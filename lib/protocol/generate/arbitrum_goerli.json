@@ -1,0 +1,22 @@
+{
+  "BAYC": "0x445b465ba8e68c6f2d50c29db5b629e40f6e9978",
+  "NFTCallOracle": "0xe8aeafe1022d835d0a831757c477a910d86e84a6",
+  "LPToken": "0x3bdc06937c3b709e00195846212887958e1941df",
+  "BlackScholes": "0x7955a7b31b468c9e77d5e3434dbbfd492cad0fc9",
+  "OptionPricer": "0x4a5c0710f22607e65bbc2400b7ffa6b1311ef4a9",
+  "AssetRiskCache": "0xcdc5c31ae4318d5906ffcf19f964f4672d570c4a",
+  "Reserve": "0x20628114dde50543a2db893a51d79df9352dd675",
+  "Vault": "0x13edf670f0aaaf0f4f3f1339a812300f83c86c93",
+  "operator": "0x65a7050ac6b5cf745846f4c5a7bf99ab1b279c2d",
+  "WETH": "0xce1a20a75cb7a69bb20b54b2065a1b482c6380d9",
+  "MAYC": "0x88898d1596204a25c93ce4832d3fb98a99058fe8",
+  "SurgeUI": "0x9f7D0E0AcA182d116Ff2C927e4da36d35dddA330",
+  "markets": {
+    "BAYC": {
+      "OptionToken": "0x599f27D5dB2C3E6470b27F3671dF8DceeD67d546"
+    },
+    "MAYC": {
+      "OptionToken": "0x107175288bFDedAae5d08cDC95CbAEb78D19E117"
+    }
+  }
+}

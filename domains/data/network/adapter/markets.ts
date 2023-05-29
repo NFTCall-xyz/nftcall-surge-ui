@@ -1,6 +1,6 @@
 import type { AddressData } from 'lib/protocol/market'
 
-export type MarketId = 'CloneX'
+export type MarketId = 'BAYC'
 
 export type MarketInfo = {
   symbol: string
@@ -16,9 +16,8 @@ const getMarketInfo = (id: MarketId): MarketInfo => {
 }
 
 export type ContractsAddress = {
-  CallPool: string
-  CallPoolForTest: string
   NFT: string
+  OptionToken: string
 }
 
 export type Market = {
@@ -29,7 +28,7 @@ export type Market = {
 
 export const getMarkets = (address: AddressData) => {
   return Object.keys(address.markets)
-    .filter((key) => address.markets[key as 'CloneX'].CallPool)
+    .filter((key) => address.markets[key as 'BAYC'].OptionToken)
     .map((key) => {
       const id: MarketId = key as any
       const info = getMarketInfo(id)
@@ -38,6 +37,7 @@ export const getMarkets = (address: AddressData) => {
         id,
         info,
         address: {
+          NFT: address[key as 'BAYC'],
           ...address.markets[id],
         } as ContractsAddress,
       }

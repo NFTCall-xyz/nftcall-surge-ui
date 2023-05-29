@@ -7,7 +7,7 @@ const ROOT_PATH = process.cwd()
 
 const SOURCE_BASE_PATH = path.resolve(ROOT_PATH, 'lib/protocol/src')
 const DEPLOYED_CONTRACTS_PATH = path.resolve(SOURCE_BASE_PATH, 'deployed-contracts-base.json')
-const DEPLOYED_MARKET_CONTRACTS_PATH = path.resolve(SOURCE_BASE_PATH, 'deployed-contracts-pool.json')
+const DEPLOYED_MARKET_CONTRACTS_PATH = path.resolve(SOURCE_BASE_PATH, 'deployed-contracts-market.json')
 
 const TARGET_BASE_PATH = path.resolve(ROOT_PATH, 'lib/protocol/generate')
 const SUBGRAPH_TARGET_BASE_PATH = path.resolve(ROOT_PATH, 'lib/protocol/generate/dist')

@@ -1,4 +1,4 @@
-import arbitrumGoerli from 'lib/protocol/generate/goerli.json'
+import arbitrumGoerli from 'lib/protocol/generate/arbitrum_goerli.json'
 import { ChainId } from 'lib/wallet/constant/chains'
 
 export type AddressData = {
