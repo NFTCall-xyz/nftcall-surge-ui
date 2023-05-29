@@ -1,0 +1,2 @@
+schema: https://api.thegraph.com/subgraphs/name/nftcall-xyz/nftcall-stage
+documents: 'lib/graphql/**/*.graphql'

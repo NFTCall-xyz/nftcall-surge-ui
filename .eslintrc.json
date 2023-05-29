@@ -1,0 +1,35 @@
+{
+  "plugins": ["@typescript-eslint", "unused-imports"],
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ],
+    "no-extra-semi": "off",
+    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-extra-semi": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/adjacent-overload-signatures": "off",
+    "@typescript-eslint/ban-types": "off"
+  }
+}

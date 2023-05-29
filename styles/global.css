@@ -1,0 +1,22 @@
+.rc-image-preview-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+  /* box-sizing: border-box; */
+  margin: 0;
+  height: 100%;
+}

@@ -1,0 +1,13 @@
+{
+  "Premium": "0x5bc5b1a6b960f7456d2889eae52a8e4a5a2b437c",
+  "NTokenFactory": "0x8965e4d7a81f4a67cb7e3b838257ead7d79839df",
+  "CallTokenFactory": "0xb9946fd6b6e6387c0b4dd27840ef15a35f90bcab",
+  "CallFactory": "0xc4b4b8be2fb3994d080818e458c333f6fffd3cb7",
+  "MockedOracle": "0x4ef010ad68a5f11f7737ed916bb8761b9b282849",
+  "markets": {
+    "Azuki": {
+      "NFT": "0x363b3C954D922770a312CeC18c85A3B01E167946",
+      "CallPool": "0x1a205cDB154D1676adb90800914da0A0213FC652"
+    }
+  }
+}
