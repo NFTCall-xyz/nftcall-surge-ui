@@ -31,9 +31,8 @@ export type EthereumTransactionTypeExtended = {
 }
 
 export type ApproveType = {
+  token: tEthereumAddress
   user: tEthereumAddress
   spender: tEthereumAddress
-  token: tEthereumAddress
-  tokenId?: string
-  amount?: string
+  amount: string
 }
