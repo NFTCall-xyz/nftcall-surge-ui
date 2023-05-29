@@ -1,3 +1,5 @@
+import { utils } from 'ethers'
+
 import type { AddressData } from 'lib/protocol/market'
 
 export type MarketId = 'BAYC'
@@ -37,8 +39,8 @@ export const getMarkets = (address: AddressData) => {
         id,
         info,
         address: {
-          NFT: address[key as 'BAYC'],
-          ...address.markets[id],
+          NFT: utils.getAddress(address[key as 'BAYC']),
+          OptionToken: utils.getAddress(address.markets[id].OptionToken),
         } as ContractsAddress,
       }
     })
