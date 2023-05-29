@@ -24,7 +24,7 @@ const Menu = () => {
     () =>
       list
         .filter((item) => !item.hide)
-        .map(({ label, linkTo, target }, index) => (
+        .map(({ label, linkTo, target }: any, index) => (
           <HeaderLink
             href={linkTo}
             key={index}
