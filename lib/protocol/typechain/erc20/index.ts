@@ -1,7 +1,7 @@
 import type { providers } from 'ethers'
 import { BigNumber } from 'ethers'
 
-import { valueToWei, weiToValue } from 'lib/math'
+import { weiToValue } from 'lib/math'
 
 import BaseService from '../commons/BaseService'
 import type { EthereumTransactionTypeExtended, tEthereumAddress, transactionType } from '../commons/types'
@@ -63,13 +63,10 @@ export class ERC20Service extends BaseService<ERC20> implements IERC20ServiceInt
   }
 
   public async isApproved({ user, token, spender, amount }: ApproveType): Promise<boolean> {
-    const decimals = await this.decimalsOf(token)
     const erc20Contract: ERC20 = this.getContractInstance(token)
     const allowance: BigNumber = await erc20Contract.allowance(user, spender)
     const amountBNWithDecimals: BigNumber =
-      amount === '-1'
-        ? BigNumber.from(SUPER_BIG_ALLOWANCE_NUMBER)
-        : BigNumber.from(valueToWei(amount, decimals).toString())
+      amount === '-1' ? BigNumber.from(SUPER_BIG_ALLOWANCE_NUMBER) : BigNumber.from(amount)
     return allowance.gte(amountBNWithDecimals)
   }
 

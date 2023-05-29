@@ -92,7 +92,6 @@ export class VaultService extends BaseService<Vault> {
       wETHAddress,
       lpTokenAddress,
       approveService: { isApproved, approve },
-
       amount,
     } = props
     const VaultContract = this.getContractInstance(Vault)

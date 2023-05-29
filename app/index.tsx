@@ -2,6 +2,8 @@ import ActiveLayout from 'UI/layouts'
 import type { AppProps } from 'next/app'
 
 import CssBaseline from '@mui/material/CssBaseline'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 import { createContextWithProvider } from 'app/utils/createContext'
 
@@ -33,7 +35,9 @@ export const Provider: FCC<MyAppProps> = (props) => {
       <CssBaseline enableColorScheme />
       <MotionProvider>
         <APP>
-          <ActiveLayout {...props} />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <ActiveLayout {...props} />
+          </LocalizationProvider>
           <ToastContainer />
         </APP>
       </MotionProvider>

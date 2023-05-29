@@ -7,7 +7,7 @@ import { useCollectionsData } from './application/collections'
 import type { BaseCollection } from './application/collections/adapter/getCollection'
 
 export type NFTCollection = Market & {
-  collection: GetNFTCollectionData
+  data: GetNFTCollectionData
   info: BaseCollection
 }
 

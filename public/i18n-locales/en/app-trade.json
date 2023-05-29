@@ -1,1 +1,9 @@
-{}
+{
+  "floorPriceTrends": {
+    "floorPrice": "Floor Price",
+    "title": "Floor Price Trends",
+    "change24h": "24h Change",
+    "days": "D",
+    "loading": "loading"
+  }
+}

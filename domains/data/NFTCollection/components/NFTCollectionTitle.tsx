@@ -15,11 +15,13 @@ const NFTCollectionTitle: FC<NFTCollectionTitleProps> = ({
   },
 }) => {
   return (
-    <Stack spacing={2} direction="row">
+    <Stack spacing={1} direction="row">
       <Avatar sx={{ width: 40 }} src={imageUrl} />
       <Stack spacing={1}>
         <H5>{id}</H5>
-        <Tiny ellipsis>{name}</Tiny>
+        <Tiny ellipsis maxWidth="100px">
+          {name}
+        </Tiny>
       </Stack>
     </Stack>
   )

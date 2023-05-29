@@ -46,6 +46,20 @@ export type OptionPositionStructOutput = [BigNumber, number, number, BigNumber, 
   premium: BigNumber
 }
 
+export type StrikeStruct = {
+  spotPrice: PromiseOrValue<BigNumberish>
+  strikePrice: PromiseOrValue<BigNumberish>
+  duration: PromiseOrValue<BigNumberish>
+  expiry: PromiseOrValue<BigNumberish>
+}
+
+export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
+  spotPrice: BigNumber
+  strikePrice: BigNumber
+  duration: BigNumber
+  expiry: BigNumber
+}
+
 export type VaultLPTokenStruct = {
   wETHBalance: PromiseOrValue<BigNumberish>
   balance: PromiseOrValue<BigNumberish>
@@ -85,12 +99,19 @@ export interface SurgeUIInterface extends utils.Interface {
     'getNFTCollection(address,address,address)': FunctionFragment
     'getNFTCollections(address[],address,address)': FunctionFragment
     'getPosition(address,uint256)': FunctionFragment
+    'getPremium(address,address,uint8,(uint256,uint256,uint256,uint256))': FunctionFragment
     'getVault(address,address,address)': FunctionFragment
     'getVaultWithUser(address,address,address,address)': FunctionFragment
   }
 
   getFunction(
-    nameOrSignatureOrTopic: 'getNFTCollection' | 'getNFTCollections' | 'getPosition' | 'getVault' | 'getVaultWithUser'
+    nameOrSignatureOrTopic:
+      | 'getNFTCollection'
+      | 'getNFTCollections'
+      | 'getPosition'
+      | 'getPremium'
+      | 'getVault'
+      | 'getVaultWithUser'
   ): FunctionFragment
 
   encodeFunctionData(
@@ -106,6 +127,10 @@ export interface SurgeUIInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
   encodeFunctionData(
+    functionFragment: 'getPremium',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, StrikeStruct]
+  ): string
+  encodeFunctionData(
     functionFragment: 'getVault',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
   ): string
@@ -117,6 +142,7 @@ export interface SurgeUIInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getNFTCollection', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getNFTCollections', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getPosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'getPremium', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getVault', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getVaultWithUser', data: BytesLike): Result
 
@@ -166,6 +192,14 @@ export interface SurgeUI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[OptionPositionStructOutput]>
 
+    getPremium(
+      pricerAddress: PromiseOrValue<string>,
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strike_: StrikeStruct,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
+
     getVault(
       vaultAddress: PromiseOrValue<string>,
       lpTokenAddress: PromiseOrValue<string>,
@@ -202,6 +236,14 @@ export interface SurgeUI extends BaseContract {
     overrides?: CallOverrides
   ): Promise<OptionPositionStructOutput>
 
+  getPremium(
+    pricerAddress: PromiseOrValue<string>,
+    collection: PromiseOrValue<string>,
+    optionType: PromiseOrValue<BigNumberish>,
+    strike_: StrikeStruct,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
   getVault(
     vaultAddress: PromiseOrValue<string>,
     lpTokenAddress: PromiseOrValue<string>,
@@ -237,6 +279,14 @@ export interface SurgeUI extends BaseContract {
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<OptionPositionStructOutput>
+
+    getPremium(
+      pricerAddress: PromiseOrValue<string>,
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strike_: StrikeStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
     getVault(
       vaultAddress: PromiseOrValue<string>,
@@ -277,6 +327,14 @@ export interface SurgeUI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
+    getPremium(
+      pricerAddress: PromiseOrValue<string>,
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strike_: StrikeStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     getVault(
       vaultAddress: PromiseOrValue<string>,
       lpTokenAddress: PromiseOrValue<string>,
@@ -311,6 +369,14 @@ export interface SurgeUI extends BaseContract {
     getPosition(
       optionTokenAddress: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    getPremium(
+      pricerAddress: PromiseOrValue<string>,
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strike_: StrikeStruct,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 

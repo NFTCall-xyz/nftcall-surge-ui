@@ -18,18 +18,17 @@ const useCollectionsSouceData = () => {
   const collectionSouceData = useMemo(() => {
     const returnValue = markets.map((market) => {
       const { id, address } = market
-      const collection =
-        storeData.getNFTCollections.find((i) => i.collectionAddress === address.NFT) || ({} as undefined)
+      const data = storeData.getNFTCollections.find((i) => i.collectionAddress === address.NFT) || ({} as undefined)
       const info = collectionInfos[id]
 
       return {
         ...market,
-        collection,
+        data,
         info,
       } as NFTCollection
     })
     return returnValue
-  }, [markets, storeData.getNFTCollections])
+  }, [collectionInfos, markets, storeData.getNFTCollections])
 
   useWhyDidYouUpdate('[Collection][CollectionsSouceData]', [markets, storeData.getNFTCollections])
   return collectionSouceData
