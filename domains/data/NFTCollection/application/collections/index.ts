@@ -8,30 +8,34 @@ import { useNetwork } from 'domains/data'
 import type { GetStoreNFTCollectionsProps } from 'store/surgeUI/getNFTCollections/adapter'
 import { useSurgeUIStateData } from 'store/surgeUI/useSurgeUIStateData'
 
-import type { NFTCollection } from '..'
+import type { NFTCollection } from '../..'
+import { getCollectionInfos } from './constant/collections'
 
-const useCollectionSouceData = () => {
+const useCollectionsSouceData = () => {
   const storeData = useSurgeUIStateData()
+  const collectionInfos = useMemo(() => getCollectionInfos(), [])
   const { markets } = useNetwork()
   const collectionSouceData = useMemo(() => {
     const returnValue = markets.map((market) => {
-      const { address } = market
+      const { id, address } = market
       const collection =
         storeData.getNFTCollections.find((i) => i.collectionAddress === address.NFT) || ({} as undefined)
+      const info = collectionInfos[id]
 
       return {
         ...market,
         collection,
+        info,
       } as NFTCollection
     })
     return returnValue
   }, [markets, storeData.getNFTCollections])
 
-  useWhyDidYouUpdate('[Collection][CollectionSouceData]', [markets, storeData.getNFTCollections])
+  useWhyDidYouUpdate('[Collection][CollectionsSouceData]', [markets, storeData.getNFTCollections])
   return collectionSouceData
 }
 
-const useCollectionRequest = () => {
+const useCollectionsRequest = () => {
   const {
     contracts: { surgeUIService },
     markets,
@@ -60,14 +64,14 @@ const useCollectionRequest = () => {
   }
 }
 
-export const useCollectionData = () => {
-  const collectionSouceData = useCollectionSouceData()
+export const useCollectionsData = () => {
+  const collectionSouceData = useCollectionsSouceData()
 
-  const collection = useMemo(() => collectionSouceData, [collectionSouceData])
+  const collections = useMemo(() => collectionSouceData, [collectionSouceData])
 
-  useWhyDidYouUpdate('[Collection][collection]', collection)
+  useWhyDidYouUpdate('[Collection][collections]', collections)
 
-  const { updateNFTCollections } = useCollectionRequest()
+  const { updateNFTCollections } = useCollectionsRequest()
 
-  return { collection, updateNFTCollections }
+  return { collections, updateNFTCollections }
 }

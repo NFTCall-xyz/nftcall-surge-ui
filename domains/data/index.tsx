@@ -16,4 +16,4 @@ export default Provider
 
 export const useNetwork = createNetworkContext()
 export const useVault = createVaultContext()
-export const useNFTCollection = createNFTCollectionContext()
+export const useNFTCollections = createNFTCollectionContext()
