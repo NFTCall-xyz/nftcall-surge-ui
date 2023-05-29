@@ -8,7 +8,7 @@ const BNObjToStrObj = (obj: any) => {
   if (typeof obj !== 'object') return obj
   const o: any = {}
   Object.keys(obj).forEach((k) => {
-    if (isEmpty(obj[k])) {
+    if (typeof obj[k] != 'number' && isEmpty(obj[k])) {
       o[k] = undefined
       return
     } else if (obj[k]._isBigNumber && obj[k].toString) {
