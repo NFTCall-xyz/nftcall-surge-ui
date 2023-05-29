@@ -1,21 +1,18 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
-import type { TypedUseSelectorHook } from 'react-redux'
-import { useDispatch, useSelector } from 'react-redux'
 
 import theme from 'app/theme/store'
 
 import nprogress from 'lib/nprogress/store/nprogress'
 
-export const useAppDispatch = () => useDispatch<AppDispatch>()
-
-export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
+import surgeUI from './surgeUI'
 
 export function makeStore() {
   return configureStore({
     reducer: {
       theme,
       nprogress,
+      surgeUI,
     },
   })
 }

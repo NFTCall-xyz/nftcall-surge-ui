@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
-import { useAppSelector } from 'store'
 
 import { ThemeProvider } from '@mui/material/styles'
 
 import { createContextWithProvider } from 'app/utils/createContext'
+
+import { useAppSelector } from 'store/helpers'
 
 import { selectData } from './store'
 import { createThemeOptions, getTheme, themes } from './themes'

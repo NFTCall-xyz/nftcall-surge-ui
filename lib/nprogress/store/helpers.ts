@@ -3,11 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 import { clamp, get } from 'lodash'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { useAppDispatch } from 'store'
 
 import { useLatest } from 'app/hooks/useLatest'
 import { useObjectMemo } from 'app/hooks/useValues'
 import { createPromise } from 'app/utils/promise'
+
+import { useAppDispatch } from 'store/helpers'
 
 const TRICKLE_SPEED = 800
 const TRICKLE_RATE = 0.02
