@@ -50,7 +50,7 @@ const MenuMobile = () => {
         <Divider />
         {menu.list
           .filter((item) => !item.hide)
-          .map(({ label, linkTo, key, target }) => (
+          .map(({ label, linkTo, key, target }: any) => (
             <ListItemButton
               key={linkTo}
               selected={menu.current.key === key}
