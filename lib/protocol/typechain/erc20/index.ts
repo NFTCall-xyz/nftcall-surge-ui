@@ -67,7 +67,9 @@ export class ERC20Service extends BaseService<ERC20> implements IERC20ServiceInt
     const erc20Contract: ERC20 = this.getContractInstance(token)
     const allowance: BigNumber = await erc20Contract.allowance(user, spender)
     const amountBNWithDecimals: BigNumber =
-      amount === '-1' ? BigNumber.from(SUPER_BIG_ALLOWANCE_NUMBER) : BigNumber.from(valueToWei(amount, decimals))
+      amount === '-1'
+        ? BigNumber.from(SUPER_BIG_ALLOWANCE_NUMBER)
+        : BigNumber.from(valueToWei(amount, decimals).toString())
     return allowance.gte(amountBNWithDecimals)
   }
 
