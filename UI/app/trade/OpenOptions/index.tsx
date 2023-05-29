@@ -28,7 +28,7 @@ import { usePageTrade } from '..'
 
 export type OpenCallOptionsProps = {}
 const OpenCallOptions: FC<OpenCallOptionsProps> = () => {
-  const { t } = useTranslation('app-trade', { keyPrefix: 'open-call-options' })
+  const { t: tOpenCallOptions } = useTranslation('app-trade', { keyPrefix: 'OpenCallOptions' })
   const theme = useTheme()
 
   const [optionType, setOptionType] = useImmer(OptionType.LONG_CALL)
@@ -84,15 +84,15 @@ const OpenCallOptions: FC<OpenCallOptionsProps> = () => {
       <CardContent>
         <Stack spacing={4}>
           <ToggleButtonGroup value={optionType} exclusive onChange={(e, value) => setOptionType(value)}>
-            <ToggleButton value={OptionType.LONG_CALL}>{t('call')}</ToggleButton>
-            <ToggleButton value={OptionType.LONG_PUT}>{t('put')}</ToggleButton>
+            <ToggleButton value={OptionType.LONG_CALL}>{tOpenCallOptions('call')}</ToggleButton>
+            <ToggleButton value={OptionType.LONG_PUT}>{tOpenCallOptions('put')}</ToggleButton>
           </ToggleButtonGroup>
 
           <Stack spacing={1}>
             <FlexBetween>
-              <Span>{t('size')}</Span>
+              <Span>{tOpenCallOptions('size')}</Span>
               <Tiny color="text.secondary">
-                <Span>{`${t('limit')}: `}</Span>
+                <Span>{`${tOpenCallOptions('limit')}: `}</Span>
                 <NumberDisplay value={maximumOptionAmount} options="number" />
               </Tiny>
             </FlexBetween>
@@ -113,7 +113,7 @@ const OpenCallOptions: FC<OpenCallOptionsProps> = () => {
 
           <Stack spacing={1}>
             <FlexBetween>
-              <Span>{t('strikePrice')}</Span>
+              <Span>{tOpenCallOptions('strikePrice')}</Span>
               <RiseOrFall value={strikePricePercent}>
                 <NumberDisplay
                   value={strikePricePercent}
@@ -132,7 +132,7 @@ const OpenCallOptions: FC<OpenCallOptionsProps> = () => {
 
           <Stack spacing={1}>
             <FlexBetween>
-              <Span>{t('expiry')}</Span>
+              <Span>{tOpenCallOptions('expiry')}</Span>
               <Span>{expiryDiff}</Span>
             </FlexBetween>
             <DateTimePicker value={expiry} onChange={(newValue) => setExpiry(newValue)} />
@@ -149,7 +149,7 @@ const OpenCallOptions: FC<OpenCallOptionsProps> = () => {
               })
             }}
           >
-            {t('openOptions')}
+            {tOpenCallOptions('openOptions')}
           </Button>
         </Stack>
       </CardContent>

@@ -42,7 +42,7 @@ const Left = styled(Stack)`
 const Right = styled('div')``
 
 const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
-  const { t } = useTranslation('app-trade', { keyPrefix: 'floorPriceTrends' })
+  const { t: tFloorPriceTrends } = useTranslation('app-trade', { keyPrefix: 'floorPriceTrends' })
 
   const chart = useChart()
   const theme = useTheme()
@@ -53,7 +53,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
       <Left spacing={4} direction="row">
         <Stack spacing={1}>
           <H5 color="text.secondary" fontWeight={400}>
-            {t('floorPrice')}
+            {tFloorPriceTrends('floorPrice')}
           </H5>
           <Paragraph fontWeight={600} fontSize={24} component="div">
             <Stack spacing={0.5} direction="row" alignItems="center">
@@ -64,7 +64,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
         </Stack>
         <Stack spacing={1}>
           <H5 color="text.secondary" fontWeight={400}>
-            {t('change24h')}
+            {tFloorPriceTrends('change24h')}
           </H5>
 
           <RiseOrFall value={chart.change24}>
@@ -82,7 +82,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
         </Stack>
       </Left>
     ),
-    [chart.change24, chart.currentFloorPrice, t]
+    [chart.change24, chart.currentFloorPrice, tFloorPriceTrends]
   )
 
   const right = useMemo(
@@ -91,13 +91,13 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
         <ToggleButtonGroup color="primary" value={chart.dayButton.value} exclusive onChange={chart.dayButton.onChange}>
           {chart.dayButton.list.map((day) => (
             <ToggleButton value={day} key={day} size="small">
-              {day} {t('days')}
+              {day} {tFloorPriceTrends('days')}
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
       </Right>
     ),
-    [chart.dayButton.list, chart.dayButton.onChange, chart.dayButton.value, t]
+    [chart.dayButton.list, chart.dayButton.onChange, chart.dayButton.value, tFloorPriceTrends]
   )
 
   return (

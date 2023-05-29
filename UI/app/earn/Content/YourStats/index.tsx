@@ -79,7 +79,7 @@ const YourStats: FC = () => {
           </Stack>
         </Text>
         <Text>
-          <Span>{tYourStats('locked.ncETHBalance')}</Span>
+          <Span>{tYourStats('locked.until')}</Span>
           <Span>{safeGet(() => format(locked.lockedUnitil, 'MMM dd HH:mm'))}</Span>
         </Text>
 

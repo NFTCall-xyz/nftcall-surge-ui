@@ -27,6 +27,31 @@ const locale = {
     days: 'D',
     loading: 'loading',
   },
+  OpenCallOptions: {
+    call: 'Call',
+    put: 'Put',
+    size: 'Size',
+    limit: 'Limit',
+    strikePrice: 'Strike Price',
+    expiry: 'Expiration Date',
+    premium: 'Premium',
+    openOptions: 'Open Options',
+  },
+  OptionPositions: {
+    tabs: {
+      activePositions: 'Active Positions',
+      history: 'History',
+    },
+    table: {
+      type: 'Type',
+      size: 'Size',
+      floorPrice: 'Floor Price',
+      strikePrice: 'Strike Price',
+      premium: 'Premium',
+      PNL: 'PNL',
+      status: 'Status',
+    },
+  },
 }
 
 export default locale

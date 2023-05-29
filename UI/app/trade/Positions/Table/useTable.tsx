@@ -23,7 +23,7 @@ type PositionsProps = {
   isActive: boolean
 }
 export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
-  const { t } = useTranslation('app-positions', { keyPrefix: 'table' })
+  const { t: tOptionPositionsTable } = useTranslation('app-trade', { keyPrefix: 'OptionPositions.table' })
   const {
     collection: { collection },
   } = usePageTrade()
@@ -82,11 +82,11 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           },
         ] as TableColumnsProps[]
       ).map((column) => {
-        column.label = t(column.dataKey)
+        column.label = tOptionPositionsTable(column.dataKey)
         return column
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t]
+    [tOptionPositionsTable]
   )
   const skip = useMemo(() => pageIndex * pageSize, [pageIndex])
   const data = useMemo(() => {

@@ -129,7 +129,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
       },
     ]
     return returnValue.map((i) => {
-      i.title = tTabs(`${i.title}`)
+      i.title = tTabs(`${i.title}.action`)
       return i
     })
   }, [tTabs])

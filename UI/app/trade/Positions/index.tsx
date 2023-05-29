@@ -3,17 +3,15 @@ import type { FC } from 'react'
 import { useMemo } from 'react'
 
 import Grid from '@mui/material/Grid'
-import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 
-import { H1, Paragraph } from 'components/Typography'
 import type { TabsProps } from 'components/tabs'
 import Tabs from 'components/tabs'
 
 import Table from './Table'
 
 const Positions: FC = () => {
-  const { t } = useTranslation('app-trade', { keyPrefix: 'positions' })
+  const { t: tOptionPositions } = useTranslation('app-trade', { keyPrefix: 'OptionPositions' })
   const theme = useTheme()
   const tabs = useMemo(() => {
     const returnValue: TabsProps['tabs'] = [
@@ -34,38 +32,32 @@ const Positions: FC = () => {
       },
     ]
     return returnValue.map((i) => {
-      i.title = t(`tabs.${i.title}`)
+      i.title = tOptionPositions(`tabs.${i.title}`)
       return i
     })
-  }, [t])
+  }, [tOptionPositions])
 
   return (
-    <Stack spacing={4}>
-      <Stack spacing={2}>
-        <H1>{t('title')}</H1>
-        <Paragraph color="text.secondary">{t('subTitle')}</Paragraph>
-      </Stack>
-      <Grid container pt={2}>
-        <Grid item xs={12}>
-          <Tabs
-            tabs={tabs}
-            sx={{
-              [theme.breakpoints.up('sm')]: {
-                flex: 1,
-                '.MuiTabs-scroller': {
-                  justifyContent: { xs: 'center', sm: 'start' },
-                  alignItems: 'center',
-                  display: 'flex',
-                },
-                '.MuiButtonBase-root': {
-                  minWidth: 150,
-                },
+    <Grid container pt={2}>
+      <Grid item xs={12}>
+        <Tabs
+          tabs={tabs}
+          sx={{
+            [theme.breakpoints.up('sm')]: {
+              flex: 1,
+              '.MuiTabs-scroller': {
+                justifyContent: { xs: 'center', sm: 'start' },
+                alignItems: 'center',
+                display: 'flex',
               },
-            }}
-          />
-        </Grid>
+              '.MuiButtonBase-root': {
+                minWidth: 150,
+              },
+            },
+          }}
+        />
       </Grid>
-    </Stack>
+    </Grid>
   )
 }
 
