@@ -121,6 +121,8 @@ export class VaultService extends BaseService<Vault> {
       tx: txCallback,
       txType: eEthereumTxType.DLP,
     })
+
+    return txs
   }
 
   public async openPosition(props: OpenPositionProps) {

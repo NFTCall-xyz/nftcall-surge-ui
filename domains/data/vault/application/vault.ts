@@ -22,7 +22,7 @@ const useVaultSouceData = () => {
 const useVaultRequest = () => {
   const {
     contracts: { surgeUIService },
-    address: { LPToken, Vault, SurgeUI },
+    address: { LPToken, Vault, SurgeUI, WETH },
   } = useNetwork()
   const { account } = useWallet()
   const { surgeUI } = useControllers()
@@ -31,10 +31,11 @@ const useVaultRequest = () => {
       userAddress: account,
       lpTokenAddress: LPToken,
       vaultAddress: Vault,
+      wETHAddress: WETH,
       SurgeUI,
       surgeUIService,
     }),
-    [LPToken, SurgeUI, Vault, account, surgeUIService]
+    [LPToken, SurgeUI, Vault, WETH, account, surgeUIService]
   )
 
   surgeUI.getVault.usePolling(query, (query) => !query.vaultAddress, 1000 * 60)

@@ -5,6 +5,7 @@ import type { VaultStructOutput } from 'lib/protocol/typechain/nftcall-surge/typ
 export type GetVaultBaseData = {
   lpToken: {
     balance: string
+    wETHBalance: string
     lockedBalance: string
     maxWithdraw: string
     releaseTime: string
@@ -19,7 +20,7 @@ export type GetVaultBaseData = {
 
 export const getGetVaultBaseData = (value: VaultStructOutput): GetVaultBaseData => {
   return {
-    lpToken: getString(value.lpToken, ['balance', 'lockedBalance', 'maxWithdraw', 'releaseTime']),
+    lpToken: getString(value.lpToken, ['balance', 'lockedBalance', 'maxWithdraw', 'releaseTime', 'wETHBalance']),
     ...getString(value, ['totalSupply', 'totalAssets', 'totalLockedAssets', 'unrealizedPNL', 'unrealizedPremium']),
   }
 }

@@ -24,6 +24,7 @@ export interface GetNFTCollectionProps extends BaseSurgeUIProps {
 export interface GetVaultProps extends BaseSurgeUIProps {
   lpTokenAddress: string
   vaultAddress: string
+  wETHAddress: string
   userAddress?: string
 }
 
@@ -53,12 +54,12 @@ export class SurgeUIService extends BaseService<SurgeUI> {
   }
 
   public async getVault(props: GetVaultProps) {
-    const { SurgeUI, lpTokenAddress, vaultAddress, userAddress } = props
+    const { SurgeUI, lpTokenAddress, vaultAddress, wETHAddress, userAddress } = props
     const SurgeUIContract = this.getContractInstance(SurgeUI)
     if (userAddress) {
-      return await SurgeUIContract.getVaultWithUser(vaultAddress, lpTokenAddress, userAddress)
+      return await SurgeUIContract.getVaultWithUser(vaultAddress, lpTokenAddress, wETHAddress, userAddress)
     } else {
-      return await SurgeUIContract.getVault(vaultAddress, lpTokenAddress)
+      return await SurgeUIContract.getVault(vaultAddress, wETHAddress, lpTokenAddress)
     }
   }
 }
