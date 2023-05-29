@@ -31,13 +31,13 @@ const Header: FC = () => {
   if (!downLg) {
     return (
       <ROOT>
-        <Container component="main" maxWidth="lg">
+        <Container component="main" maxWidth="xl">
           <BODY>
-            <Logo />
-            <Stack spacing={4} direction="row">
+            <Stack spacing={6} direction="row">
+              <Logo />
               <Menu />
-              <Actions />
             </Stack>
+            <Actions />
           </BODY>
         </Container>
       </ROOT>

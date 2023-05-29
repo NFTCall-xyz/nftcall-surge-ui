@@ -37,6 +37,12 @@ export const assetsList: Asset[] = [
     color: '#4db196',
     icon: icons.usdt,
   },
+  {
+    name: 'Arbitrum',
+    symbol: 'ARB',
+    color: '#12AAFF',
+    icon: icons.arbitrum,
+  },
 ]
 
 export const getAssetInfoFactory =

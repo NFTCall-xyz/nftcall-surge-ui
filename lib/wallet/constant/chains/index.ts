@@ -13,7 +13,7 @@ export const CHAIN_INFORMATION: ChainInformation[] = [
   {
     id: ChainId.arbitrum,
     currency: ArbitrumETH,
-    name: 'Arbitrum One',
+    name: 'Arbitrum',
     explorerUrl: `https://arbiscan.io/`,
     publicJsonRPCUrl: ['https://endpoints.omniatech.io/v1/arbitrum/one/public', `https://1rpc.io/arb`],
   },

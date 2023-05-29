@@ -45,6 +45,7 @@ export const ChainButton: FC = () => {
         startIcon={<ChainIcon chainName={network.name} />}
         onClick={open}
         sx={{
+          lineHeight: '24px',
           border: `1px solid ${theme.palette.divider}`,
           '&:hover': {
             backgroundColor: theme.palette.action.hover,

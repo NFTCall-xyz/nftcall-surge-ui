@@ -71,6 +71,13 @@ const components = (theme: Theme): any => {
         },
       },
     },
+    // MuiContainer: {
+    //   styleOverrides: {
+    //     root: {
+    //       '&.MuiContainer-maxWidthLg': '1400px',
+    //     }
+    //   }
+    // },
     MuiAvatar: {
       styleOverrides: {
         fallback: { height: '75%', width: '75%' },

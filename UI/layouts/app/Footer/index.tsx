@@ -42,7 +42,7 @@ const CopyRight = styled(Typography)`
 const Footer: FC = () => {
   return (
     <ROOT component="footer">
-      <Content>
+      <Content maxWidth="xl">
         <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
           <Stack spacing={4} direction={{ xs: 'column', sm: 'row' }} alignItems="center">
             <Logo imgSrc={LogoImgDark} />

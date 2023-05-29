@@ -14,7 +14,11 @@ export const ChainIcon: FC<ChainIconProps> = ({ chainName }) => {
       case 'Goerli':
         return <CircleIcon fontSize="small" sx={{ color: '#f6c343' }} />
       case 'Ethereum':
-        return <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
+        return <TokenIcon symbol={'ETH'} sx={{ width: 24, height: 24 }} />
+      case 'Arbitrum':
+        return <TokenIcon symbol={'ARB'} sx={{ width: 24, height: 24 }} />
+      case 'Arbitrum Goerli':
+        return <CircleIcon fontSize="small" sx={{ color: '#12AAFF' }} />
       default:
         return <CircleIcon fontSize="small" sx={{ color: 'grey' }} />
     }

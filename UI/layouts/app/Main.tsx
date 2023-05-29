@@ -7,7 +7,7 @@ const ROOT: any = styled(Container)`
 `
 const Main: FCC = ({ children }) => {
   return (
-    <ROOT component="main" maxWidth="lg">
+    <ROOT component="main" maxWidth="xl">
       {children}
     </ROOT>
   )
