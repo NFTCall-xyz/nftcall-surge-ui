@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar'
 import Stack from '@mui/material/Stack'
 
-import { H3, H5, Paragraph, Tiny } from 'components/Typography'
+import { H5, Tiny } from 'components/Typography'
 
 import type { NFTCollection } from '..'
 
