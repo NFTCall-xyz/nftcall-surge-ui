@@ -1,17 +1,13 @@
-import goerli from 'lib/protocol/generate/goerli.json'
-import ethereum from 'lib/protocol/generate/mainnet.json'
+import arbitrumGoerli from 'lib/protocol/generate/goerli.json'
 import { ChainId } from 'lib/wallet/constant/chains'
 
 export type AddressData = {
   chainId: ChainId
-} & typeof goerli
+} & typeof arbitrumGoerli
 
-const list: Record<ChainId, typeof goerli> = {
-  [ChainId.ethereum]: {
-    ...ethereum,
-  },
-  [ChainId.goerli]: {
-    ...goerli,
+const list: Record<ChainId, typeof arbitrumGoerli> = {
+  [ChainId.arbitrumGoerli]: {
+    ...arbitrumGoerli,
   },
 } as any
 
@@ -26,10 +22,10 @@ const getMarketsData = (chainId: ChainId): AddressData => {
 }
 
 export const MARKETS: Record<number, AddressData> = {
-  [ChainId.ethereum]: getMarketsData(ChainId.ethereum),
-  [ChainId.goerli]: getMarketsData(ChainId.goerli),
+  // [ChainId.arbitrum]: getMarketsData(ChainId.arbitrum),
+  [ChainId.arbitrumGoerli]: getMarketsData(ChainId.arbitrumGoerli),
 }
 
-export const defaultMarket = MARKETS[ChainId.ethereum]
+export const defaultMarket = MARKETS[ChainId.arbitrumGoerli]
 export const getAddress = (chainId: ChainId) => MARKETS[chainId] || defaultMarket
 export const marktetIds = Object.keys(defaultMarket.markets)

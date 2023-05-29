@@ -12,3 +12,15 @@ export const GoerliETH: Currency = {
   decimals: 18,
   icon: eth,
 }
+
+export const ArbitrumETH: Currency = {
+  symbol: 'ETH',
+  decimals: 18,
+  icon: eth,
+}
+
+export const ArbitrumGoerliETH: Currency = {
+  symbol: 'GoerliETH',
+  decimals: 18,
+  icon: eth,
+}

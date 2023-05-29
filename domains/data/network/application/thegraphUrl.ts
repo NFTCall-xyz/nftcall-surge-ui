@@ -9,9 +9,9 @@ import { ChainId } from 'lib/wallet/constant/chains'
 
 const getThegraphUrl = (chainId: number) => {
   switch (chainId) {
-    case ChainId.ethereum:
+    case ChainId.arbitrum:
       return 'https://api.thegraph.com/subgraphs/name/nftcall-xyz/nftcall'
-    case ChainId.goerli:
+    case ChainId.arbitrumGoerli:
       return 'https://api.thegraph.com/subgraphs/name/gordon199404/nftcall'
     default:
       return 'https://api.thegraph.com/subgraphs/name/nftcall-xyz/nftcall'

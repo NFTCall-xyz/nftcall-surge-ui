@@ -17,9 +17,8 @@ const ChainDialogContent: FC = () => {
   const buttons = useMemo(
     () => (
       <Fragment>
-        <ChainButton chainId={ChainId.ethereum} />
-        <ChainButton chainId={ChainId.goerli} />
-        {/* <ChainButton chainId={ChainId.bsc_testnet} /> */}
+        {/* <ChainButton chainId={ChainId.arbitrum} /> */}
+        <ChainButton chainId={ChainId.arbitrumGoerli} />
       </Fragment>
     ),
     []
@@ -65,11 +64,6 @@ const ChainButton: FC<{ chainId: ChainId }> = (props) => {
       onClick={() => {
         setDefalutChainId(props.chainId)
         onSwitchEthereumChain(props.chainId).then(() => {
-          // if (ChainId.ethereum === props.chainId) {
-          //   router.push({
-          //     pathname: '/nft-airdrop',
-          //   })
-          // }
           close()
         })
       }}

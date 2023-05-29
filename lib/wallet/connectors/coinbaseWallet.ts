@@ -10,7 +10,7 @@ export const [coinbaseWallet, hooks] = initializeConnector<CoinbaseWallet>(
     new CoinbaseWallet({
       actions,
       options: {
-        url: getChainInformationByChainId(ChainId.ethereum).publicJsonRPCUrl[0],
+        url: getChainInformationByChainId(ChainId.arbitrumGoerli).publicJsonRPCUrl[0],
         appName: 'NFTCall',
       },
     })

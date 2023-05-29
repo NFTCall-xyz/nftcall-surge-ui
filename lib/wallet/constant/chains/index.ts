@@ -1,34 +1,31 @@
-import { ETH, GoerliETH } from '../currency'
+import { ArbitrumETH, ArbitrumGoerliETH } from '../currency'
 import type { ChainInformation } from './types'
 
-export const infuraId = 'd178bf7e1786465d9f22f733d8106552'
-export const walletconnectId = 'beb7948db9bda6e0d2316f7582d6b332'
+export const infuraId = ''
+export const walletconnectId = ''
 
 export enum ChainId {
-  ethereum = 1,
-  goerli = 5,
+  arbitrum = 42161,
+  arbitrumGoerli = 421613,
 }
 
 export const CHAIN_INFORMATION: ChainInformation[] = [
   {
-    id: ChainId.ethereum,
-    currency: ETH,
-    name: 'Ethereum',
-    explorerUrl: `https://etherscan.io`,
-    publicJsonRPCUrl: [
-      'https://rpc.ankr.com/eth',
-      'https://cloudflare-eth.com',
-      'https://rpc.flashbots.net',
-      'https://ethereum.publicnode.com',
-      `https://mainnet.infura.io/v3/${infuraId}`,
-    ],
+    id: ChainId.arbitrum,
+    currency: ArbitrumETH,
+    name: 'Arbitrum One',
+    explorerUrl: `https://arbiscan.io/`,
+    publicJsonRPCUrl: ['https://endpoints.omniatech.io/v1/arbitrum/one/public', `https://1rpc.io/arb`],
   },
   {
-    id: ChainId.goerli,
-    currency: GoerliETH,
-    name: 'Goerli',
-    explorerUrl: `https://goerli.etherscan.io`,
-    publicJsonRPCUrl: ['https://rpc.ankr.com/eth_goerli', `https://goerli.infura.io/v3/${infuraId}`],
+    id: ChainId.arbitrumGoerli,
+    currency: ArbitrumGoerliETH,
+    name: 'Arbitrum Goerli',
+    explorerUrl: `https://testnet.arbiscan.io/`,
+    publicJsonRPCUrl: [
+      'https://endpoints.omniatech.io/v1/arbitrum/goerli/public',
+      `https://arbitrum-goerli.public.blastapi.io`,
+    ],
   },
 ]
 
