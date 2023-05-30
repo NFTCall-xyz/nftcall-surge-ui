@@ -166,11 +166,6 @@ const components = (theme: Theme): any => {
         },
       ],
     },
-    MuiCardHeader: {
-      defaultProps: {
-        titleTypographyProps: { variant: 'h6' },
-      },
-    },
     MuiCard: {
       styleOverrides: {
         root: {

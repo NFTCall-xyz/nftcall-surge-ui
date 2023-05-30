@@ -35,7 +35,7 @@ const Stats: FC = () => {
           <NumberDisplay value={stats.ncETHPrice} abbreviate={{}} />
         </Stack>
       ),
-      title: 'nETHPrice',
+      title: 'ncETHPrice',
     },
     {
       price: (
@@ -44,7 +44,7 @@ const Stats: FC = () => {
           <NumberDisplay value={stats.ncETHTotalSupply} abbreviate={{}} />
         </Stack>
       ),
-      title: 'nETHTotalSupply',
+      title: 'ncETHTotalSupply',
     },
   ]
 

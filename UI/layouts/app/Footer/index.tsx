@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -17,9 +16,9 @@ const ROOT = styled(Box)`
   })}
 `
 
-const Content = styled(Container)`
+const Content = styled('div')`
   ${({ theme }) => ({
-    paddingTop: '10px',
+    paddingTop: '15px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -42,7 +41,7 @@ const CopyRight = styled(Typography)`
 const Footer: FC = () => {
   return (
     <ROOT component="footer">
-      <Content maxWidth="xl">
+      <Content>
         <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
           <Stack spacing={4} direction={{ xs: 'column', sm: 'row' }} alignItems="center">
             <Logo imgSrc={LogoImgDark} />

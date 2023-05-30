@@ -23,6 +23,7 @@ const BODY = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 24px;
 `
 
 const Header: FC = () => {
@@ -31,15 +32,13 @@ const Header: FC = () => {
   if (!downLg) {
     return (
       <ROOT>
-        <Container component="main" maxWidth="xl">
-          <BODY>
-            <Stack spacing={6} direction="row">
-              <Logo />
-              <Menu />
-            </Stack>
-            <Actions />
-          </BODY>
-        </Container>
+        <BODY>
+          <Stack spacing={6} direction="row">
+            <Logo />
+            <Menu />
+          </Stack>
+          <Actions />
+        </BODY>
       </ROOT>
     )
   } else {

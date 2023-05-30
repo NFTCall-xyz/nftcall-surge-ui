@@ -6,13 +6,14 @@ import CardHeader from '@mui/material/CardHeader'
 import { usePageTrade } from '..'
 import NFTCollection from './NFTCollection'
 import { useTranslation } from 'next-i18next'
+import { H3 } from 'components/Typography'
 
 const SelectNFTCollection: FC = () => {
   const { collections } = usePageTrade()
   const { t } = useTranslation('app-trade', { keyPrefix: 'nftCollections' })
   return (
     <Card sx={{ flex: 1 }}>
-      <CardHeader title={t('title')} />
+      <CardHeader title={<H3>{t('title')}</H3>} />
       <CardContent>
         <Stack spacing={2}>
           {collections.map((collection) => (

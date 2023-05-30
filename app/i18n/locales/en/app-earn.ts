@@ -26,6 +26,12 @@ const locale = {
       action: 'Withdraw',
     },
   },
+  stats: {
+    TVL: 'TVL',
+    APY: 'APY',
+    ncETHPrice: 'ncETH Price',
+    ncETHTotalSupply: 'ncETH Total Supply',
+  }
 }
 
 export default locale
