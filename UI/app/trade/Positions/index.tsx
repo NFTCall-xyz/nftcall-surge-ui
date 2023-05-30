@@ -3,6 +3,8 @@ import type { FC } from 'react'
 import { useMemo } from 'react'
 
 import Grid from '@mui/material/Grid'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
 
 import type { TabsProps } from 'components/tabs'
@@ -38,26 +40,30 @@ const Positions: FC = () => {
   }, [tOptionPositions])
 
   return (
-    <Grid container pt={2}>
-      <Grid item xs={12}>
-        <Tabs
-          tabs={tabs}
-          sx={{
-            [theme.breakpoints.up('sm')]: {
-              flex: 1,
-              '.MuiTabs-scroller': {
-                justifyContent: { xs: 'center', sm: 'start' },
-                alignItems: 'center',
-                display: 'flex',
-              },
-              '.MuiButtonBase-root': {
-                minWidth: 150,
-              },
-            },
-          }}
-        />
-      </Grid>
-    </Grid>
+    <Card sx={{ flex: 1 }}>
+      <CardContent sx={{ paddingX: 2, paddingY: 0 }}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Tabs
+              tabs={tabs}
+              sx={{
+                [theme.breakpoints.up('sm')]: {
+                  flex: 1,
+                  '.MuiTabs-scroller': {
+                    justifyContent: { xs: 'center', sm: 'start' },
+                    alignItems: 'center',
+                    display: 'flex',
+                  },
+                  '.MuiButtonBase-root': {
+                    minWidth: 150,
+                  },
+                },
+              }}
+            />
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   )
 }
 

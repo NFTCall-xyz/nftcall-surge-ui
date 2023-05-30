@@ -98,7 +98,7 @@ export const useChart = () => {
   const props = useMemo(
     () =>
       ({
-        height: matches ? 300 : 100,
+        height: matches ? 300 : 120,
         data: {
           datasets: [
             {
@@ -230,5 +230,5 @@ export const useChart = () => {
     ]
   )
 
-  return { props, loading, dayButton, change24, currentFloorPrice: collection.data.price }
+  return { props, loading, dayButton, change24, currentFloorPrice: collection.data.price, volatility: collection.data.vol, collection: collection }
 }

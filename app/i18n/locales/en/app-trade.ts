@@ -1,4 +1,7 @@
 const locale = {
+  nftCollections: {
+    title: 'NFT Collections',
+  },
   positions: {
     table: {
       NFT: 'NFT',
@@ -26,6 +29,7 @@ const locale = {
     change24h: '24h Change',
     days: 'D',
     loading: 'loading',
+    volatility: 'Volatility'
   },
   OpenCallOptions: {
     call: 'Call',

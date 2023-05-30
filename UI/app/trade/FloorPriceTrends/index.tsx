@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { H5, Paragraph } from 'components/Typography'
+import { Tiny, Paragraph } from 'components/Typography'
 import FlexRowAlign from 'components/flexbox/FlexRowAlign'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
@@ -21,21 +21,18 @@ import TokenIcon from 'lib/protocol/components/TokenIcon'
 import Chart from './Chart'
 import type { FloorPriceTrendsProps } from './types'
 import { useChart } from './useChart'
+import NFTCollectionTitle from 'domains/data/NFTCollection/components/NFTCollectionTitle'
 
 const ROOT = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
-  borderRadius: '10px',
-  flex: 8,
-  backgroundColor: 'transparent',
-  border: 'solid 1px',
-  borderColor: theme.palette.divider,
+  flexBasis: '55%',
 }))
 const SubTitle = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: 'center';
 `
-const Left = styled(Stack)`
+const NFTCollectionInfo = styled(Stack)`
   align-items: flex-end;
 `
 
@@ -46,29 +43,30 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
 
   const chart = useChart()
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.up('md'))
+  const matches = useMediaQuery(theme.breakpoints.up('xl'))
 
-  const left = useMemo(
+  const collectionInfo = useMemo(
     () => (
-      <Left spacing={4} direction="row">
-        <Stack spacing={1}>
-          <H5 color="text.secondary" fontWeight={400}>
+      <NFTCollectionInfo spacing={4} direction="row">
+        <NFTCollectionTitle collection={chart.collection}/>
+        <Stack spacing={0.5}>
+          <Tiny color="text.secondary" fontWeight={400}>
             {tFloorPriceTrends('floorPrice')}
-          </H5>
-          <Paragraph fontWeight={600} fontSize={24} component="div">
+          </Tiny>
+          <Paragraph component="div">
             <Stack spacing={0.5} direction="row" alignItems="center">
               <TokenIcon symbol="ETH" sx={{ width: 16, height: 16 }} />
               <NumberDisplay value={chart.currentFloorPrice} options="number" />
             </Stack>
           </Paragraph>
         </Stack>
-        <Stack spacing={1}>
-          <H5 color="text.secondary" fontWeight={400}>
+        <Stack spacing={0.5}>
+          <Tiny color="text.secondary" fontWeight={400}>
             {tFloorPriceTrends('change24h')}
-          </H5>
+          </Tiny>
 
           <RiseOrFall value={chart.change24}>
-            <Paragraph fontWeight={600} fontSize={24} component="div">
+            <Paragraph component="div">
               <Stack spacing={0.5} direction="row" alignItems="center">
                 <NumberDisplay
                   value={chart.change24}
@@ -80,12 +78,20 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
             </Paragraph>
           </RiseOrFall>
         </Stack>
-      </Left>
+        <Stack spacing={0.5}>
+          <Tiny color="text.secondary" fontWeight={400}>
+            {tFloorPriceTrends('volatility')}
+          </Tiny>
+          <Paragraph component="div">
+            <NumberDisplay value={chart.volatility} options="percent" />
+          </Paragraph>
+        </Stack>
+      </NFTCollectionInfo>
     ),
-    [chart.change24, chart.currentFloorPrice, tFloorPriceTrends]
+    [chart, tFloorPriceTrends]
   )
 
-  const right = useMemo(
+  const chartButtons = useMemo(
     () => (
       <Right>
         <ToggleButtonGroup color="primary" value={chart.dayButton.value} exclusive onChange={chart.dayButton.onChange}>
@@ -105,13 +111,13 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
       <Stack spacing={2}>
         {matches ? (
           <SubTitle>
-            {left}
-            {right}
+            {collectionInfo}
+            {chartButtons}
           </SubTitle>
         ) : (
           <Fragment>
-            {left}
-            {right}
+            {collectionInfo}
+            {chartButtons}
           </Fragment>
         )}
         {chart.loading ? (

@@ -71,13 +71,6 @@ const components = (theme: Theme): any => {
         },
       },
     },
-    // MuiContainer: {
-    //   styleOverrides: {
-    //     root: {
-    //       '&.MuiContainer-maxWidthLg': '1400px',
-    //     }
-    //   }
-    // },
     MuiAvatar: {
       styleOverrides: {
         fallback: { height: '75%', width: '75%' },
@@ -173,17 +166,17 @@ const components = (theme: Theme): any => {
         },
       ],
     },
-    // MuiCardHeader: {
-    //   defaultProps: {
-    //     titleTypographyProps: { variant: 'h6' },
-    //   },
-    // },
+    MuiCardHeader: {
+      defaultProps: {
+        titleTypographyProps: { variant: 'h6' },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
-          // boxShadow: 'none',
           boxShadow: shadows[1],
-          // border: "1px solid #E5EAF2",
+          border: 'solid 1px',
+          borderColor: theme.palette.divider,
           borderRadius: 8,
         },
       },

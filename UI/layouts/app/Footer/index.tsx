@@ -12,14 +12,14 @@ import LogoImgDark from './images/logo-black.svg'
 
 const ROOT = styled(Box)`
   ${({ theme }) => ({
-    padding: `${theme.spacing(8)} 0 ${theme.spacing(4)} 0`,
+    padding: theme.spacing(4),
     color: theme.palette.text.secondary,
   })}
 `
 
 const Content = styled(Container)`
   ${({ theme }) => ({
-    paddingTop: '32px',
+    paddingTop: '10px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -30,8 +30,13 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
     <Card
       variant="outlined"
       sx={{
-        backgroundColor: isSelected ? 'primary.main' : 'background.paper',
+        border: 'none',
+        backgroundColor: isSelected ? 'primary.200' : 'action.disabledBackground',
         padding: 1.5,
+        '&:hover': {
+          backgroundColor: 'primary.200',
+          cursor: 'pointer',
+        }
       }}
       onClick={() => {
         setNFTCollectionAddress(collection.address.NFT)
@@ -41,7 +46,7 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
         <NFTCollectionTitle collection={collection} />
         <Stack spacing={1} justifyContent="center">
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'ETH'} sx={{ width: 18, height: 18 }} />
+            <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={collection.data.price} abbreviate={{}} />
           </Stack>
           <Tiny textAlign="center">

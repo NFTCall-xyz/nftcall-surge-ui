@@ -17,6 +17,8 @@ import { safeGet } from 'app/utils/get'
 
 import { Span, Tiny } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
+import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined'
+import TrendingDownOutlinedIcon from '@mui/icons-material/TrendingDownOutlined'
 
 import { toBN, valueToWei } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
@@ -80,19 +82,35 @@ const OpenCallOptions: FC<OpenCallOptionsProps> = () => {
   }, [expiry, getPremium, optionType, price, strikePrice])
 
   return (
-    <Card sx={{ border: 'solid 1px', borderColor: theme.palette.divider, position: 'sticky', top: theme.spacing(4) }}>
+    <Card sx={{ position: 'sticky', top: theme.spacing(4), flex: 1 }}>
       <CardContent>
         <Stack spacing={4}>
-          <ToggleButtonGroup value={optionType} exclusive onChange={(e, value) => setOptionType(value)}>
-            <ToggleButton value={OptionType.LONG_CALL}>{tOpenCallOptions('call')}</ToggleButton>
-            <ToggleButton value={OptionType.LONG_PUT}>{tOpenCallOptions('put')}</ToggleButton>
+          <ToggleButtonGroup 
+            value={optionType} 
+            exclusive 
+            onChange={(e, value) => setOptionType(value)}
+            color='primary'
+            sx={{
+              '& button': {
+                flex: 1,
+              }
+            }}
+          >
+            <ToggleButton value={OptionType.LONG_CALL}>
+              <TrendingUpOutlinedIcon />
+              <Span marginLeft={1}>{tOpenCallOptions('call')}</Span>
+            </ToggleButton>
+            <ToggleButton value={OptionType.LONG_PUT}>
+              <TrendingDownOutlinedIcon />
+              <Span marginLeft={1}>{tOpenCallOptions('put')}</Span>
+            </ToggleButton>
           </ToggleButtonGroup>
 
           <Stack spacing={1}>
             <FlexBetween>
               <Span>{tOpenCallOptions('size')}</Span>
               <Tiny color="text.secondary">
-                <Span>{`${tOpenCallOptions('limit')}: `}</Span>
+                <Span fontSize={12}>{`${tOpenCallOptions('limit')}: `}</Span>
                 <NumberDisplay value={maximumOptionAmount} options="number" />
               </Tiny>
             </FlexBetween>
