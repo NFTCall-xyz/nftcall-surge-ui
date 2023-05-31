@@ -30,11 +30,11 @@ const Layout: FC<MyAppProps> = ({ Component, pageProps }) => {
   const {
     menu: { current },
   } = useApp()
-  const seoTitle = 'NFTCall | Speculate or Earn Premiums from NFT Options'
+  const seoTitle = 'NFTCall | Speculate, Hedge or Earn Premiums from NFT Options'
   const desc =
-    'NFTCall is a physically-settled, peer-to-peer NFT options trading platform that allows NFT holders to earn premiums and sell NFTs at a higher price while allowing NFT investors to buy NFTs with high leverage but with limited losses.'
+    'NFTCall Surge is a peer-to-pool NFT options trading platform using AMM model that allows traders to purchase NFT call and put options against liquidity pools, enabling NFT investors to engage in speculation with high leverage but low risk, while helping NFT holders hedge the risk of price decline.'
   const title = useMemo(
-    () => (current.key === 'Home' ? seoTitle : `NFTCall | ${t('router:' + current.key)}`),
+    () => (current.key === 'Home' ? seoTitle : `NFTCall Surge | ${t('router:' + current.key)}`),
     [current.key, t]
   )
 
