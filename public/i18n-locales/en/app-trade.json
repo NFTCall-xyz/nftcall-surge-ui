@@ -1,4 +1,7 @@
 {
+  "nftCollections": {
+    "title": "NFT Collections"
+  },
   "positions": {
     "table": {
       "NFT": "NFT",
@@ -25,7 +28,8 @@
     "title": "Floor Price Trends",
     "change24h": "24h Change",
     "days": "D",
-    "loading": "loading"
+    "loading": "loading",
+    "volatility": "Volatility"
   },
   "OpenCallOptions": {
     "call": "Call",
