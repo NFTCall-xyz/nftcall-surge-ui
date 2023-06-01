@@ -42,11 +42,19 @@ export interface DepositProps extends BaseVaultProps {
 export interface OpenPositionProps extends BaseVaultProps {
   userAddress: tEthereumAddress
   collectionAddress: tEthereumAddress
+  wETHAddress: tEthereumAddress
   optionType: OptionType
 
   strikePrice: string
   expiry: number
   amount: string
+
+  premium: string
+
+  approveService: {
+    approve: (args: ApproveType) => EthereumTransactionTypeExtended
+    isApproved: (args: ApproveType) => Promise<boolean>
+  }
 }
 
 export interface WithdrawProps extends BaseVaultProps {
@@ -125,9 +133,33 @@ export class VaultService extends BaseService<Vault> {
   }
 
   public async openPosition(props: OpenPositionProps) {
-    const { Vault, userAddress, collectionAddress, optionType, strikePrice, expiry, amount } = props
+    const {
+      Vault,
+      userAddress,
+      wETHAddress,
+      collectionAddress,
+      optionType,
+      strikePrice,
+      expiry,
+      amount,
+      premium,
+      approveService: { isApproved, approve },
+    } = props
     const VaultContract = this.getContractInstance(Vault)
     const txs: EthereumTransactionTypeExtended[] = []
+
+    const convertedPremium = valueToWei(premium, 18).toString()
+    const approveProps = {
+      token: wETHAddress,
+      user: userAddress,
+      spender: Vault,
+      amount: convertedPremium,
+    }
+    const approved = await isApproved(approveProps)
+    if (!approved) {
+      const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
+      txs.push(approveTx)
+    }
 
     const txCallback: () => Promise<transactionType> = this.generateTxCallback({
       rawTxMethod: async () =>

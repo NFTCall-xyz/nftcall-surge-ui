@@ -29,16 +29,18 @@ const useNFTCollection = () => {
   const { account } = useWallet()
 
   const {
-    address: { Vault: vaultAddress },
-    contracts: { vaultService },
+    address: { Vault: vaultAddress, WETH: wETHAddress },
+    contracts: { vaultService, erc20Service },
   } = useNetwork()
   const openOptions = useCallback(
-    (props: Pick<OpenPositionProps, 'optionType' | 'strikePrice' | 'expiry' | 'amount'>) =>
+    (props: Pick<OpenPositionProps, 'optionType' | 'strikePrice' | 'expiry' | 'amount' | 'premium'>) =>
       transaction({
         createTransaction: vaultService.openPosition({
           Vault: vaultAddress,
+          wETHAddress,
           userAddress: account,
           collectionAddress: collection.address.NFT,
+          approveService: erc20Service,
           ...props,
         }),
         setStatus: () => {},
@@ -47,7 +49,16 @@ const useNFTCollection = () => {
       }).finally(() => {
         updateNFTCollections()
       }),
-    [account, collection.address.NFT, sendTransaction, updateNFTCollections, vaultAddress, vaultService]
+    [
+      account,
+      collection.address.NFT,
+      erc20Service,
+      sendTransaction,
+      updateNFTCollections,
+      vaultAddress,
+      vaultService,
+      wETHAddress,
+    ]
   )
 
   return {

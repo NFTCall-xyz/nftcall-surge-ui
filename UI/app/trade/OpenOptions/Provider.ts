@@ -203,9 +203,9 @@ export default createContextWithProvider(() => {
   useEffect(() => {
     if (!id) return
     setOptionType(() => OptionType.LONG_CALL)
-    strikePrice.set(() => null)
-    setAmount(() => null)
-    expiryDate.set(() => null)
+    strikePrice.set(null)
+    setAmount(null)
+    expiryDate.set(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
