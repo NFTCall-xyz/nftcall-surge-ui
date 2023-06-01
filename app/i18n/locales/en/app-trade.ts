@@ -29,16 +29,21 @@ const locale = {
     change24h: '24h Change',
     days: 'D',
     loading: 'loading',
-    volatility: 'Volatility'
+    volatility: 'Volatility',
   },
   OpenCallOptions: {
     call: 'Call',
+    calls: 'Calls',
     put: 'Put',
     size: 'Size',
     limit: 'Limit',
     strikePrice: 'Strike Price',
     expiry: 'Expiration Date',
     premium: 'Premium',
+    yourBalance: 'Your Balance',
+    breakevenPrice: 'Breakeven Price',
+    maxProfit: 'Max. Profit',
+    maxLoss: 'Max. Loss',
     openOptions: 'Open Options',
   },
   OptionPositions: {

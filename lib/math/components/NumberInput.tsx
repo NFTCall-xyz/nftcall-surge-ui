@@ -8,7 +8,18 @@ import InputBase from '@mui/material/InputBase'
 import Paper from '@mui/material/Paper'
 import { useTheme } from '@mui/material/styles'
 
-export function NumberInput({ value, onChange, disabled, onBlur, error, helperText, onMax, name }: any) {
+export function NumberInput({
+  value,
+  onChange,
+  disabled,
+  onBlur,
+  error,
+  helperText,
+  onMax,
+  name,
+  endAdornment,
+  startAdornment,
+}: any) {
   const theme = useTheme()
   return (
     <FormControl error={error} variant="standard">
@@ -27,6 +38,8 @@ export function NumberInput({ value, onChange, disabled, onBlur, error, helperTe
           sx={{ ml: 1, flex: 1 }}
           placeholder="0.00"
           inputProps={{ 'aria-label': 'input number', pattern: '^[0-9]*[.,]?[0-9]*$' }}
+          startAdornment={startAdornment}
+          endAdornment={endAdornment}
         />
         {onMax && (
           <Fragment>

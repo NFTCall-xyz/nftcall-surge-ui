@@ -369,6 +369,9 @@ const components = (theme: Theme): any => {
         root: {
           padding: '7px 10px',
         },
+        sizeSmall: {
+          padding: '7px 4px',
+        },
       },
     },
   }
