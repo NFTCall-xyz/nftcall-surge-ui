@@ -16,6 +16,7 @@ query getOptionPositions(
     nftAddress
     positionId
     optionType
+    status
     strikeId {
       enabled
       expiration
@@ -23,6 +24,7 @@ query getOptionPositions(
       strikePrice
     }
     amount
+    premium
     updateTimestamp
   }
 }

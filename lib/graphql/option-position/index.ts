@@ -4,7 +4,13 @@ import type { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 import document from './index.graphql'
 
+export enum OptionPositionStatus {
+  PENDING = 'PENDING',
+  ACTIVE = 'ACTIVE',
+  CLOSED = 'CLOSED',
+}
 export type OptionPositionBaseData = {
+  status: OptionPositionStatus
   userAddress: string
   nftAddress: string
   positionId: number
@@ -16,6 +22,7 @@ export type OptionPositionBaseData = {
     strikePrice: string
   }
   amount: string
+  premium: string
   updateTimestamp: number
 }
 export type ResponseType = { optionPositions: OptionPositionBaseData[] }

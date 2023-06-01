@@ -9,7 +9,8 @@ import { usePost } from 'app/hooks/request'
 
 import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicTable/types'
 import { cellRenderer, headerRenderer } from 'components/table/renderer'
-import { tokenIconCellRenderer } from 'components/table/renderer'
+import { numberCellRenderer, tokenIconCellRenderer } from 'components/table/renderer'
+import { PNLCellRenderer } from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
@@ -40,18 +41,21 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
         [
           {
             dataKey: 'type',
+            cellData: 'optionType',
             width: 250,
             headerRenderer,
             cellRenderer,
           },
           {
             dataKey: 'size',
+            cellData: 'amount',
             width: 250,
             headerRenderer,
-            cellRenderer,
+            cellRenderer: numberCellRenderer,
           },
           {
             dataKey: 'floorPrice',
+            cellData: 'spotPrice',
             width: 250,
             headerRenderer,
             cellRenderer: tokenIconCellRenderer,
@@ -72,7 +76,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
             dataKey: 'PNL',
             width: 240,
             headerRenderer,
-            cellRenderer,
+            cellRenderer: PNLCellRenderer,
           },
           {
             dataKey: 'status',

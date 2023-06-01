@@ -1,10 +1,11 @@
 import { getAddresses, getNumber, getWeiToValueBN } from 'app/utils/get'
 
-import type { OptionPositionBaseData } from 'lib/graphql/option-position'
+import type { OptionPositionBaseData, OptionPositionStatus } from 'lib/graphql/option-position'
 import { toBN } from 'lib/math'
 import type { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 export type OptionPosition = {
+  status: OptionPositionStatus
   userAddress: string
   nftAddress: string
   positionId: number
@@ -13,6 +14,8 @@ export type OptionPosition = {
   strikePrice: BN
   amount: BN
   premium: BN
+  PNL: BN
+  PNLRate: BN
   expiration: number
   updateTimestamp: number
 }
@@ -26,10 +29,25 @@ export const getPositions = (positions: OptionPositionBaseData[]) => {
       ...timestamps,
       ...strikeTimestamps,
       ...getAddresses(t, ['nftAddress', 'userAddress']),
-      ...getWeiToValueBN(t, ['amount'], 18),
+      ...getWeiToValueBN(t, ['amount', 'premium'], 18),
       ...getWeiToValueBN(t.strikeId, ['strikePrice', 'spotPrice'], 18),
-      premium: toBN(0),
+      PNL: toBN(0),
+      PNLRate: toBN(0),
     }
+
+    if (returnValue.premium && !returnValue.premium.isZero()) {
+      if (returnValue.spotPrice.gt(returnValue.strikePrice)) {
+        returnValue.PNL = returnValue.spotPrice
+          .minus(returnValue.strikePrice)
+          .multipliedBy(returnValue.amount)
+          .minus(returnValue.premium)
+      } else {
+        returnValue.PNL = returnValue.premium.multipliedBy(-1)
+      }
+    }
+
+    returnValue.PNLRate = returnValue.PNL.dividedBy(returnValue.premium)
+
     return returnValue
   })
 
