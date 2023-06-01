@@ -31,7 +31,7 @@ const locale = {
     APY: 'APY',
     ncETHPrice: 'ncETH Price',
     ncETHTotalSupply: 'ncETH Total Supply',
-  }
+  },
 }
 
 export default locale

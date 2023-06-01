@@ -1,5 +1,5 @@
-import Stack from '@mui/material/Stack'
 import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
 
 import { H1, Paragraph } from 'components/Typography'
 
@@ -14,7 +14,7 @@ const Earn: FC = () => {
   usePageEffect()
 
   return (
-    <Container  maxWidth='lg'>
+    <Container maxWidth="lg">
       <Stack spacing={2}>
         <Stack spacing={2}>
           <H1>{t('title')}</H1>
@@ -24,7 +24,6 @@ const Earn: FC = () => {
         <Content />
       </Stack>
     </Container>
-
   )
 }
 

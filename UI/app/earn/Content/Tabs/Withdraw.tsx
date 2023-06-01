@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
+import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
-import Alert from '@mui/material/Alert'
 
 import { safeGet } from 'app/utils/get'
 
@@ -64,7 +64,9 @@ const Withdraw: FC = () => {
                 />
               </Stack>
               <Stack spacing={2}>
-                <Paragraph color="text.secondary" fontSize={14}>Receive Amount</Paragraph>
+                <Paragraph color="text.secondary" fontSize={14}>
+                  Receive Amount
+                </Paragraph>
                 <Stack spacing={0.5} direction="row" alignItems="center">
                   <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
                   <NumberDisplay value={receiveAmount} />
@@ -105,11 +107,10 @@ const Withdraw: FC = () => {
               Please note that you will only be able to withdraw funds when the amount of available ETH in the Vault is
               sufficient, and you can only withdraw up to 50% of the available ETH in the Vault at one time.
             </Paragraph>
-            <Paragraph>
-              Available ETH refers to funds not used by current open positions.
-            </Paragraph>
-            <Alert severity='info'>
-              Please be aware, you can't immediately withdraw your assets within 72 hours, and withdrawal incurs a fee of 0.3%.
+            <Paragraph>Available ETH refers to funds not used by current open positions.</Paragraph>
+            <Alert severity="info">
+              Please be aware, you can't immediately withdraw your assets within 72 hours, and withdrawal incurs a fee
+              of 0.3%.
             </Alert>
           </Stack>
         </Grid>

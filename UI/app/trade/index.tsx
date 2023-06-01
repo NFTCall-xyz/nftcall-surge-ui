@@ -20,7 +20,7 @@ const Trade: FC = () => {
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Stack minHeight={minHeight}>
-            <SelectNFTCollection/>
+            <SelectNFTCollection />
           </Stack>
         </Grid>
         <Grid item xs={6}>

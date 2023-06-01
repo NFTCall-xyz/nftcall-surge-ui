@@ -230,5 +230,13 @@ export const useChart = () => {
     ]
   )
 
-  return { props, loading, dayButton, change24, currentFloorPrice: collection.data.price, volatility: collection.data.vol, collection: collection }
+  return {
+    props,
+    loading,
+    dayButton,
+    change24,
+    currentFloorPrice: collection.data.price,
+    volatility: collection.data.vol,
+    collection: collection,
+  }
 }

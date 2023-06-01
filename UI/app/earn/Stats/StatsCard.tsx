@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Stack, Card } from '@mui/material'
+import { Card, Stack } from '@mui/material'
 
 import { H2, Span } from 'components/Typography'
 
@@ -16,7 +16,7 @@ const StatsCard: FC<React.PropsWithChildren<StatsCardProps>> = ({ card }) => {
 
   return (
     <Card>
-      <Stack spacing={1} paddingY={2} paddingX={3} >
+      <Stack spacing={1} paddingY={2} paddingX={3}>
         <Span color="text.secondary">{t(title)}</Span>
         <H2>{price}</H2>
       </Stack>

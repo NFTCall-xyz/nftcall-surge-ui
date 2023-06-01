@@ -36,7 +36,7 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
         '&:hover': {
           backgroundColor: 'primary.200',
           cursor: 'pointer',
-        }
+        },
       }}
       onClick={() => {
         setNFTCollectionAddress(collection.address.NFT)

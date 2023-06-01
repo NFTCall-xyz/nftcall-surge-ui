@@ -2,9 +2,9 @@ import { useTranslation } from 'next-i18next'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 
-import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 
 import type { TabsProps } from 'components/tabs'

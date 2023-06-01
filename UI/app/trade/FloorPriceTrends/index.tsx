@@ -11,8 +11,10 @@ import { styled } from '@mui/material/styles'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { Tiny, Paragraph } from 'components/Typography'
+import { Paragraph, Tiny } from 'components/Typography'
 import FlexRowAlign from 'components/flexbox/FlexRowAlign'
+
+import NFTCollectionTitle from 'domains/data/NFTCollection/components/NFTCollectionTitle'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import RiseOrFall from 'lib/math/components/RiseOrFall'
@@ -21,7 +23,6 @@ import TokenIcon from 'lib/protocol/components/TokenIcon'
 import Chart from './Chart'
 import type { FloorPriceTrendsProps } from './types'
 import { useChart } from './useChart'
-import NFTCollectionTitle from 'domains/data/NFTCollection/components/NFTCollectionTitle'
 
 const ROOT = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -48,7 +49,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
   const collectionInfo = useMemo(
     () => (
       <NFTCollectionInfo spacing={4} direction="row">
-        <NFTCollectionTitle collection={chart.collection}/>
+        <NFTCollectionTitle collection={chart.collection} />
         <Stack spacing={0.5}>
           <Tiny color="text.secondary" fontWeight={400}>
             {tFloorPriceTrends('floorPrice')}

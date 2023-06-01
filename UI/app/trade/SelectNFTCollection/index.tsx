@@ -1,12 +1,14 @@
-import Stack from '@mui/material/Stack'
+import { useTranslation } from 'next-i18next'
+
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
+import Stack from '@mui/material/Stack'
+
+import { H3 } from 'components/Typography'
 
 import { usePageTrade } from '..'
 import NFTCollection from './NFTCollection'
-import { useTranslation } from 'next-i18next'
-import { H3 } from 'components/Typography'
 
 const SelectNFTCollection: FC = () => {
   const { collections } = usePageTrade()

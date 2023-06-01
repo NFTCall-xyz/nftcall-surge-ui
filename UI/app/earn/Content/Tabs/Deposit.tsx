@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
+import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
-import Alert from '@mui/material/Alert'
 
 import { safeGet } from 'app/utils/get'
 
@@ -57,12 +57,16 @@ const Deposit: FC = () => {
                 />
               </Stack>
               <Stack spacing={2}>
-                <Paragraph color="text.secondary" fontSize={14}>Receive Amount</Paragraph>
+                <Paragraph color="text.secondary" fontSize={14}>
+                  Receive Amount
+                </Paragraph>
                 <Stack spacing={0.5} direction="row" alignItems="center">
                   <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
                   <NumberDisplay value={receiveAmount} />
                 </Stack>
-                <Tiny color="text.secondary">1 ETH = {<NumberDisplay value={ncETHPrice} options="number" />} ncETH</Tiny>
+                <Tiny color="text.secondary">
+                  1 ETH = {<NumberDisplay value={ncETHPrice} options="number" />} ncETH
+                </Tiny>
               </Stack>
 
               <Button
@@ -93,8 +97,9 @@ const Deposit: FC = () => {
               Stakers receive 90% premiums from each option written on the platform in exchange for serving as the
               counterparty to all trades. ncETH accumulates these premiums in real-time.
             </Paragraph>
-            <Alert severity='info'>
-              Please be aware, you can't immediately withdraw your assets within 72 hours, and withdrawal incurs a fee of 0.3%.
+            <Alert severity="info">
+              Please be aware, you can't immediately withdraw your assets within 72 hours, and withdrawal incurs a fee
+              of 0.3%.
             </Alert>
           </Stack>
         </Grid>

@@ -1,6 +1,7 @@
+import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
+
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
-import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import RiseOrFall from 'lib/math/components/RiseOrFall'
