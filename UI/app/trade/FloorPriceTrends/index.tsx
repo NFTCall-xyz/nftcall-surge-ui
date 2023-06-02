@@ -28,11 +28,7 @@ const ROOT = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
   flexBasis: '55%',
 }))
-const SubTitle = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  align-items: 'center';
-`
+
 const NFTCollectionInfo = styled(Stack)`
   align-items: flex-end;
 `
@@ -97,7 +93,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
       <Right>
         <ToggleButtonGroup color="primary" value={chart.dayButton.value} exclusive onChange={chart.dayButton.onChange}>
           {chart.dayButton.list.map((day) => (
-            <ToggleButton value={day} key={day} size="small">
+            <ToggleButton value={day} key={day} sx={{ fontSize: 12 }}>
               {day} {tFloorPriceTrends('days')}
             </ToggleButton>
           ))}
@@ -111,10 +107,10 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
     <ROOT>
       <Stack spacing={2}>
         {matches ? (
-          <SubTitle>
+          <Stack alignItems='center' justifyContent='space-between' direction='row'>
             {collectionInfo}
             {chartButtons}
-          </SubTitle>
+          </Stack>
         ) : (
           <Fragment>
             {collectionInfo}

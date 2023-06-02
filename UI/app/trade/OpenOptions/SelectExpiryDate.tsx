@@ -69,7 +69,7 @@ const SelectExpiryDate: FC = () => {
       >
         {tags.map((i) => {
           return (
-            <ToggleButton size="small" value={i} key={i}>
+            <ToggleButton size="small" value={i} key={i} sx={{ fontSize: 12 }}>
               {i} D
             </ToggleButton>
           )

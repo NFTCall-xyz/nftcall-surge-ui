@@ -130,6 +130,9 @@ export const useChart = () => {
               fill: 'start',
               borderColor: theme.palette.primary.main,
               pointBackgroundColor: theme.palette.primary.main,
+              pointRadius: (context) => {
+                return context.dataset.data.length > 14 ? 0 : 3
+              },
               pointHoverRadius: 6,
               pointHoverBorderColor: '#fff',
               pointHoverBorderWidth: 2,
@@ -142,6 +145,9 @@ export const useChart = () => {
               fill: 'start',
               borderColor: theme.palette.secondary.main,
               pointBackgroundColor: theme.palette.secondary.main,
+              pointRadius: (context) => {
+                return context.dataset.data.length > 14 ? 0 : 3
+              },
               pointHoverRadius: 6,
               pointHoverBorderColor: '#fff',
               pointHoverBorderWidth: 2,
