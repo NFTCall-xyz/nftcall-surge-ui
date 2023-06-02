@@ -106,7 +106,7 @@ const PCTable: FC<BasicTableProps> = (props) => {
             {table.head}
           </TableRow>
         </TableHead>
-        <Stack component={TableBody} spacing={2}>
+        <Stack component={TableBody} spacing={0}>
           {table.body}
         </Stack>
       </Table>
@@ -128,6 +128,10 @@ export const ROOT = styled('div')`
   }
   .ReactVirtualized__Table__headerRow {
     align-items: center;
+    border-bottom: solid 1px;
+    ${({ theme }) => ({
+      borderColor: theme.palette.divider,
+    })}
   }
   .MuiTableCell-root {
     display: flex;
@@ -143,8 +147,11 @@ export const ROOT = styled('div')`
   .ReactVirtualized__Table__row {
     display: flex;
     will-change: transform;
-    padding: 20px 0;
-    border: solid 1px;
+    /* padding: 20px 0; */
+    /* border: solid 1px; */
+    border: none;
+    border-bottom: solid 1px;
+    border-radius: 0;
     ${({ theme }) => ({
       borderColor: theme.palette.divider,
     })}

@@ -41,7 +41,7 @@ const Positions: FC = () => {
 
   return (
     <Card sx={{ flex: 1 }}>
-      <CardContent sx={{ paddingX: 2, paddingY: 0 }}>
+      <CardContent sx={{ paddingX: 3, paddingY: 0 }}>
         <Grid container>
           <Grid item xs={12}>
             <Tabs
