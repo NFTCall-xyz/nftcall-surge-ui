@@ -14,6 +14,7 @@ import FlexRowAlign from 'components/flexbox/FlexRowAlign'
 import MobileTable from './MobileTable'
 import PCTable from './PCTable'
 import type { BasicTableProps } from './types'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const BasicTable: FC<BasicTableProps> = (props) => {
   const { t } = useTranslation()
@@ -27,7 +28,7 @@ const BasicTable: FC<BasicTableProps> = (props) => {
       {matches ? <PCTable {...props} /> : <MobileTable {...props} />}
       {loading && (
         <FlexRowAlign paddingTop={2} height={100}>
-          <H6 color="text.disabled">{t('table.loading')}</H6>
+          <CircularProgress size={24} />
         </FlexRowAlign>
       )}
       {!loading && noData && (
@@ -49,7 +50,7 @@ const BasicTable: FC<BasicTableProps> = (props) => {
       {!loading && !noData && !props.pagination && props.loadMore && (
         <FlexRowAlign paddingTop={2}>
           {props.loadMore.end ? (
-            <Paragraph color="text.disabled">{t('table.noMoreData')}</Paragraph>
+            <Paragraph color="text.disabled" fontSize={14}>{t('table.noMoreData')}</Paragraph>
           ) : (
             <Button disabled={props.loadMore.disabled} onClick={props.loadMore.onLoadMore}>
               {t('table.loadMore')}

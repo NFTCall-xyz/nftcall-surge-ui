@@ -10,7 +10,7 @@ import { usePost } from 'app/hooks/request'
 import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicTable/types'
 import { headerRenderer } from 'components/table/renderer'
 import { numberCellRenderer, tokenIconCellRenderer } from 'components/table/renderer'
-import { PNLCellRenderer, expiryDateRenderer, optionTypeRenderer } from 'components/table/renderer/position'
+import { PNLCellRenderer, expiryDateRenderer, optionTypeRenderer, statusCellRenderer } from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
@@ -42,39 +42,46 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           {
             dataKey: 'type',
             cellData: 'optionType',
-            width: 250,
+            width: 200,
             headerRenderer,
             cellRenderer: optionTypeRenderer,
           },
           {
+            dataKey: 'status',
+            cellData: 'status',
+            width: 150,
+            headerRenderer,
+            cellRenderer: statusCellRenderer,
+          },
+          {
             dataKey: 'size',
             cellData: 'amount',
-            width: 250,
+            width: 150,
             headerRenderer,
             cellRenderer: numberCellRenderer,
           },
           {
-            dataKey: 'expiryDate',
-            cellData: 'expiration',
-            width: 250,
-            headerRenderer,
-            cellRenderer: expiryDateRenderer,
-          },
-          {
             dataKey: 'strikePrice',
-            width: 250,
+            width: 200,
             headerRenderer,
             cellRenderer: tokenIconCellRenderer,
           },
           {
+            dataKey: 'expiryDate',
+            cellData: 'expiration',
+            width: 350,
+            headerRenderer,
+            cellRenderer: expiryDateRenderer,
+          },
+          {
             dataKey: 'premium',
-            width: 250,
+            width: 200,
             headerRenderer,
             cellRenderer: tokenIconCellRenderer,
           },
           {
             dataKey: 'PNL',
-            width: 240,
+            width: 200,
             headerRenderer,
             cellRenderer: PNLCellRenderer,
           },
