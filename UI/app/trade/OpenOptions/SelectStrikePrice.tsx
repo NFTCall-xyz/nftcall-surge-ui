@@ -64,7 +64,7 @@ const SelectStrikePrice: FC = () => {
       >
         {tags.map((i) => {
           return (
-            <ToggleButton size="small" value={safeGet(() => price.multipliedBy(i + 1).toNumber())} key={i}>
+            <ToggleButton size="small" value={safeGet(() => price.multipliedBy(i + 1).toNumber()) || i} key={i}>
               <NumberDisplay value={i} options="percent" numberFormatOptions={{ signDisplay: 'always' }} />
             </ToggleButton>
           )

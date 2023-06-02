@@ -5,9 +5,11 @@ import type { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 import document from './index.graphql'
 
 export enum OptionPositionStatus {
-  PENDING = 'PENDING',
-  ACTIVE = 'ACTIVE',
-  CLOSED = 'CLOSED',
+  Pending = 'Pending',
+  Active = 'Active',
+  Closed = 'Closed',
+  Failed = 'Failed',
+  Expired = 'Expired',
 }
 export type OptionPositionBaseData = {
   status: OptionPositionStatus

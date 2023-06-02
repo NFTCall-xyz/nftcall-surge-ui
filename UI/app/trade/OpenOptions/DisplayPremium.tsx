@@ -11,11 +11,13 @@ const DisplayPremium: FC = () => {
   return (
     <FlexBetween>
       <Span>{tOpenCallOptions('premium')}</Span>
-      {premium.loading ? (
-        <Span>Loading...</Span>
-      ) : (
-        <NumberDisplay value={premium.value} options="number" numberFormatOptions={{ maximumFractionDigits: 6 }} />
-      )}
+      <Span>
+        {premium.loading ? (
+          'Loading...'
+        ) : (
+          <NumberDisplay value={premium.value} options="number" numberFormatOptions={{ maximumFractionDigits: 6 }} />
+        )}
+      </Span>
     </FlexBetween>
   )
 }

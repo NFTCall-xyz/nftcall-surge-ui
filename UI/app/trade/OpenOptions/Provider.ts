@@ -21,7 +21,7 @@ const useStrikePrice = (optionType: OptionType) => {
       },
     },
   } = usePageTrade()
-  const [strikePrice, setStrikePrice] = useImmer<number>(null)
+  const [strikePrice, setStrikePrice] = useImmer<number>(0)
 
   const { diffPercent, min, max, tags } = useMemo(() => {
     let tags: number[] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.8, 1.1]
@@ -95,7 +95,7 @@ type UsePremiumProps = {
   expiryDate: ReturnType<typeof useExpiryDate>
 }
 const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumProps) => {
-  const [value, setValue] = useImmer<number>(null)
+  const [value, setValue] = useImmer<number>(0)
   const [loading, setLoading] = useImmer<boolean>(false)
 
   const {
@@ -197,15 +197,16 @@ export default createContextWithProvider(() => {
   const [optionType, setOptionType] = useImmer(OptionType.LONG_CALL)
   const strikePrice = useStrikePrice(optionType)
   const expiryDate = useExpiryDate()
-  const [amount, setAmount] = useImmer<number>(null)
+  const [amount, setAmount] = useImmer<number>(0)
   const premium = usePremium({ amount, optionType, strikePrice, expiryDate })
 
   useEffect(() => {
     if (!id) return
     setOptionType(() => OptionType.LONG_CALL)
-    strikePrice.set(null)
-    setAmount(null)
+    strikePrice.set(0)
+    setAmount(0)
     expiryDate.set(null)
+    expiryDate.setTagId(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 

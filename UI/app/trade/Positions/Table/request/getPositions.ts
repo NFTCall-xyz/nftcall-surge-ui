@@ -1,6 +1,6 @@
 import { getAddresses, getNumber, getWeiToValueBN } from 'app/utils/get'
 
-import type { OptionPositionBaseData, OptionPositionStatus } from 'lib/graphql/option-position'
+import { type OptionPositionBaseData, OptionPositionStatus } from 'lib/graphql/option-position'
 import { toBN } from 'lib/math'
 import type { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
@@ -43,6 +43,12 @@ export const getPositions = (positions: OptionPositionBaseData[]) => {
           .minus(returnValue.premium)
       } else {
         returnValue.PNL = returnValue.premium.multipliedBy(-1)
+      }
+    }
+
+    if (returnValue.status === OptionPositionStatus.Active) {
+      if (returnValue.expiration < Date.now()) {
+        returnValue.status = OptionPositionStatus.Expired
       }
     }
 

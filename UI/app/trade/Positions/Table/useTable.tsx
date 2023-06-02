@@ -8,9 +8,9 @@ import { getTimestamp } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 
 import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicTable/types'
-import { cellRenderer, headerRenderer } from 'components/table/renderer'
+import { headerRenderer } from 'components/table/renderer'
 import { numberCellRenderer, tokenIconCellRenderer } from 'components/table/renderer'
-import { PNLCellRenderer } from 'components/table/renderer/position'
+import { PNLCellRenderer, expiryDateRenderer, optionTypeRenderer } from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
@@ -44,7 +44,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
             cellData: 'optionType',
             width: 250,
             headerRenderer,
-            cellRenderer,
+            cellRenderer: optionTypeRenderer,
           },
           {
             dataKey: 'size',
@@ -54,11 +54,11 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
             cellRenderer: numberCellRenderer,
           },
           {
-            dataKey: 'floorPrice',
-            cellData: 'spotPrice',
+            dataKey: 'expiryDate',
+            cellData: 'expiration',
             width: 250,
             headerRenderer,
-            cellRenderer: tokenIconCellRenderer,
+            cellRenderer: expiryDateRenderer,
           },
           {
             dataKey: 'strikePrice',
@@ -77,12 +77,6 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
             width: 240,
             headerRenderer,
             cellRenderer: PNLCellRenderer,
-          },
-          {
-            dataKey: 'status',
-            width: 300,
-            headerRenderer,
-            cellRenderer,
           },
         ] as TableColumnsProps[]
       ).map((column) => {
