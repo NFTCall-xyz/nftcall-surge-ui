@@ -2,27 +2,6 @@
   "nftCollections": {
     "title": "NFT Collections"
   },
-  "positions": {
-    "table": {
-      "NFT": "NFT",
-      "floorPrice": "Floor Price",
-      "strikePrice": "Strike Price",
-      "expiryDate": "Expiration Date",
-      "exercisableDate": "Exercisable Date",
-      "exercisedDate": "Exercised Date",
-      "createdDate": "Created Date",
-      "premium": "Premium",
-      "PNL": "PNL",
-      "PNLTip": "PNL = Options payoff - premium",
-      "status": "Status",
-      "action": "Action",
-      "exercise": "Exercise"
-    },
-    "tabs": {
-      "activePositions": "Active Positions",
-      "history": "History"
-    }
-  },
   "floorPriceTrends": {
     "floorPrice": "Floor Price",
     "title": "Floor Price Trends",
@@ -56,6 +35,7 @@
       "size": "Size",
       "floorPrice": "Floor Price",
       "strikePrice": "Strike Price",
+      "expiryDate": "Expiration Date",
       "premium": "Premium",
       "PNL": "PNL",
       "status": "Status"
