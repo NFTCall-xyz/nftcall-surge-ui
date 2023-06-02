@@ -2,6 +2,8 @@ import { Span } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
+import Stack from '@mui/material/Stack'
+import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
 
@@ -10,10 +12,11 @@ const DisplayBreakevenPrice: FC = () => {
 
   return (
     <FlexBetween>
-      <Span>{tOpenCallOptions('yourBalance')}</Span>
-      <Span>
+      <Span color='text.secondary'>{tOpenCallOptions('yourBalance')}</Span>
+      <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
+        <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
         <NumberDisplay value={wETHBalance} />
-      </Span>
+      </Stack>
     </FlexBetween>
   )
 }

@@ -24,12 +24,12 @@ const OpenOptions: FC<OpenOptionsProps> = () => {
   return (
     <Card sx={{ position: 'sticky', top: theme.spacing(4), flex: 1 }}>
       <CardContent>
-        <Stack spacing={4}>
+        <Stack spacing={3}>
           <SelectOptionType />
           <SelectAmount />
           <SelectStrikePrice />
           <SelectExpiryDate />
-          <Stack spacing={2}>
+          <Stack spacing={1}>
             <DisplayMaxProfit />
             <DisplayBreakevenPrice />
             <DisplayMaxLoss />
