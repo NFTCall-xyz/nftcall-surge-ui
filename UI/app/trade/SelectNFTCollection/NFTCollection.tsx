@@ -44,12 +44,12 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
     >
       <FlexBetween>
         <NFTCollectionTitle collection={collection} />
-        <Stack spacing={1} justifyContent="center">
+        <Stack spacing={1} alignItems="end">
           <Stack spacing={0.5} direction="row" alignItems="center">
             <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={collection.data.price} abbreviate={{}} />
           </Stack>
-          <Tiny textAlign="center">
+          <Tiny>
             <NumberDisplay value={0} abbreviate={{}} />
           </Tiny>
         </Stack>

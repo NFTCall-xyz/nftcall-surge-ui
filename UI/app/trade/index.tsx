@@ -13,26 +13,21 @@ export const usePageTrade = PageProvider.createUseContext()
 const Trade: FC = () => {
   const { usePageEffect } = usePageTrade()
   usePageEffect()
-  const height = 'calc(100vh - 240px)'
 
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <Stack height={height}>
-            <SelectNFTCollection />
-          </Stack>
-        </Grid>
-        <Grid item xs={6}>
-          <Stack spacing={2} minHeight={height}>
-            <FloorPriceTrends />
+        <Grid item xs={9}>
+          <Stack spacing={2}>
+            <Stack spacing={2} direction="row" height="50vh">
+              <SelectNFTCollection />
+              <FloorPriceTrends />
+            </Stack>
             <Positions />
           </Stack>
         </Grid>
         <Grid item xs={3}>
-          <Stack height={height}>
-            <OpenOptions />
-          </Stack>
+          <OpenOptions />
         </Grid>
       </Grid>
     </Box>

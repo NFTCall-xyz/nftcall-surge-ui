@@ -98,7 +98,7 @@ export const useChart = () => {
   const props = useMemo(
     () =>
       ({
-        height: matches ? 300 : 120,
+        height: matches ? 300 : 150,
         data: {
           datasets: [
             {

@@ -26,7 +26,7 @@ import { useChart } from './useChart'
 
 const ROOT = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
-  flexBasis: '55%',
+  flex: 1,
 }))
 
 const NFTCollectionInfo = styled(Stack)`

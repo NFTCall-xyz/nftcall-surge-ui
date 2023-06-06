@@ -25,7 +25,7 @@ type TableCellProps = {
 
 export const PNLCellRenderer = ({ rowData: { PNL, PNLRate } }: TableCellProps) => {
   return (
-    <TableCell align="right" component="div" sx={{ span: { fontSize: 14 } }}>
+    <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
       <Stack spacing={1} alignItems="end">
         <RiseOrFall value={PNL}>
           <NumberDisplay value={PNL} abbreviate={{}} numberFormatOptions={{ signDisplay: 'always' }} />
@@ -61,7 +61,7 @@ export const expiryDateRenderer = ({ cellData }: TableCellProps) => {
 export const optionTypeRenderer = ({ rowData: { optionType } }: TableCellProps) => {
   if (optionType === OptionType.LONG_CALL) {
     return (
-      <TableCell align="left" component="div">
+      <TableCell align="center" component="div">
         <Stack spacing={1}>
           <Stack spacing={0.5} direction="row" alignItems="center">
             <TrendingUpOutlinedIcon color="success" />
