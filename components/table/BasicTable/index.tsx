@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { Fragment } from 'react'
 
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 import TablePagination from '@mui/material/TablePagination'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -14,7 +15,6 @@ import FlexRowAlign from 'components/flexbox/FlexRowAlign'
 import MobileTable from './MobileTable'
 import PCTable from './PCTable'
 import type { BasicTableProps } from './types'
-import CircularProgress from '@mui/material/CircularProgress'
 
 const BasicTable: FC<BasicTableProps> = (props) => {
   const { t } = useTranslation()
@@ -50,7 +50,9 @@ const BasicTable: FC<BasicTableProps> = (props) => {
       {!loading && !noData && !props.pagination && props.loadMore && (
         <FlexRowAlign paddingTop={2}>
           {props.loadMore.end ? (
-            <Paragraph color="text.disabled" fontSize={14}>{t('table.noMoreData')}</Paragraph>
+            <Paragraph color="text.disabled" fontSize={14}>
+              {t('table.noMoreData')}
+            </Paragraph>
           ) : (
             <Button disabled={props.loadMore.disabled} onClick={props.loadMore.onLoadMore}>
               {t('table.loadMore')}

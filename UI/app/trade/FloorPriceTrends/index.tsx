@@ -107,7 +107,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
     <ROOT>
       <Stack spacing={2}>
         {matches ? (
-          <Stack alignItems='center' justifyContent='space-between' direction='row'>
+          <Stack alignItems="center" justifyContent="space-between" direction="row">
             {collectionInfo}
             {chartButtons}
           </Stack>

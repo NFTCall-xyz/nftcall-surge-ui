@@ -1,10 +1,10 @@
 import Stack from '@mui/material/Stack'
 
-import Features from './Features'
 import CTA from './CTA'
+import Features from './Features'
 import Hero from './Hero'
-import Why from './Why'
 import Layer2 from './Layer2'
+import Why from './Why'
 
 const Home = () => {
   return (

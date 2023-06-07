@@ -1,12 +1,12 @@
 import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
 import { differenceInDays, differenceInHours, format } from 'date-fns'
 
+import TrendingDownOutlinedIcon from '@mui/icons-material/TrendingDownOutlined'
+import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined'
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
 
 import { Span, Tiny } from 'components/Typography'
-import TrendingDownOutlinedIcon from '@mui/icons-material/TrendingDownOutlined'
-import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import RiseOrFall from 'lib/math/components/RiseOrFall'

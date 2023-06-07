@@ -6,9 +6,9 @@ import LocalAtmTwoToneIcon from '@mui/icons-material/LocalAtmTwoTone'
 import LocalDrinkTwoToneIcon from '@mui/icons-material/LocalDrinkTwoTone'
 import SwapVerticalCircleTwoToneIcon from '@mui/icons-material/SwapVerticalCircleTwoTone'
 import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
-import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 
 import { H2, H3, Paragraph } from 'components/Typography'
@@ -45,7 +45,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, content }) => {
       >
         {icon}
       </IconButton>
-      <Stack spacing={2} alignItems='center'>
+      <Stack spacing={2} alignItems="center">
         <H3 fontSize={20}>{title}</H3>
         <Paragraph color="text.secondary">{content}</Paragraph>
       </Stack>

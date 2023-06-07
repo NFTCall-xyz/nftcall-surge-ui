@@ -23,7 +23,8 @@ const locale = {
     list: {
       0: {
         title: 'Peer-to-pool model',
-        subTitle: 'Inspired by GMX, Gains Network and Lyra, we adopt the peer-to-pool model for cash-settled NFT options. The liquidity pool will automatically provides market-making services through an AMM model, allowing traders to purchase both call and put options against the liquidity pool.',
+        subTitle:
+          'Inspired by GMX, Gains Network and Lyra, we adopt the peer-to-pool model for cash-settled NFT options. The liquidity pool will automatically provides market-making services through an AMM model, allowing traders to purchase both call and put options against the liquidity pool.',
       },
       1: {
         title: 'Cash-settled NFT Options',

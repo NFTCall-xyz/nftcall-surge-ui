@@ -1,18 +1,18 @@
 import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
 import React from 'react'
 
 import ArrowForward from '@mui/icons-material/ArrowForward'
+import { Chip } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
-
-import Image from 'next/image'
-import zkSyncEra from '../images/zksync-era.svg'
-import arbitrum from '../images/arbitrum.svg'
-
 import { useTheme } from '@mui/material/styles'
+
 import { H2, H3, Paragraph } from 'components/Typography'
-import { Chip } from '@mui/material'
+
+import arbitrum from '../images/arbitrum.svg'
+import zkSyncEra from '../images/zksync-era.svg'
 
 type NetworkCardProps = {
   title: string
@@ -23,8 +23,8 @@ type NetworkCardProps = {
 const NetworkCard: React.FC<NetworkCardProps> = ({ image, title, status }) => {
   const theme = useTheme()
   return (
-    <Stack 
-      direction="row" 
+    <Stack
+      direction="row"
       justifyContent="space-between"
       alignItems="center"
       padding={2}
@@ -35,12 +35,8 @@ const NetworkCard: React.FC<NetworkCardProps> = ({ image, title, status }) => {
         borderColor: theme.palette.divider,
       }}
     >
-      <Stack
-        direction="row"
-        spacing={4}
-        alignItems="center"
-      >
-        <Image 
+      <Stack direction="row" spacing={4} alignItems="center">
+        <Image
           src={image}
           alt={title}
           style={{
@@ -48,17 +44,14 @@ const NetworkCard: React.FC<NetworkCardProps> = ({ image, title, status }) => {
             height: '100px',
           }}
         />
-          <H3 fontSize={24}>{title}</H3>
+        <H3 fontSize={24}>{title}</H3>
       </Stack>
-      <Chip label={status} color='primary' variant='outlined'/>
+      <Chip label={status} color="primary" variant="outlined" />
     </Stack>
   )
 }
 
-const networks = [
-  { image: arbitrum },
-  { image: zkSyncEra },
-]
+const networks = [{ image: arbitrum }, { image: zkSyncEra }]
 
 const Layer2: FC = () => {
   const { t } = useTranslation('home', { keyPrefix: 'layer2' })
@@ -81,12 +74,7 @@ const Layer2: FC = () => {
       </Stack>
       <Stack flex={1} spacing={4}>
         {networks.map(({ image }, index) => (
-          <NetworkCard 
-            key={index} 
-            image={image} 
-            title={t(`list.${index}.title`)}
-            status={t(`list.${index}.status`)}
-          />
+          <NetworkCard key={index} image={image} title={t(`list.${index}.title`)} status={t(`list.${index}.status`)} />
         ))}
       </Stack>
     </Stack>
