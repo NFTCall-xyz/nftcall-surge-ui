@@ -10,11 +10,15 @@ import { usePost } from 'app/hooks/request'
 import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicTable/types'
 import { headerRenderer } from 'components/table/renderer'
 import { numberCellRenderer, tokenIconCellRenderer } from 'components/table/renderer'
-import { PNLCellRenderer, expiryDateRenderer, optionTypeRenderer, statusCellRenderer } from 'components/table/renderer/position'
+import {
+  PNLCellRenderer,
+  expiryDateRenderer,
+  optionTypeRenderer,
+  statusCellRenderer,
+} from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
-import { usePageTrade } from '../..'
 import { request } from './request'
 import type { OptionPosition } from './request/getPositions'
 
@@ -25,9 +29,7 @@ type PositionsProps = {
 }
 export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
   const { t: tOptionPositionsTable } = useTranslation('app-trade', { keyPrefix: 'OptionPositions.table' })
-  const {
-    collection: { collection },
-  } = usePageTrade()
+
   const [pageIndex, setPageIndex] = useImmer(0)
   const dataFetcher = usePost(request)
   const [noMoreSourceData, setNoMoreSourceData] = useImmer(false)
@@ -118,7 +120,6 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           userAddress: account,
           thegraphUrl,
           isActive,
-          nftAddress: collection.address.NFT,
           currentTimestamp: getTimestamp(Date.now()),
         })
         .then((rowData) => {
@@ -126,7 +127,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           setSourceData((data) => data.concat(rowData))
         })
     },
-    [dataFetcher, account, thegraphUrl, isActive, collection.address.NFT, setNoMoreSourceData, setSourceData]
+    [dataFetcher, account, thegraphUrl, isActive, setNoMoreSourceData, setSourceData]
   )
 
   const loadMore = useMemo(() => {
