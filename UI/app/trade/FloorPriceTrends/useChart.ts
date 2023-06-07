@@ -202,7 +202,7 @@ export const useChart = () => {
               grace: '15%',
               grid: {
                 display: true,
-                color: theme.palette.grey[50],
+                color: theme.palette.grey[200],
               },
               ticks: {
                 color: theme.palette.text.secondary,

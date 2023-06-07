@@ -164,5 +164,5 @@ export const darkPalette = {
   text: textDark,
   action: actionDark,
   divider: greyDark[400],
-  background: { default: '#000000', paper: '#00040F' },
+  background: { default: '#00040F', paper: '#0C1727' },
 }

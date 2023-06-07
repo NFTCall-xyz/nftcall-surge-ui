@@ -2,14 +2,13 @@ import { useTranslation } from 'next-i18next'
 import React from 'react'
 
 import ArrowForward from '@mui/icons-material/ArrowForward'
-// import MoneyOffRounded from '@mui/icons-material/MoneyOffRounded'
-import MultipleStopIcon from '@mui/icons-material/MultipleStop'
-import StarRounded from '@mui/icons-material/StarRounded'
-import TimelapseIcon from '@mui/icons-material/Timelapse'
-import Box from '@mui/material/Box'
+import LocalAtmTwoToneIcon from '@mui/icons-material/LocalAtmTwoTone'
+import LocalDrinkTwoToneIcon from '@mui/icons-material/LocalDrinkTwoTone'
+import SwapVerticalCircleTwoToneIcon from '@mui/icons-material/SwapVerticalCircleTwoTone'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
+import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 
 import { H2, H3, Paragraph } from 'components/Typography'
@@ -24,10 +23,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, content }) => {
   const theme = useTheme()
   return (
     <Stack
-      direction="row"
-      padding={2}
+      padding={4}
       spacing={2}
       alignItems="center"
+      height="450px"
       sx={{
         '&:hover': {
           background: theme.palette.background.paper,
@@ -39,15 +38,15 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, content }) => {
         color="primary"
         sx={{
           '& .MuiSvgIcon-root': {
-            fontSize: '2.5rem',
+            fontSize: '3rem',
           },
           cursor: 'default',
         }}
       >
         {icon}
       </IconButton>
-      <Stack spacing={1}>
-        <H3>{title}</H3>
+      <Stack spacing={2} alignItems='center'>
+        <H3 fontSize={20}>{title}</H3>
         <Paragraph color="text.secondary">{content}</Paragraph>
       </Stack>
     </Stack>
@@ -55,38 +54,36 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, content }) => {
 }
 
 const featureIcons = [
-  { icon: <StarRounded /> },
-  { icon: <MultipleStopIcon /> },
-  // { icon: <MoneyOffRounded /> },
-  { icon: <TimelapseIcon /> },
+  { icon: <LocalDrinkTwoToneIcon /> },
+  { icon: <LocalAtmTwoToneIcon /> },
+  { icon: <SwapVerticalCircleTwoToneIcon /> },
 ]
 
-const Benefits: FC = () => {
-  const { t } = useTranslation('home', { keyPrefix: 'benefits' })
+const Features: FC = () => {
+  const { t } = useTranslation('home', { keyPrefix: 'features' })
   return (
-    <Stack component="section" direction={{ xs: 'column', md: 'row' }} spacing={8}>
-      <Stack spacing={4} paddingY={2} alignItems={{ xs: 'center', md: 'start' }} flex={1}>
+    <Stack component="section" spacing={4}>
+      <Stack spacing={4} alignItems="center">
         <Stack spacing={2}>
           <H2 fontSize={36} textAlign={{ xs: 'center', md: 'left' }}>
             {t('title')}
           </H2>
-          <Paragraph color="text.secondary" textAlign={{ xs: 'center', md: 'left' }}>
-            {t('subTitle')}
-          </Paragraph>
         </Stack>
-        <Box>
-          <Button variant="contained" endIcon={<ArrowForward />} href="/app">
-            {t('tradeNow')}
-          </Button>
-        </Box>
       </Stack>
-      <Stack flex={1} spacing={1}>
+      <Grid container spacing={2}>
         {featureIcons.map(({ icon }, index) => (
-          <FeatureCard key={index} icon={icon} title={t(`list.${index}.title`)} content={t(`list.${index}.subTitle`)} />
+          <Grid item xs={12} md={4} key={index}>
+            <FeatureCard icon={icon} title={t(`list.${index}.title`)} content={t(`list.${index}.subTitle`)} />
+          </Grid>
         ))}
+      </Grid>
+      <Stack alignItems="center">
+        <Button size="large" variant="contained" endIcon={<ArrowForward />} href="/app">
+          {t('tradeNow')}
+        </Button>
       </Stack>
     </Stack>
   )
 }
 
-export default Benefits
+export default Features

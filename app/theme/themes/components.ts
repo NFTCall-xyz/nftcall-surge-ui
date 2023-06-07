@@ -173,6 +173,7 @@ const components = (theme: Theme): any => {
           border: 'solid 1px',
           borderColor: theme.palette.divider,
           borderRadius: 8,
+          backgroudColor: theme.palette.background.paper,
         },
       },
     },

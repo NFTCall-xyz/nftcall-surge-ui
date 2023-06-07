@@ -8,16 +8,16 @@ import { H4, Span } from 'components/Typography'
 
 const stats = [
   {
-    label: 'nftListed',
-    value: '3800',
-  },
-  {
-    label: 'optionsSold',
-    value: '2300',
-  },
-  {
     label: 'tradingVolume',
-    value: '$230M+',
+    value: '$1.3B',
+  },
+  {
+    label: 'openInterest',
+    value: '$13.4M',
+  },
+  {
+    label: 'tvl',
+    value: '$34.1M',
   },
 ]
 

@@ -2,17 +2,23 @@ import { useTranslation } from 'next-i18next'
 import React from 'react'
 
 import Stack from '@mui/material/Stack'
+import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 
 import { H2, H3, Paragraph } from 'components/Typography'
+import speculateImg from '../images/speculate.svg'
+import hedgeImg from '../images/hedge.svg'
+import yieldImg from '../images/yield.svg'
+import leverageImg from '../images/leverage.svg'
+import Image from 'next/image'
 
-type MilestoneProps = {
+type BenefitProps = {
   title: string
-  tag: string
   desc: string
+  image: any
 }
 
-const Milestone: React.FC<MilestoneProps> = ({ title, tag, desc }) => {
+const Benefit: React.FC<BenefitProps> = ({ title, desc, image }) => {
   const theme = useTheme()
 
   return (
@@ -27,8 +33,8 @@ const Milestone: React.FC<MilestoneProps> = ({ title, tag, desc }) => {
         width: '100%',
       }}
     >
-      <H3 color="primary.main">{tag}</H3>
-      <H3 fontSize={20}>{title}</H3>
+      <Image src={image} alt={title} width={100} />
+      <H3 fontSize={20} color="primary.main">{title}</H3>
       <Paragraph fontSize={16} lineHeight={1.8} color="text.secondary">
         {desc}
       </Paragraph>
@@ -37,22 +43,23 @@ const Milestone: React.FC<MilestoneProps> = ({ title, tag, desc }) => {
 }
 
 const Roadmap: FC = () => {
-  const { t } = useTranslation('home', { keyPrefix: 'roadmap' })
+  const { t } = useTranslation('home', { keyPrefix: 'why' })
   return (
     <Stack component="section" spacing={10} position="relative">
       <Stack spacing={{ xs: 2, md: 20 }} direction={{ xs: 'column', md: 'row' }} justifyContent="center">
         <H2 fontSize={36}>{t('title')}</H2>
       </Stack>
-      <Stack spacing={2} direction={{ xs: 'column', md: 'row' }}>
-        {[0, 1, 2].map((index) => (
-          <Milestone
-            key={index}
-            title={t(`list.${index}.title`)}
-            tag={t(`list.${index}.tag`)}
-            desc={t(`list.${index}.desc`)}
-          />
+      <Grid spacing={2} container>
+        {[speculateImg, hedgeImg, yieldImg, leverageImg].map((image, index) => (
+          <Grid item xs={12} md={6} key={index}>
+            <Benefit
+              title={t(`list.${index}.title`)}
+              desc={t(`list.${index}.desc`)}
+              image={image}
+            />
+          </Grid>
         ))}
-      </Stack>
+      </Grid>
     </Stack>
   )
 }

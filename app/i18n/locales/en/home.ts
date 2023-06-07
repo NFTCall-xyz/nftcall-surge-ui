@@ -1,8 +1,8 @@
 const locale = {
   hero: {
-    title: 'Speculate or Earn Premiums from <NFTOptions>NFT Options</NFTOptions>',
+    title: 'Speculate, Hedge or Earn Premiums from <NFTOptions>NFT Options</NFTOptions>',
     subTitle:
-      'NFTCall is a physically-settled, peer-to-peer NFT options trading platform that allows NFT holders to earn premiums and sell NFTs at a higher price while allowing NFT investors to buy NFTs with high leverage but with limited losses.',
+      'NFTCall is an NFT options trading platform on Layer-2 that using a peer-to-pool model and auto market making mechanism.',
     tradeNow: 'Trade Now',
     watchVideo: 'Watch Video',
     NFTOptions: 'NFT Options',
@@ -11,92 +11,66 @@ const locale = {
     subTitle: 'The first on-chain NFT options trading platform.',
   },
   stats: {
-    nftListed: 'NFTs Listed',
-    optionsSold: 'Options Sold',
     tradingVolume: 'Trading Volume',
+    openInterest: 'Open Interest',
+    tvl: 'TVL',
+    allTimeTrades: 'All Time Trades',
+    totalUsers: 'Total Users',
   },
-  benefits: {
-    title: 'Sell, buy and exercise options in just one step',
-    subTitle:
-      'NFTCall creates a derivative market where both NFT holders and investors can benefit from our physically-settled options, peer-to-peer model, flexible options exercise mechanism, and cost-effective fee structure.',
+  features: {
+    title: 'What is NFTCall?',
     tradeNow: 'Trade Now',
     list: {
       0: {
-        title: 'Physical Settlement',
-        subTitle: 'NFTCall creates a new NFT trading experience with physically-settled options.',
-      },
-      1: {
-        title: 'Peer-to-peer model',
-        subTitle:
-          'We use a peer-to-peer model to ensure both NFT holders and investors can benefit from options contracts.',
-      },
-      2: {
-        title: 'Flexible options exercise',
-        subTitle:
-          'NFTCall combines features of American and European style options. Buyers can exercise the options during the second half of the period before the expiration.',
-      },
-      3: {
-        title: 'No transaction fees',
-        subTitle:
-          'We do not charge transaction fees when exercising options to ensure that everyone can enjoy NFT options trading.',
-      },
-    },
-  },
-  buyAndSell: {
-    for: 'For NFT Holders',
-    title: 'Sell NFT at a higher price while earning premiums',
-    subTitle:
-      'NFT holders deposit their NFTs into the market for call options selling, which means they promise to sell their NFTs at a specified price in the future. And the specified price is usually higher than the current floor price. If the market price rises above the specified price on the expiration date, their NFTs will be sold to the options buyers, otherwise, they can receive passive income from the sold options.',
-    tradeNow: 'Trade Now',
-  },
-  speculateAndHedge: {
-    for: 'For NFT Investors',
-    title: 'Buy NFTs with high leverage but limited losses',
-    subTitle:
-      'NFT investors can pay a small premium in advance for the call options, which means they lock in a price at which to buy the NFT in the future. If the floor price rises above the specified price on the expiration date, options buyers can take the NFT and sell it on the market for a profit, otherwise they only lose the small premium.',
-    tradeNow: 'Trade Now',
-  },
-  how: {
-    title: 'How people are using NFTCall',
-    subTitle: 'Speculate, hedge and earn income from NFT options trading.',
-    list: {
-      0: {
-        title:
-          'Pay a premium in advance for the right to buy NFTs at a specified floor price and expiry date. If the market price goes higher than the specified price, you will make a profit.',
-        author: 'Alice',
-        tag: 'NFT Buyer',
-      },
-      1: {
-        title:
-          'Sell NFTs with a specified floor price and expiry date limit, while having chance to earn income from the premium before the NFTs get sold under the specified conditions.',
-        author: 'Bob',
-        tag: 'NFT Seller',
-      },
-      2: {
-        title:
-          'Get exposure to popular NFTs with low entry cost by purchasing call options. Instead of selling NFTs, you can also hedge the floor price crash by put options.',
-        author: 'Charlie',
-        tag: 'NFT Speculator & Hedger',
-      },
-    },
-  },
-  roadmap: {
-    title: 'Roadmap',
-    list: {
-      0: {
-        title: 'Mainnet Launch',
-        desc: 'Complete the code audit and launch the NFTCall protocol on the Ethereum mainnet.',
-        tag: '2023 Q1',
+        title: 'Peer-to-pool model',
+        subTitle: 'Inspired by GMX, Gains Network and Lyra, we adopt the peer-to-pool model for cash-settled NFT options. The liquidity pool will automatically provides market-making services through an AMM model, allowing traders to purchase both call and put options against the liquidity pool.',
       },
       1: {
         title: 'Cash-settled NFT Options',
-        desc: 'Launch the NFTCall protocol on the Layer-2 Arbitrum with a liquidty pool for cash-settled NFT options.',
-        tag: '2023 Q2',
+        subTitle:
+          'Compared to NFT-settled options, NFTCall’s cash-settled NFT options creates a more flexible trading experience without royalties and provides a lower entry barriers for traders who are interested in gaining exposure to NFT price fluctuations.',
       },
       2: {
-        title: 'NFT Perpetuals',
-        desc: 'Develop our NFT perpetual trading platform based on the peer-to-pool model, providing more liquidity and flexibility for NFT speculation and hedging purpose.',
-        tag: '2023 Q3 & Q4',
+        title: 'Auto market making',
+        subTitle:
+          'The core mechanism of the AMM is to increase the cost of NFT options when demand for options is high and decrease it when supply is high. By taking this approach, the AMM can reach a market-clearing value for NFT options with any strike and expiry, and effectively manage the risks associated with options trading for LPs.',
+      },
+    },
+  },
+  why: {
+    title: 'Why trading NFT options on NFTCall?',
+    list: {
+      0: {
+        title: 'Speculation',
+        desc: 'Speculating on the future price trend of an NFT collection can be profitable regardless of whether the floor price rises, falls, or fluctuates within a range.',
+      },
+      1: {
+        title: 'Hedging',
+        desc: 'NFT holders can use NFT options to hedge against the risk of a drop in NFT prices.',
+      },
+      2: {
+        title: 'Yield',
+        desc: 'Liquidity providers deposit liquidity into the vault as option sellers and use NFT options to generate income or revenue.',
+      },
+      3: {
+        title: 'Leverage',
+        desc: 'Options have similar market exposure to owning an NFT, but require less money, providing more leverage and flexibility for investment portfolios, especially for high-priced blue-chip NFTs.',
+      },
+    },
+  },
+  layer2: {
+    title: 'Available on popular Layer-2 networks',
+    subTitle: 'NFTCall will be deployed on Arbitrum and ZkSync Era.',
+    tag: 'Networks',
+    tradeNow: 'Trade Now',
+    list: {
+      0: {
+        title: 'Arbitrum',
+        status: 'Coming soon',
+      },
+      1: {
+        title: 'ZkSync Era',
+        status: 'Coming soon',
       },
     },
   },
