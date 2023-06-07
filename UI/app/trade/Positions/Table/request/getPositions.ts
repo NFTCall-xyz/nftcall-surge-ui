@@ -1,8 +1,8 @@
 import { getAddresses, getNumber, getWeiToValueBN } from 'app/utils/get'
 
 import { type OptionPositionBaseData, OptionPositionStatus } from 'lib/graphql/option-position'
-import { toBN } from 'lib/math'
-import type { OptionType } from 'lib/protocol/typechain/nftcall-surge'
+import { BN, toBN } from 'lib/math'
+import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 export type OptionPosition = {
   status: OptionPositionStatus
@@ -19,7 +19,7 @@ export type OptionPosition = {
   expiration: number
   updateTimestamp: number
 }
-export const getPositions = (positions: OptionPositionBaseData[]) => {
+export const getPositions = (positions: OptionPositionBaseData[], floorPrice: BN) => {
   if (!positions) return []
   const returnValue = positions.map((t) => {
     const timestamps = getNumber(t, ['updateTimestamp'])
@@ -35,21 +35,21 @@ export const getPositions = (positions: OptionPositionBaseData[]) => {
       PNLRate: toBN(0),
     }
 
-    if (returnValue.premium && !returnValue.premium.isZero()) {
-      if (returnValue.spotPrice.gt(returnValue.strikePrice)) {
-        returnValue.PNL = returnValue.spotPrice
-          .minus(returnValue.strikePrice)
-          .multipliedBy(returnValue.amount)
-          .minus(returnValue.premium)
-      } else {
-        returnValue.PNL = returnValue.premium.multipliedBy(-1)
-      }
-    }
-
     if (returnValue.status === OptionPositionStatus.Active) {
       if (returnValue.expiration < Date.now()) {
         returnValue.status = OptionPositionStatus.Expired
       }
+    }
+
+    if (returnValue.status === OptionPositionStatus.Active) {
+      let optionValue = toBN(0)
+      if (returnValue.optionType === OptionType.LONG_CALL) {
+        optionValue = floorPrice.minus(returnValue.strikePrice).multipliedBy(returnValue.amount)
+      } else {
+        optionValue = returnValue.strikePrice.minus(floorPrice).multipliedBy(returnValue.amount)
+      }
+
+      returnValue.PNL = BN.max(optionValue.minus(returnValue.premium), returnValue.premium.multipliedBy(-1))
     }
 
     returnValue.PNLRate = returnValue.PNL.dividedBy(returnValue.premium)

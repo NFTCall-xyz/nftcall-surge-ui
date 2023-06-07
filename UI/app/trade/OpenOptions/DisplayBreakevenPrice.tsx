@@ -13,15 +13,16 @@ import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 import { usePageTradeOpenOptions } from '.'
 
 const DisplayBreakevenPrice: FC = () => {
-  const { optionType, price, premium, tOpenCallOptions } = usePageTradeOpenOptions()
+  const { optionType, price, premium, tOpenCallOptions, init } = usePageTradeOpenOptions()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
+    if (init || !premium.value) return <NumberDisplay value={0} />
     if (optionType === OptionType.LONG_CALL) {
       return <NumberDisplay value={price ? price.plus(premium.value) : 0} />
     } else {
       return <NumberDisplay value={price ? price.minus(premium.value) : 0} />
     }
-  }, [optionType, premium.loading, premium.value, price])
+  }, [init, optionType, premium.loading, premium.value, price])
 
   return (
     <FlexBetween>

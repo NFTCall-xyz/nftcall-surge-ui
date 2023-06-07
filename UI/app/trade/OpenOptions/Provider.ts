@@ -214,7 +214,7 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
   )
 
   useEffect(() => {
-    if (!strikePrice.value || !expiryDate.value) {
+    if (!strikePrice.value || !expiryDate.value || !expiryDate.value.getTime()) {
       setLoading(() => false)
       return
     }
@@ -290,6 +290,7 @@ export default createContextWithProvider(() => {
     amount.set(0)
     expiryDate.set(null)
     expiryDate.setTagId(null)
+    premium.set(0)
 
     setInit(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps

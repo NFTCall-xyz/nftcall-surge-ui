@@ -55,7 +55,7 @@ const OpenOptionsAction: FC = () => {
         onClick={() => {
           openOptions({
             optionType,
-            amount: amount.toString(),
+            amount: amount.value.toString(),
             strikePrice: strikePrice.value.toString(),
             expiry: getTimestamp(expiryDate.value.getTime()),
             premium: premium.value.toString(),

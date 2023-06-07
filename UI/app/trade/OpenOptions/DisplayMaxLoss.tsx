@@ -15,7 +15,7 @@ const DisplayMaxLoss: FC = () => {
   const { premium, tOpenCallOptions } = usePageTradeOpenOptions()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
-    return <NumberDisplay value={premium.value} />
+    return <NumberDisplay value={premium.value} numberFormatOptions={{ maximumFractionDigits: 6 }} />
   }, [premium.loading, premium.value])
 
   return (
