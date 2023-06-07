@@ -22,11 +22,17 @@ export function NumberInput({
 }: any) {
   const theme = useTheme()
   return (
-    <FormControl error={error} variant="standard">
+    <FormControl error={!!error} variant="standard">
       <Paper
         component="div"
         variant="outlined"
-        sx={{ padding: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
+        sx={{
+          padding: '2px 4px',
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          borderColor: error ? 'error.main' : 'divider',
+        }}
       >
         <InputBase
           disabled={disabled}

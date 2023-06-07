@@ -1,3 +1,5 @@
+import { useImmer } from 'use-immer'
+
 import Stack from '@mui/material/Stack'
 
 import { Span, Tiny } from 'components/Typography'
@@ -9,24 +11,29 @@ import { NumberInput } from 'lib/math/components/NumberInput'
 import { usePageTradeOpenOptions } from '.'
 
 const SelectAmount: FC = () => {
-  const { amount, maximumOptionAmount, setAmount, tOpenCallOptions } = usePageTradeOpenOptions()
+  const { amount, tOpenCallOptions } = usePageTradeOpenOptions()
+  const [error, setError] = useImmer('')
   return (
     <Stack spacing={1}>
       <FlexBetween>
         <Span>{tOpenCallOptions('size')}</Span>
         <Tiny color="text.secondary">
           <Span fontSize={12}>{`${tOpenCallOptions('limit')}: `}</Span>
-          <NumberDisplay value={maximumOptionAmount} options="number" />
+          <NumberDisplay value={amount.max} options="number" />
         </Tiny>
       </FlexBetween>
       <NumberInput
-        value={amount}
+        value={amount.value}
         endAdornment={<Span color="text.secondary">{tOpenCallOptions('calls')}</Span>}
+        error={error}
         onChange={(e: any) => {
-          if (maximumOptionAmount && e.target.value > maximumOptionAmount.toNumber()) {
-            setAmount(maximumOptionAmount.toNumber())
+          const value = e.target.value
+          setError(amount.checked(value))
+
+          if (amount.max && e.target.value > amount.max.toNumber()) {
+            amount.set(amount.max.toNumber())
           } else {
-            setAmount(e.target.value)
+            amount.set(e.target.value)
           }
         }}
       />

@@ -1,3 +1,5 @@
+import { useImmer } from 'use-immer'
+
 import Stack from '@mui/material/Stack'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
@@ -24,9 +26,10 @@ const SelectStrikePrice: FC = () => {
     },
   } = usePageTrade()
   const {
-    strikePrice: { value, set, tags, diffPercent, min, max },
+    strikePrice: { value, set, tags, diffPercent, min, max, checked },
     tOpenCallOptions,
   } = usePageTradeOpenOptions()
+  const [error, setError] = useImmer('')
 
   return (
     <Stack spacing={1}>
@@ -39,7 +42,12 @@ const SelectStrikePrice: FC = () => {
       <NumberInput
         value={value}
         endAdornment={<Span color="text.secondary">ETH</Span>}
-        onChange={(e: any) => set(e.target.value)}
+        error={error}
+        onChange={(e: any) => {
+          const value = e.target.value
+          setError(checked(value))
+          set(value)
+        }}
         onBlur={() => {
           const valueBN = toBN(value)
           if (valueBN.lt(min)) {
