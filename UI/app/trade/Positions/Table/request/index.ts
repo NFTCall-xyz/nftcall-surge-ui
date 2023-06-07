@@ -14,10 +14,8 @@ type Props = BaseGraphqlRequestType &
 export const request = ({ thegraphUrl, isActive, ...props }: Props) => {
   if (!thegraphUrl) return Promise.reject({ message: 'network error' })
   const variables: RequestType = props
-  if (isActive) {
-    variables.currentTimestamp = getCurrentTimestamp()
-  }
-  return graphqlRequest(thegraphUrl, variables)
+  variables.currentTimestamp = getCurrentTimestamp()
+  return graphqlRequest(thegraphUrl, isActive, variables)
     .then(({ optionPositions }) => optionPositions)
     .then((data) => getPositions(data))
 }

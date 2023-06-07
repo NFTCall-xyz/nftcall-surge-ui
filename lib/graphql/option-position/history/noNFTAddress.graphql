@@ -1,8 +1,8 @@
-query getOptionPositions($first: Int!, $skip: Int!, $userAddress: Bytes!, $currentTimestamp: BigInt = 0) {
+query getOptionPositions($first: Int!, $skip: Int!, $userAddress: Bytes!, $currentTimestamp: BigInt!) {
   optionPositions(
     first: $first
     skip: $skip
-    where: { userAddress: $userAddress, strikeId_: { expiration_gt: $currentTimestamp } }
+    where: { userAddress: $userAddress, strikeId_: { expiration_lt: $currentTimestamp } }
     orderBy: updateTimestamp
     orderDirection: asc
   ) {

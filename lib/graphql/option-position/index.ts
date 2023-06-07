@@ -2,8 +2,10 @@ import { request as RQ } from 'graphql-request'
 
 import type { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
-import document from './index.graphql'
-import documentNoNFTAddress from './noNFTAddress.graphql'
+import activeDocument from './active/index.graphql'
+import activeDocumentNoNFTAddress from './active/noNFTAddress.graphql'
+import historyDocument from './history/index.graphql'
+import historyDocumentNoNFTAddress from './history/noNFTAddress.graphql'
 
 export enum OptionPositionStatus {
   Pending = 'Pending',
@@ -38,10 +40,18 @@ export type RequestType = {
   currentTimestamp: number
 }
 
-export const graphqlRequest = (url: string, variables: RequestType) => {
-  if (variables.nftAddress) {
-    return RQ<ResponseType>(url, document, variables)
+export const graphqlRequest = (url: string, isActive: boolean, variables: RequestType) => {
+  if (isActive) {
+    if (variables.nftAddress) {
+      return RQ<ResponseType>(url, activeDocument, variables)
+    } else {
+      return RQ<ResponseType>(url, activeDocumentNoNFTAddress, variables)
+    }
   } else {
-    return RQ<ResponseType>(url, documentNoNFTAddress, variables)
+    if (variables.nftAddress) {
+      return RQ<ResponseType>(url, historyDocument, variables)
+    } else {
+      return RQ<ResponseType>(url, historyDocumentNoNFTAddress, variables)
+    }
   }
 }
