@@ -3,12 +3,15 @@
 /* tslint:disable */
 
 /* eslint-disable */
+import type * as helpers from './helpers'
 import type * as interfaces from './interfaces'
 import type * as libraries from './libraries'
 import type * as mocked from './mocked'
 import type * as synthetix from './synthetix'
 import type * as tokens from './tokens'
 import type * as vault from './vault'
+
+export type { helpers }
 
 export type { interfaces }
 
@@ -22,6 +25,7 @@ export type { tokens }
 
 export type { vault }
 export type { AssetRiskCache } from './AssetRiskCache'
+export type { BackstopPool } from './BackstopPool'
 export type { NFTCallOracle } from './NFTCallOracle'
 export type { OptionPricer } from './OptionPricer'
 export type { Reserve } from './Reserve'

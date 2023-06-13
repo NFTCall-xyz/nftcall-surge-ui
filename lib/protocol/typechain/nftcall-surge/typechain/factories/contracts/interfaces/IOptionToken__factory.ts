@@ -172,6 +172,12 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'address',
+        name: 'payer',
+        type: 'address',
+      },
+      {
         indexed: true,
         internalType: 'address',
         name: 'to',
@@ -199,6 +205,12 @@ const _abi = [
         indexed: false,
         internalType: 'uint256',
         name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'maximumPremium',
         type: 'uint256',
       },
     ],
@@ -257,7 +269,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'forceClosePosition',
+    name: 'forceClosePendingPosition',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -285,6 +297,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
+        name: 'payer',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
         name: 'to',
         type: 'address',
       },
@@ -301,6 +318,11 @@ const _abi = [
       {
         internalType: 'uint256',
         name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumPremium',
         type: 'uint256',
       },
     ],
@@ -328,11 +350,6 @@ const _abi = [
       {
         components: [
           {
-            internalType: 'uint256',
-            name: 'strikeId',
-            type: 'uint256',
-          },
-          {
             internalType: 'enum PositionState',
             name: 'state',
             type: 'uint8',
@@ -343,6 +360,16 @@ const _abi = [
             type: 'uint8',
           },
           {
+            internalType: 'address',
+            name: 'payer',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'strikeId',
+            type: 'uint256',
+          },
+          {
             internalType: 'uint256',
             name: 'amount',
             type: 'uint256',
@@ -350,6 +377,11 @@ const _abi = [
           {
             internalType: 'uint256',
             name: 'premium',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'maximumPremium',
             type: 'uint256',
           },
         ],
@@ -391,6 +423,19 @@ const _abi = [
     name: 'setBaseURI',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {

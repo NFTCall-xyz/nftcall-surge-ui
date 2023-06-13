@@ -21,19 +21,23 @@ import type {
 import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export type OptionPositionStruct = {
-  strikeId: PromiseOrValue<BigNumberish>
   state: PromiseOrValue<BigNumberish>
   optionType: PromiseOrValue<BigNumberish>
+  payer: PromiseOrValue<string>
+  strikeId: PromiseOrValue<BigNumberish>
   amount: PromiseOrValue<BigNumberish>
   premium: PromiseOrValue<BigNumberish>
+  maximumPremium: PromiseOrValue<BigNumberish>
 }
 
-export type OptionPositionStructOutput = [BigNumber, number, number, BigNumber, BigNumber] & {
-  strikeId: BigNumber
+export type OptionPositionStructOutput = [number, number, string, BigNumber, BigNumber, BigNumber, BigNumber] & {
   state: number
   optionType: number
+  payer: string
+  strikeId: BigNumber
   amount: BigNumber
   premium: BigNumber
+  maximumPremium: BigNumber
 }
 
 export interface OptionTokenInterface extends utils.Interface {
@@ -43,13 +47,13 @@ export interface OptionTokenInterface extends utils.Interface {
     'balanceOf(address)': FunctionFragment
     'closePosition(uint256)': FunctionFragment
     'collection()': FunctionFragment
-    'forceClosePosition(uint256)': FunctionFragment
+    'forceClosePendingPosition(uint256)': FunctionFragment
     'getApproved(uint256)': FunctionFragment
     'initialize(address)': FunctionFragment
     'isApprovedForAll(address,address)': FunctionFragment
     'lockedValue(uint256)': FunctionFragment
     'name()': FunctionFragment
-    'openPosition(address,uint8,uint256,uint256)': FunctionFragment
+    'openPosition(address,address,uint8,uint256,uint256,uint256)': FunctionFragment
     'optionPosition(uint256)': FunctionFragment
     'optionPositionState(uint256)': FunctionFragment
     'owner()': FunctionFragment
@@ -64,6 +68,7 @@ export interface OptionTokenInterface extends utils.Interface {
     'tokenByIndex(uint256)': FunctionFragment
     'tokenOfOwnerByIndex(address,uint256)': FunctionFragment
     'tokenURI(uint256)': FunctionFragment
+    'totalAmount()': FunctionFragment
     'totalSupply()': FunctionFragment
     'totalValue()': FunctionFragment
     'transferFrom(address,address,uint256)': FunctionFragment
@@ -78,7 +83,7 @@ export interface OptionTokenInterface extends utils.Interface {
       | 'balanceOf'
       | 'closePosition'
       | 'collection'
-      | 'forceClosePosition'
+      | 'forceClosePendingPosition'
       | 'getApproved'
       | 'initialize'
       | 'isApprovedForAll'
@@ -99,6 +104,7 @@ export interface OptionTokenInterface extends utils.Interface {
       | 'tokenByIndex'
       | 'tokenOfOwnerByIndex'
       | 'tokenURI'
+      | 'totalAmount'
       | 'totalSupply'
       | 'totalValue'
       | 'transferFrom'
@@ -117,7 +123,7 @@ export interface OptionTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'closePosition', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'collection', values?: undefined): string
-  encodeFunctionData(functionFragment: 'forceClosePosition', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'forceClosePendingPosition', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
@@ -130,6 +136,8 @@ export interface OptionTokenInterface extends utils.Interface {
     functionFragment: 'openPosition',
     values: [
       PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
@@ -161,6 +169,7 @@ export interface OptionTokenInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
   encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'totalAmount', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalValue', values?: undefined): string
   encodeFunctionData(
@@ -175,7 +184,7 @@ export interface OptionTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'collection', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'forceClosePosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'forceClosePendingPosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getApproved', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'isApprovedForAll', data: BytesLike): Result
@@ -196,6 +205,7 @@ export interface OptionTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'tokenByIndex', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'tokenOfOwnerByIndex', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalAmount', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalValue', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result
@@ -209,7 +219,7 @@ export interface OptionTokenInterface extends utils.Interface {
     'ClosePosition(uint256)': EventFragment
     'ForceClosePosition(uint256)': EventFragment
     'Initialize(address)': EventFragment
-    'OpenPosition(address,uint256,uint8,uint256,uint256)': EventFragment
+    'OpenPosition(address,address,uint256,uint8,uint256,uint256,uint256)': EventFragment
     'OwnershipTransferred(address,address)': EventFragment
     'Transfer(address,address,uint256)': EventFragment
     'UpdateBaseURI(string)': EventFragment
@@ -275,13 +285,18 @@ export type InitializeEvent = TypedEvent<[string], InitializeEventObject>
 export type InitializeEventFilter = TypedEventFilter<InitializeEvent>
 
 export interface OpenPositionEventObject {
+  payer: string
   to: string
   positionId: BigNumber
   optionType: number
   strikeId: BigNumber
   amount: BigNumber
+  maximumPremium: BigNumber
 }
-export type OpenPositionEvent = TypedEvent<[string, BigNumber, number, BigNumber, BigNumber], OpenPositionEventObject>
+export type OpenPositionEvent = TypedEvent<
+  [string, string, BigNumber, number, BigNumber, BigNumber, BigNumber],
+  OpenPositionEventObject
+>
 
 export type OpenPositionEventFilter = TypedEventFilter<OpenPositionEvent>
 
@@ -353,7 +368,7 @@ export interface OptionToken extends BaseContract {
 
     collection(overrides?: CallOverrides): Promise<[string]>
 
-    forceClosePosition(
+    forceClosePendingPosition(
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
@@ -376,10 +391,12 @@ export interface OptionToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<[string]>
 
     openPosition(
+      payer: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       optionType: PromiseOrValue<BigNumberish>,
       strikeId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
@@ -439,6 +456,8 @@ export interface OptionToken extends BaseContract {
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>
 
+    totalAmount(overrides?: CallOverrides): Promise<[BigNumber]>
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>
 
     totalValue(overrides?: CallOverrides): Promise<[BigNumber]>
@@ -479,7 +498,7 @@ export interface OptionToken extends BaseContract {
 
   collection(overrides?: CallOverrides): Promise<string>
 
-  forceClosePosition(
+  forceClosePendingPosition(
     positionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
@@ -502,10 +521,12 @@ export interface OptionToken extends BaseContract {
   name(overrides?: CallOverrides): Promise<string>
 
   openPosition(
+    payer: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     optionType: PromiseOrValue<BigNumberish>,
     strikeId: PromiseOrValue<BigNumberish>,
     amount: PromiseOrValue<BigNumberish>,
+    maximumPremium: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
@@ -562,6 +583,8 @@ export interface OptionToken extends BaseContract {
 
   tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
 
+  totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
   totalValue(overrides?: CallOverrides): Promise<BigNumber>
@@ -595,7 +618,7 @@ export interface OptionToken extends BaseContract {
 
     collection(overrides?: CallOverrides): Promise<string>
 
-    forceClosePosition(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    forceClosePendingPosition(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
 
     getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
 
@@ -612,10 +635,12 @@ export interface OptionToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<string>
 
     openPosition(
+      payer: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       optionType: PromiseOrValue<BigNumberish>,
       strikeId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -668,6 +693,8 @@ export interface OptionToken extends BaseContract {
     ): Promise<BigNumber>
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+
+    totalAmount(overrides?: CallOverrides): Promise<BigNumber>
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -723,19 +750,23 @@ export interface OptionToken extends BaseContract {
     'Initialize(address)'(vault?: PromiseOrValue<string> | null): InitializeEventFilter
     Initialize(vault?: PromiseOrValue<string> | null): InitializeEventFilter
 
-    'OpenPosition(address,uint256,uint8,uint256,uint256)'(
+    'OpenPosition(address,address,uint256,uint8,uint256,uint256,uint256)'(
+      payer?: null,
       to?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       optionType?: null,
       strikeId?: null,
-      amount?: null
+      amount?: null,
+      maximumPremium?: null
     ): OpenPositionEventFilter
     OpenPosition(
+      payer?: null,
       to?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       optionType?: null,
       strikeId?: null,
-      amount?: null
+      amount?: null,
+      maximumPremium?: null
     ): OpenPositionEventFilter
 
     'OwnershipTransferred(address,address)'(
@@ -784,7 +815,7 @@ export interface OptionToken extends BaseContract {
 
     collection(overrides?: CallOverrides): Promise<BigNumber>
 
-    forceClosePosition(
+    forceClosePendingPosition(
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
@@ -807,10 +838,12 @@ export interface OptionToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<BigNumber>
 
     openPosition(
+      payer: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       optionType: PromiseOrValue<BigNumberish>,
       strikeId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
@@ -864,6 +897,8 @@ export interface OptionToken extends BaseContract {
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
+    totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
     totalValue(overrides?: CallOverrides): Promise<BigNumber>
@@ -905,7 +940,7 @@ export interface OptionToken extends BaseContract {
 
     collection(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    forceClosePosition(
+    forceClosePendingPosition(
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
@@ -928,10 +963,12 @@ export interface OptionToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     openPosition(
+      payer: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       optionType: PromiseOrValue<BigNumberish>,
       strikeId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
@@ -987,6 +1024,8 @@ export interface OptionToken extends BaseContract {
     ): Promise<PopulatedTransaction>
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    totalAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>
 

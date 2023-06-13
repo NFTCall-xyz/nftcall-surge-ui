@@ -17,32 +17,6 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'releaseTime',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'blockTimestamp',
-        type: 'uint256',
-      },
-    ],
-    name: 'ClaimBeforeReleaseTime',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'thrower',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
         name: 'assets',
         type: 'uint256',
@@ -240,25 +214,6 @@ const _abi = [
     ],
     name: 'UpdateMinimumAssetToShareRatio',
     type: 'event',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-    ],
-    name: 'claim',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'shares',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
     inputs: [

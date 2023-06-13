@@ -36,7 +36,7 @@ export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & 
 
 export declare namespace IVault {
   export type CollectionConfigurationStruct = {
-    paused: PromiseOrValue<boolean>
+    frozen: PromiseOrValue<boolean>
     activated: PromiseOrValue<boolean>
     id: PromiseOrValue<BigNumberish>
     weight: PromiseOrValue<BigNumberish>
@@ -44,7 +44,7 @@ export declare namespace IVault {
   }
 
   export type CollectionConfigurationStructOutput = [boolean, boolean, number, number, string] & {
-    paused: boolean
+    frozen: boolean
     activated: boolean
     id: number
     weight: number
@@ -54,20 +54,43 @@ export declare namespace IVault {
 
 export interface IVaultInterface extends utils.Interface {
   functions: {
+    'KEEPER_FEE()': FunctionFragment
+    'MAXIMUM_CALL_STRIKE_PRICE_RATIO()': FunctionFragment
+    'MAXIMUM_DURATION()': FunctionFragment
+    'MAXIMUM_LOCK_RATIO()': FunctionFragment
+    'MAXIMUM_PUT_STRIKE_PRICE_RATIO()': FunctionFragment
+    'MINIMUM_CALL_STRIKE_PRICE_RATIO()': FunctionFragment
+    'MINIMUM_DURATION()': FunctionFragment
+    'MINIMUM_PUT_STRIKE_PRICE_RATIO()': FunctionFragment
+    'RESERVE_RATIO()': FunctionFragment
+    'activateMarket(address)': FunctionFragment
     'activePosition(address,uint256)': FunctionFragment
     'addMarket(address,uint32,address)': FunctionFragment
-    'claimLPToken(address)': FunctionFragment
-    'closePosition(address,address,uint256)': FunctionFragment
+    'backstopPool()': FunctionFragment
+    'closePosition(address,uint256)': FunctionFragment
+    'deactivateMarket(address)': FunctionFragment
+    'defreezeMarket(address)': FunctionFragment
     'deposit(uint256,address)': FunctionFragment
+    'estimatePremium(address,uint8,uint256,uint256,uint256)': FunctionFragment
+    'feeRatio()': FunctionFragment
     'forceClosePendingPosition(address,uint256)': FunctionFragment
+    'freezeMarket(address)': FunctionFragment
+    'isActiveMarket(address)': FunctionFragment
+    'isFrozenMarket(address)': FunctionFragment
+    'isPaused()': FunctionFragment
+    'keeper()': FunctionFragment
     'marketConfiguration(address)': FunctionFragment
     'markets()': FunctionFragment
     'maximumOptionAmount(address,uint8)': FunctionFragment
-    'openPosition(address,address,uint8,uint256,uint256,uint256)': FunctionFragment
+    'openPosition(address,address,uint8,uint256,uint256,uint256,uint256)': FunctionFragment
+    'pause()': FunctionFragment
+    'profitFeeRatio()': FunctionFragment
     'reserve()': FunctionFragment
+    'setKeeper(address)': FunctionFragment
     'strike(uint256)': FunctionFragment
     'totalAssets()': FunctionFragment
     'totalLockedAssets()': FunctionFragment
+    'unpause()': FunctionFragment
     'unrealizedPNL()': FunctionFragment
     'unrealizedPremium()': FunctionFragment
     'updateUnrealizedPNL()': FunctionFragment
@@ -76,26 +99,59 @@ export interface IVaultInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'KEEPER_FEE'
+      | 'MAXIMUM_CALL_STRIKE_PRICE_RATIO'
+      | 'MAXIMUM_DURATION'
+      | 'MAXIMUM_LOCK_RATIO'
+      | 'MAXIMUM_PUT_STRIKE_PRICE_RATIO'
+      | 'MINIMUM_CALL_STRIKE_PRICE_RATIO'
+      | 'MINIMUM_DURATION'
+      | 'MINIMUM_PUT_STRIKE_PRICE_RATIO'
+      | 'RESERVE_RATIO'
+      | 'activateMarket'
       | 'activePosition'
       | 'addMarket'
-      | 'claimLPToken'
+      | 'backstopPool'
       | 'closePosition'
+      | 'deactivateMarket'
+      | 'defreezeMarket'
       | 'deposit'
+      | 'estimatePremium'
+      | 'feeRatio'
       | 'forceClosePendingPosition'
+      | 'freezeMarket'
+      | 'isActiveMarket'
+      | 'isFrozenMarket'
+      | 'isPaused'
+      | 'keeper'
       | 'marketConfiguration'
       | 'markets'
       | 'maximumOptionAmount'
       | 'openPosition'
+      | 'pause'
+      | 'profitFeeRatio'
       | 'reserve'
+      | 'setKeeper'
       | 'strike'
       | 'totalAssets'
       | 'totalLockedAssets'
+      | 'unpause'
       | 'unrealizedPNL'
       | 'unrealizedPremium'
       | 'updateUnrealizedPNL'
       | 'withdraw'
   ): FunctionFragment
 
+  encodeFunctionData(functionFragment: 'KEEPER_FEE', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MAXIMUM_CALL_STRIKE_PRICE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MAXIMUM_DURATION', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MAXIMUM_LOCK_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MAXIMUM_PUT_STRIKE_PRICE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MINIMUM_CALL_STRIKE_PRICE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MINIMUM_DURATION', values?: undefined): string
+  encodeFunctionData(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'RESERVE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'activateMarket', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
     functionFragment: 'activePosition',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -104,19 +160,37 @@ export interface IVaultInterface extends utils.Interface {
     functionFragment: 'addMarket',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string
-  encodeFunctionData(functionFragment: 'claimLPToken', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'backstopPool', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'closePosition',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
+  encodeFunctionData(functionFragment: 'deactivateMarket', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'defreezeMarket', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
     functionFragment: 'deposit',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string
   encodeFunctionData(
+    functionFragment: 'estimatePremium',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(functionFragment: 'feeRatio', values?: undefined): string
+  encodeFunctionData(
     functionFragment: 'forceClosePendingPosition',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
+  encodeFunctionData(functionFragment: 'freezeMarket', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'isActiveMarket', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'isFrozenMarket', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'isPaused', values?: undefined): string
+  encodeFunctionData(functionFragment: 'keeper', values?: undefined): string
   encodeFunctionData(functionFragment: 'marketConfiguration', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'markets', values?: undefined): string
   encodeFunctionData(
@@ -131,13 +205,18 @@ export interface IVaultInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string
+  encodeFunctionData(functionFragment: 'pause', values?: undefined): string
+  encodeFunctionData(functionFragment: 'profitFeeRatio', values?: undefined): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
+  encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'strike', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalLockedAssets', values?: undefined): string
+  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPNL', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPremium', values?: undefined): string
   encodeFunctionData(functionFragment: 'updateUnrealizedPNL', values?: undefined): string
@@ -146,41 +225,90 @@ export interface IVaultInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string
 
+  decodeFunctionResult(functionFragment: 'KEEPER_FEE', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MAXIMUM_CALL_STRIKE_PRICE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MAXIMUM_DURATION', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MAXIMUM_LOCK_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MAXIMUM_PUT_STRIKE_PRICE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MINIMUM_CALL_STRIKE_PRICE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MINIMUM_DURATION', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'RESERVE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'activateMarket', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'claimLPToken', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'backstopPool', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'deactivateMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'defreezeMarket', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'estimatePremium', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'feeRatio', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'forceClosePendingPosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'freezeMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'isActiveMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'isFrozenMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'isPaused', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'keeper', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'marketConfiguration', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'markets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'maximumOptionAmount', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'openPosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'profitFeeRatio', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'reserve', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setKeeper', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'strike', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalLockedAssets', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'unrealizedPNL', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'unrealizedPremium', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'updateUnrealizedPNL', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result
 
   events: {
+    'ActivateMarket(address,address)': EventFragment
     'CreateMarket(address,uint32,address)': EventFragment
     'CreateStrike(uint256,uint256,uint256,uint256,uint256)': EventFragment
+    'DeactivateMarket(address,address)': EventFragment
+    'DefreezeMarket(address,address)': EventFragment
     'DestoryStrike(uint256)': EventFragment
+    'FreezeMarket(address,address)': EventFragment
+    'KeeperAddressUpdated(address)': EventFragment
     'OpenPosition(address,uint256,uint256,uint256)': EventFragment
+    'PauseVault(address)': EventFragment
+    'ReceiveKeeperFee(address,uint256)': EventFragment
     'ReceivePremium(address,uint256,uint256)': EventFragment
     'SendRevenue(address,uint256,uint256)': EventFragment
+    'UnpauseVault(address)': EventFragment
+    'UpdateLPTokenPrice(address,uint256)': EventFragment
   }
 
+  getEvent(nameOrSignatureOrTopic: 'ActivateMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'CreateMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'CreateStrike'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'DeactivateMarket'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'DefreezeMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'DestoryStrike'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'FreezeMarket'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'KeeperAddressUpdated'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'OpenPosition'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'PauseVault'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'ReceiveKeeperFee'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'ReceivePremium'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'SendRevenue'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UnpauseVault'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateLPTokenPrice'): EventFragment
 }
+
+export interface ActivateMarketEventObject {
+  operator: string
+  collection: string
+}
+export type ActivateMarketEvent = TypedEvent<[string, string], ActivateMarketEventObject>
+
+export type ActivateMarketEventFilter = TypedEventFilter<ActivateMarketEvent>
 
 export interface CreateMarketEventObject {
   collection: string
@@ -205,12 +333,43 @@ export type CreateStrikeEvent = TypedEvent<
 
 export type CreateStrikeEventFilter = TypedEventFilter<CreateStrikeEvent>
 
+export interface DeactivateMarketEventObject {
+  operator: string
+  collection: string
+}
+export type DeactivateMarketEvent = TypedEvent<[string, string], DeactivateMarketEventObject>
+
+export type DeactivateMarketEventFilter = TypedEventFilter<DeactivateMarketEvent>
+
+export interface DefreezeMarketEventObject {
+  operator: string
+  collection: string
+}
+export type DefreezeMarketEvent = TypedEvent<[string, string], DefreezeMarketEventObject>
+
+export type DefreezeMarketEventFilter = TypedEventFilter<DefreezeMarketEvent>
+
 export interface DestoryStrikeEventObject {
   strikeId: BigNumber
 }
 export type DestoryStrikeEvent = TypedEvent<[BigNumber], DestoryStrikeEventObject>
 
 export type DestoryStrikeEventFilter = TypedEventFilter<DestoryStrikeEvent>
+
+export interface FreezeMarketEventObject {
+  operator: string
+  collection: string
+}
+export type FreezeMarketEvent = TypedEvent<[string, string], FreezeMarketEventObject>
+
+export type FreezeMarketEventFilter = TypedEventFilter<FreezeMarketEvent>
+
+export interface KeeperAddressUpdatedEventObject {
+  keeperAddress: string
+}
+export type KeeperAddressUpdatedEvent = TypedEvent<[string], KeeperAddressUpdatedEventObject>
+
+export type KeeperAddressUpdatedEventFilter = TypedEventFilter<KeeperAddressUpdatedEvent>
 
 export interface OpenPositionEventObject {
   collection: string
@@ -221,6 +380,21 @@ export interface OpenPositionEventObject {
 export type OpenPositionEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], OpenPositionEventObject>
 
 export type OpenPositionEventFilter = TypedEventFilter<OpenPositionEvent>
+
+export interface PauseVaultEventObject {
+  operator: string
+}
+export type PauseVaultEvent = TypedEvent<[string], PauseVaultEventObject>
+
+export type PauseVaultEventFilter = TypedEventFilter<PauseVaultEvent>
+
+export interface ReceiveKeeperFeeEventObject {
+  user: string
+  amount: BigNumber
+}
+export type ReceiveKeeperFeeEvent = TypedEvent<[string, BigNumber], ReceiveKeeperFeeEventObject>
+
+export type ReceiveKeeperFeeEventFilter = TypedEventFilter<ReceiveKeeperFeeEvent>
 
 export interface ReceivePremiumEventObject {
   user: string
@@ -239,6 +413,21 @@ export interface SendRevenueEventObject {
 export type SendRevenueEvent = TypedEvent<[string, BigNumber, BigNumber], SendRevenueEventObject>
 
 export type SendRevenueEventFilter = TypedEventFilter<SendRevenueEvent>
+
+export interface UnpauseVaultEventObject {
+  operator: string
+}
+export type UnpauseVaultEvent = TypedEvent<[string], UnpauseVaultEventObject>
+
+export type UnpauseVaultEventFilter = TypedEventFilter<UnpauseVaultEvent>
+
+export interface UpdateLPTokenPriceEventObject {
+  lpToken: string
+  newPrice: BigNumber
+}
+export type UpdateLPTokenPriceEvent = TypedEvent<[string, BigNumber], UpdateLPTokenPriceEventObject>
+
+export type UpdateLPTokenPriceEventFilter = TypedEventFilter<UpdateLPTokenPriceEvent>
 
 export interface IVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this
@@ -263,6 +452,29 @@ export interface IVault extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
+    KEEPER_FEE(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MAXIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MAXIMUM_DURATION(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MAXIMUM_LOCK_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MAXIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MINIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MINIMUM_DURATION(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    MINIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    RESERVE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    activateMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
     activePosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
@@ -276,15 +488,21 @@ export interface IVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
-    claimLPToken(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    backstopPool(overrides?: CallOverrides): Promise<[string]>
 
     closePosition(
       collection: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    deactivateMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    defreezeMarket(
+      collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
@@ -294,11 +512,35 @@ export interface IVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
+    estimatePremium(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { premium: BigNumber }>
+
+    feeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
+
     forceClosePendingPosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
+
+    freezeMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>
+
+    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>
+
+    isPaused(overrides?: CallOverrides): Promise<[boolean]>
+
+    keeper(overrides?: CallOverrides): Promise<[string]>
 
     marketConfiguration(
       collection: PromiseOrValue<string>,
@@ -320,16 +562,28 @@ export interface IVault extends BaseContract {
       strikePrice: PromiseOrValue<BigNumberish>,
       expiry: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+
+    profitFeeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
+
     reserve(overrides?: CallOverrides): Promise<[string]>
+
+    setKeeper(
+      keeperAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[StrikeStructOutput]>
 
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<[BigNumber]>
 
@@ -344,6 +598,29 @@ export interface IVault extends BaseContract {
     ): Promise<ContractTransaction>
   }
 
+  KEEPER_FEE(overrides?: CallOverrides): Promise<BigNumber>
+
+  MAXIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+  MAXIMUM_DURATION(overrides?: CallOverrides): Promise<BigNumber>
+
+  MAXIMUM_LOCK_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+  MAXIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+  MINIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+  MINIMUM_DURATION(overrides?: CallOverrides): Promise<BigNumber>
+
+  MINIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+  RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+  activateMarket(
+    collection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
   activePosition(
     collection: PromiseOrValue<string>,
     positionId: PromiseOrValue<BigNumberish>,
@@ -357,15 +634,21 @@ export interface IVault extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
-  claimLPToken(
-    user: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  backstopPool(overrides?: CallOverrides): Promise<string>
 
   closePosition(
     collection: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
     positionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  deactivateMarket(
+    collection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  defreezeMarket(
+    collection: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
@@ -375,11 +658,35 @@ export interface IVault extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
+  estimatePremium(
+    collection: PromiseOrValue<string>,
+    optionType: PromiseOrValue<BigNumberish>,
+    strikePrice: PromiseOrValue<BigNumberish>,
+    expiry: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  feeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
   forceClosePendingPosition(
     collection: PromiseOrValue<string>,
     positionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
+
+  freezeMarket(
+    collection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+
+  isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+
+  isPaused(overrides?: CallOverrides): Promise<boolean>
+
+  keeper(overrides?: CallOverrides): Promise<string>
 
   marketConfiguration(
     collection: PromiseOrValue<string>,
@@ -401,16 +708,28 @@ export interface IVault extends BaseContract {
     strikePrice: PromiseOrValue<BigNumberish>,
     expiry: PromiseOrValue<BigNumberish>,
     amount: PromiseOrValue<BigNumberish>,
+    maximumPremium: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+
+  profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
   reserve(overrides?: CallOverrides): Promise<string>
+
+  setKeeper(
+    keeperAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<StrikeStructOutput>
 
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
   totalLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
+
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
   unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -425,6 +744,26 @@ export interface IVault extends BaseContract {
   ): Promise<ContractTransaction>
 
   callStatic: {
+    KEEPER_FEE(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_DURATION(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_LOCK_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MINIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MINIMUM_DURATION(overrides?: CallOverrides): Promise<BigNumber>
+
+    MINIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    activateMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+
     activePosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
@@ -438,14 +777,17 @@ export interface IVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<number>
 
-    claimLPToken(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    backstopPool(overrides?: CallOverrides): Promise<string>
 
     closePosition(
       collection: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
+
+    deactivateMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+
+    defreezeMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
 
     deposit(
       amount: PromiseOrValue<BigNumberish>,
@@ -453,11 +795,32 @@ export interface IVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>
 
+    estimatePremium(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    feeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
     forceClosePendingPosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>
+
+    freezeMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+
+    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+
+    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+
+    isPaused(overrides?: CallOverrides): Promise<boolean>
+
+    keeper(overrides?: CallOverrides): Promise<string>
 
     marketConfiguration(
       collection: PromiseOrValue<string>,
@@ -479,16 +842,25 @@ export interface IVault extends BaseContract {
       strikePrice: PromiseOrValue<BigNumberish>,
       expiry: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { positionId: BigNumber; premium: BigNumber }>
 
+    pause(overrides?: CallOverrides): Promise<void>
+
+    profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
     reserve(overrides?: CallOverrides): Promise<string>
+
+    setKeeper(keeperAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
 
     strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<StrikeStructOutput>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
+
+    unpause(overrides?: CallOverrides): Promise<void>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -504,6 +876,15 @@ export interface IVault extends BaseContract {
   }
 
   filters: {
+    'ActivateMarket(address,address)'(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): ActivateMarketEventFilter
+    ActivateMarket(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): ActivateMarketEventFilter
+
     'CreateMarket(address,uint32,address)'(
       collection?: PromiseOrValue<string> | null,
       weight?: null,
@@ -526,8 +907,38 @@ export interface IVault extends BaseContract {
       strikePrice?: null
     ): CreateStrikeEventFilter
 
+    'DeactivateMarket(address,address)'(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): DeactivateMarketEventFilter
+    DeactivateMarket(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): DeactivateMarketEventFilter
+
+    'DefreezeMarket(address,address)'(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): DefreezeMarketEventFilter
+    DefreezeMarket(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): DefreezeMarketEventFilter
+
     'DestoryStrike(uint256)'(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
     DestoryStrike(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
+
+    'FreezeMarket(address,address)'(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): FreezeMarketEventFilter
+    FreezeMarket(
+      operator?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null
+    ): FreezeMarketEventFilter
+
+    'KeeperAddressUpdated(address)'(keeperAddress?: PromiseOrValue<string> | null): KeeperAddressUpdatedEventFilter
+    KeeperAddressUpdated(keeperAddress?: PromiseOrValue<string> | null): KeeperAddressUpdatedEventFilter
 
     'OpenPosition(address,uint256,uint256,uint256)'(
       collection?: PromiseOrValue<string> | null,
@@ -541,6 +952,15 @@ export interface IVault extends BaseContract {
       positionId?: PromiseOrValue<BigNumberish> | null,
       estimatedPremium?: null
     ): OpenPositionEventFilter
+
+    'PauseVault(address)'(operator?: PromiseOrValue<string> | null): PauseVaultEventFilter
+    PauseVault(operator?: PromiseOrValue<string> | null): PauseVaultEventFilter
+
+    'ReceiveKeeperFee(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): ReceiveKeeperFeeEventFilter
+    ReceiveKeeperFee(user?: PromiseOrValue<string> | null, amount?: null): ReceiveKeeperFeeEventFilter
 
     'ReceivePremium(address,uint256,uint256)'(
       user?: PromiseOrValue<string> | null,
@@ -559,9 +979,41 @@ export interface IVault extends BaseContract {
       fee?: null
     ): SendRevenueEventFilter
     SendRevenue(receiver?: PromiseOrValue<string> | null, amount?: null, fee?: null): SendRevenueEventFilter
+
+    'UnpauseVault(address)'(operator?: PromiseOrValue<string> | null): UnpauseVaultEventFilter
+    UnpauseVault(operator?: PromiseOrValue<string> | null): UnpauseVaultEventFilter
+
+    'UpdateLPTokenPrice(address,uint256)'(
+      lpToken?: PromiseOrValue<string> | null,
+      newPrice?: null
+    ): UpdateLPTokenPriceEventFilter
+    UpdateLPTokenPrice(lpToken?: PromiseOrValue<string> | null, newPrice?: null): UpdateLPTokenPriceEventFilter
   }
 
   estimateGas: {
+    KEEPER_FEE(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_DURATION(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_LOCK_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MAXIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MINIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    MINIMUM_DURATION(overrides?: CallOverrides): Promise<BigNumber>
+
+    MINIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
+
+    activateMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
     activePosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
@@ -575,15 +1027,21 @@ export interface IVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
-    claimLPToken(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    backstopPool(overrides?: CallOverrides): Promise<BigNumber>
 
     closePosition(
       collection: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    deactivateMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    defreezeMarket(
+      collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
@@ -593,11 +1051,35 @@ export interface IVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
+    estimatePremium(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    feeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
     forceClosePendingPosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
+
+    freezeMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+
+    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+
+    isPaused(overrides?: CallOverrides): Promise<BigNumber>
+
+    keeper(overrides?: CallOverrides): Promise<BigNumber>
 
     marketConfiguration(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -616,16 +1098,28 @@ export interface IVault extends BaseContract {
       strikePrice: PromiseOrValue<BigNumberish>,
       expiry: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+
+    profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
     reserve(overrides?: CallOverrides): Promise<BigNumber>
+
+    setKeeper(
+      keeperAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
+
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -641,6 +1135,29 @@ export interface IVault extends BaseContract {
   }
 
   populateTransaction: {
+    KEEPER_FEE(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MAXIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MAXIMUM_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MAXIMUM_LOCK_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MAXIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MINIMUM_CALL_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MINIMUM_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    MINIMUM_PUT_STRIKE_PRICE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    RESERVE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    activateMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
     activePosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
@@ -654,15 +1171,21 @@ export interface IVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
-    claimLPToken(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    backstopPool(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     closePosition(
       collection: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    deactivateMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    defreezeMarket(
+      collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
@@ -672,11 +1195,35 @@ export interface IVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
+    estimatePremium(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    feeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
     forceClosePendingPosition(
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
+
+    freezeMarket(
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    isPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    keeper(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     marketConfiguration(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
@@ -695,16 +1242,28 @@ export interface IVault extends BaseContract {
       strikePrice: PromiseOrValue<BigNumberish>,
       expiry: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
+      maximumPremium: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+
+    profitFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
     reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    setKeeper(
+      keeperAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
 
     strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<PopulatedTransaction>
 

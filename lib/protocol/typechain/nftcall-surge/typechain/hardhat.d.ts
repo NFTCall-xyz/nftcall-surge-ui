@@ -79,6 +79,14 @@ declare module 'hardhat/types/runtime' {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.AssetRiskCache__factory>
     getContractFactory(
+      name: 'BackstopPool',
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BackstopPool__factory>
+    getContractFactory(
+      name: 'KeeperHelper',
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KeeperHelper__factory>
+    getContractFactory(
       name: 'IAssetRiskCache',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IAssetRiskCache__factory>
@@ -114,10 +122,6 @@ declare module 'hardhat/types/runtime' {
       name: 'FixedPointMathLib',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.FixedPointMathLib__factory>
-    getContractFactory(
-      name: 'MathErrors',
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MathErrors__factory>
     getContractFactory(
       name: 'SimpleInitializable',
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -192,6 +196,8 @@ declare module 'hardhat/types/runtime' {
     getContractAt(name: 'ERC165', address: string, signer?: ethers.Signer): Promise<Contracts.ERC165>
     getContractAt(name: 'IERC165', address: string, signer?: ethers.Signer): Promise<Contracts.IERC165>
     getContractAt(name: 'AssetRiskCache', address: string, signer?: ethers.Signer): Promise<Contracts.AssetRiskCache>
+    getContractAt(name: 'BackstopPool', address: string, signer?: ethers.Signer): Promise<Contracts.BackstopPool>
+    getContractAt(name: 'KeeperHelper', address: string, signer?: ethers.Signer): Promise<Contracts.KeeperHelper>
     getContractAt(name: 'IAssetRiskCache', address: string, signer?: ethers.Signer): Promise<Contracts.IAssetRiskCache>
     getContractAt(name: 'ILPToken', address: string, signer?: ethers.Signer): Promise<Contracts.ILPToken>
     getContractAt(name: 'IOptionToken', address: string, signer?: ethers.Signer): Promise<Contracts.IOptionToken>
@@ -205,7 +211,6 @@ declare module 'hardhat/types/runtime' {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.FixedPointMathLib>
-    getContractAt(name: 'MathErrors', address: string, signer?: ethers.Signer): Promise<Contracts.MathErrors>
     getContractAt(
       name: 'SimpleInitializable',
       address: string,

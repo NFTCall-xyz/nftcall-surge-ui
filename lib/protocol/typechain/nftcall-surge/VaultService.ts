@@ -68,29 +68,9 @@ export class VaultService extends BaseService<Vault> {
   constructor(provider: providers.Provider) {
     super(provider, Vault__factory)
     this.provider = provider
-    this.claimLPToken = this.claimLPToken.bind(this)
     this.deposit = this.deposit.bind(this)
     this.openPosition = this.openPosition.bind(this)
     this.withdraw = this.withdraw.bind(this)
-  }
-
-  public async claimLPToken(props: ClaimLPTokenProps) {
-    const { Vault, userAddress } = props
-    const VaultContract = this.getContractInstance(Vault)
-    const txs: EthereumTransactionTypeExtended[] = []
-
-    const txCallback: () => Promise<transactionType> = this.generateTxCallback({
-      rawTxMethod: async () => VaultContract.populateTransaction.claimLPToken(userAddress),
-      from: userAddress,
-      value: DEFAULT_NULL_VALUE_ON_TX,
-    })
-
-    txs.push({
-      tx: txCallback,
-      txType: eEthereumTxType.DLP,
-    })
-
-    return txs
   }
 
   public async deposit(props: DepositProps) {
@@ -169,6 +149,7 @@ export class VaultService extends BaseService<Vault> {
           optionType,
           valueToWei(strikePrice, 18).toString(),
           expiry,
+          valueToWei(amount, 18).toString(),
           valueToWei(amount, 18).toString()
         ),
       from: userAddress,

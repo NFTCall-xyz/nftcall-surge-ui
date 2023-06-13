@@ -29,7 +29,6 @@ export interface LPTokenInterface extends utils.Interface {
     'approve(address,uint256)': FunctionFragment
     'asset()': FunctionFragment
     'balanceOf(address)': FunctionFragment
-    'claim(address)': FunctionFragment
     'convertToAssets(uint256)': FunctionFragment
     'convertToShares(uint256)': FunctionFragment
     'decimals()': FunctionFragment
@@ -75,7 +74,6 @@ export interface LPTokenInterface extends utils.Interface {
       | 'approve'
       | 'asset'
       | 'balanceOf'
-      | 'claim'
       | 'convertToAssets'
       | 'convertToShares'
       | 'decimals'
@@ -122,7 +120,6 @@ export interface LPTokenInterface extends utils.Interface {
   ): string
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string
@@ -192,7 +189,6 @@ export interface LPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result
@@ -371,12 +367,7 @@ export interface LPToken extends BaseContract {
 
     asset(overrides?: CallOverrides): Promise<[string]>
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
-
-    claim(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
 
     convertToAssets(
       shares: PromiseOrValue<BigNumberish>,
@@ -526,12 +517,7 @@ export interface LPToken extends BaseContract {
 
   asset(overrides?: CallOverrides): Promise<string>
 
-  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
-
-  claim(
-    user: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
   convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -675,9 +661,7 @@ export interface LPToken extends BaseContract {
 
     asset(overrides?: CallOverrides): Promise<string>
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
-
-    claim(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
     convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -886,9 +870,7 @@ export interface LPToken extends BaseContract {
 
     asset(overrides?: CallOverrides): Promise<BigNumber>
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
-
-    claim(user: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
     convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -1033,12 +1015,7 @@ export interface LPToken extends BaseContract {
 
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
-
-    claim(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 

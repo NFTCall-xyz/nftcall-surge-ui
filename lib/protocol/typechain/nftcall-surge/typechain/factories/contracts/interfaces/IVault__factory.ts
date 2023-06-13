@@ -33,6 +33,38 @@ const _abi = [
         type: 'address',
       },
       {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'DeactivatedMarket',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'FrozenMarket',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
         name: 'totalLockedAssets',
         type: 'uint256',
@@ -143,6 +175,43 @@ const _abi = [
         type: 'address',
       },
       {
+        internalType: 'address',
+        name: 'caller',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'keeper',
+        type: 'address',
+      },
+    ],
+    name: 'OnlyKeeper',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'caller',
+        type: 'address',
+      },
+    ],
+    name: 'OnlyUnpaused',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
         name: 'positionId',
         type: 'uint256',
@@ -180,6 +249,32 @@ const _abi = [
       },
     ],
     name: 'PositionNotExpired',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'premium',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumPremium',
+        type: 'uint256',
+      },
+    ],
+    name: 'PremiumTooHigh',
     type: 'error',
   },
   {
@@ -239,6 +334,25 @@ const _abi = [
     ],
     name: 'ZeroAmount',
     type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'ActivateMarket',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -307,12 +421,82 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'DeactivateMarket',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'DefreezeMarket',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'uint256',
         name: 'strikeId',
         type: 'uint256',
       },
     ],
     name: 'DestoryStrike',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'FreezeMarket',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'keeperAddress',
+        type: 'address',
+      },
+    ],
+    name: 'KeeperAddressUpdated',
     type: 'event',
   },
   {
@@ -344,6 +528,38 @@ const _abi = [
       },
     ],
     name: 'OpenPosition',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+    ],
+    name: 'PauseVault',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'ReceiveKeeperFee',
     type: 'event',
   },
   {
@@ -395,6 +611,168 @@ const _abi = [
     ],
     name: 'SendRevenue',
     type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+    ],
+    name: 'UnpauseVault',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'lpToken',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newPrice',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateLPTokenPrice',
+    type: 'event',
+  },
+  {
+    inputs: [],
+    name: 'KEEPER_FEE',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAXIMUM_CALL_STRIKE_PRICE_RATIO',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAXIMUM_DURATION',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAXIMUM_LOCK_RATIO',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAXIMUM_PUT_STRIKE_PRICE_RATIO',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MINIMUM_CALL_STRIKE_PRICE_RATIO',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MINIMUM_DURATION',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MINIMUM_PUT_STRIKE_PRICE_RATIO',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'RESERVE_RATIO',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'activateMarket',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
@@ -450,16 +828,16 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
+    inputs: [],
+    name: 'backstopPool',
+    outputs: [
       {
         internalType: 'address',
-        name: 'user',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'claimLPToken',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -467,11 +845,6 @@ const _abi = [
       {
         internalType: 'address',
         name: 'collection',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
         type: 'address',
       },
       {
@@ -488,6 +861,32 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'deactivateMarket',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'defreezeMarket',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -517,6 +916,58 @@ const _abi = [
         type: 'address',
       },
       {
+        internalType: 'enum OptionType',
+        name: 'optionType',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint256',
+        name: 'strikePrice',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'expiry',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'estimatePremium',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'premium',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'feeRatio',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
         name: 'positionId',
         type: 'uint256',
@@ -535,13 +986,90 @@ const _abi = [
         type: 'address',
       },
     ],
+    name: 'freezeMarket',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'isActiveMarket',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
+    name: 'isFrozenMarket',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'isPaused',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'keeper',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+    ],
     name: 'marketConfiguration',
     outputs: [
       {
         components: [
           {
             internalType: 'bool',
-            name: 'paused',
+            name: 'frozen',
             type: 'bool',
           },
           {
@@ -642,6 +1170,11 @@ const _abi = [
         name: 'amount',
         type: 'uint256',
       },
+      {
+        internalType: 'uint256',
+        name: 'maximumPremium',
+        type: 'uint256',
+      },
     ],
     name: 'openPosition',
     outputs: [
@@ -661,6 +1194,26 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'pause',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'profitFeeRatio',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'reserve',
     outputs: [
       {
@@ -670,6 +1223,19 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'keeperAddress',
+        type: 'address',
+      },
+    ],
+    name: 'setKeeper',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -737,6 +1303,13 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'unpause',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

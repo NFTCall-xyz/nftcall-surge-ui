@@ -22,7 +22,6 @@ import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListen
 
 export interface ILPTokenInterface extends utils.Interface {
   functions: {
-    'claim(address)': FunctionFragment
     'deposit(uint256,address,address)': FunctionFragment
     'lockedBalanceOf(address)': FunctionFragment
     'maximumVaultBalance()': FunctionFragment
@@ -34,7 +33,6 @@ export interface ILPTokenInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'claim'
       | 'deposit'
       | 'lockedBalanceOf'
       | 'maximumVaultBalance'
@@ -44,7 +42,6 @@ export interface ILPTokenInterface extends utils.Interface {
       | 'vault'
   ): FunctionFragment
 
-  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
     functionFragment: 'deposit',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>]
@@ -56,7 +53,6 @@ export interface ILPTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'setMinimumAssetToShareRatio', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
 
-  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'lockedBalanceOf', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'maximumVaultBalance', data: BytesLike): Result
@@ -131,11 +127,6 @@ export interface ILPToken extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    claim(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
-
     deposit(
       assets: PromiseOrValue<BigNumberish>,
       user: PromiseOrValue<string>,
@@ -161,11 +152,6 @@ export interface ILPToken extends BaseContract {
 
     vault(overrides?: CallOverrides): Promise<[string]>
   }
-
-  claim(
-    user: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
 
   deposit(
     assets: PromiseOrValue<BigNumberish>,
@@ -193,8 +179,6 @@ export interface ILPToken extends BaseContract {
   vault(overrides?: CallOverrides): Promise<string>
 
   callStatic: {
-    claim(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
-
     deposit(
       assets: PromiseOrValue<BigNumberish>,
       user: PromiseOrValue<string>,
@@ -230,8 +214,6 @@ export interface ILPToken extends BaseContract {
   }
 
   estimateGas: {
-    claim(user: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
-
     deposit(
       assets: PromiseOrValue<BigNumberish>,
       user: PromiseOrValue<string>,
@@ -259,11 +241,6 @@ export interface ILPToken extends BaseContract {
   }
 
   populateTransaction: {
-    claim(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
-
     deposit(
       assets: PromiseOrValue<BigNumberish>,
       user: PromiseOrValue<string>,

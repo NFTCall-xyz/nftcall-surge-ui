@@ -81,6 +81,7 @@ export class SurgeUIService extends BaseService<SurgeUI> {
   public async getPremium(props: GetPremiumProps) {
     const { SurgeUI, pricerAddress, collection, optionType, strike } = props
     const SurgeUIContract = this.getContractInstance(SurgeUI)
-    return await SurgeUIContract.getPremium(pricerAddress, collection, optionType, strike)
+    return 0
+    // return await SurgeUIContract.getPremium(pricerAddress, collection, optionType, strike)
   }
 }

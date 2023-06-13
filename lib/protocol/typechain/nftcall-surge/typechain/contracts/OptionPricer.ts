@@ -22,9 +22,10 @@ import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListen
 
 export interface OptionPricerInterface extends utils.Interface {
   functions: {
+    'delta(uint256,uint256,uint256,uint256)': FunctionFragment
     'getAdjustedVol(address,uint8,uint256)': FunctionFragment
     'getPremium(uint8,uint256,uint256,uint256,uint256)': FunctionFragment
-    'initialize(address,address)': FunctionFragment
+    'initialize(address,address,address)': FunctionFragment
     'optionPrices(uint256,uint256,uint256,uint256)': FunctionFragment
     'owner()': FunctionFragment
     'renounceOwnership()': FunctionFragment
@@ -34,6 +35,7 @@ export interface OptionPricerInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'delta'
       | 'getAdjustedVol'
       | 'getPremium'
       | 'initialize'
@@ -44,6 +46,15 @@ export interface OptionPricerInterface extends utils.Interface {
       | 'updatePricerParams'
   ): FunctionFragment
 
+  encodeFunctionData(
+    functionFragment: 'delta',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
   encodeFunctionData(
     functionFragment: 'getAdjustedVol',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
@@ -58,7 +69,10 @@ export interface OptionPricerInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string
-  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string
   encodeFunctionData(
     functionFragment: 'optionPrices',
     values: [
@@ -81,6 +95,7 @@ export interface OptionPricerInterface extends utils.Interface {
     ]
   ): string
 
+  decodeFunctionResult(functionFragment: 'delta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getAdjustedVol', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getPremium', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
@@ -128,6 +143,14 @@ export interface OptionPricer extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
+    delta(
+      S: PromiseOrValue<BigNumberish>,
+      K: PromiseOrValue<BigNumberish>,
+      vol: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
+
     getAdjustedVol(
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
@@ -145,6 +168,7 @@ export interface OptionPricer extends BaseContract {
     ): Promise<[BigNumber]>
 
     initialize(
+      vault_: PromiseOrValue<string>,
       riskCache_: PromiseOrValue<string>,
       oracle_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -176,6 +200,14 @@ export interface OptionPricer extends BaseContract {
     ): Promise<ContractTransaction>
   }
 
+  delta(
+    S: PromiseOrValue<BigNumberish>,
+    K: PromiseOrValue<BigNumberish>,
+    vol: PromiseOrValue<BigNumberish>,
+    duration: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
+
   getAdjustedVol(
     asset: PromiseOrValue<string>,
     ot: PromiseOrValue<BigNumberish>,
@@ -193,6 +225,7 @@ export interface OptionPricer extends BaseContract {
   ): Promise<BigNumber>
 
   initialize(
+    vault_: PromiseOrValue<string>,
     riskCache_: PromiseOrValue<string>,
     oracle_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -224,6 +257,14 @@ export interface OptionPricer extends BaseContract {
   ): Promise<ContractTransaction>
 
   callStatic: {
+    delta(
+      S: PromiseOrValue<BigNumberish>,
+      K: PromiseOrValue<BigNumberish>,
+      vol: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
+
     getAdjustedVol(
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
@@ -241,6 +282,7 @@ export interface OptionPricer extends BaseContract {
     ): Promise<BigNumber>
 
     initialize(
+      vault_: PromiseOrValue<string>,
       riskCache_: PromiseOrValue<string>,
       oracle_: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -281,6 +323,14 @@ export interface OptionPricer extends BaseContract {
   }
 
   estimateGas: {
+    delta(
+      S: PromiseOrValue<BigNumberish>,
+      K: PromiseOrValue<BigNumberish>,
+      vol: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     getAdjustedVol(
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
@@ -298,6 +348,7 @@ export interface OptionPricer extends BaseContract {
     ): Promise<BigNumber>
 
     initialize(
+      vault_: PromiseOrValue<string>,
       riskCache_: PromiseOrValue<string>,
       oracle_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -330,6 +381,14 @@ export interface OptionPricer extends BaseContract {
   }
 
   populateTransaction: {
+    delta(
+      S: PromiseOrValue<BigNumberish>,
+      K: PromiseOrValue<BigNumberish>,
+      vol: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
     getAdjustedVol(
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
@@ -347,6 +406,7 @@ export interface OptionPricer extends BaseContract {
     ): Promise<PopulatedTransaction>
 
     initialize(
+      vault_: PromiseOrValue<string>,
       riskCache_: PromiseOrValue<string>,
       oracle_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
