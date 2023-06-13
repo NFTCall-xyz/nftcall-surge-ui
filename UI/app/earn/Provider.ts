@@ -40,16 +40,14 @@ const useStats = () => {
 }
 type UseYourStatsProps = {
   stats: ReturnType<typeof useStats>
-  sendTransaction: SendTransaction
 }
-const useYourStats = ({ stats, sendTransaction }: UseYourStatsProps) => {
+const useYourStats = ({ stats }: UseYourStatsProps) => {
   const {
     vault: {
       lpToken: { balance, lockedBalance, releaseTime },
       totalAssets,
       totalLockedAssets,
     },
-    updateVaults,
   } = useVault()
   const your = useMemo(() => {
     const returnValue = {
@@ -68,36 +66,13 @@ const useYourStats = ({ stats, sendTransaction }: UseYourStatsProps) => {
     return returnValue
   }, [totalAssets, totalLockedAssets])
 
-  const {
-    contracts: { vaultService },
-    address: { Vault: vaultAddress },
-  } = useNetwork()
-  const { account } = useWallet()
-  const claim = useCallback(() => {
-    return transaction({
-      createTransaction: vaultService.claimLPToken({
-        Vault: vaultAddress,
-        userAddress: account,
-      }),
-      setStatus: () => {},
-      sendTransaction,
-      isOnlyApprove: false,
-    }).finally(() => {
-      updateVaults()
-    })
-  }, [account, sendTransaction, updateVaults, vaultAddress, vaultService])
-
   const locked = useMemo(() => {
     const returnValue = {
       lockedNcETHBalance: lockedBalance,
       lockedUnitil: releaseTime,
-      claim: {
-        disabled: safeGet(() => releaseTime > Date.now() || !account || lockedBalance.isZero()),
-        action: claim,
-      },
     }
     return returnValue
-  }, [account, claim, lockedBalance, releaseTime])
+  }, [lockedBalance, releaseTime])
 
   return { your, vault, locked }
 }
@@ -190,7 +165,7 @@ export default createContextWithProvider(() => {
   const sendTransaction = useSendTransaction()
 
   const stats = useStats()
-  const yourStats = useYourStats({ stats, sendTransaction })
+  const yourStats = useYourStats({ stats })
   const tabs = useTabs({ stats, tTabs, sendTransaction })
 
   return {

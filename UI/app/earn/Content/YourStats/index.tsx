@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 
-import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 
 import { safeGet } from 'app/utils/get'
@@ -86,18 +85,6 @@ const YourStats: FC = () => {
             <Span>-</Span>
           )}
         </Text>
-
-        <Button
-          variant="contained"
-          size="small"
-          disabled={locked.claim.disabled}
-          onClick={() => {
-            locked.claim.action()
-          }}
-          sx={{ padding: '5px' }}
-        >
-          {tYourStats('locked.claim')}
-        </Button>
       </Stack>
     </Stack>
   )
