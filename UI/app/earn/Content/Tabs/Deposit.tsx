@@ -21,13 +21,17 @@ import { usePageEarn } from '../..'
 const Deposit: FC = () => {
   const {
     theme,
-    tabs: { deposit, ncETHPrice, wETHBalance },
+    tabs: { approveDeposit, deposit, ncETHPrice, wETHBalance, wETHAllowance },
     tTabs,
   } = usePageEarn()
   const [value, setValue] = useImmer(0)
   const receiveAmount = useMemo(() => {
     return safeGet(() => ncETHPrice.multipliedBy(value))
   }, [ncETHPrice, value])
+
+  const depositAvailable = useMemo(() => {
+    return safeGet(() => wETHAllowance.gt(value))
+  }, [wETHAllowance, value])
 
   return (
     <Box paddingTop={2}>
@@ -69,16 +73,29 @@ const Deposit: FC = () => {
                 </Tiny>
               </Stack>
 
-              <Button
-                variant="contained"
-                disabled={!value}
-                onClick={() => {
-                  deposit(value.toString())
-                }}
-                sx={{ padding: '5px' }}
-              >
-                {tTabs('deposit.action')}
-              </Button>
+              {depositAvailable ? (
+                <Button
+                  variant="contained"
+                  disabled={!value}
+                  onClick={() => {
+                    deposit(value.toString())
+                  }}
+                  sx={{ padding: '5px' }}
+                >
+                  {tTabs('deposit.action')}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  disabled={!value}
+                  onClick={() => {
+                    approveDeposit(value.toString())
+                  }}
+                  sx={{ padding: '5px' }}
+                >
+                  {tTabs('approve.action')}
+                </Button>
+              )}
             </Stack>
           </Box>
         </Grid>

@@ -19,6 +19,9 @@ const locale = {
     },
   },
   Tabs: {
+    approve: {
+      action: 'Approve',
+    },
     deposit: {
       action: 'Deposit',
     },

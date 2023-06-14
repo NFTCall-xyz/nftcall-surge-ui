@@ -11,7 +11,7 @@ import {
   type tEthereumAddress,
   type transactionType,
 } from '../commons/types'
-import { DEFAULT_NULL_VALUE_ON_TX } from '../commons/utils'
+import { DEFAULT_APPROVE_AMOUNT, DEFAULT_NULL_VALUE_ON_TX } from '../commons/utils'
 import type { Vault } from './typechain'
 import { Vault__factory } from './typechain'
 
@@ -49,7 +49,7 @@ export interface OpenPositionProps extends BaseVaultProps {
   expiry: number
   amount: string
 
-  premium: string
+  maximumPremium: string
 
   approveService: {
     approve: (args: ApproveType) => EthereumTransactionTypeExtended
@@ -68,11 +68,39 @@ export class VaultService extends BaseService<Vault> {
   constructor(provider: providers.Provider) {
     super(provider, Vault__factory)
     this.provider = provider
+    this.approveDeposit = this.approveDeposit.bind(this)
     this.deposit = this.deposit.bind(this)
+    this.approveOpenPosition = this.approveOpenPosition.bind(this)
     this.openPosition = this.openPosition.bind(this)
     this.withdraw = this.withdraw.bind(this)
   }
 
+  public async approveDeposit(props: DepositProps) {
+    const {
+      userAddress,
+      wETHAddress,
+      lpTokenAddress,
+      approveService: { isApproved, approve },
+      amount,
+    } = props
+    const txs: EthereumTransactionTypeExtended[] = []
+    const convertedAmount = valueToWei(amount, 18).toString()
+
+    const approveProps = {
+      token: wETHAddress,
+      user: userAddress,
+      spender: lpTokenAddress,
+      amount: convertedAmount,
+    }
+    const approved = await isApproved(approveProps)
+    if (!approved) {
+      approveProps.amount = DEFAULT_APPROVE_AMOUNT
+      const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
+      txs.push(approveTx)
+    }
+
+    return txs
+  }
   public async deposit(props: DepositProps) {
     const {
       Vault,
@@ -94,6 +122,7 @@ export class VaultService extends BaseService<Vault> {
     }
     const approved = await isApproved(approveProps)
     if (!approved) {
+      approveProps.amount = DEFAULT_APPROVE_AMOUNT
       const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
       txs.push(approveTx)
     }
@@ -112,6 +141,32 @@ export class VaultService extends BaseService<Vault> {
     return txs
   }
 
+  public async approveOpenPosition(props: OpenPositionProps) {
+    const {
+      Vault,
+      userAddress,
+      wETHAddress,
+      maximumPremium,
+      approveService: { isApproved, approve },
+    } = props
+    const txs: EthereumTransactionTypeExtended[] = []
+
+    const convertedPremium = valueToWei(maximumPremium, 18).toString()
+    const approveProps = {
+      token: wETHAddress,
+      user: userAddress,
+      spender: Vault,
+      amount: convertedPremium,
+    }
+    const approved = await isApproved(approveProps)
+    if (!approved) {
+      approveProps.amount = DEFAULT_APPROVE_AMOUNT
+      const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
+      txs.push(approveTx)
+    }
+    return txs
+  }
+
   public async openPosition(props: OpenPositionProps) {
     const {
       Vault,
@@ -122,13 +177,13 @@ export class VaultService extends BaseService<Vault> {
       strikePrice,
       expiry,
       amount,
-      premium,
+      maximumPremium,
       approveService: { isApproved, approve },
     } = props
     const VaultContract = this.getContractInstance(Vault)
     const txs: EthereumTransactionTypeExtended[] = []
 
-    const convertedPremium = valueToWei(premium, 18).toString()
+    const convertedPremium = valueToWei(maximumPremium, 18).toString()
     const approveProps = {
       token: wETHAddress,
       user: userAddress,
@@ -137,6 +192,7 @@ export class VaultService extends BaseService<Vault> {
     }
     const approved = await isApproved(approveProps)
     if (!approved) {
+      approveProps.amount = DEFAULT_APPROVE_AMOUNT
       const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
       txs.push(approveTx)
     }
@@ -150,7 +206,7 @@ export class VaultService extends BaseService<Vault> {
           valueToWei(strikePrice, 18).toString(),
           expiry,
           valueToWei(amount, 18).toString(),
-          valueToWei(amount, 18).toString()
+          convertedPremium
         ),
       from: userAddress,
       value: DEFAULT_NULL_VALUE_ON_TX,

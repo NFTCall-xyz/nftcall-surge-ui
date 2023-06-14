@@ -85,7 +85,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
   const {
     updateVaults,
     vault: {
-      lpToken: { wETHBalance, maxWithdraw },
+      lpToken: { wETHBalance, wETHAllowance, maxWithdraw },
     },
   } = useVault()
   const tabs = useMemo(() => {
@@ -114,6 +114,27 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
     address: { Vault: vaultAddress, WETH: wETHAddress, LPToken: lpTokenAddress },
   } = useNetwork()
   const { account } = useWallet()
+
+  const approveDeposit = useCallback(
+    (amount: string) => {
+      return transaction({
+        createTransaction: vaultService.approveDeposit({
+          Vault: vaultAddress,
+          userAddress: account,
+          wETHAddress,
+          lpTokenAddress,
+          amount,
+          approveService: erc20Service,
+        }),
+        setStatus: () => {},
+        sendTransaction,
+        isOnlyApprove: true,
+      }).finally(() => {
+        updateVaults()
+      })
+    },
+    [account, erc20Service, lpTokenAddress, sendTransaction, updateVaults, vaultAddress, vaultService, wETHAddress]
+  )
 
   const deposit = useCallback(
     (amount: string) => {
@@ -154,7 +175,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
     [account, sendTransaction, updateVaults, vaultAddress, vaultService]
   )
 
-  return { tabs, deposit, withdraw, wETHBalance, maxWithdraw, ncETHPrice }
+  return { tabs, approveDeposit, deposit, withdraw, wETHBalance, wETHAllowance, maxWithdraw, ncETHPrice }
 }
 
 export default createContextWithProvider(() => {
