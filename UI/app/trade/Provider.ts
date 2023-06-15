@@ -16,7 +16,9 @@ const useNFTCollection = () => {
   const {
     vault: {
       lpToken: { wETHBalance },
+      wETHAllowance,
     },
+    updateVaults,
   } = useVault()
   const { collections, updateNFTCollections } = useNFTCollections()
   const [NFTCollectionAddress, setNFTCollectionAddress] = useImmer(collections[0].address.NFT)
@@ -32,8 +34,36 @@ const useNFTCollection = () => {
     address: { Vault: vaultAddress, WETH: wETHAddress },
     contracts: { vaultService, erc20Service },
   } = useNetwork()
+  const approveOpenPosition = useCallback(
+    (props: Pick<OpenPositionProps, 'optionType' | 'strikePrice' | 'expiry' | 'amount' | 'maximumPremium'>) =>
+      transaction({
+        createTransaction: vaultService.approveOpenPosition({
+          Vault: vaultAddress,
+          wETHAddress,
+          userAddress: account,
+          collectionAddress: collection.address.NFT,
+          approveService: erc20Service,
+          ...props,
+        }),
+        setStatus: () => {},
+        sendTransaction,
+        isOnlyApprove: true,
+      }).finally(() => {
+        updateVaults()
+      }),
+    [
+      account,
+      collection.address.NFT,
+      erc20Service,
+      sendTransaction,
+      updateVaults,
+      vaultAddress,
+      vaultService,
+      wETHAddress,
+    ]
+  )
   const openOptions = useCallback(
-    (props: Pick<OpenPositionProps, 'optionType' | 'strikePrice' | 'expiry' | 'amount' | 'premium'>) =>
+    (props: Pick<OpenPositionProps, 'optionType' | 'strikePrice' | 'expiry' | 'amount' | 'maximumPremium'>) =>
       transaction({
         createTransaction: vaultService.openPosition({
           Vault: vaultAddress,
@@ -63,7 +93,9 @@ const useNFTCollection = () => {
 
   return {
     wETHBalance,
+    wETHAllowance,
     collection,
+    approveOpenPosition,
     openOptions,
     setNFTCollectionAddress,
   }

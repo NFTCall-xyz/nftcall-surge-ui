@@ -15,15 +15,18 @@ const locale = {
     calls: 'Calls',
     put: 'Put',
     size: 'Size',
+    amount: 'Size',
     limit: 'Limit',
     strikePrice: 'Strike Price',
     expiry: 'Expiration Date',
+    expiryDate: 'Expiration Date',
     premium: 'Premium',
     yourBalance: 'Your Balance',
     breakevenPrice: 'Breakeven Price',
     maxProfit: 'Max. Profit',
     maxLoss: 'Max. Loss',
     openOptions: 'Open Options',
+    approve: 'Approve',
   },
   OptionPositions: {
     tabs: {

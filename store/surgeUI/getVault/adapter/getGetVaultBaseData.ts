@@ -6,21 +6,41 @@ export type GetVaultBaseData = {
   lpToken: {
     balance: string
     wETHBalance: string
+    wETHAllowance: string
     lockedBalance: string
     maxWithdraw: string
     releaseTime: string
   }
 
+  wETHAllowance: string
   totalSupply: string
   totalAssets: string
   totalLockedAssets: string
+  totalActiveOptions: string
+  executionFee: string
   unrealizedPNL: string
   unrealizedPremium: string
 }
 
 export const getGetVaultBaseData = (value: VaultStructOutput): GetVaultBaseData => {
   return {
-    lpToken: getString(value.lpToken, ['balance', 'lockedBalance', 'maxWithdraw', 'releaseTime', 'wETHBalance']),
-    ...getString(value, ['totalSupply', 'totalAssets', 'totalLockedAssets', 'unrealizedPNL', 'unrealizedPremium']),
+    lpToken: getString(value.lpToken, [
+      'balance',
+      'lockedBalance',
+      'maxWithdraw',
+      'releaseTime',
+      'wETHBalance',
+      'wETHAllowance',
+    ]),
+    ...getString(value, [
+      'totalSupply',
+      'totalAssets',
+      'totalLockedAssets',
+      'unrealizedPNL',
+      'unrealizedPremium',
+      'wETHAllowance',
+      'totalActiveOptions',
+      'executionFee',
+    ]),
   }
 }
