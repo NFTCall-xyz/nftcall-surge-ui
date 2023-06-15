@@ -63,8 +63,8 @@ const OpenOptionsAction: FC = () => {
   }, [init, strikePrice.value, amount.value, expiryDate.value])
 
   const maximumPremium = useMemo(() => {
-    return toBN(1 + allowedSlippage).multipliedBy(premium.value)
-  }, [allowedSlippage, premium.value])
+    return toBN(1 + allowedSlippage.value).multipliedBy(premium.value)
+  }, [allowedSlippage.value, premium.value])
 
   const openOptionsAvailable = useMemo(() => {
     return safeGet(() => wETHAllowance.gt(maximumPremium))

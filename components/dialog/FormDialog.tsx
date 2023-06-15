@@ -22,14 +22,7 @@ const FormDialog: FCC<DialogValues & { title: string; submit: () => Promise<any>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button onClick={close}>Cancel</Button>
-        <SubmitBotton
-          onClick={() =>
-            submit().then(() => {
-              close()
-            })
-          }
-          isSubmitting={isSubmitting}
-        >
+        <SubmitBotton onClick={() => submit()} isSubmitting={isSubmitting}>
           Submit
         </SubmitBotton>
       </DialogActions>

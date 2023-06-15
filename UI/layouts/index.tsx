@@ -4,6 +4,8 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { Fragment, useMemo } from 'react'
 
+import SettingDialog from 'app/setting/components/SettingDialog'
+
 import MotionDiv from 'lib/framer-motion/components/MotionDiv'
 import NProgress from 'lib/nprogress/components/NProgress'
 import ChainDialog from 'lib/wallet/components/ChainDialog'
@@ -78,6 +80,7 @@ const Layout: FC<MyAppProps> = ({ Component, pageProps }) => {
         <Page />
         <ChainDialog />
         <ConnectDialog />
+        <SettingDialog />
       </ActiveLayout>
     </Fragment>
   )

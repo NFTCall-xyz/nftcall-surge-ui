@@ -3,6 +3,8 @@ import type { FC } from 'react'
 import Stack from '@mui/material/Stack'
 import { styled } from '@mui/material/styles'
 
+import SettingButton from 'app/setting/components/SettingButton'
+
 import ChainButton from 'lib/wallet/components/ChainButton'
 import ConnectButton from 'lib/wallet/components/ConnectButton'
 
@@ -12,6 +14,7 @@ const ROOT = styled(Stack)`
 const Actions: FC = () => {
   return (
     <ROOT direction="row" spacing={2}>
+      <SettingButton />
       <ChainButton />
       <ConnectButton />
     </ROOT>

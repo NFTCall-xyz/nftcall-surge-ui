@@ -1,12 +1,13 @@
 import { useCallback } from 'react'
 import { useImmer } from 'use-immer'
 
+import { useDialog } from 'app/hooks/useDialog'
 import { useMount } from 'app/hooks/useMount'
 import { getItem, setItem } from 'app/utils/cache/localStorage'
 
 type DisplayMode = 'card' | 'list'
 
-export function useSetting() {
+const useDisplayMode = () => {
   const [displayMode, setDisplayModeInternal] = useImmer<DisplayMode>('card')
   const setDisplayMode = useCallback(
     (displayMode: DisplayMode) => {
@@ -24,5 +25,28 @@ export function useSetting() {
   return {
     displayMode,
     setDisplayMode,
+  }
+}
+
+const useAllowedSlippage = () => {
+  const [allowedSlippage, setAllowedSlippage] = useImmer(0.05)
+  const dialog = useDialog()
+
+  return {
+    value: allowedSlippage,
+    set: setAllowedSlippage,
+    dialog,
+  }
+}
+
+export function useSetting() {
+  const { displayMode, setDisplayMode } = useDisplayMode()
+  const allowedSlippage = useAllowedSlippage()
+
+  return {
+    displayMode,
+    setDisplayMode,
+
+    allowedSlippage,
   }
 }
