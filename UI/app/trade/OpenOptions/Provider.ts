@@ -9,7 +9,7 @@ import { createContextWithProvider } from 'app/utils/createContext'
 import { useNetwork } from 'domains/data'
 
 import { toBN, valueToWei, weiToValue } from 'lib/math'
-import { OptionType, type Strike } from 'lib/protocol/typechain/nftcall-surge'
+import { OptionType, type GetPremiumProps as ProtocolGetPremiumProps } from 'lib/protocol/typechain/nftcall-surge'
 
 import { usePageTrade } from '..'
 
@@ -186,31 +186,32 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
     },
   } = usePageTrade()
   const {
-    address: { OptionPricer: pricerAddress, SurgeUI },
-    contracts: { surgeUIService },
+    address: { Vault },
+    contracts: { vaultService },
   } = useNetwork()
 
   type GetPremiumProps = {
-    props: Strike & { optionType: OptionType }
+    props: Pick<ProtocolGetPremiumProps, 'optionType' | 'strikePrice' | 'expiry' | 'amount'>
     getPromise: (promise: Promise<BN>) => void
   }
 
   const getPremium = useMemo(
     () =>
-      debounce(({ props: { optionType, ...strike }, getPromise }: GetPremiumProps) => {
+      debounce(({ props: { optionType, strikePrice, expiry, amount }, getPromise }: GetPremiumProps) => {
         return getPromise(
-          surgeUIService
+          vaultService
             .getPremium({
+              Vault,
               collection: address.NFT,
               optionType,
-              strike,
-              SurgeUI,
-              pricerAddress,
+              strikePrice,
+              expiry,
+              amount,
             })
             .then((data) => weiToValue(data, 0))
         )
       }, 300),
-    [SurgeUI, address.NFT, pricerAddress, surgeUIService]
+    [Vault, address.NFT, vaultService]
   )
 
   useEffect(() => {
@@ -223,10 +224,9 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
     getPremium({
       props: {
         optionType,
-        spotPrice: valueToWei(price, 18).toString(),
         strikePrice: valueToWei(strikePrice.value, 18).toString(),
         expiry: getTimestamp(expiryDate.value.getTime()),
-        duration: getTimestamp(expiryDate.value.getTime() - Date.now()),
+        amount: valueToWei(amount.value, 18).toString(),
       },
       getPromise: (promise) =>
         promise
@@ -246,12 +246,11 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
     return () => {
       isCancel = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getPremium, optionType, price, strikePrice.value, expiryDate.value])
+  }, [amount.value, expiryDate.value, getPremium, optionType, setLoading, setValue, strikePrice.value])
 
   const returnValue = useMemo(() => {
-    if (!amount.value || !value) return 0
-    return toBN(value).multipliedBy(1.05).multipliedBy(amount.value).toNumber()
+    if (!amount.value || !value) return toBN(0)
+    return toBN(value)
   }, [amount.value, value])
 
   return {
@@ -272,7 +271,9 @@ export default createContextWithProvider(() => {
         data: { price },
       },
       wETHBalance,
+      wETHAllowance,
       openOptions,
+      approveOpenPosition,
     },
   } = usePageTrade()
 
@@ -306,9 +307,11 @@ export default createContextWithProvider(() => {
     amount,
     strikePrice,
     expiryDate,
+    approveOpenPosition,
     openOptions,
     price,
     premium,
     wETHBalance,
+    wETHAllowance,
   }
 })

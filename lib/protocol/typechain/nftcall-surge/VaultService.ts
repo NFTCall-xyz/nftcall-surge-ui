@@ -62,6 +62,14 @@ export interface WithdrawProps extends BaseVaultProps {
   amount: string
 }
 
+export interface GetPremiumProps extends BaseVaultProps {
+  collection: string
+  optionType: OptionType
+  strikePrice: string
+  expiry: number
+  amount: string
+}
+
 export class VaultService extends BaseService<Vault> {
   provider: providers.Provider
 
@@ -244,5 +252,11 @@ export class VaultService extends BaseService<Vault> {
     })
 
     return txs
+  }
+
+  public async getPremium(props: GetPremiumProps) {
+    const { Vault, collection, optionType, strikePrice, expiry, amount } = props
+    const VaultContract = this.getContractInstance(Vault)
+    return await VaultContract.estimatePremium(collection, optionType, strikePrice, expiry, amount)
   }
 }
