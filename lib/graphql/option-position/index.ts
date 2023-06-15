@@ -28,6 +28,7 @@ export type OptionPositionBaseData = {
   }
   amount: string
   premium: string
+  maximumPremium: string
   updateTimestamp: number
 }
 export type ResponseType = { optionPositions: OptionPositionBaseData[] }

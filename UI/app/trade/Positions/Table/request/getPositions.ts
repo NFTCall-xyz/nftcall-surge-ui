@@ -29,7 +29,7 @@ export const getPositions = (positions: OptionPositionBaseData[], floorPrice: BN
       ...timestamps,
       ...strikeTimestamps,
       ...getAddresses(t, ['nftAddress', 'userAddress']),
-      ...getWeiToValueBN(t, ['amount', 'premium'], 18),
+      ...getWeiToValueBN(t, ['amount', 'premium', 'maximumPremium'], 18),
       ...getWeiToValueBN(t.strikeId, ['strikePrice', 'spotPrice'], 18),
       PNL: toBN(0),
       PNLRate: toBN(0),

@@ -25,6 +25,7 @@ query getOptionPositions(
     }
     amount
     premium
+    maximumPremium
     updateTimestamp
   }
 }

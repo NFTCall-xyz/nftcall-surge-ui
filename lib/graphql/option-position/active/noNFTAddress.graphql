@@ -19,6 +19,7 @@ query getOptionPositions($first: Int!, $skip: Int!, $userAddress: Bytes!, $curre
     }
     amount
     premium
+    maximumPremium
     updateTimestamp
   }
 }
