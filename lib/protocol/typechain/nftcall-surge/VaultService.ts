@@ -62,6 +62,12 @@ export interface WithdrawProps extends BaseVaultProps {
   amount: string
 }
 
+export interface ForceClosePendingPositionProps extends BaseVaultProps {
+  userAddress: tEthereumAddress
+  collectionAddress: tEthereumAddress
+  positionId: number
+}
+
 export interface GetPremiumProps extends BaseVaultProps {
   collection: string
   optionType: OptionType
@@ -81,6 +87,8 @@ export class VaultService extends BaseService<Vault> {
     this.approveOpenPosition = this.approveOpenPosition.bind(this)
     this.openPosition = this.openPosition.bind(this)
     this.withdraw = this.withdraw.bind(this)
+    this.forceClosePendingPosition = this.forceClosePendingPosition.bind(this)
+    this.getPremium = this.getPremium.bind(this)
   }
 
   public async approveDeposit(props: DepositProps) {
@@ -109,6 +117,7 @@ export class VaultService extends BaseService<Vault> {
 
     return txs
   }
+
   public async deposit(props: DepositProps) {
     const {
       Vault,
@@ -242,6 +251,26 @@ export class VaultService extends BaseService<Vault> {
 
     const txCallback: () => Promise<transactionType> = this.generateTxCallback({
       rawTxMethod: async () => VaultContract.populateTransaction.withdraw(convertedAmount, userAddress),
+      from: userAddress,
+      value: DEFAULT_NULL_VALUE_ON_TX,
+    })
+
+    txs.push({
+      tx: txCallback,
+      txType: eEthereumTxType.DLP,
+    })
+
+    return txs
+  }
+
+  public async forceClosePendingPosition(props: ForceClosePendingPositionProps) {
+    const { Vault, collectionAddress, positionId, userAddress } = props
+    const VaultContract = this.getContractInstance(Vault)
+    const txs: EthereumTransactionTypeExtended[] = []
+
+    const txCallback: () => Promise<transactionType> = this.generateTxCallback({
+      rawTxMethod: async () =>
+        VaultContract.populateTransaction.forceClosePendingPosition(collectionAddress, positionId),
       from: userAddress,
       value: DEFAULT_NULL_VALUE_ON_TX,
     })
