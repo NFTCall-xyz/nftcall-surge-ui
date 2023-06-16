@@ -28,6 +28,7 @@ type CollapsibleHeadProps = Pick<BasicTableProps, 'columns'>
 type CollapsibleRowProps = Pick<BasicTableProps, 'columns'> & {
   data: any[]
   row: any
+  setRowData: any
   rowIndex: any
 }
 
@@ -67,7 +68,7 @@ const CollapsibleHead: FC<CollapsibleHeadProps> = (props) => {
 }
 const CollapsibleRow: FC<CollapsibleRowProps> = (props) => {
   const [open, setOpen] = useImmer(false)
-  const { columns, row, rowIndex, data } = props
+  const { columns, row, rowIndex, data, setRowData } = props
 
   const columnsPrimary = columns.slice(0, columnsPrimaryNumber)
   const columnsSecondary = columns.slice(columnsPrimaryNumber)
@@ -107,8 +108,9 @@ const CollapsibleRow: FC<CollapsibleRowProps> = (props) => {
               dataKey: column.dataKey,
               isScrolling: false,
               rowData: row,
+              setRowData,
               rowIndex,
-            })}
+            } as any)}
           </Box>
         ))}
       </TableRow>
@@ -143,8 +145,9 @@ const CollapsibleRow: FC<CollapsibleRowProps> = (props) => {
                       dataKey: column.dataKey,
                       isScrolling: false,
                       rowData: row,
+                      setRowData,
                       rowIndex,
-                    })}
+                    } as any)}
                   </Grid>
                 </Grid>
               ))}
@@ -180,6 +183,7 @@ const DataFetcher: FC<{
         row: rowData,
         rowIndex,
         columns,
+        setRowData,
       }}
     />
   )

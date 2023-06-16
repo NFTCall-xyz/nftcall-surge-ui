@@ -65,6 +65,7 @@ const DataFetcher: FC<{
             dataKey: column.dataKey,
             isScrolling: false,
             rowData,
+            setRowData,
             rowIndex,
           })}
         </td>
