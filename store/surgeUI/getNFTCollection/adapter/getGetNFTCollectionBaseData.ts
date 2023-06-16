@@ -7,6 +7,7 @@ export type GetNFTCollectionBaseData = {
   price: string
   vol: string
   maximumOptionAmount: string
+  openInterest: string
 }
 
 export const getGetNFTCollectionBaseData = (
@@ -15,6 +16,6 @@ export const getGetNFTCollectionBaseData = (
 ): GetNFTCollectionBaseData => {
   return {
     collectionAddress,
-    ...getString(value, ['price', 'vol', 'maximumOptionAmount']),
+    ...getString(value, ['price', 'vol', 'maximumOptionAmount', 'openInterest']),
   }
 }

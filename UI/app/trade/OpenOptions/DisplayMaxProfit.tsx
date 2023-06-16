@@ -15,7 +15,7 @@ const DisplayMaxProfit: FC = () => {
   const { amount, strikePrice, premium, tOpenCallOptions } = usePageTradeOpenOptions()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
-    return <NumberDisplay value={strikePrice ? strikePrice.value * amount.value - premium.value : 0} />
+    return <NumberDisplay value={strikePrice ? strikePrice.value * amount.value - premium.value.toNumber() : 0} />
   }, [amount.value, premium.loading, premium.value, strikePrice])
 
   return (

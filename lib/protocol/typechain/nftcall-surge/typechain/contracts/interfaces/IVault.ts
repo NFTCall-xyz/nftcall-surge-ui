@@ -280,6 +280,8 @@ export interface IVaultInterface extends utils.Interface {
     'PauseVault(address)': EventFragment
     'ReceiveKeeperFee(address,uint256)': EventFragment
     'ReceivePremium(address,uint256,uint256)': EventFragment
+    'ReceivePremiumAndFee(address,uint256,uint256)': EventFragment
+    'ReturnExcessPremium(address,uint256)': EventFragment
     'SendRevenue(address,uint256,uint256)': EventFragment
     'UnpauseVault(address)': EventFragment
     'UpdateLPTokenPrice(address,uint256)': EventFragment
@@ -297,6 +299,8 @@ export interface IVaultInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'PauseVault'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'ReceiveKeeperFee'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'ReceivePremium'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'ReceivePremiumAndFee'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'ReturnExcessPremium'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'SendRevenue'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UnpauseVault'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateLPTokenPrice'): EventFragment
@@ -404,6 +408,23 @@ export interface ReceivePremiumEventObject {
 export type ReceivePremiumEvent = TypedEvent<[string, BigNumber, BigNumber], ReceivePremiumEventObject>
 
 export type ReceivePremiumEventFilter = TypedEventFilter<ReceivePremiumEvent>
+
+export interface ReceivePremiumAndFeeEventObject {
+  user: string
+  premium: BigNumber
+  fee: BigNumber
+}
+export type ReceivePremiumAndFeeEvent = TypedEvent<[string, BigNumber, BigNumber], ReceivePremiumAndFeeEventObject>
+
+export type ReceivePremiumAndFeeEventFilter = TypedEventFilter<ReceivePremiumAndFeeEvent>
+
+export interface ReturnExcessPremiumEventObject {
+  user: string
+  returnedPremium: BigNumber
+}
+export type ReturnExcessPremiumEvent = TypedEvent<[string, BigNumber], ReturnExcessPremiumEventObject>
+
+export type ReturnExcessPremiumEventFilter = TypedEventFilter<ReturnExcessPremiumEvent>
 
 export interface SendRevenueEventObject {
   receiver: string
@@ -972,6 +993,23 @@ export interface IVault extends BaseContract {
       amountToReserve?: null,
       amountToLiquidityPool?: null
     ): ReceivePremiumEventFilter
+
+    'ReceivePremiumAndFee(address,uint256,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      premium?: null,
+      fee?: null
+    ): ReceivePremiumAndFeeEventFilter
+    ReceivePremiumAndFee(
+      user?: PromiseOrValue<string> | null,
+      premium?: null,
+      fee?: null
+    ): ReceivePremiumAndFeeEventFilter
+
+    'ReturnExcessPremium(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      returnedPremium?: null
+    ): ReturnExcessPremiumEventFilter
+    ReturnExcessPremium(user?: PromiseOrValue<string> | null, returnedPremium?: null): ReturnExcessPremiumEventFilter
 
     'SendRevenue(address,uint256,uint256)'(
       receiver?: PromiseOrValue<string> | null,

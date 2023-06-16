@@ -16,7 +16,6 @@ export type GetVaultData = {
   totalSupply: BN
   totalAssets: BN
   totalLockedAssets: BN
-  totalActiveOptions: BN
   executionFee: BN
   unrealizedPNL: BN
   unrealizedPremium: BN
@@ -46,6 +45,5 @@ export const getGetVaultData = (getVaultBaseData: GetVaultBaseData): GetVaultDat
       ],
       18
     ),
-    ...getWeiToValueBN(getVaultBaseData, ['totalActiveOptions'], 0),
   }
 }

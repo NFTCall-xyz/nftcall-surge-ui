@@ -16,7 +16,6 @@ export type GetVaultBaseData = {
   totalSupply: string
   totalAssets: string
   totalLockedAssets: string
-  totalActiveOptions: string
   executionFee: string
   unrealizedPNL: string
   unrealizedPremium: string
@@ -39,7 +38,6 @@ export const getGetVaultBaseData = (value: VaultStructOutput): GetVaultBaseData 
       'unrealizedPNL',
       'unrealizedPremium',
       'wETHAllowance',
-      'totalActiveOptions',
       'executionFee',
     ]),
   }

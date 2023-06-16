@@ -22,12 +22,14 @@ export type NFTCollectionStruct = {
   price: PromiseOrValue<BigNumberish>
   vol: PromiseOrValue<BigNumberish>
   maximumOptionAmount: PromiseOrValue<BigNumberish>
+  openInterest: PromiseOrValue<BigNumberish>
 }
 
-export type NFTCollectionStructOutput = [BigNumber, BigNumber, BigNumber] & {
+export type NFTCollectionStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
   price: BigNumber
   vol: BigNumber
   maximumOptionAmount: BigNumber
+  openInterest: BigNumber
 }
 
 export type OptionPositionStruct = {
@@ -73,7 +75,6 @@ export type VaultStruct = {
   wETHAllowance: PromiseOrValue<BigNumberish>
   totalSupply: PromiseOrValue<BigNumberish>
   totalAssets: PromiseOrValue<BigNumberish>
-  totalActiveOptions: PromiseOrValue<BigNumberish>
   executionFee: PromiseOrValue<BigNumberish>
   totalLockedAssets: PromiseOrValue<BigNumberish>
   unrealizedPNL: PromiseOrValue<BigNumberish>
@@ -88,14 +89,12 @@ export type VaultStructOutput = [
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber,
   BigNumber
 ] & {
   lpToken: VaultLPTokenStructOutput
   wETHAllowance: BigNumber
   totalSupply: BigNumber
   totalAssets: BigNumber
-  totalActiveOptions: BigNumber
   executionFee: BigNumber
   totalLockedAssets: BigNumber
   unrealizedPNL: BigNumber
