@@ -80,14 +80,16 @@ export const transaction = (props: {
               console.log('[txResponse]', txResponse)
               return txResponse.wait()
             })
-            .then(() => {
+            .then((data) => {
               console.log('success')
+              return data
             })
         }
 
         const onlyApprove = () =>
-          approval().then(() => {
+          approval().then((data) => {
             console.log('success')
+            return data
           })
 
         return isOnlyApprove ? onlyApprove() : approveAndTransaction()

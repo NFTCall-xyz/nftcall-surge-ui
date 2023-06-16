@@ -275,6 +275,7 @@ export default createContextWithProvider(() => {
       openOptions,
       approveOpenPosition,
     },
+    positions: { setSourceData },
   } = usePageTrade()
 
   const [init, setInit] = useImmer(true)
@@ -309,6 +310,7 @@ export default createContextWithProvider(() => {
     expiryDate,
     approveOpenPosition,
     openOptions,
+    setSourceData,
     price,
     premium,
     wETHBalance,

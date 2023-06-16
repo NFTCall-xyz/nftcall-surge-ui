@@ -1,14 +1,18 @@
 import { useWallet } from 'domains'
+import type { LogDescription } from 'ethers/lib/utils'
 import { useCallback, useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
 import { createContextWithProvider } from 'app/utils/createContext'
+import { safeGet } from 'app/utils/get'
 
 import { transaction } from 'domains/controllers/adapter/transaction'
 import { useNFTCollections, useNetwork, useVault } from 'domains/data'
 
 import { useSendTransaction } from 'lib/protocol/hooks/sendTransaction'
 import type { OpenPositionProps } from 'lib/protocol/typechain/nftcall-surge'
+
+import type { OptionPosition } from './Positions/Table/request/getPositions'
 
 const usePageEffect = () => {}
 
@@ -76,9 +80,30 @@ const useNFTCollection = () => {
         setStatus: () => {},
         sendTransaction,
         isOnlyApprove: false,
-      }).finally(() => {
-        updateNFTCollections()
-      }),
+      })
+        .then((receipt) => {
+          const logs: LogDescription[] = safeGet(() =>
+            receipt.logs
+              .map((data: any) =>
+                safeGet(() => vaultService.getContractInstance(vaultAddress).interface.parseLog(data))
+              )
+              .filter((i: any) => i)
+          )
+          console.log(logs)
+          const result = logs.find((i) => i.name === 'OpenPosition')
+          if (!result) return
+          const positionId = result.args.positionId.toNumber()
+
+          return {
+            positionId,
+            userAddress: account,
+            nftAddress: collection.address.NFT,
+            ...props,
+          }
+        })
+        .finally(() => {
+          updateNFTCollections()
+        }),
     [
       account,
       collection.address.NFT,
@@ -101,13 +126,24 @@ const useNFTCollection = () => {
   }
 }
 
+const usePositions = () => {
+  const [sourceData, setSourceData] = useImmer<OptionPosition[]>([])
+
+  return {
+    sourceData,
+    setSourceData,
+  }
+}
+
 export default createContextWithProvider(() => {
   const { collections } = useNFTCollections()
   const collection = useNFTCollection()
+  const positions = usePositions()
 
   return {
     collections,
     collection,
+    positions,
     usePageEffect,
   }
 })

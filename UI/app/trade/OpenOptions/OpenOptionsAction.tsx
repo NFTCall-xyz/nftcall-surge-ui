@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack'
 import { getTimestamp } from 'app/constant'
 import { safeGet } from 'app/utils/get'
 
+import { OptionPositionStatus } from 'lib/graphql/option-position'
 import { toBN } from 'lib/math'
 
 import { usePageTradeOpenOptions } from '.'
@@ -21,6 +22,7 @@ const OpenOptionsAction: FC = () => {
 
   const {
     openOptions,
+    setSourceData,
     approveOpenPosition,
     wETHAllowance,
     strikePrice,
@@ -83,6 +85,16 @@ const OpenOptionsAction: FC = () => {
               strikePrice: strikePrice.value.toString(),
               expiry: getTimestamp(expiryDate.value.getTime()),
               maximumPremium: maximumPremium.toString(),
+            }).then((data) => {
+              setSourceData((sourceData) => [
+                {
+                  ...data,
+                  status: OptionPositionStatus.Pending,
+                  expiration: data.expiry,
+                  updateTimestamp: Date.now(),
+                },
+                ...sourceData,
+              ])
             })
           }}
         >

@@ -19,8 +19,8 @@ import {
 
 import { useNetwork } from 'domains/data'
 
+import { usePageTrade } from '../..'
 import { request } from './request'
-import type { OptionPosition } from './request/getPositions'
 
 const pageSize = 5
 
@@ -29,11 +29,13 @@ type PositionsProps = {
 }
 export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
   const { t: tOptionPositionsTable } = useTranslation('app-trade', { keyPrefix: 'OptionPositions.table' })
+  const {
+    positions: { setSourceData, sourceData },
+  } = usePageTrade()
 
   const [pageIndex, setPageIndex] = useImmer(0)
   const dataFetcher = usePost(request)
   const [noMoreSourceData, setNoMoreSourceData] = useImmer(false)
-  const [sourceData, setSourceData] = useImmer<OptionPosition[]>([])
 
   const { account } = useWallet()
 
