@@ -19,7 +19,6 @@ import {
 
 import { useNetwork } from 'domains/data'
 
-import { usePageTrade } from '../..'
 import { request } from './request'
 import type { OptionPosition } from './request/getPositions'
 
@@ -30,13 +29,6 @@ type PositionsProps = {
 }
 export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
   const { t: tOptionPositionsTable } = useTranslation('app-trade', { keyPrefix: 'OptionPositions.table' })
-  const {
-    collection: {
-      collection: {
-        data: { price },
-      },
-    },
-  } = usePageTrade()
 
   const [pageIndex, setPageIndex] = useImmer(0)
   const dataFetcher = usePost(request)
@@ -129,14 +121,13 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           thegraphUrl,
           isActive,
           currentTimestamp: getTimestamp(Date.now()),
-          floorPrice: price,
         })
         .then((rowData) => {
           if (rowData.length < pageSize) setNoMoreSourceData(true)
           setSourceData((data) => data.concat(rowData))
         })
     },
-    [dataFetcher, account, thegraphUrl, isActive, price, setNoMoreSourceData, setSourceData]
+    [dataFetcher, account, thegraphUrl, isActive, setNoMoreSourceData, setSourceData]
   )
 
   const loadMore = useMemo(() => {
@@ -144,23 +135,13 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
       end,
       disabled: dataFetcher.loading,
       onLoadMore: () => {
-        if (!account || !price || price.isZero()) return setNoMoreSourceData(true)
+        if (!account) return setNoMoreSourceData(true)
         if (noMoreSourceData) return Promise.resolve()
         setPageIndex(pageIndex + 1)
         return onFetch(pageIndex)
       },
     }
-  }, [
-    account,
-    dataFetcher.loading,
-    end,
-    noMoreSourceData,
-    onFetch,
-    pageIndex,
-    price,
-    setNoMoreSourceData,
-    setPageIndex,
-  ])
+  }, [account, dataFetcher.loading, end, noMoreSourceData, onFetch, pageIndex, setNoMoreSourceData, setPageIndex])
 
   useEffect(() => {
     if (!account) return

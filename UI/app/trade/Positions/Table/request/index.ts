@@ -10,13 +10,12 @@ type Props = BaseGraphqlRequestType &
   RequestType &
   Partial<{
     isActive: boolean
-    floorPrice: BN
   }>
-export const request = ({ thegraphUrl, isActive, floorPrice, ...props }: Props) => {
+export const request = ({ thegraphUrl, isActive, ...props }: Props) => {
   if (!thegraphUrl) return Promise.reject({ message: 'network error' })
   const variables: RequestType = props
   variables.currentTimestamp = getCurrentTimestamp()
   return graphqlRequest(thegraphUrl, isActive, variables)
     .then(({ optionPositions }) => optionPositions)
-    .then((data) => getPositions(data, floorPrice))
+    .then((data) => getPositions(data))
 }

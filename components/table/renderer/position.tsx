@@ -1,5 +1,6 @@
 import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
 import { differenceInDays, differenceInHours, format } from 'date-fns'
+import type { Updater } from 'use-immer'
 
 import TrendingDownOutlinedIcon from '@mui/icons-material/TrendingDownOutlined'
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined'
@@ -8,8 +9,9 @@ import TableCell from '@mui/material/TableCell'
 
 import { Span, Tiny } from 'components/Typography'
 
-import NumberDisplay from 'lib/math/components/NumberDisplay'
-import RiseOrFall from 'lib/math/components/RiseOrFall'
+import OptionPositionPNL from 'domains/data/optionPosition/components/OptionPositionPNL'
+import OptionPositionStaus from 'domains/data/optionPosition/components/OptionPositionStaus'
+
 import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 type TableCellProps = {
@@ -20,22 +22,12 @@ type TableCellProps = {
   isScrolling: boolean
   parent?: any
   rowData: OptionPosition
+  setRowData: Updater<OptionPosition>
   rowIndex: number
 }
 
-export const PNLCellRenderer = ({ rowData: { PNL, PNLRate } }: TableCellProps) => {
-  return (
-    <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
-      <Stack spacing={1} alignItems="end">
-        <RiseOrFall value={PNL}>
-          <NumberDisplay value={PNL} abbreviate={{}} numberFormatOptions={{ signDisplay: 'always' }} />
-        </RiseOrFall>
-        <RiseOrFall value={PNLRate}>
-          <NumberDisplay value={PNLRate} options="percent" numberFormatOptions={{ signDisplay: 'always' }} />
-        </RiseOrFall>
-      </Stack>
-    </TableCell>
-  )
+export const PNLCellRenderer = (props: TableCellProps) => {
+  return <OptionPositionPNL {...props} />
 }
 
 export const expiryDateRenderer = ({ cellData }: TableCellProps) => {
@@ -90,10 +82,6 @@ export const optionTypeRenderer = ({ rowData: { optionType } }: TableCellProps) 
   }
 }
 
-export const statusCellRenderer = ({ rowData: { status } }: TableCellProps) => {
-  return (
-    <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
-      <Span color="text.secondary">{status}</Span>
-    </TableCell>
-  )
+export const statusCellRenderer = (props: TableCellProps) => {
+  return <OptionPositionStaus {...props} />
 }
