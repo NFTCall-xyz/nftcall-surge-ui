@@ -3,8 +3,8 @@ query getOptionPositions($first: Int!, $skip: Int!, $userAddress: Bytes!, $curre
     first: $first
     skip: $skip
     where: { userAddress: $userAddress, strikeId_: { expiration_lt: $currentTimestamp } }
-    orderBy: updateTimestamp
-    orderDirection: asc
+    orderBy: createTimestamp
+    orderDirection: desc
   ) {
     userAddress
     nftAddress

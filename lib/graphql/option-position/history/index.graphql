@@ -13,8 +13,8 @@ query getOptionPositions(
       userAddress: $userAddress
       or: [{ status: Active, strikeId_: { expiration_lt: $currentTimestamp } }, { status_not: Active }]
     }
-    orderBy: updateTimestamp
-    orderDirection: asc
+    orderBy: createTimestamp
+    orderDirection: desc
   ) {
     userAddress
     nftAddress
