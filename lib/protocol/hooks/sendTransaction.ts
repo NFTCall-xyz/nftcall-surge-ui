@@ -3,6 +3,8 @@ import { useWeb3React } from '@web3-react/core'
 import type { BigNumber, providers } from 'ethers'
 import { useCallback } from 'react'
 
+import { toBN } from 'lib/math'
+
 export type transactionType = {
   value?: string
   from?: string
@@ -21,9 +23,16 @@ export const useSendTransaction = () => {
     (extendedTxData: transactionType) => {
       const { from, ...txData } = extendedTxData
       const signer = web3Provider.getSigner(from)
-      return signer.sendTransaction({
+      const tx = {
         ...txData,
         value: txData.value ? EthersBN.from(txData.value) : undefined,
+      }
+
+      return signer.estimateGas(tx).then((gasLimit) => {
+        if (gasLimit && !gasLimit.isZero()) {
+          tx.gasLimit = EthersBN.from(toBN(gasLimit).multipliedBy(2).toString())
+        }
+        return signer.sendTransaction(tx)
       })
     },
     [web3Provider]
