@@ -136,11 +136,12 @@ const usePositions = () => {
 }
 
 export default createContextWithProvider(() => {
-  const { collections } = useNFTCollections()
+  const { collections, floorPrice24Change } = useNFTCollections()
   const collection = useNFTCollection()
   const positions = usePositions()
 
   return {
+    floorPrice24Change,
     collections,
     collection,
     positions,

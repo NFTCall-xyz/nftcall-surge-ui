@@ -10,6 +10,7 @@ import type { NFTCollection as Collection } from 'domains/data/NFTCollection'
 import NFTCollectionTitle from 'domains/data/NFTCollection/components/NFTCollectionTitle'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
+import RiseOrFall from 'lib/math/components/RiseOrFall'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTrade } from '..'
@@ -23,6 +24,7 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
       collection: { address },
       setNFTCollectionAddress,
     },
+    floorPrice24Change,
   } = usePageTrade()
   const isSelected = useMemo(() => collection.address.NFT === address.NFT, [address.NFT, collection.address.NFT])
 
@@ -49,9 +51,16 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
             <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={collection.data.price} abbreviate={{}} />
           </Stack>
-          <Tiny>
-            <NumberDisplay value={0} abbreviate={{}} />
-          </Tiny>
+          <RiseOrFall value={floorPrice24Change.value[collection.address.NFT]}>
+            <Tiny color="unset">
+              <NumberDisplay
+                value={floorPrice24Change.value[collection.address.NFT]}
+                abbreviate={{}}
+                numberFormatOptions={{ signDisplay: 'always' }}
+                options="percent"
+              />
+            </Tiny>
+          </RiseOrFall>
         </Stack>
       </FlexBetween>
     </Card>

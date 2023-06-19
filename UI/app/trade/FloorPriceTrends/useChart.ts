@@ -13,13 +13,16 @@ import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 import { safeGet } from 'app/utils/get'
 
+import type {
+  FloorPriceTrends,
+  FloorPriceTrendsChartProps,
+} from 'domains/data/NFTCollection/application/floorPrice24Change//types'
+import { getFloorPriceTrends } from 'domains/data/NFTCollection/application/floorPrice24Change/request'
 import { useMath } from 'domains/utils'
 
 import { toBN } from 'lib/math'
 
 import { usePageTrade } from '..'
-import { getFloorPriceTrends } from './request'
-import type { FloorPriceTrends, FloorPriceTrendsChartProps } from './types'
 
 const DayButtonList = [7, 14, 30, 90]
 const useDayButton = () => {
@@ -41,6 +44,7 @@ export const useChart = () => {
   const dayButton = useDayButton()
   const {
     collection: { collection },
+    floorPrice24Change,
   } = usePageTrade()
   const { chainId } = useWallet()
   const matches = useMediaQuery(theme.breakpoints.down('md'))
@@ -92,8 +96,8 @@ export const useChart = () => {
   }, [collection.data.price, collection.data.vol, dayButton.value, sourceData])
 
   const change24 = useMemo(() => {
-    return safeGet(() => data[data.length - 1].floorPrice.div(data[data.length - 2].floorPrice).minus(1)) || toBN(0)
-  }, [data])
+    return safeGet(() => floorPrice24Change.value[collection.address.NFT]) || toBN(0)
+  }, [collection.address.NFT, floorPrice24Change.value])
 
   const props = useMemo(
     () =>

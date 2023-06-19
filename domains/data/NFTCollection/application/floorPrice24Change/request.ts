@@ -35,6 +35,7 @@ export const getFloorPriceTrends = (props: GetFloorPriceTrendsProps): Promise<Fl
       return {
         chainId,
         NFTAddress,
+        MainNetworkNFT: item.address,
         floorPrice: weiToValue(item.price, 18),
         vol: weiToValue(item.vol, 4),
         createTime: timestamps.time,

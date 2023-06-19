@@ -14,6 +14,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { Paragraph, Tiny } from 'components/Typography'
 import FlexRowAlign from 'components/flexbox/FlexRowAlign'
 
+import type { FloorPriceTrendsProps } from 'domains/data/NFTCollection/application/floorPrice24Change/types'
 import NFTCollectionTitle from 'domains/data/NFTCollection/components/NFTCollectionTitle'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
@@ -21,7 +22,6 @@ import RiseOrFall from 'lib/math/components/RiseOrFall'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import Chart from './Chart'
-import type { FloorPriceTrendsProps } from './types'
 import { useChart } from './useChart'
 
 const ROOT = styled(Card)(({ theme }) => ({

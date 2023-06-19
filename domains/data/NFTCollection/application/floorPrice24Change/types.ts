@@ -11,6 +11,7 @@ export type GetFloorPriceTrendsProps = {
 export type FloorPriceTrends = {
   chainId: number
   NFTAddress: string
+  MainNetworkNFT: string
   floorPrice: BN
   vol: BN
   createTime: number
