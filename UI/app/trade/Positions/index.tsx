@@ -10,6 +10,7 @@ import { useTheme } from '@mui/material/styles'
 import type { TabsProps } from 'components/tabs'
 import Tabs from 'components/tabs'
 
+import TabHeader from './TabHeader'
 import Table from './Table'
 
 const Positions: FC = () => {
@@ -46,6 +47,7 @@ const Positions: FC = () => {
           <Grid item xs={12}>
             <Tabs
               tabs={tabs}
+              Header={TabHeader}
               sx={{
                 [theme.breakpoints.up('sm')]: {
                   flex: 1,

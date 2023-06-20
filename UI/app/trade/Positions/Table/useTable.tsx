@@ -31,7 +31,11 @@ type PositionsProps = {
 export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
   const { t: tOptionPositionsTable } = useTranslation('app-trade', { keyPrefix: 'OptionPositions.table' })
   const {
-    positions: { setSourceData, sourceData },
+    positions: {
+      setSourceData,
+      sourceData,
+      filter: { collectionAddress },
+    },
   } = usePageTrade()
 
   const [pageIndex, setPageIndex] = useImmer(0)
@@ -127,6 +131,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           skip: pageIndex * pageSize,
           first: pageSize,
           userAddress: account,
+          nftAddress: collectionAddress,
           thegraphUrl,
           isActive,
           currentTimestamp: getTimestamp(Date.now()),
@@ -136,7 +141,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           setSourceData((data) => data.concat(rowData))
         })
     },
-    [dataFetcher, account, thegraphUrl, isActive, setNoMoreSourceData, setSourceData]
+    [dataFetcher, account, collectionAddress, thegraphUrl, isActive, setNoMoreSourceData, setSourceData]
   )
 
   const loadMore = useMemo(() => {
@@ -158,7 +163,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
     setPageIndex(1)
     onFetch(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account])
+  }, [account, collectionAddress])
 
   return {
     loading: dataFetcher.loading,

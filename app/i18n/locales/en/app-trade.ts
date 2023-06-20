@@ -32,6 +32,7 @@ const locale = {
     tabs: {
       activePositions: 'Active Positions',
       history: 'History',
+      collectionAddress: 'collection',
     },
     table: {
       nftAddress: 'Collection',

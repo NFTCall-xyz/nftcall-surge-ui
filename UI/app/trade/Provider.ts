@@ -128,10 +128,16 @@ const useNFTCollection = () => {
 
 const usePositions = () => {
   const [sourceData, setSourceData] = useImmer<OptionPosition[]>([])
+  const [collectionAddress, setCollectionAddress] = useImmer('')
 
   return {
     sourceData,
     setSourceData,
+
+    filter: {
+      collectionAddress,
+      setCollectionAddress,
+    },
   }
 }
 
