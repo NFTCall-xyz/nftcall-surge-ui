@@ -11,7 +11,7 @@ import UseWalletProvider from './UseWalletProvider'
 import { useWalletDialogs } from './application/dialogs'
 import { useENS } from './application/ens'
 import { WalletStatus } from './constant'
-import { getChainInformationByChainId } from './constant/chains'
+import { ChainId, getChainInformationByChainId } from './constant/chains'
 import { getProvider } from './provider'
 
 const useWalletService = () => {
@@ -37,6 +37,10 @@ const useWalletService = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, walletChainId, walletProvider])
 
+  const mainnetProvider = useMemo(() => {
+    return getProvider(ChainId.ethereum)
+  }, [])
+
   const status = useMemo(() => {
     if (isActivating) {
       return WalletStatus.connecting
@@ -58,7 +62,7 @@ const useWalletService = () => {
     } catch (error) {}
   })
 
-  const ens = useENS(provider)
+  const ens = useENS(mainnetProvider)
 
   return {
     connector,
