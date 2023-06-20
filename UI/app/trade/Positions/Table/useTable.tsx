@@ -11,6 +11,7 @@ import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicT
 import { headerRenderer } from 'components/table/renderer'
 import { numberCellRenderer, tokenIconCellRenderer } from 'components/table/renderer'
 import {
+  NFTCollectionRenderer,
   PNLCellRenderer,
   expiryDateRenderer,
   optionTypeRenderer,
@@ -43,6 +44,12 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
     () =>
       (
         [
+          {
+            dataKey: 'nftAddress',
+            width: 200,
+            headerRenderer,
+            cellRenderer: NFTCollectionRenderer,
+          },
           {
             dataKey: 'type',
             cellData: 'optionType',

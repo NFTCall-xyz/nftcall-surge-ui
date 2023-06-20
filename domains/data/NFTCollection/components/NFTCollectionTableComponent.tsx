@@ -1,0 +1,35 @@
+import Avatar from '@mui/material/Avatar'
+import Stack from '@mui/material/Stack'
+import TableCell from '@mui/material/TableCell'
+
+import { H5, Tiny } from 'components/Typography'
+
+import { useNFTCollections } from 'domains/data'
+
+type NFTCollectionTableComponentProps = {
+  nftAddress: string
+}
+const NFTCollectionTableComponent: FC<NFTCollectionTableComponentProps> = ({ nftAddress }) => {
+  const { collections } = useNFTCollections()
+  const collection = collections.find((collection) => collection.address.NFT === nftAddress)
+  const {
+    id,
+    info: { name, imageUrl },
+  } = collection
+
+  return (
+    <TableCell component="div">
+      <Stack spacing={1} direction="row">
+        <Avatar sx={{ width: 40 }} src={imageUrl} />
+        <Stack spacing={1}>
+          <H5>{id}</H5>
+          <Tiny ellipsis maxWidth="150px">
+            {name}
+          </Tiny>
+        </Stack>
+      </Stack>
+    </TableCell>
+  )
+}
+
+export default NFTCollectionTableComponent

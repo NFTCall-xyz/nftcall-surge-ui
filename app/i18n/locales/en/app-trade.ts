@@ -34,6 +34,7 @@ const locale = {
       history: 'History',
     },
     table: {
+      nftAddress: 'Collection',
       type: 'Type',
       size: 'Size',
       floorPrice: 'Floor Price',

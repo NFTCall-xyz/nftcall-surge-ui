@@ -9,6 +9,7 @@ import TableCell from '@mui/material/TableCell'
 
 import { Span, Tiny } from 'components/Typography'
 
+import NFTCollectionTableComponent from 'domains/data/NFTCollection/components/NFTCollectionTableComponent'
 import OptionPositionPNL from 'domains/data/optionPosition/components/OptionPositionPNL'
 import OptionPositionStaus from 'domains/data/optionPosition/components/OptionPositionStaus'
 
@@ -84,4 +85,8 @@ export const optionTypeRenderer = ({ rowData: { optionType } }: TableCellProps) 
 
 export const statusCellRenderer = (props: TableCellProps) => {
   return <OptionPositionStaus {...props} />
+}
+
+export const NFTCollectionRenderer = ({ cellData }: TableCellProps) => {
+  return <NFTCollectionTableComponent nftAddress={cellData} />
 }
