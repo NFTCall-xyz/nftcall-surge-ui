@@ -2,7 +2,7 @@ query getOptionPositions($first: Int!, $skip: Int!, $userAddress: Bytes!, $curre
   optionPositions(
     first: $first
     skip: $skip
-    where: { userAddress: $userAddress, strikeId_: { expiration_gt: $currentTimestamp } }
+    where: { userAddress: $userAddress, status_in: [Active, Pending], strikeId_: { expiration_gt: $currentTimestamp } }
     orderBy: createTimestamp
     orderDirection: desc
   ) {

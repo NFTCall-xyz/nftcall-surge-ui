@@ -1,18 +1,8 @@
-query getOptionPositions(
-  $first: Int!
-  $skip: Int!
-  $nftAddress: Bytes!
-  $userAddress: Bytes!
-  $currentTimestamp: BigInt!
-) {
+query getOptionPositions($first: Int!, $skip: Int!, $nftAddress: Bytes!, $userAddress: Bytes!) {
   optionPositions(
     first: $first
     skip: $skip
-    where: {
-      nftAddress: $nftAddress
-      userAddress: $userAddress
-      or: [{ status: Active, strikeId_: { expiration_lt: $currentTimestamp } }, { status_not: Active }]
-    }
+    where: { nftAddress: $nftAddress, userAddress: $userAddress, status_not_in: [Pending, Active] }
     orderBy: createTimestamp
     orderDirection: desc
   ) {
