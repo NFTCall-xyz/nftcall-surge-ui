@@ -15,22 +15,31 @@
     "calls": "Calls",
     "put": "Put",
     "size": "Size",
+    "type": "Option Type",
+    "amount": "Size",
     "limit": "Limit",
     "strikePrice": "Strike Price",
     "expiry": "Expiration Date",
+    "expiryDate": "Expiration Date",
     "premium": "Premium",
+    "fees": "Fees",
+    "subtotal": "Subtotal",
+    "allowedSlippage": "Allowed Slippage",
     "yourBalance": "Your Balance",
     "breakevenPrice": "Breakeven Price",
     "maxProfit": "Max. Profit",
     "maxLoss": "Max. Loss",
-    "openOptions": "Open Options"
+    "openOptions": "Open Options",
+    "approve": "Approve"
   },
   "OptionPositions": {
     "tabs": {
       "activePositions": "Active Positions",
-      "history": "History"
+      "history": "History",
+      "collectionAddress": "collection"
     },
     "table": {
+      "nftAddress": "Collection",
       "type": "Type",
       "size": "Size",
       "floorPrice": "Floor Price",
