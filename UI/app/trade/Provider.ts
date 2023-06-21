@@ -144,6 +144,9 @@ const usePositions = () => {
 export default createContextWithProvider(() => {
   const { collections, floorPrice24Change } = useNFTCollections()
   const collection = useNFTCollection()
+  const {
+    vault: { executionFee },
+  } = useVault()
   const positions = usePositions()
 
   return {
@@ -151,6 +154,7 @@ export default createContextWithProvider(() => {
     collections,
     collection,
     positions,
+    executionFee,
     usePageEffect,
   }
 })

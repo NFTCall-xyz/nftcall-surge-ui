@@ -1,9 +1,11 @@
+import { useApp } from 'app'
 import { debounce } from 'lodash'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useEffect, useMemo } from 'react'
 import { type Updater, useImmer } from 'use-immer'
 
 import { DAY, MINUTES, getTimestamp } from 'app/constant'
+import { useDialog } from 'app/hooks/useDialog'
 import { createContextWithProvider } from 'app/utils/createContext'
 
 import { useNetwork } from 'domains/data'
@@ -253,13 +255,28 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
     return toBN(value)
   }, [amount.value, value])
 
+  const {
+    setting: { allowedSlippage },
+  } = useApp()
+  const maximumPremium = useMemo(() => {
+    return toBN(1 + allowedSlippage.value).multipliedBy(returnValue)
+  }, [allowedSlippage.value, returnValue])
+
   return {
     value: returnValue,
     set: setValue,
 
     loading: loading,
     setLoading: setLoading,
+    maximumPremium,
+    allowedSlippage,
   }
+}
+
+const useConfirmOpenOptionDialog = () => {
+  const dialog = useDialog()
+
+  return dialog
 }
 
 export default createContextWithProvider(() => {
@@ -269,6 +286,7 @@ export default createContextWithProvider(() => {
       collection: {
         id,
         data: { price },
+        info: { name },
       },
       wETHBalance,
       wETHAllowance,
@@ -276,8 +294,10 @@ export default createContextWithProvider(() => {
       approveOpenPosition,
     },
     positions: { setSourceData },
+    executionFee,
   } = usePageTrade()
 
+  const confirmOpenOptionDialog = useConfirmOpenOptionDialog()
   const [init, setInit] = useImmer(true)
   const [optionType, setOptionType] = useImmer(OptionType.LONG_CALL)
   const strikePrice = useStrikePrice(optionType, setInit)
@@ -300,7 +320,10 @@ export default createContextWithProvider(() => {
 
   return {
     tOpenCallOptions,
+    confirmOpenOptionDialog,
 
+    id,
+    name,
     init,
 
     optionType,
@@ -315,5 +338,6 @@ export default createContextWithProvider(() => {
     premium,
     wETHBalance,
     wETHAllowance,
+    executionFee,
   }
 })

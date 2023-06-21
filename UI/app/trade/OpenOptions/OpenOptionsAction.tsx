@@ -1,4 +1,3 @@
-import { useApp } from 'app'
 import { useEffect, useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
@@ -9,20 +8,14 @@ import Stack from '@mui/material/Stack'
 import { getTimestamp } from 'app/constant'
 import { safeGet } from 'app/utils/get'
 
-import { OptionPositionStatus } from 'lib/graphql/option-position'
 import { toBN } from 'lib/math'
 
 import { usePageTradeOpenOptions } from '.'
 
 const OpenOptionsAction: FC = () => {
-  const {
-    setting: { allowedSlippage },
-  } = useApp()
   const pageTradeOpenOptions = usePageTradeOpenOptions()
 
   const {
-    openOptions,
-    setSourceData,
     approveOpenPosition,
     wETHAllowance,
     strikePrice,
@@ -32,6 +25,8 @@ const OpenOptionsAction: FC = () => {
     expiryDate,
     tOpenCallOptions,
     init,
+
+    confirmOpenOptionDialog,
   } = pageTradeOpenOptions
 
   const [error, setError] = useImmer('')
@@ -64,53 +59,31 @@ const OpenOptionsAction: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [init, strikePrice.value, amount.value, expiryDate.value])
 
-  const maximumPremium = useMemo(() => {
-    return toBN(1 + allowedSlippage.value).multipliedBy(premium.value)
-  }, [allowedSlippage.value, premium.value])
-
   const openOptionsAvailable = useMemo(() => {
-    return safeGet(() => wETHAllowance.gt(maximumPremium))
-  }, [wETHAllowance, maximumPremium])
+    return safeGet(() => wETHAllowance.gt(premium.maximumPremium))
+  }, [wETHAllowance, premium.maximumPremium])
 
   return (
     <Stack spacing={1}>
       {openOptionsAvailable ? (
         <Button
           variant="contained"
-          disabled={!!error || premium.loading || safeGet(() => maximumPremium.isZero())}
-          onClick={() => {
-            openOptions({
-              optionType,
-              amount: amount.value.toString(),
-              strikePrice: strikePrice.value.toString(),
-              expiry: getTimestamp(expiryDate.value.getTime()),
-              maximumPremium: maximumPremium.toString(),
-            }).then((data) => {
-              setSourceData((sourceData) => [
-                {
-                  ...data,
-                  status: OptionPositionStatus.Pending,
-                  expiration: toBN(data.expiry).multipliedBy(Math.pow(10, 3)).toNumber(),
-                  updateTimestamp: Date.now(),
-                },
-                ...sourceData,
-              ])
-            })
-          }}
+          disabled={!!error || premium.loading || safeGet(() => premium.maximumPremium.isZero())}
+          onClick={() => confirmOpenOptionDialog.open()}
         >
           {tOpenCallOptions('openOptions')}
         </Button>
       ) : (
         <Button
           variant="contained"
-          disabled={!!error || premium.loading || safeGet(() => maximumPremium.isZero())}
+          disabled={!!error || premium.loading || safeGet(() => premium.maximumPremium.isZero())}
           onClick={() => {
             approveOpenPosition({
               optionType,
               amount: amount.value.toString(),
               strikePrice: strikePrice.value.toString(),
               expiry: getTimestamp(expiryDate.value.getTime()),
-              maximumPremium: maximumPremium.toString(),
+              maximumPremium: premium.maximumPremium.toString(),
             })
           }}
         >

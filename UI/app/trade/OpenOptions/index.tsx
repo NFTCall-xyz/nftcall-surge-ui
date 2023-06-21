@@ -3,6 +3,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Stack from '@mui/material/Stack'
 
+import ConfirmOpenOptionDialog from './ConfirmOpenOptionDialog'
 import DisplayBreakevenPrice from './DisplayBreakevenPrice'
 import DisplayMaxLoss from './DisplayMaxLoss'
 import DisplayMaxProfit from './DisplayMaxProfit'
@@ -39,6 +40,7 @@ const OpenOptions: FC<OpenOptionsProps> = () => {
           <OpenOptionsAction />
         </Stack>
       </CardContent>
+      <ConfirmOpenOptionDialog />
     </Card>
   )
 }
