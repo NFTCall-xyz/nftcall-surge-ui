@@ -1,15 +1,23 @@
 import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
+import { useEffect } from 'react'
 import { type Updater, useImmer } from 'use-immer'
 
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
 
+import { SECONDS } from 'app/constant'
+import { getWeiToValueBN } from 'app/utils/get'
+
 import { Span } from 'components/Typography'
 
-import { useOptionPosition } from 'domains/data'
+import { useNFTCollections, useNetwork, useOptionPosition } from 'domains/data'
 
-import { OptionPositionStatus } from 'lib/graphql/option-position'
+import {
+  OptionPositionStateProtocol,
+  OptionPositionStatus,
+  getOptionPositionStatusByProtocol,
+} from 'lib/graphql/option-position'
 
 type OptionPositionStausProps = {
   rowData: OptionPosition
@@ -21,6 +29,76 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
 }) => {
   const [loading, setLoaidng] = useImmer(false)
   const { forceClosePendingPosition } = useOptionPosition()
+  const { collections } = useNFTCollections()
+  const {
+    contracts: { surgeUIService },
+    address: { SurgeUI },
+  } = useNetwork()
+
+  useEffect(() => {
+    if (status !== OptionPositionStatus.Pending) return
+    const collection = collections.find((collection) => collection.address.NFT === nftAddress)
+    if (!collection || !collection.address.OptionToken) return
+    let nextRuntime = Date.now()
+    let timer = 0
+    let loading = false
+    let isCancel = false
+
+    const run = () => {
+      timer = setTimeout(() => {
+        if (isCancel) return
+        if (!loading && nextRuntime <= Date.now()) {
+          loading = true
+          nextRuntime += SECONDS * 15
+          surgeUIService
+            .getPosition({
+              SurgeUI,
+              optionTokenAddress: collection.address.OptionToken,
+              positionId,
+            })
+            .then((data) => {
+              if (isCancel) return
+              console.log('OptionPositionStatus', {
+                optionTokenAddress: collection.address.OptionToken,
+                positionId,
+                data,
+              })
+              if (data.state === OptionPositionStateProtocol.PENDING) {
+                run()
+              } else {
+                setRowData((row) => ({
+                  ...row,
+                  ...getWeiToValueBN(data, ['premium'], 18),
+                  status: getOptionPositionStatusByProtocol(data.state),
+                }))
+              }
+            })
+            .catch(() => {
+              if (isCancel) return
+              setRowData((row) => ({
+                ...row,
+                status: OptionPositionStatus.Failed,
+              }))
+            })
+            .finally(() => {
+              loading = false
+            })
+        } else {
+          run()
+        }
+      }, SECONDS) as any
+    }
+
+    run()
+
+    return () => {
+      isCancel = true
+      clearTimeout(timer)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [surgeUIService, status])
+
   if (status !== OptionPositionStatus.Pending) {
     return (
       <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
@@ -42,7 +120,7 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
               })
                 .then(() => {
                   setRowData((row) => {
-                    row.status = OptionPositionStatus.Closed
+                    row.status = OptionPositionStatus.Cancelled
                   })
                 })
                 .finally(() => {

@@ -1,6 +1,7 @@
 import { useControllers } from 'domains'
 import { useCallback, useMemo } from 'react'
 
+import { MINUTES } from 'app/constant'
 import { useWhyDidYouUpdate } from 'app/utils/dev/hooks/useWhyDidYouUpdate'
 
 import { useNetwork } from 'domains/data'
@@ -52,7 +53,7 @@ const useCollectionsRequest = () => {
     [NFTCallOracle, SurgeUI, Vault, markets, surgeUIService]
   )
 
-  surgeUI.getNFTCollections.usePolling(query, (query) => !query.collectionAddresses.length, 1000 * 60)
+  surgeUI.getNFTCollections.usePolling(query, (query) => !query.collectionAddresses.length, MINUTES)
 
   const updateNFTCollections = useCallback(() => {
     surgeUI.getNFTCollections.polling.restart()

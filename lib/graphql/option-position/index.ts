@@ -7,12 +7,31 @@ import activeDocumentNoNFTAddress from './active/noNFTAddress.graphql'
 import historyDocument from './history/index.graphql'
 import historyDocumentNoNFTAddress from './history/noNFTAddress.graphql'
 
+export enum OptionPositionStateProtocol {
+  EMPTY,
+  PENDING,
+  ACTIVE,
+  CLOSED,
+}
 export enum OptionPositionStatus {
   Pending = 'Pending',
   Active = 'Active',
-  Closed = 'Closed',
-  Failed = 'Failed',
   Expired = 'Expired',
+  Exercised = 'Exercised',
+  Cancelled = 'Cancelled',
+  Failed = 'Failed',
+}
+
+export const getOptionPositionStatusByProtocol = (data: OptionPositionStateProtocol) => {
+  switch (data) {
+    case OptionPositionStateProtocol.EMPTY:
+    case OptionPositionStateProtocol.PENDING:
+      return OptionPositionStatus.Pending
+    case OptionPositionStateProtocol.ACTIVE:
+      return OptionPositionStatus.Active
+    case OptionPositionStateProtocol.CLOSED:
+      return OptionPositionStatus.Exercised
+  }
 }
 export type OptionPositionBaseData = {
   status: OptionPositionStatus

@@ -90,7 +90,7 @@ const OpenOptionsAction: FC = () => {
                 {
                   ...data,
                   status: OptionPositionStatus.Pending,
-                  expiration: data.expiry,
+                  expiration: toBN(data.expiry).multipliedBy(Math.pow(10, 3)).toNumber(),
                   updateTimestamp: Date.now(),
                 },
                 ...sourceData,

@@ -1,6 +1,7 @@
 import { useControllers, useWallet } from 'domains'
 import { useCallback, useMemo } from 'react'
 
+import { MINUTES } from 'app/constant'
 import { useWhyDidYouUpdate } from 'app/utils/dev/hooks/useWhyDidYouUpdate'
 
 import { useNetwork } from 'domains/data'
@@ -38,7 +39,7 @@ const useVaultRequest = () => {
     [LPToken, SurgeUI, Vault, WETH, account, surgeUIService]
   )
 
-  surgeUI.getVault.usePolling(query, (query) => !query.vaultAddress, 1000 * 60)
+  surgeUI.getVault.usePolling(query, (query) => !query.vaultAddress, MINUTES)
 
   const updateVaults = useCallback(() => {
     surgeUI.getVault.polling.restart()
