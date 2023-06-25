@@ -30,24 +30,25 @@ export const getOptionPositionStatusByProtocol = (data: OptionPositionStateProto
     case OptionPositionStateProtocol.ACTIVE:
       return OptionPositionStatus.Active
     case OptionPositionStateProtocol.CLOSED:
-      return OptionPositionStatus.Exercised
+      return OptionPositionStatus.Failed
   }
 }
 export type OptionPositionBaseData = {
   status: OptionPositionStatus
   userAddress: string
-  nftAddress: string
+  collectionAddress: string
   positionId: number
   optionType: OptionType
-  strikeId: {
-    enabled: boolean
-    expiration: number
-    spotPrice: string
-    strikePrice: string
-  }
+  expiration: number
+  spotPrice: string
+  strikePrice: string
   amount: string
   premium: string
-  maximumPremium: string
+  excessPremium: string
+  returnedPremium: string
+  keeperFee: string
+  revenue: string
+  exerciseFee: string
   updateTimestamp: number
 }
 export type ResponseType = { optionPositions: OptionPositionBaseData[] }
@@ -55,20 +56,19 @@ export type ResponseType = { optionPositions: OptionPositionBaseData[] }
 export type RequestType = {
   first: number
   skip: number
-  nftAddress?: string
+  collectionAddress?: string
   userAddress: string
-  currentTimestamp: number
 }
 
 export const graphqlRequest = (url: string, isActive: boolean, variables: RequestType) => {
   if (isActive) {
-    if (variables.nftAddress) {
+    if (variables.collectionAddress) {
       return RQ<ResponseType>(url, activeDocument, variables)
     } else {
       return RQ<ResponseType>(url, activeDocumentNoNFTAddress, variables)
     }
   } else {
-    if (variables.nftAddress) {
+    if (variables.collectionAddress) {
       return RQ<ResponseType>(url, historyDocument, variables)
     } else {
       return RQ<ResponseType>(url, historyDocumentNoNFTAddress, variables)

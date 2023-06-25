@@ -56,7 +56,7 @@ export const useChart = () => {
     const endTimestamp = getCurrentTimestamp()
     post({
       chainId: 1,
-      NFTAddress: collection.address.MainNetworkNFT,
+      NFTAddress: collection.address.ethereumCollection,
       startTimestamp: endTimestamp - getTimestamp(90 * DAY),
       endTimestamp,
     }).then((data) => setSourceData(() => data))
@@ -65,7 +65,7 @@ export const useChart = () => {
       cancel()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, collection.address.NFT])
+  }, [chainId, collection.address.collection])
 
   const data = useMemo(() => {
     if (!sourceData.length) return []
@@ -96,8 +96,8 @@ export const useChart = () => {
   }, [collection.data.price, collection.data.vol, dayButton.value, sourceData])
 
   const change24 = useMemo(() => {
-    return safeGet(() => floorPrice24Change.value[collection.address.NFT]) || toBN(0)
-  }, [collection.address.NFT, floorPrice24Change.value])
+    return safeGet(() => floorPrice24Change.value[collection.address.collection]) || toBN(0)
+  }, [collection.address.collection, floorPrice24Change.value])
 
   const props = useMemo(
     () =>

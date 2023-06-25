@@ -1,36 +1,27 @@
-query getOptionPositions(
-  $first: Int!
-  $skip: Int!
-  $nftAddress: Bytes!
-  $userAddress: Bytes!
-  $currentTimestamp: BigInt!
-) {
+query getOptionPositions($first: Int!, $skip: Int!, $collectionAddress: Bytes!, $userAddress: Bytes!) {
   optionPositions(
     first: $first
     skip: $skip
-    where: {
-      nftAddress: $nftAddress
-      status_in: [Active, Pending]
-      userAddress: $userAddress
-      strikeId_: { expiration_gt: $currentTimestamp }
-    }
+    where: { receiverAddress: $userAddress, collectionAddress: $collectionAddress, status_in: [Active, Pending] }
     orderBy: createTimestamp
     orderDirection: desc
   ) {
-    userAddress
-    nftAddress
+    id
+    userAddress: receiverAddress
+    collectionAddress
     positionId
     optionType
     status
-    strikeId {
-      enabled
-      expiration
-      spotPrice
-      strikePrice
-    }
+    expiration
+    spotPrice
+    strikePrice
     amount
     premium
-    maximumPremium
+    excessPremium
+    returnedPremium
+    keeperFee
+    revenue
+    exerciseFee
     updateTimestamp
   }
 }

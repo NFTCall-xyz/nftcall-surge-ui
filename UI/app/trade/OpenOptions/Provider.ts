@@ -204,7 +204,7 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
           vaultService
             .getPremium({
               Vault,
-              collection: address.NFT,
+              collection: address.collection,
               optionType,
               strikePrice,
               expiry,
@@ -213,7 +213,7 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
             .then((data) => weiToValue(data, 0))
         )
       }, 300),
-    [Vault, address.NFT, vaultService]
+    [Vault, address.collection, vaultService]
   )
 
   useEffect(() => {

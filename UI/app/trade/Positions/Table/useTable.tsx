@@ -49,7 +49,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
       (
         [
           {
-            dataKey: 'nftAddress',
+            dataKey: 'collectionAddress',
             width: 200,
             headerRenderer,
             cellRenderer: NFTCollectionRenderer,
@@ -131,7 +131,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           skip: pageIndex * pageSize,
           first: pageSize,
           userAddress: account,
-          nftAddress: collectionAddress,
+          collectionAddress: collectionAddress,
           thegraphUrl,
           isActive,
           currentTimestamp: getTimestamp(Date.now()),

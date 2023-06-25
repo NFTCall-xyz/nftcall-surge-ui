@@ -32,7 +32,7 @@ export const useFloorPrice24Change = (collections: NFTCollection[]) => {
   const { post, cancel, loading } = usePost(getFloorPriceTrends)
   const [sourceData, setSourceData] = useImmer<FloorPriceTrends[]>([])
   const NFTAddress = useMemo(
-    () => collections.map((collection) => collection.address.MainNetworkNFT).join(','),
+    () => collections.map((collection) => collection.address.ethereumCollection).join(','),
     [collections]
   )
 
@@ -58,7 +58,7 @@ export const useFloorPrice24Change = (collections: NFTCollection[]) => {
     const returnValue: Record<string, BN> = {}
 
     for (const key in tData) {
-      const collection = collections.find((item) => item.address.MainNetworkNFT === key)
+      const collection = collections.find((item) => item.address.ethereumCollection === key)
       const item = tData[key]
       const targetDate = item[item.length - 1].createTime
       if (isSameDay(targetDate, new Date())) {
@@ -72,7 +72,7 @@ export const useFloorPrice24Change = (collections: NFTCollection[]) => {
         } as any)
       }
 
-      returnValue[collection.address.NFT] =
+      returnValue[collection.address.collection] =
         safeGet(() => item[item.length - 1].floorPrice.div(item[item.length - 2].floorPrice).minus(1)) || toBN(0)
     }
 

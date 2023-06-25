@@ -20,9 +20,9 @@ const getMarketInfo = (id: MarketId): MarketInfo => {
 }
 
 export type ContractsAddress = {
-  NFT: string
-  MainNetworkNFT: string
-  OptionToken: string
+  collection: string
+  ethereumCollection: string
+  optionToken: string
 }
 
 export type Market = {
@@ -43,9 +43,9 @@ export const getMarkets = (address: AddressData) => {
         id,
         info,
         address: {
-          NFT,
-          MainNetworkNFT: getOpenSeaMainNetworkAddress(NFT),
-          OptionToken: utils.getAddress(address.markets[id].OptionToken),
+          collection: NFT,
+          ethereumCollection: getOpenSeaMainNetworkAddress(NFT),
+          optionToken: utils.getAddress(address.markets[id].OptionToken),
         } as ContractsAddress,
       }
     })

@@ -143,6 +143,9 @@ const ConfirmOpenOptionDialog: FC = () => {
             variant="contained"
             onClick={() => {
               close()
+              const props = {
+                premium: premium.value,
+              }
               openOptions({
                 optionType,
                 amount: amount.value.toString(),
@@ -153,6 +156,7 @@ const ConfirmOpenOptionDialog: FC = () => {
                 setSourceData((sourceData) => [
                   {
                     ...data,
+                    ...props,
                     status: OptionPositionStatus.Pending,
                     expiration: toBN(data.expiry).multipliedBy(Math.pow(10, 3)).toNumber(),
                     updateTimestamp: Date.now(),

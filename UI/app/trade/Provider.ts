@@ -25,9 +25,9 @@ const useNFTCollection = () => {
     updateVaults,
   } = useVault()
   const { collections, updateNFTCollections } = useNFTCollections()
-  const [NFTCollectionAddress, setNFTCollectionAddress] = useImmer(collections[0].address.NFT)
+  const [NFTCollectionAddress, setNFTCollectionAddress] = useImmer(collections[0].address.collection)
   const collection = useMemo(
-    () => collections.find((i) => i.address.NFT === NFTCollectionAddress),
+    () => collections.find((i) => i.address.collection === NFTCollectionAddress),
     [NFTCollectionAddress, collections]
   )
 
@@ -45,7 +45,7 @@ const useNFTCollection = () => {
           Vault: vaultAddress,
           wETHAddress,
           userAddress: account,
-          collectionAddress: collection.address.NFT,
+          collectionAddress: collection.address.collection,
           approveService: erc20Service,
           ...props,
         }),
@@ -57,7 +57,7 @@ const useNFTCollection = () => {
       }),
     [
       account,
-      collection.address.NFT,
+      collection.address.collection,
       erc20Service,
       sendTransaction,
       updateVaults,
@@ -73,7 +73,7 @@ const useNFTCollection = () => {
           Vault: vaultAddress,
           wETHAddress,
           userAddress: account,
-          collectionAddress: collection.address.NFT,
+          collectionAddress: collection.address.collection,
           approveService: erc20Service,
           ...props,
         }),
@@ -97,7 +97,7 @@ const useNFTCollection = () => {
           return {
             positionId,
             userAddress: account,
-            nftAddress: collection.address.NFT,
+            collectionAddress: collection.address.collection,
             ...props,
           }
         })
@@ -106,7 +106,7 @@ const useNFTCollection = () => {
         }),
     [
       account,
-      collection.address.NFT,
+      collection.address.collection,
       erc20Service,
       sendTransaction,
       updateNFTCollections,

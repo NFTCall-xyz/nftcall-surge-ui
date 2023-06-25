@@ -39,7 +39,7 @@ const locale = {
       collectionAddress: 'collection',
     },
     table: {
-      nftAddress: 'Collection',
+      collectionAddress: 'Collection',
       type: 'Type',
       size: 'Size',
       floorPrice: 'Floor Price',

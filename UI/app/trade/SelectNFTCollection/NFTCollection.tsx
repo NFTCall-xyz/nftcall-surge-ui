@@ -26,7 +26,10 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
     },
     floorPrice24Change,
   } = usePageTrade()
-  const isSelected = useMemo(() => collection.address.NFT === address.NFT, [address.NFT, collection.address.NFT])
+  const isSelected = useMemo(
+    () => collection.address.collection === address.collection,
+    [address.collection, collection.address.collection]
+  )
 
   return (
     <Card
@@ -41,7 +44,7 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
         },
       }}
       onClick={() => {
-        setNFTCollectionAddress(collection.address.NFT)
+        setNFTCollectionAddress(collection.address.collection)
       }}
     >
       <FlexBetween>
@@ -51,10 +54,10 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
             <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={collection.data.price} abbreviate={{}} />
           </Stack>
-          <RiseOrFall value={floorPrice24Change.value[collection.address.NFT]}>
+          <RiseOrFall value={floorPrice24Change.value[collection.address.collection]}>
             <Tiny color="unset">
               <NumberDisplay
-                value={floorPrice24Change.value[collection.address.NFT]}
+                value={floorPrice24Change.value[collection.address.collection]}
                 abbreviate={{}}
                 numberFormatOptions={{ signDisplay: 'always' }}
                 options="percent"

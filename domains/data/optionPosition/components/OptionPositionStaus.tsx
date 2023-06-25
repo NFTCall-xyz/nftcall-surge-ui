@@ -24,7 +24,7 @@ type OptionPositionStausProps = {
   setRowData: Updater<OptionPosition>
 }
 const OptionPositionStaus: FC<OptionPositionStausProps> = ({
-  rowData: { status, positionId, nftAddress },
+  rowData: { status, positionId, collectionAddress },
   setRowData,
 }) => {
   const [loading, setLoaidng] = useImmer(false)
@@ -37,8 +37,8 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
 
   useEffect(() => {
     if (status !== OptionPositionStatus.Pending) return
-    const collection = collections.find((collection) => collection.address.NFT === nftAddress)
-    if (!collection || !collection.address.OptionToken) return
+    const collection = collections.find((collection) => collection.address.collection === collectionAddress)
+    if (!collection || !collection.address.optionToken) return
     let nextRuntime = Date.now()
     let timer = 0
     let loading = false
@@ -53,13 +53,13 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
           surgeUIService
             .getPosition({
               SurgeUI,
-              optionTokenAddress: collection.address.OptionToken,
+              optionTokenAddress: collection.address.optionToken,
               positionId,
             })
             .then((data) => {
               if (isCancel) return
               console.log('OptionPositionStatus', {
-                optionTokenAddress: collection.address.OptionToken,
+                optionTokenAddress: collection.address.optionToken,
                 positionId,
                 data,
               })
@@ -116,7 +116,7 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
               setLoaidng(true)
               forceClosePendingPosition({
                 positionId,
-                collectionAddress: nftAddress,
+                collectionAddress: collectionAddress,
               })
                 .then(() => {
                   setRowData((row) => {

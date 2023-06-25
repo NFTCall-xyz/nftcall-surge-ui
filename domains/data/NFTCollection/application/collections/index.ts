@@ -19,7 +19,8 @@ const useCollectionsSouceData = () => {
   const collectionSouceData = useMemo(() => {
     const returnValue = markets.map((market) => {
       const { id, address } = market
-      const data = storeData.getNFTCollections.find((i) => i.collectionAddress === address.NFT) || ({} as undefined)
+      const data =
+        storeData.getNFTCollections.find((i) => i.collectionAddress === address.collection) || ({} as undefined)
       const info = collectionInfos[id]
 
       return {
@@ -44,7 +45,7 @@ const useCollectionsRequest = () => {
   const { surgeUI } = useControllers()
   const query: GetStoreNFTCollectionsProps = useMemo(
     () => ({
-      collectionAddresses: markets.map((i) => i.address.NFT),
+      collectionAddresses: markets.map((i) => i.address.collection),
       oracleAddress: NFTCallOracle,
       vaultAddress: Vault,
       SurgeUI,

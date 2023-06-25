@@ -7,11 +7,11 @@ import { H5, Tiny } from 'components/Typography'
 import { useNFTCollections } from 'domains/data'
 
 type NFTCollectionTableComponentProps = {
-  nftAddress: string
+  collectionAddress: string
 }
-const NFTCollectionTableComponent: FC<NFTCollectionTableComponentProps> = ({ nftAddress }) => {
+const NFTCollectionTableComponent: FC<NFTCollectionTableComponentProps> = ({ collectionAddress }) => {
   const { collections } = useNFTCollections()
-  const collection = collections.find((collection) => collection.address.NFT === nftAddress)
+  const collection = collections.find((collection) => collection.address.collection === collectionAddress)
   const {
     id,
     info: { name, imageUrl },

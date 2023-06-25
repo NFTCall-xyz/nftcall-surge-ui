@@ -35,7 +35,7 @@ const TabHeader: FCC = ({ children }) => {
             </MenuItem>
             {collections.map((collection) => {
               return (
-                <MenuItem value={collection.address.NFT} key={collection.address.NFT}>
+                <MenuItem value={collection.address.collection} key={collection.address.collection}>
                   <ListItemText
                     sx={{ margin: 0 }}
                     primary={collection.id}

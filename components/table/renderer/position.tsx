@@ -88,5 +88,5 @@ export const statusCellRenderer = (props: TableCellProps) => {
 }
 
 export const NFTCollectionRenderer = ({ cellData }: TableCellProps) => {
-  return <NFTCollectionTableComponent nftAddress={cellData} />
+  return <NFTCollectionTableComponent collectionAddress={cellData} />
 }

@@ -19,7 +19,7 @@ const SelectNFTCollection: FC = () => {
       <CardContent sx={{ overflow: 'auto', height: '100%' }}>
         <Stack spacing={2}>
           {collections.map((collection) => (
-            <NFTCollection key={collection.address.NFT} collection={collection} />
+            <NFTCollection key={collection.address.collection} collection={collection} />
           ))}
         </Stack>
       </CardContent>
