@@ -35,6 +35,34 @@ export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & 
 }
 
 export declare namespace IVault {
+  export type OpenPositionEventParametersStruct = {
+    optionType: PromiseOrValue<BigNumberish>
+    expiration: PromiseOrValue<BigNumberish>
+    spotPrice: PromiseOrValue<BigNumberish>
+    strikePrice: PromiseOrValue<BigNumberish>
+    amount: PromiseOrValue<BigNumberish>
+    premium: PromiseOrValue<BigNumberish>
+    keeperFee: PromiseOrValue<BigNumberish>
+  }
+
+  export type OpenPositionEventParametersStructOutput = [
+    number,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    optionType: number
+    expiration: BigNumber
+    spotPrice: BigNumber
+    strikePrice: BigNumber
+    amount: BigNumber
+    premium: BigNumber
+    keeperFee: BigNumber
+  }
+
   export type CollectionConfigurationStruct = {
     frozen: PromiseOrValue<boolean>
     activated: PromiseOrValue<boolean>
@@ -285,44 +313,44 @@ export interface VaultInterface extends utils.Interface {
 
   events: {
     'ActivateMarket(address,address)': EventFragment
+    'ActivatePosition(address,address,uint256,uint256,uint256)': EventFragment
+    'CancelPosition(address,address,uint256,uint256)': EventFragment
     'CreateMarket(address,uint32,address)': EventFragment
     'CreateStrike(uint256,uint256,uint256,uint256,uint256)': EventFragment
     'DeactivateMarket(address,address)': EventFragment
     'DefreezeMarket(address,address)': EventFragment
     'DestoryStrike(uint256)': EventFragment
+    'ExercisePosition(address,address,uint256,uint256,uint256)': EventFragment
+    'ExpirePosition(address,address,uint256)': EventFragment
+    'FailPosition(address,address,uint256,uint256)': EventFragment
     'FreezeMarket(address,address)': EventFragment
     'KeeperAddressUpdated(address)': EventFragment
-    'OpenPosition(address,uint256,uint256,uint256)': EventFragment
+    'OpenPosition(address,address,address,uint256,tuple)': EventFragment
     'OwnershipTransferred(address,address)': EventFragment
     'PauseVault(address)': EventFragment
     'Paused(address)': EventFragment
-    'ReceiveKeeperFee(address,uint256)': EventFragment
-    'ReceivePremium(address,uint256,uint256)': EventFragment
-    'ReceivePremiumAndFee(address,uint256,uint256)': EventFragment
-    'ReturnExcessPremium(address,uint256)': EventFragment
-    'SendRevenue(address,uint256,uint256)': EventFragment
     'UnpauseVault(address)': EventFragment
     'Unpaused(address)': EventFragment
     'UpdateLPTokenPrice(address,uint256)': EventFragment
   }
 
   getEvent(nameOrSignatureOrTopic: 'ActivateMarket'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'ActivatePosition'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'CancelPosition'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'CreateMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'CreateStrike'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'DeactivateMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'DefreezeMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'DestoryStrike'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'ExercisePosition'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'ExpirePosition'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'FailPosition'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'FreezeMarket'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'KeeperAddressUpdated'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'OpenPosition'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'PauseVault'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'ReceiveKeeperFee'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'ReceivePremium'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'ReceivePremiumAndFee'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'ReturnExcessPremium'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'SendRevenue'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UnpauseVault'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateLPTokenPrice'): EventFragment
@@ -335,6 +363,30 @@ export interface ActivateMarketEventObject {
 export type ActivateMarketEvent = TypedEvent<[string, string], ActivateMarketEventObject>
 
 export type ActivateMarketEventFilter = TypedEventFilter<ActivateMarketEvent>
+
+export interface ActivatePositionEventObject {
+  owner: string
+  collection: string
+  positionId: BigNumber
+  premium: BigNumber
+  excessPremium: BigNumber
+}
+export type ActivatePositionEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber, BigNumber],
+  ActivatePositionEventObject
+>
+
+export type ActivatePositionEventFilter = TypedEventFilter<ActivatePositionEvent>
+
+export interface CancelPositionEventObject {
+  owner: string
+  collection: string
+  positionId: BigNumber
+  returnedPremium: BigNumber
+}
+export type CancelPositionEvent = TypedEvent<[string, string, BigNumber, BigNumber], CancelPositionEventObject>
+
+export type CancelPositionEventFilter = TypedEventFilter<CancelPositionEvent>
 
 export interface CreateMarketEventObject {
   collection: string
@@ -382,6 +434,39 @@ export type DestoryStrikeEvent = TypedEvent<[BigNumber], DestoryStrikeEventObjec
 
 export type DestoryStrikeEventFilter = TypedEventFilter<DestoryStrikeEvent>
 
+export interface ExercisePositionEventObject {
+  owner: string
+  collection: string
+  positionId: BigNumber
+  revenue: BigNumber
+  exerciseFee: BigNumber
+}
+export type ExercisePositionEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber, BigNumber],
+  ExercisePositionEventObject
+>
+
+export type ExercisePositionEventFilter = TypedEventFilter<ExercisePositionEvent>
+
+export interface ExpirePositionEventObject {
+  owner: string
+  collection: string
+  positionId: BigNumber
+}
+export type ExpirePositionEvent = TypedEvent<[string, string, BigNumber], ExpirePositionEventObject>
+
+export type ExpirePositionEventFilter = TypedEventFilter<ExpirePositionEvent>
+
+export interface FailPositionEventObject {
+  owner: string
+  collection: string
+  positionId: BigNumber
+  returnedPremium: BigNumber
+}
+export type FailPositionEvent = TypedEvent<[string, string, BigNumber, BigNumber], FailPositionEventObject>
+
+export type FailPositionEventFilter = TypedEventFilter<FailPositionEvent>
+
 export interface FreezeMarketEventObject {
   operator: string
   collection: string
@@ -398,12 +483,16 @@ export type KeeperAddressUpdatedEvent = TypedEvent<[string], KeeperAddressUpdate
 export type KeeperAddressUpdatedEventFilter = TypedEventFilter<KeeperAddressUpdatedEvent>
 
 export interface OpenPositionEventObject {
+  caller: string
+  receiver: string
   collection: string
-  strikeId: BigNumber
   positionId: BigNumber
-  estimatedPremium: BigNumber
+  parameters: IVault.OpenPositionEventParametersStructOutput
 }
-export type OpenPositionEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], OpenPositionEventObject>
+export type OpenPositionEvent = TypedEvent<
+  [string, string, string, BigNumber, IVault.OpenPositionEventParametersStructOutput],
+  OpenPositionEventObject
+>
 
 export type OpenPositionEventFilter = TypedEventFilter<OpenPositionEvent>
 
@@ -428,49 +517,6 @@ export interface PausedEventObject {
 export type PausedEvent = TypedEvent<[string], PausedEventObject>
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>
-
-export interface ReceiveKeeperFeeEventObject {
-  user: string
-  amount: BigNumber
-}
-export type ReceiveKeeperFeeEvent = TypedEvent<[string, BigNumber], ReceiveKeeperFeeEventObject>
-
-export type ReceiveKeeperFeeEventFilter = TypedEventFilter<ReceiveKeeperFeeEvent>
-
-export interface ReceivePremiumEventObject {
-  user: string
-  amountToReserve: BigNumber
-  amountToLiquidityPool: BigNumber
-}
-export type ReceivePremiumEvent = TypedEvent<[string, BigNumber, BigNumber], ReceivePremiumEventObject>
-
-export type ReceivePremiumEventFilter = TypedEventFilter<ReceivePremiumEvent>
-
-export interface ReceivePremiumAndFeeEventObject {
-  user: string
-  premium: BigNumber
-  fee: BigNumber
-}
-export type ReceivePremiumAndFeeEvent = TypedEvent<[string, BigNumber, BigNumber], ReceivePremiumAndFeeEventObject>
-
-export type ReceivePremiumAndFeeEventFilter = TypedEventFilter<ReceivePremiumAndFeeEvent>
-
-export interface ReturnExcessPremiumEventObject {
-  user: string
-  returnedPremium: BigNumber
-}
-export type ReturnExcessPremiumEvent = TypedEvent<[string, BigNumber], ReturnExcessPremiumEventObject>
-
-export type ReturnExcessPremiumEventFilter = TypedEventFilter<ReturnExcessPremiumEvent>
-
-export interface SendRevenueEventObject {
-  receiver: string
-  amount: BigNumber
-  fee: BigNumber
-}
-export type SendRevenueEvent = TypedEvent<[string, BigNumber, BigNumber], SendRevenueEventObject>
-
-export type SendRevenueEventFilter = TypedEventFilter<SendRevenueEvent>
 
 export interface UnpauseVaultEventObject {
   operator: string
@@ -983,6 +1029,34 @@ export interface Vault extends BaseContract {
       collection?: PromiseOrValue<string> | null
     ): ActivateMarketEventFilter
 
+    'ActivatePosition(address,address,uint256,uint256,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      premium?: null,
+      excessPremium?: null
+    ): ActivatePositionEventFilter
+    ActivatePosition(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      premium?: null,
+      excessPremium?: null
+    ): ActivatePositionEventFilter
+
+    'CancelPosition(address,address,uint256,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      returnedPremium?: null
+    ): CancelPositionEventFilter
+    CancelPosition(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      returnedPremium?: null
+    ): CancelPositionEventFilter
+
     'CreateMarket(address,uint32,address)'(
       collection?: PromiseOrValue<string> | null,
       weight?: null,
@@ -1026,6 +1100,45 @@ export interface Vault extends BaseContract {
     'DestoryStrike(uint256)'(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
     DestoryStrike(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
 
+    'ExercisePosition(address,address,uint256,uint256,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      revenue?: null,
+      exerciseFee?: null
+    ): ExercisePositionEventFilter
+    ExercisePosition(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      revenue?: null,
+      exerciseFee?: null
+    ): ExercisePositionEventFilter
+
+    'ExpirePosition(address,address,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null
+    ): ExpirePositionEventFilter
+    ExpirePosition(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null
+    ): ExpirePositionEventFilter
+
+    'FailPosition(address,address,uint256,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      returnedPremium?: null
+    ): FailPositionEventFilter
+    FailPosition(
+      owner?: PromiseOrValue<string> | null,
+      collection?: PromiseOrValue<string> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      returnedPremium?: null
+    ): FailPositionEventFilter
+
     'FreezeMarket(address,address)'(
       operator?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null
@@ -1038,17 +1151,19 @@ export interface Vault extends BaseContract {
     'KeeperAddressUpdated(address)'(keeperAddress?: PromiseOrValue<string> | null): KeeperAddressUpdatedEventFilter
     KeeperAddressUpdated(keeperAddress?: PromiseOrValue<string> | null): KeeperAddressUpdatedEventFilter
 
-    'OpenPosition(address,uint256,uint256,uint256)'(
+    'OpenPosition(address,address,address,uint256,tuple)'(
+      caller?: null,
+      receiver?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
-      strikeId?: PromiseOrValue<BigNumberish> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
-      estimatedPremium?: null
+      parameters?: null
     ): OpenPositionEventFilter
     OpenPosition(
+      caller?: null,
+      receiver?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
-      strikeId?: PromiseOrValue<BigNumberish> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
-      estimatedPremium?: null
+      parameters?: null
     ): OpenPositionEventFilter
 
     'OwnershipTransferred(address,address)'(
@@ -1065,47 +1180,6 @@ export interface Vault extends BaseContract {
 
     'Paused(address)'(account?: null): PausedEventFilter
     Paused(account?: null): PausedEventFilter
-
-    'ReceiveKeeperFee(address,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): ReceiveKeeperFeeEventFilter
-    ReceiveKeeperFee(user?: PromiseOrValue<string> | null, amount?: null): ReceiveKeeperFeeEventFilter
-
-    'ReceivePremium(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      amountToReserve?: null,
-      amountToLiquidityPool?: null
-    ): ReceivePremiumEventFilter
-    ReceivePremium(
-      user?: PromiseOrValue<string> | null,
-      amountToReserve?: null,
-      amountToLiquidityPool?: null
-    ): ReceivePremiumEventFilter
-
-    'ReceivePremiumAndFee(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      premium?: null,
-      fee?: null
-    ): ReceivePremiumAndFeeEventFilter
-    ReceivePremiumAndFee(
-      user?: PromiseOrValue<string> | null,
-      premium?: null,
-      fee?: null
-    ): ReceivePremiumAndFeeEventFilter
-
-    'ReturnExcessPremium(address,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      returnedPremium?: null
-    ): ReturnExcessPremiumEventFilter
-    ReturnExcessPremium(user?: PromiseOrValue<string> | null, returnedPremium?: null): ReturnExcessPremiumEventFilter
-
-    'SendRevenue(address,uint256,uint256)'(
-      receiver?: PromiseOrValue<string> | null,
-      amount?: null,
-      fee?: null
-    ): SendRevenueEventFilter
-    SendRevenue(receiver?: PromiseOrValue<string> | null, amount?: null, fee?: null): SendRevenueEventFilter
 
     'UnpauseVault(address)'(operator?: PromiseOrValue<string> | null): UnpauseVaultEventFilter
     UnpauseVault(operator?: PromiseOrValue<string> | null): UnpauseVaultEventFilter

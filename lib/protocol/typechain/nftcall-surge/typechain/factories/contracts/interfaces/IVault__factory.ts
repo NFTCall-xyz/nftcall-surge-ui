@@ -200,6 +200,37 @@ const _abi = [
         name: 'caller',
         type: 'address',
       },
+      {
+        internalType: 'address',
+        name: 'keeper',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'payer',
+        type: 'address',
+      },
+    ],
+    name: 'OnlyKeeperOrOwnerOrPayer',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'caller',
+        type: 'address',
+      },
     ],
     name: 'OnlyUnpaused',
     type: 'error',
@@ -360,6 +391,74 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'premium',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'excessPremium',
+        type: 'uint256',
+      },
+    ],
+    name: 'ActivatePosition',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'returnedPremium',
+        type: 'uint256',
+      },
+    ],
+    name: 'CancelPosition',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'collection',
         type: 'address',
       },
@@ -473,6 +572,99 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'revenue',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'exerciseFee',
+        type: 'uint256',
+      },
+    ],
+    name: 'ExercisePosition',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+    ],
+    name: 'ExpirePosition',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'returnedPremium',
+        type: 'uint256',
+      },
+    ],
+    name: 'FailPosition',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'operator',
         type: 'address',
       },
@@ -503,6 +695,18 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'address',
+        name: 'caller',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'receiver',
+        type: 'address',
+      },
+      {
         indexed: true,
         internalType: 'address',
         name: 'collection',
@@ -511,20 +715,51 @@ const _abi = [
       {
         indexed: true,
         internalType: 'uint256',
-        name: 'strikeId',
-        type: 'uint256',
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
         name: 'positionId',
         type: 'uint256',
       },
       {
+        components: [
+          {
+            internalType: 'enum OptionType',
+            name: 'optionType',
+            type: 'uint8',
+          },
+          {
+            internalType: 'uint256',
+            name: 'expiration',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'spotPrice',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'strikePrice',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'premium',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'keeperFee',
+            type: 'uint256',
+          },
+        ],
         indexed: false,
-        internalType: 'uint256',
-        name: 'estimatedPremium',
-        type: 'uint256',
+        internalType: 'struct IVault.OpenPositionEventParameters',
+        name: 'parameters',
+        type: 'tuple',
       },
     ],
     name: 'OpenPosition',
@@ -541,119 +776,6 @@ const _abi = [
       },
     ],
     name: 'PauseVault',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReceiveKeeperFee',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amountToReserve',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amountToLiquidityPool',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReceivePremium',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'premium',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fee',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReceivePremiumAndFee',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'returnedPremium',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReturnExcessPremium',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'receiver',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fee',
-        type: 'uint256',
-      },
-    ],
-    name: 'SendRevenue',
     type: 'event',
   },
   {
