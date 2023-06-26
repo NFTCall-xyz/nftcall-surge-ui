@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useImmer } from 'use-immer'
 
-import { getTimestamp } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 
 import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicTable/types'
@@ -134,7 +133,6 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           collectionAddress: collectionAddress,
           thegraphUrl,
           isActive,
-          currentTimestamp: getTimestamp(Date.now()),
         })
         .then((rowData) => {
           if (rowData.length < pageSize) setNoMoreSourceData(true)
