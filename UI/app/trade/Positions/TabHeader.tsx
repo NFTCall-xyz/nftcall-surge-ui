@@ -7,8 +7,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Stack from '@mui/material/Stack'
 
-import FlexBetween from 'components/flexbox/FlexBetween'
-
 import { usePageTrade } from '..'
 
 const TabHeader: FCC = ({ children }) => {
@@ -20,11 +18,11 @@ const TabHeader: FCC = ({ children }) => {
     },
   } = usePageTrade()
   return (
-    <FlexBetween alignItems="center" paddingTop={1}>
+    <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" paddingTop={1} justifyContent={{ sm: 'space-between' }}>
       {children}
       <Stack spacing={1} direction="row" display="flex">
         <FormControl size="small" sx={{ width: '200px' }}>
-          <InputLabel>{tOptionPositionsTabs('collectionAddress')}</InputLabel>
+          <InputLabel sx={{ fontSize: 14 }}>{tOptionPositionsTabs('collectionAddress')}</InputLabel>
           <Select
             value={collectionAddress}
             onChange={(e) => setCollectionAddress(e.target.value)}
@@ -47,7 +45,7 @@ const TabHeader: FCC = ({ children }) => {
           </Select>
         </FormControl>
       </Stack>
-    </FlexBetween>
+    </Stack>
   )
 }
 

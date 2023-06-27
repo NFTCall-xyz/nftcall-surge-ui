@@ -21,6 +21,7 @@ import ConnectButton from 'lib/wallet/components/ConnectButton'
 
 import { useLinks } from '../../Footer/Links/useLinks'
 import Logo from '../Logo'
+import SettingButton from 'app/setting/components/SettingButton'
 
 const ROOT = styled(Box)``
 
@@ -47,6 +48,11 @@ const MenuMobile = () => {
         </ListItem>
         <ListItem sx={{ '& button': { width: '100%' } }}>
           <ConnectButton />
+        </ListItem>
+        <ListItem>
+          <SettingButton>
+            Settings
+          </SettingButton>
         </ListItem>
         <Divider />
         {menu.list

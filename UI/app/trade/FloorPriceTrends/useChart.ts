@@ -47,7 +47,7 @@ export const useChart = () => {
     floorPrice24Change,
   } = usePageTrade()
   const { chainId } = useWallet()
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
   const { post, cancel, loading } = usePost(getFloorPriceTrends)
   const [sourceData, setSourceData] = useImmer<FloorPriceTrends[]>([])

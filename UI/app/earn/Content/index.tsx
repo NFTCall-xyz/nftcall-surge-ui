@@ -7,20 +7,20 @@ import Tabs from './Tabs'
 import YourStats from './YourStats'
 
 const Content: FC = () => {
-  const height = 'calc(100vh - 450px)'
+  const minHeight = 'calc(100vh - 450px)'
 
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Card sx={{ height }}>
+        <Grid item xs={12} sm={4}>
+          <Card sx={{ minHeight }}>
             <CardContent>
               <YourStats />
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={8}>
-          <Card sx={{ height }}>
+        <Grid item xs={12} sm={8}>
+          <Card sx={{ minHeight }}>
             <CardContent>
               <Tabs />
             </CardContent>

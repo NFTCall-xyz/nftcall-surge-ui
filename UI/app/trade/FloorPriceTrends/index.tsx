@@ -30,7 +30,6 @@ const ROOT = styled(Card)(({ theme }) => ({
 }))
 
 const NFTCollectionInfo = styled(Stack)`
-  align-items: flex-end;
 `
 
 const Right = styled('div')``
@@ -44,44 +43,45 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
 
   const collectionInfo = useMemo(
     () => (
-      <NFTCollectionInfo spacing={4} direction="row">
+      <NFTCollectionInfo spacing={{ xs: 2, sm: 6 }} direction={{ xs: 'column', sm: "row" }} alignItems={{ xs: 'start', sm: 'end' }}>
         <NFTCollectionTitle collection={chart.collection} />
-        <Stack spacing={0.5}>
-          <Tiny color="text.secondary" fontWeight={400}>
-            {tFloorPriceTrends('floorPrice')}
-          </Tiny>
-          <Paragraph component="div">
-            <Stack spacing={0.5} direction="row" alignItems="center">
-              <TokenIcon symbol="ETH" sx={{ width: 16, height: 16 }} />
-              <NumberDisplay value={chart.currentFloorPrice} options="number" />
-            </Stack>
-          </Paragraph>
-        </Stack>
-        <Stack spacing={0.5}>
-          <Tiny color="text.secondary" fontWeight={400}>
-            {tFloorPriceTrends('change24h')}
-          </Tiny>
-
-          <RiseOrFall value={chart.change24}>
+        <Stack direction="row" spacing={4}>
+          <Stack spacing={0.5}>
+            <Tiny color="text.secondary" fontWeight={400}>
+              {tFloorPriceTrends('floorPrice')}
+            </Tiny>
             <Paragraph component="div">
               <Stack spacing={0.5} direction="row" alignItems="center">
-                <NumberDisplay
-                  value={chart.change24}
-                  abbreviate={{}}
-                  numberFormatOptions={{ signDisplay: 'always' }}
-                  options="percent"
-                />
+                <TokenIcon symbol="ETH" sx={{ width: 16, height: 16 }} />
+                <NumberDisplay value={chart.currentFloorPrice} options="number" />
               </Stack>
             </Paragraph>
-          </RiseOrFall>
-        </Stack>
-        <Stack spacing={0.5}>
-          <Tiny color="text.secondary" fontWeight={400}>
-            {tFloorPriceTrends('volatility')}
-          </Tiny>
-          <Paragraph component="div">
-            <NumberDisplay value={chart.volatility} options="percent" />
-          </Paragraph>
+          </Stack>
+          <Stack spacing={0.5}>
+            <Tiny color="text.secondary" fontWeight={400}>
+              {tFloorPriceTrends('change24h')}
+            </Tiny>
+            <RiseOrFall value={chart.change24}>
+              <Paragraph component="div">
+                <Stack spacing={0.5} direction="row" alignItems="center">
+                  <NumberDisplay
+                    value={chart.change24}
+                    abbreviate={{}}
+                    numberFormatOptions={{ signDisplay: 'always' }}
+                    options="percent"
+                  />
+                </Stack>
+              </Paragraph>
+            </RiseOrFall>
+          </Stack>
+          <Stack spacing={0.5}>
+            <Tiny color="text.secondary" fontWeight={400}>
+              {tFloorPriceTrends('volatility')}
+            </Tiny>
+            <Paragraph component="div">
+              <NumberDisplay value={chart.volatility} options="percent" />
+            </Paragraph>
+          </Stack>
         </Stack>
       </NFTCollectionInfo>
     ),

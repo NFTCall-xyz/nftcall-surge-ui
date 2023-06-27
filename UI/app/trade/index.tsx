@@ -17,16 +17,16 @@ const Trade: FC = () => {
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={9}>
           <Stack spacing={2}>
-            <Stack spacing={2} direction="row" height="50vh">
+            <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} minHeight="50vh">
               <SelectNFTCollection />
               <FloorPriceTrends />
             </Stack>
             <Positions />
           </Stack>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <OpenOptions />
         </Grid>
       </Grid>

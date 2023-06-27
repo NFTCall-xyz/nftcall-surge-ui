@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles'
 
 import ChainButton from 'lib/wallet/components/ChainButton'
 import ConnectButton from 'lib/wallet/components/ConnectButton'
+import SettingButton from 'app/setting/components/SettingButton'
 
 const ROOT = styled(Stack)``
 
@@ -29,6 +30,9 @@ const ActionsMobile: FC = () => {
       </IconButton>
       <Drawer anchor="right" open={openDrawer} onClose={() => setOpenDrawer(false)}>
         <List>
+          <ListItem>
+            <SettingButton />
+          </ListItem>
           <ListItem>
             <ChainButton />
           </ListItem>

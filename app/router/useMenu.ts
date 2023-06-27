@@ -21,6 +21,11 @@ const MenuList = [
     key: 'Earn',
     linkTo: '/app/earn',
   },
+  {
+    key: 'Docs',
+    linkTo: 'https://docs.nftcall.xyz/',
+    target: '_blank',
+  },
 ]
 
 export function useMenu() {

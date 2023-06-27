@@ -48,7 +48,7 @@ const ConfirmOpenOptionDialog: FC = () => {
     <Dialog open={visible} onClose={close}>
       <DialogTitle>Open position</DialogTitle>
       <ConfirmOpenOptionDialogCloseIconButton />
-      <DialogContent sx={{ width: 450 }}>
+      <DialogContent>
         <Stack spacing={4}>
           <Stack spacing={2}>
             <H3>

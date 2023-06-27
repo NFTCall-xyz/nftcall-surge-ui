@@ -37,11 +37,11 @@ const Deposit: FC = () => {
   return (
     <Box paddingTop={2}>
       <Grid container spacing={2}>
-        <Grid item xs={6.5}>
+        <Grid item xs={12} sm={6.5}>
           <Box paddingRight={2}>
             <Stack spacing={4}>
               <Stack spacing={2}>
-                <FlexBetween>
+                <FlexBetween flexDirection={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'start', sm: 'center' }}>
                   <H5>Deposit Amount</H5>
                   <Tiny color="text.secondary">
                     available: {<NumberDisplay value={wETHBalance} options="number" />} WETH
@@ -101,9 +101,10 @@ const Deposit: FC = () => {
         </Grid>
         <Grid
           item
-          xs={5.5}
+          xs={12}
+          sm={5.5}
           sx={{
-            borderLeft: `1px solid ${theme.palette.divider}`,
+            borderLeft: { sm: `1px solid ${theme.palette.divider}` },
           }}
         >
           <Stack spacing={2} paddingX={1} sx={{ '& p': { fontSize: 14, lineHeight: 2, color: 'text.secondary' } }}>

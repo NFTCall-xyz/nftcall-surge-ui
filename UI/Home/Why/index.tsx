@@ -50,7 +50,7 @@ const Roadmap: FC = () => {
   return (
     <Stack component="section" spacing={10} position="relative">
       <Stack spacing={{ xs: 2, md: 20 }} direction={{ xs: 'column', md: 'row' }} justifyContent="center">
-        <H2 fontSize={36}>{t('title')}</H2>
+        <H2 fontSize={36} textAlign={{ xs: 'center', md: 'left' }}>{t('title')}</H2>
       </Stack>
       <Grid spacing={2} container>
         {[speculateImg, hedgeImg, yieldImg, leverageImg].map((image, index) => (

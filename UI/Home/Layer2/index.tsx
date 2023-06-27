@@ -25,9 +25,9 @@ const NetworkCard: React.FC<NetworkCardProps> = ({ image, title, status }) => {
   return (
     <Stack
       direction="row"
-      justifyContent="space-between"
       alignItems="center"
       padding={2}
+      spacing={2}
       sx={{
         background: theme.palette.background.paper,
         borderRadius: '20px',
@@ -35,18 +35,18 @@ const NetworkCard: React.FC<NetworkCardProps> = ({ image, title, status }) => {
         borderColor: theme.palette.divider,
       }}
     >
-      <Stack direction="row" spacing={4} alignItems="center">
-        <Image
-          src={image}
-          alt={title}
-          style={{
-            width: '100px',
-            height: '100px',
-          }}
-        />
+      <Image
+        src={image}
+        alt={title}
+        style={{
+          width: '100px',
+          height: '100px',
+        }}
+      />
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} alignItems={{ xs: "start", sm: "center" }}>
         <H3 fontSize={24}>{title}</H3>
+        <Chip label={status} color="primary" variant="outlined" />
       </Stack>
-      <Chip label={status} color="primary" variant="outlined" />
     </Stack>
   )
 }
