@@ -31,13 +31,23 @@ const Divider = styled(Box)`
 const Stats: FC = () => {
   const { t } = useTranslation('home', { keyPrefix: 'stats' })
   return (
-    <Stack component="section" direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" spacing={{ xs: 4, sm: 0 }}>
+    <Stack
+      component="section"
+      direction={{ xs: 'column', md: 'row' }}
+      justifyContent="space-between"
+      spacing={{ xs: 4, sm: 0 }}
+    >
       {stats.map((stat) => (
-        <Stack key={stat.label} direction={{ xs: 'column-reverse', sm: 'row' }} alignItems="center" spacing={{ xs: 0, sm: 2 }}>
+        <Stack
+          key={stat.label}
+          direction={{ xs: 'column-reverse', sm: 'row' }}
+          alignItems="center"
+          spacing={{ xs: 0, sm: 2 }}
+        >
           <H4 fontSize={32} fontWeight={500}>
             {stat.value}
           </H4>
-          <Divider sx={{ display: { xs: 'none', sm: 'block' } }}/>
+          <Divider sx={{ display: { xs: 'none', sm: 'block' } }} />
           <Span fontSize={18} color="primary.main" textTransform="uppercase">
             {t(`${stat.label}`)}
           </Span>

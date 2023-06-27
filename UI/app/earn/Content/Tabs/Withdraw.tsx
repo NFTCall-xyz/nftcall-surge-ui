@@ -61,7 +61,7 @@ const Withdraw: FC = () => {
                   onMax={() => {
                     setValue(maxWithdraw.toNumber())
                   }}
-                  endAdornment={"ncETH"}
+                  endAdornment={'ncETH'}
                 />
               </Stack>
               <Stack spacing={2}>

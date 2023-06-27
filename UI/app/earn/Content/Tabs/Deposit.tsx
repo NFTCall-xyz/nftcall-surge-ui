@@ -12,12 +12,12 @@ import { safeGet } from 'app/utils/get'
 import { H5, Paragraph, Tiny } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
+import { toBN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { NumberInput } from 'lib/math/components/NumberInput'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageEarn } from '../..'
-import { toBN } from 'lib/math'
 
 const Deposit: FC = () => {
   const {
@@ -59,7 +59,7 @@ const Deposit: FC = () => {
                   onMax={() => {
                     setValue(wETHBalance.toNumber())
                   }}
-                  endAdornment={"WETH"}
+                  endAdornment={'WETH'}
                 />
               </Stack>
               <Stack spacing={2}>

@@ -43,7 +43,11 @@ const NetworkCard: React.FC<NetworkCardProps> = ({ image, title, status }) => {
           height: '100px',
         }}
       />
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} alignItems={{ xs: "start", sm: "center" }}>
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        spacing={{ xs: 1, sm: 2 }}
+        alignItems={{ xs: 'start', sm: 'center' }}
+      >
         <H3 fontSize={24}>{title}</H3>
         <Chip label={status} color="primary" variant="outlined" />
       </Stack>

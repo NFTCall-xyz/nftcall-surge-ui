@@ -1,9 +1,9 @@
+import { Tooltip } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import type { SxProps, Theme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
 
 import { getAssetInfo } from './assets-list'
-import { Tooltip } from '@mui/material'
 
 export interface TokenIconProps {
   symbol: string

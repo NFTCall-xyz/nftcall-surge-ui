@@ -18,7 +18,12 @@ const TabHeader: FCC = ({ children }) => {
     },
   } = usePageTrade()
   return (
-    <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" paddingTop={1} justifyContent={{ sm: 'space-between' }}>
+    <Stack
+      direction={{ xs: 'column', sm: 'row' }}
+      alignItems="center"
+      paddingTop={1}
+      justifyContent={{ sm: 'space-between' }}
+    >
       {children}
       <Stack spacing={1} direction="row" display="flex">
         <FormControl size="small" sx={{ width: '200px' }}>

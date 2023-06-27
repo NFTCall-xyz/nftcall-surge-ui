@@ -33,19 +33,23 @@ export function NumberInput({
         placeholder="0.00"
         inputProps={{ 'aria-label': 'input number', pattern: '^[0-9]*[.,]?[0-9]*$' }}
         startAdornment={startAdornment}
-        endAdornment={onMax ? (
-          <Fragment>
-            <Button disabled={disabled} onClick={onMax} sx={{ color: theme.palette.primary.main, minWidth: "50px" }}>
-              Max
-            </Button>
-            {endAdornment && 
-              <>
-                <Divider sx={{ height: 28, ml: 0.5, mr: 1.5 }} orientation="vertical" />
-                {endAdornment}
-              </>
-            }
-          </Fragment>
-        ): endAdornment}
+        endAdornment={
+          onMax ? (
+            <Fragment>
+              <Button disabled={disabled} onClick={onMax} sx={{ color: theme.palette.primary.main, minWidth: '50px' }}>
+                Max
+              </Button>
+              {endAdornment && (
+                <>
+                  <Divider sx={{ height: 28, ml: 0.5, mr: 1.5 }} orientation="vertical" />
+                  {endAdornment}
+                </>
+              )}
+            </Fragment>
+          ) : (
+            endAdornment
+          )
+        }
       />
       <FormHelperText id="helper-text">{helperText || error}</FormHelperText>
     </FormControl>

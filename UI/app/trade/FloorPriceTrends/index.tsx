@@ -29,8 +29,7 @@ const ROOT = styled(Card)(({ theme }) => ({
   flex: 1,
 }))
 
-const NFTCollectionInfo = styled(Stack)`
-`
+const NFTCollectionInfo = styled(Stack)``
 
 const Right = styled('div')``
 
@@ -43,7 +42,11 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
 
   const collectionInfo = useMemo(
     () => (
-      <NFTCollectionInfo spacing={{ xs: 2, sm: 6 }} direction={{ xs: 'column', sm: "row" }} alignItems={{ xs: 'start', sm: 'end' }}>
+      <NFTCollectionInfo
+        spacing={{ xs: 2, sm: 6 }}
+        direction={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'start', sm: 'end' }}
+      >
         <NFTCollectionTitle collection={chart.collection} />
         <Stack direction="row" spacing={4}>
           <Stack spacing={0.5}>

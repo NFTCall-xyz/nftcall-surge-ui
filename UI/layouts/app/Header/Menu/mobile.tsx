@@ -14,6 +14,8 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { styled, useTheme } from '@mui/material/styles'
 
+import SettingButton from 'app/setting/components/SettingButton'
+
 import { Small } from 'components/Typography'
 
 import ChainButton from 'lib/wallet/components/ChainButton'
@@ -21,7 +23,6 @@ import ConnectButton from 'lib/wallet/components/ConnectButton'
 
 import { useLinks } from '../../Footer/Links/useLinks'
 import Logo from '../Logo'
-import SettingButton from 'app/setting/components/SettingButton'
 
 const ROOT = styled(Box)``
 
@@ -50,9 +51,7 @@ const MenuMobile = () => {
           <ConnectButton />
         </ListItem>
         <ListItem>
-          <SettingButton>
-            Settings
-          </SettingButton>
+          <SettingButton>Settings</SettingButton>
         </ListItem>
         <Divider />
         {menu.list

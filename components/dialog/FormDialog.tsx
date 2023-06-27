@@ -21,7 +21,9 @@ const FormDialog: FCC<DialogValues & { title: string; submit: () => Promise<any>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions sx={{ padding: 3 }}>
-        <Button onClick={close} variant='outlined'>Cancel</Button>
+        <Button onClick={close} variant="outlined">
+          Cancel
+        </Button>
         <SubmitBotton onClick={() => submit()} isSubmitting={isSubmitting}>
           Save
         </SubmitBotton>

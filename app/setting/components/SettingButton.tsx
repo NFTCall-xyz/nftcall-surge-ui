@@ -4,10 +4,10 @@ import type { ReactNode } from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
 import IconButton from '@mui/material/IconButton'
 
+import { Span } from 'components/Typography'
 import FlexBox from 'components/flexbox/FlexBox'
 
 import MotionDiv from 'lib/framer-motion/components/MotionDiv'
-import { Span } from 'components/Typography'
 
 const SettingButton: FC<{ children?: ReactNode }> = ({ children }) => {
   const {
