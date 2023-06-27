@@ -15,7 +15,10 @@ const SelectOptionType: FC = () => {
     <ToggleButtonGroup
       value={optionType}
       exclusive
-      onChange={(e, value) => setOptionType(value)}
+      onChange={(e, newValue) => {
+        if (newValue === null) return
+        setOptionType(newValue)
+      }}
       color="primary"
       sx={{
         '& button': {

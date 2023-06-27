@@ -31,7 +31,7 @@ const SelectExpiryDate: FC = () => {
   return (
     <Stack spacing={1}>
       <FlexBetween>
-        <Span fontWeight='medium'>{tOpenCallOptions('expiry')}</Span>
+        <Span fontWeight="medium">{tOpenCallOptions('expiry')}</Span>
         <Span>{expiryDiff}</Span>
       </FlexBetween>
       <DateTimePicker
@@ -50,15 +50,15 @@ const SelectExpiryDate: FC = () => {
         value={tagId}
         exclusive
         size="small"
-        onChange={(e, value) => {
+        onChange={(e, newValue) => {
           const now = Date.now()
-          let expiryDate = now + value * DAY
-          if (value === 3) {
+          let expiryDate = now + newValue * DAY
+          if (newValue === 3) {
             expiryDate += MINUTES * 10
           }
           set(new Date(expiryDate))
           setNow(now)
-          setTagId(value)
+          setTagId(newValue)
         }}
         color="primary"
         sx={{

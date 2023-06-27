@@ -30,7 +30,7 @@ const useDayButton = () => {
   return {
     value,
     onChange: (event: MouseEvent<HTMLElement>, newValue: number) => {
-      if (!newValue) return
+      if (newValue === null) return
       setValue(newValue)
     },
     list: DayButtonList,

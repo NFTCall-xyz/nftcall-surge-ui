@@ -34,7 +34,7 @@ const SelectStrikePrice: FC = () => {
   return (
     <Stack spacing={1}>
       <FlexBetween>
-        <Span fontWeight='medium'>{tOpenCallOptions('strikePrice')}</Span>
+        <Span fontWeight="medium">{tOpenCallOptions('strikePrice')}</Span>
         <RiseOrFall value={diffPercent}>
           <NumberDisplay value={diffPercent} options="percent" numberFormatOptions={{ signDisplay: 'always' }} />
         </RiseOrFall>
@@ -44,9 +44,9 @@ const SelectStrikePrice: FC = () => {
         endAdornment={<Span color="text.secondary">ETH</Span>}
         error={error}
         onChange={(e: any) => {
-          const value = e.target.value
-          setError(checked(value))
-          set(value)
+          const newValue = e.target.value
+          setError(checked(newValue))
+          set(newValue)
         }}
         onBlur={() => {
           const valueBN = toBN(value)
@@ -62,7 +62,10 @@ const SelectStrikePrice: FC = () => {
         value={value}
         exclusive
         size="small"
-        onChange={(e, value) => set(value)}
+        onChange={(e, newValue) => {
+          if (newValue === null) return
+          set(newValue)
+        }}
         color="primary"
         sx={{
           '& button': {
