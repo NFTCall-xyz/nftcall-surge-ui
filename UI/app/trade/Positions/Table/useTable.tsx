@@ -49,7 +49,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
         [
           {
             dataKey: 'collectionAddress',
-            width: 200,
+            width: 350,
             headerRenderer,
             cellRenderer: NFTCollectionRenderer,
           },
@@ -63,14 +63,14 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
           {
             dataKey: 'status',
             cellData: 'status',
-            width: 150,
+            width: 200,
             headerRenderer,
             cellRenderer: statusCellRenderer,
           },
           {
             dataKey: 'size',
             cellData: 'amount',
-            width: 150,
+            width: 200,
             headerRenderer,
             cellRenderer: numberCellRenderer,
           },

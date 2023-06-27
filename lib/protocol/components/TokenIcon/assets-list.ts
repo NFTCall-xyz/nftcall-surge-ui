@@ -20,10 +20,16 @@ export const assetsList: Asset[] = [
     icon: icons.eth,
   },
   {
-    name: 'nEthereum',
-    symbol: 'NETH',
+    name: 'Wrapped Ethereum',
+    symbol: 'WETH',
     color: '#000000',
-    icon: icons.neth,
+    icon: icons.weth,
+  },
+  {
+    name: 'NFTCall Ethereum',
+    symbol: 'ncETH',
+    color: '#000000',
+    icon: icons.nceth,
   },
   {
     name: 'USD Coin',

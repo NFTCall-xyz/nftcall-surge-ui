@@ -49,9 +49,9 @@ const OpenOptionsAction: FC = () => {
 
       const bnValue = toBN(temp)
       if (bnValue.lt(min)) {
-        return setError(() => tOpenCallOptions(key) + ' too low')
+        return setError(() => tOpenCallOptions(key) + ' exceeds the lower limit')
       } else if (bnValue.gt(max)) {
-        return setError(() => tOpenCallOptions(key) + ' too high')
+        return setError(() => tOpenCallOptions(key) + ' exceeds the upper limit')
       }
     }
 

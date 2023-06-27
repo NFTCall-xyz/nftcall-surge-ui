@@ -34,7 +34,7 @@ const SelectStrikePrice: FC = () => {
   return (
     <Stack spacing={1}>
       <FlexBetween>
-        <Span>{tOpenCallOptions('strikePrice')}</Span>
+        <Span fontWeight='medium'>{tOpenCallOptions('strikePrice')}</Span>
         <RiseOrFall value={diffPercent}>
           <NumberDisplay value={diffPercent} options="percent" numberFormatOptions={{ signDisplay: 'always' }} />
         </RiseOrFall>

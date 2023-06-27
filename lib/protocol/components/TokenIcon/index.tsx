@@ -3,6 +3,7 @@ import type { SxProps, Theme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
 
 import { getAssetInfo } from './assets-list'
+import { Tooltip } from '@mui/material'
 
 export interface TokenIconProps {
   symbol: string
@@ -19,7 +20,11 @@ const TokenIcon = ({ symbol, sx }: TokenIconProps) => {
   if (!symbol) return null
   const asset = getAssetInfo(symbol)
 
-  return <TokenAvatar sx={sx} alt={symbol} src={asset.icon.src} />
+  return (
+    <Tooltip title={symbol}>
+      <TokenAvatar sx={sx} alt={symbol} src={asset.icon.src} />
+    </Tooltip>
+  )
 }
 
 export default TokenIcon

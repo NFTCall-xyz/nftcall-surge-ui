@@ -27,9 +27,9 @@ const useAmount = (setInit: Updater<boolean>) => {
   const [amount, setAmount] = useImmer<number>(0)
   const checked = useCallback((value: any) => {
     if (!/^[0-9]*[.,]?[0-9]*$/.test(value)) {
-      return 'Illegal input format'
+      return 'input is invalid'
     } else if (!value) {
-      return 'Cannot be empty'
+      return 'cannot be empty'
     } else {
       return ''
     }
@@ -73,9 +73,9 @@ const useStrikePrice = (optionType: OptionType, setInit: Updater<boolean>) => {
   const [strikePrice, setStrikePrice] = useImmer<number>(0)
   const checked = useCallback((value: any) => {
     if (!/^[0-9]*[.,]?[0-9]*$/.test(value)) {
-      return 'Illegal input format'
+      return 'input is invalid'
     } else if (!value) {
-      return 'Cannot be empty'
+      return 'cannot be empty'
     } else {
       return ''
     }
@@ -129,7 +129,7 @@ const useExpiryDate = (setInit: Updater<boolean>) => {
 
   const checked = useCallback((value: any) => {
     if (!value) {
-      return 'Cannot be empty'
+      return 'cannot be empty'
     } else {
       return ''
     }

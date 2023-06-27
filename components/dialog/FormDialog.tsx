@@ -20,10 +20,10 @@ const FormDialog: FCC<DialogValues & { title: string; submit: () => Promise<any>
     <Dialog open={visible} onClose={close}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
-      <DialogActions>
-        <Button onClick={close}>Cancel</Button>
+      <DialogActions sx={{ padding: 3 }}>
+        <Button onClick={close} variant='outlined'>Cancel</Button>
         <SubmitBotton onClick={() => submit()} isSubmitting={isSubmitting}>
-          Submit
+          Save
         </SubmitBotton>
       </DialogActions>
     </Dialog>

@@ -67,7 +67,7 @@ const ConfirmOpenOptionDialog: FC = () => {
               </Stack>
             </H3>
             <Tiny textAlign="center">
-              You think the floor price of {name} will rise above {<NumberDisplay value={strikePrice.value} />} ETH on{' '}
+              You think the floor price of {name} will {optionType === OptionType.LONG_CALL ? 'rise above' : 'fall below'} {<NumberDisplay value={strikePrice.value} />} ETH on{' '}
               {safeGet(() => format(expiryDate.value, 'yyyy-MM-dd HH:mm'))}
             </Tiny>
           </Stack>

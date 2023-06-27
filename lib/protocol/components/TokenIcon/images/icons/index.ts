@@ -1,6 +1,7 @@
 import arbitrum from './arbitrum.svg'
 import eth from './eth.svg'
-import neth from './neth.svg'
+import weth from './eth.svg'
+import nceth from './nceth.svg'
 import usdc from './usdc.svg'
 import usdt from './usdt.svg'
 
@@ -10,8 +11,9 @@ interface Images {
 
 export default {
   eth,
+  weth,
   usdc,
   usdt,
-  neth,
+  nceth,
   arbitrum,
 } as Images

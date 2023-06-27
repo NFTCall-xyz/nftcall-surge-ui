@@ -31,7 +31,7 @@ const SelectExpiryDate: FC = () => {
   return (
     <Stack spacing={1}>
       <FlexBetween>
-        <Span>{tOpenCallOptions('expiry')}</Span>
+        <Span fontWeight='medium'>{tOpenCallOptions('expiry')}</Span>
         <Span>{expiryDiff}</Span>
       </FlexBetween>
       <DateTimePicker

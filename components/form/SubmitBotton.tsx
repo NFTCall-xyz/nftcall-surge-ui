@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 const SubmitBotton: FCC<ButtonProps & { isSubmitting: boolean }> = ({ children, isSubmitting, ...btnProps }) => {
   const text = useMemo(() => (isSubmitting ? 'Submitting' : children), [isSubmitting, children])
   return (
-    <Button {...btnProps} type="submit" disabled={isSubmitting}>
+    <Button {...btnProps} type="submit" disabled={isSubmitting} variant='contained'>
       {text}
     </Button>
   )

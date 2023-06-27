@@ -1,6 +1,6 @@
 const locale = {
   title: 'ncETH Vault',
-  subTitle: 'Deposit ETH in exchange for ncETH and earn protocol fees. Learn more.',
+  subTitle: 'Deposit WETH in exchange for ncETH and earn protocol fees. Learn more.',
   YourStats: {
     title: 'Your Stats',
     ncETHBalance: 'ncETH Balance',

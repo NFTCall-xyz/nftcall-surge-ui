@@ -20,7 +20,7 @@ const DisplayPremium: FC = () => {
           <CircularProgress size={14} />
         ) : (
           <>
-            <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
+            <TokenIcon symbol="WETH" sx={{ width: 14, height: 14 }} />
             <NumberDisplay value={premium.value} options="number" numberFormatOptions={{ maximumFractionDigits: 6 }} />
           </>
         )}

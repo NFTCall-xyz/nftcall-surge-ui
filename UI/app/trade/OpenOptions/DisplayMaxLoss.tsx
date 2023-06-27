@@ -22,7 +22,7 @@ const DisplayMaxLoss: FC = () => {
     <FlexBetween>
       <Span color="text.secondary">{tOpenCallOptions('maxLoss')}</Span>
       <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
-        <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
+        <TokenIcon symbol="WETH" sx={{ width: 14, height: 14 }} />
         {value}
       </Stack>
     </FlexBetween>

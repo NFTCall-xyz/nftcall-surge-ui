@@ -16,7 +16,7 @@ const SelectAmount: FC = () => {
   return (
     <Stack spacing={1}>
       <FlexBetween>
-        <Span>{tOpenCallOptions('size')}</Span>
+        <Span fontWeight='medium'>{tOpenCallOptions('size')}</Span>
         <Tiny color="text.secondary">
           <Span fontSize={12}>{`${tOpenCallOptions('limit')}: `}</Span>
           <NumberDisplay value={amount.max} options="number" />
@@ -24,7 +24,7 @@ const SelectAmount: FC = () => {
       </FlexBetween>
       <NumberInput
         value={amount.value}
-        endAdornment={<Span color="text.secondary">{tOpenCallOptions('calls')}</Span>}
+        endAdornment={<Span color="text.secondary">{tOpenCallOptions('contracts')}</Span>}
         error={error}
         onChange={(e: any) => {
           const value = e.target.value

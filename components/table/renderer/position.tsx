@@ -55,22 +55,18 @@ export const optionTypeRenderer = ({ rowData: { optionType } }: TableCellProps) 
   if (optionType === OptionType.LONG_CALL) {
     return (
       <TableCell align="center" component="div">
-        <Stack spacing={1}>
-          <Stack spacing={0.5} direction="row" alignItems="center">
-            <TrendingUpOutlinedIcon color="success" />
-            <Span>CALL</Span>
-          </Stack>
+        <Stack spacing={0.5} direction="row" alignItems="center">
+          <TrendingUpOutlinedIcon color="success" />
+          <Span>CALL</Span>
         </Stack>
       </TableCell>
     )
   } else if (optionType === OptionType.LONG_PUT) {
     return (
-      <TableCell align="left" component="div">
-        <Stack spacing={1}>
-          <Stack spacing={0.5} direction="row" alignItems="center">
-            <TrendingDownOutlinedIcon color="error" />
-            <Span>PUT</Span>
-          </Stack>
+      <TableCell align="center" component="div">
+        <Stack spacing={0.5} direction="row" alignItems="center">
+          <TrendingDownOutlinedIcon color="error" />
+          <Span>PUT</Span>
         </Stack>
       </TableCell>
     )
