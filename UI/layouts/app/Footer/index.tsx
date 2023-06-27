@@ -39,6 +39,8 @@ const CopyRight = styled(Typography)`
 `
 
 const Footer: FC = () => {
+  const currentDate = new Date()
+
   return (
     <ROOT component="footer">
       <Content>
@@ -49,7 +51,7 @@ const Footer: FC = () => {
           </Stack>
         </Stack>
         <CopyRight className="copy-right" variant="caption" color="grey.400">
-          © 2023, NFTCall. All Rights Reserved
+          {`Copyright Ⓒ ${currentDate.getFullYear()} NFTCall. All Rights Reserved.`}
         </CopyRight>
       </Content>
     </ROOT>

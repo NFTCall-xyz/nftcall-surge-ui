@@ -32,18 +32,19 @@ export const footerLinks = [
     title: 'NFTCall Protocol',
     links: [
       { name: 'Overview', link: 'https://docs.nftcall.xyz/' },
-      { name: 'How it Works', link: 'https://docs.nftcall.xyz/overview/how-does-nftcall-work' },
+      { name: 'How it Works', link: 'https://docs.nftcall.xyz/nftcall-surge/overview/how-does-nftcall-work' },
       // { name: 'Tokenomics', link: '#' },
-      { name: 'User Guide', link: 'https://docs.nftcall.xyz/guide/buy' },
+      { name: 'User Guide', link: 'https://docs.nftcall.xyz/nftcall-surge/user-guide/trade' },
     ],
   },
   {
     title: 'Useful Link',
     links: [
       // { name: 'FAQ', link: '#' },
-      { name: 'Docs', link: 'https://docs.nftcall.xyz/' },
+      // { name: 'Docs', link: 'https://docs.nftcall.xyz/' },
       { name: 'Github', link: 'https://github.com/NFTCall-xyz' },
       { name: 'Contact', link: 'mailto:info@nftcall.xyz' },
+      { name: 'NFTCall V1', link: 'https://v1.nftcall.xyz/' },
       // { name: 'Terms & Services', link: '#' },
     ],
   },
@@ -60,6 +61,7 @@ export const footerLinks = [
 const Footer: FC = () => {
   const theme = useTheme()
   const { t } = useTranslation('home', { keyPrefix: 'footer' })
+  const currentDate = new Date()
 
   return (
     <Stack component="footer" paddingTop={16} paddingBottom={4}>
@@ -96,7 +98,7 @@ const Footer: FC = () => {
         >
           <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} alignItems="center">
             <Paragraph color="text.disabled" textAlign="center">
-              Copyright Ⓒ 2022 NFTCall. All Rights Reserved.
+              {`Copyright Ⓒ ${currentDate.getFullYear()} NFTCall. All Rights Reserved.`}
             </Paragraph>
           </Stack>
           <SocialLinks />

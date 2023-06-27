@@ -29,7 +29,7 @@ const locale = {
     breakevenPrice: 'Breakeven Price',
     maxProfit: 'Max. Profit',
     maxLoss: 'Max. Loss',
-    openOptions: 'Open Options',
+    openOptions: 'Open Position',
     approve: 'Approve',
   },
   OptionPositions: {

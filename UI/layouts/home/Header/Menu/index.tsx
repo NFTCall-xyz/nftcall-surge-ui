@@ -14,7 +14,7 @@ const HeaderLink = styled(Link)`
 `
 
 const menu = [
-  { label: 'NFTCall Protocol', linkTo: 'https://docs.nftcall.xyz/overview/how-does-nftcall-work' },
+  // { label: 'NFTCall Protocol', linkTo: 'https://docs.nftcall.xyz/overview/how-does-nftcall-work' },
   { label: 'Docs', linkTo: 'https://docs.nftcall.xyz/' },
   // { label: 'FAQs', linkTo: '#FAQs' },
 ]

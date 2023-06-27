@@ -2,7 +2,7 @@ const locale = {
   hero: {
     title: 'Speculate, Hedge or Earn Premiums from <NFTOptions>NFT Options</NFTOptions>',
     subTitle:
-      'NFTCall is an NFT options trading platform on Layer-2 that using a peer-to-pool model and auto market making mechanism.',
+      'NFTCall is an NFT options trading platform on Layer-2 that uses a peer-to-pool model and auto market making mechanism.',
     tradeNow: 'Trade Now',
     watchVideo: 'Watch Video',
     NFTOptions: 'NFT Options',
@@ -39,7 +39,7 @@ const locale = {
     },
   },
   why: {
-    title: 'Why trading NFT options on NFTCall?',
+    title: 'Why trade NFT options on NFTCall?',
     list: {
       0: {
         title: 'Speculation',

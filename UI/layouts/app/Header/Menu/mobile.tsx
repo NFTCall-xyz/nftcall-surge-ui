@@ -29,6 +29,7 @@ const MenuMobile = () => {
   const { links } = useLinks()
   const [openDrawer, setOpenDrawer] = useImmer(false)
   const theme = useTheme()
+  const currentDate = useMemo(() => new Date(), [])
 
   const list = useMemo(
     () => (
@@ -81,11 +82,11 @@ const MenuMobile = () => {
         ))}
         <Divider />
         <ListItem>
-          <Small color="text.disabled"> © 2022, NFTCall. All Rights Reserved</Small>
+          <Small color="text.disabled">{`© ${currentDate.getFullYear()}, NFTCall. All Rights Reserved`}</Small>
         </ListItem>
       </List>
     ),
-    [links, menu, setOpenDrawer, theme.palette.text.secondary]
+    [links, menu, setOpenDrawer, theme.palette.text.secondary, currentDate]
   )
 
   return (
