@@ -9,12 +9,12 @@ const locale = {
     estimatedEarnings: 'Estimated Earnings',
     vault: {
       title: 'Vault',
-      available: 'Available',
+      available: 'Available to Withdraw',
     },
     locked: {
       title: 'Locked',
       ncETHBalance: 'Locked ncETH',
-      until: 'Locked until',
+      until: 'Locked Until',
       claim: 'Claim',
     },
   },

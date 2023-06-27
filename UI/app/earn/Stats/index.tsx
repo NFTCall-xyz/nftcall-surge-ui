@@ -14,7 +14,7 @@ const Stats: FC = () => {
     {
       price: (
         <Stack spacing={0.5} direction="row" alignItems="center">
-          <TokenIcon symbol={'ETH'} sx={{ width: 24, height: 24 }} />
+          <TokenIcon symbol={'WETH'} sx={{ width: 24, height: 24 }} />
           <NumberDisplay value={stats.TVL} abbreviate={{}} />
         </Stack>
       ),
@@ -31,7 +31,7 @@ const Stats: FC = () => {
     {
       price: (
         <Stack spacing={0.5} direction="row" alignItems="center">
-          <TokenIcon symbol={'ETH'} sx={{ width: 24, height: 24 }} />
+          <TokenIcon symbol={'WETH'} sx={{ width: 24, height: 24 }} />
           <NumberDisplay value={stats.ncETHPrice} abbreviate={{}} />
         </Stack>
       ),
@@ -40,7 +40,7 @@ const Stats: FC = () => {
     {
       price: (
         <Stack spacing={0.5} direction="row" alignItems="center">
-          <TokenIcon symbol={'nETH'} sx={{ width: 24, height: 24 }} />
+          <TokenIcon symbol={'ncETH'} sx={{ width: 24, height: 24 }} />
           <NumberDisplay value={stats.ncETHTotalSupply} abbreviate={{}} />
         </Stack>
       ),

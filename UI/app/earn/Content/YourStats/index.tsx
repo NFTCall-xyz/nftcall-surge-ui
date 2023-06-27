@@ -32,28 +32,28 @@ const YourStats: FC = () => {
         <Text>
           <Span color="text.secondary">{tYourStats('ncETHBalance')}</Span>
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
+            <TokenIcon symbol={'ncETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={your.ncETHBalance} />
           </Stack>
         </Text>
         <Text>
           <Span color="text.secondary">{tYourStats('lockedNcETHBalance')}</Span>
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
+            <TokenIcon symbol={'ncETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={your.lockedNcETHBalance} />
           </Stack>
         </Text>
         <Text>
           <Span color="text.secondary">{tYourStats('totalValue')}</Span>
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
+            <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={your.totalValue} />
           </Stack>
         </Text>
         <Text>
           <Span color="text.secondary">{tYourStats('estimatedEarnings')}</Span>
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
+            <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={your.estimatedEarnings} />
           </Stack>
         </Text>
@@ -63,7 +63,7 @@ const YourStats: FC = () => {
         <Text>
           <Span color="text.secondary">{tYourStats('vault.available')}</Span>
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
+            <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={vault.available} />
           </Stack>
         </Text>
@@ -73,7 +73,7 @@ const YourStats: FC = () => {
         <Text>
           <Span color="text.secondary">{tYourStats('locked.ncETHBalance')}</Span>
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
+            <TokenIcon symbol={'ncETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={locked.lockedNcETHBalance} />
           </Stack>
         </Text>

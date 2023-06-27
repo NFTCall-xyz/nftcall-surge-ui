@@ -46,7 +46,7 @@ const Withdraw: FC = () => {
                 <FlexBetween>
                   <H5>Withdraw Amount</H5>
                   <Tiny color="text.secondary">
-                    available: {<NumberDisplay value={maxWithdraw} options="number" />} ETH
+                    available: {<NumberDisplay value={maxWithdraw} options="number" />} ncETH
                   </Tiny>
                 </FlexBetween>
                 <NumberInput
@@ -61,22 +61,23 @@ const Withdraw: FC = () => {
                   onMax={() => {
                     setValue(maxWithdraw.toNumber())
                   }}
+                  endAdornment={"ncETH"}
                 />
               </Stack>
               <Stack spacing={2}>
                 <Paragraph color="text.secondary" fontSize={14}>
-                  Receive Amount
+                  Receive WETH Amount
                 </Paragraph>
                 <Stack spacing={0.5} direction="row" alignItems="center">
-                  <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
+                  <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
                   <NumberDisplay value={receiveAmount} />
                 </Stack>
                 <Stack spacing={1}>
                   <Tiny color="text.secondary">
-                    1 ETH = {<NumberDisplay value={ncETHPrice} options="number" />} ncETH
+                    1 ncETH = {<NumberDisplay value={ncETHPrice} options="number" />} WETH
                   </Tiny>
                   <Tiny color="text.secondary">
-                    Withdrawal fee: {<NumberDisplay value={withdrawalFee} options="number" />} ETH
+                    Withdrawal fee: {<NumberDisplay value={withdrawalFee} options="number" />} WETH
                   </Tiny>
                 </Stack>
               </Stack>
@@ -87,7 +88,6 @@ const Withdraw: FC = () => {
                 onClick={() => {
                   withdraw(value.toString())
                 }}
-                sx={{ padding: '5px' }}
               >
                 {tTabs('withdraw.action')}
               </Button>
@@ -102,12 +102,12 @@ const Withdraw: FC = () => {
           }}
         >
           <Stack spacing={2} paddingX={1} sx={{ '& p': { fontSize: 14, lineHeight: 2, color: 'text.secondary' } }}>
-            <Paragraph>Burn your ncETH in exchange for ETH/WETH.</Paragraph>
+            <Paragraph>Burn your ncETH in exchange for WETH.</Paragraph>
             <Paragraph>
-              Please note that you will only be able to withdraw funds when the amount of available ETH in the Vault is
-              sufficient, and you can only withdraw up to 50% of the available ETH in the Vault at one time.
+              Please note that you will only be able to withdraw funds when the amount of available WETH in the Vault is
+              sufficient, and you can only withdraw up to 50% of the available WETH in the Vault at one time.
             </Paragraph>
-            <Paragraph>Available ETH refers to funds not used by current open positions.</Paragraph>
+            <Paragraph>Available WETH refers to funds not used by current open positions.</Paragraph>
             <Alert severity="info">
               Please be aware, you can't immediately withdraw your assets within 72 hours, and withdrawal incurs a fee
               of 0.3%.

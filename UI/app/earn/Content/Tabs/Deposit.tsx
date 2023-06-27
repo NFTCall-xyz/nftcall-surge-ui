@@ -17,6 +17,7 @@ import { NumberInput } from 'lib/math/components/NumberInput'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageEarn } from '../..'
+import { toBN } from 'lib/math'
 
 const Deposit: FC = () => {
   const {
@@ -43,7 +44,7 @@ const Deposit: FC = () => {
                 <FlexBetween>
                   <H5>Deposit Amount</H5>
                   <Tiny color="text.secondary">
-                    available: {<NumberDisplay value={wETHBalance} options="number" />} ETH
+                    available: {<NumberDisplay value={wETHBalance} options="number" />} WETH
                   </Tiny>
                 </FlexBetween>
                 <NumberInput
@@ -58,18 +59,19 @@ const Deposit: FC = () => {
                   onMax={() => {
                     setValue(wETHBalance.toNumber())
                   }}
+                  endAdornment={"WETH"}
                 />
               </Stack>
               <Stack spacing={2}>
                 <Paragraph color="text.secondary" fontSize={14}>
-                  Receive Amount
+                  Receive ncETH Amount
                 </Paragraph>
                 <Stack spacing={0.5} direction="row" alignItems="center">
-                  <TokenIcon symbol={'nETH'} sx={{ width: 16, height: 16 }} />
+                  <TokenIcon symbol={'ncETH'} sx={{ width: 16, height: 16 }} />
                   <NumberDisplay value={receiveAmount} />
                 </Stack>
                 <Tiny color="text.secondary">
-                  1 ETH = {<NumberDisplay value={ncETHPrice} options="number" />} ncETH
+                  1 WETH = {<NumberDisplay value={toBN(1).div(ncETHPrice)} options="number" />} ncETH
                 </Tiny>
               </Stack>
 
@@ -80,7 +82,6 @@ const Deposit: FC = () => {
                   onClick={() => {
                     deposit(value.toString())
                   }}
-                  sx={{ padding: '5px' }}
                 >
                   {tTabs('deposit.action')}
                 </Button>
@@ -91,7 +92,6 @@ const Deposit: FC = () => {
                   onClick={() => {
                     approveDeposit(value.toString())
                   }}
-                  sx={{ padding: '5px' }}
                 >
                   {tTabs('approve.action')}
                 </Button>
@@ -108,7 +108,7 @@ const Deposit: FC = () => {
         >
           <Stack spacing={2} paddingX={1} sx={{ '& p': { fontSize: 14, lineHeight: 2, color: 'text.secondary' } }}>
             <Paragraph>
-              Deposit ETH/WETH in exchange for ncETH, an ERC-20 token representing your ownership in the vault.
+              Deposit WETH in exchange for ncETH, an ERC-20 token representing your ownership in the vault.
             </Paragraph>
             <Paragraph>
               Stakers receive 90% premiums from each option written on the platform in exchange for serving as the

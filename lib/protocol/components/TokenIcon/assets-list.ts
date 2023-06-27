@@ -27,7 +27,7 @@ export const assetsList: Asset[] = [
   },
   {
     name: 'NFTCall Ethereum',
-    symbol: 'ncETH',
+    symbol: 'NCETH',
     color: '#000000',
     icon: icons.nceth,
   },

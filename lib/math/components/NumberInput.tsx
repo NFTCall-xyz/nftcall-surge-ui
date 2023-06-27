@@ -35,12 +35,12 @@ export function NumberInput({
         startAdornment={startAdornment}
         endAdornment={onMax ? (
           <Fragment>
-            <Button disabled={disabled} onClick={onMax} sx={{ color: theme.palette.primary.main }}>
+            <Button disabled={disabled} onClick={onMax} sx={{ color: theme.palette.primary.main, minWidth: "50px" }}>
               Max
             </Button>
             {endAdornment && 
               <>
-                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                <Divider sx={{ height: 28, ml: 0.5, mr: 1.5 }} orientation="vertical" />
                 {endAdornment}
               </>
             }
