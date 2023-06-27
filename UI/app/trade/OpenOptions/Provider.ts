@@ -26,7 +26,7 @@ const useAmount = (setInit: Updater<boolean>) => {
 
   const [amount, setAmount] = useImmer<number>(0)
   const checked = useCallback((value: any) => {
-    if (!/^[0-9]*[.,]?[0-9]*$/.test(value)) {
+    if (!/^[0-9]*[.]?[0-9]*$/.test(value)) {
       return 'input is invalid'
     } else if (!value) {
       return 'cannot be empty'
@@ -72,7 +72,7 @@ const useStrikePrice = (optionType: OptionType, setInit: Updater<boolean>) => {
   } = usePageTrade()
   const [strikePrice, setStrikePrice] = useImmer<number>(0)
   const checked = useCallback((value: any) => {
-    if (!/^[0-9]*[.,]?[0-9]*$/.test(value)) {
+    if (!/^[0-9]*[.]?[0-9]*$/.test(value)) {
       return 'input is invalid'
     } else if (!value) {
       return 'cannot be empty'

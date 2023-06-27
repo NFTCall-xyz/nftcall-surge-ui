@@ -27,11 +27,26 @@ export function NumberInput({
         name={name}
         aria-describedby="helper-text"
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+          let newValue = e.target.value
+
+          const nonNumeric = /[^0-9.]/g
+          if (nonNumeric.test(newValue)) {
+            newValue = newValue.replace(nonNumeric, '')
+          }
+
+          if (newValue != '0' && !newValue.startsWith('0.')) {
+            newValue = newValue.replace(/^0+/, '')
+          }
+
+          e.target.value = newValue || '0'
+
+          onChange(e)
+        }}
         onBlur={onBlur}
         sx={{ flex: 1 }}
         placeholder="0.00"
-        inputProps={{ 'aria-label': 'input number', pattern: '^[0-9]*[.,]?[0-9]*$' }}
+        inputProps={{ 'aria-label': 'input number', pattern: '^[0-9]*[.]?[0-9]*$' }}
         startAdornment={startAdornment}
         endAdornment={
           onMax ? (
