@@ -7,6 +7,7 @@ import { type Updater, useImmer } from 'use-immer'
 import { DAY, MINUTES, getTimestamp } from 'app/constant'
 import { useDialog } from 'app/hooks/useDialog'
 import { createContextWithProvider } from 'app/utils/createContext'
+import { log } from 'app/utils/dev'
 
 import { useNetwork } from 'domains/data'
 
@@ -223,21 +224,26 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
     }
     setLoading(() => true)
     let isCancel = false
+    const props = {
+      optionType,
+      strikePrice: valueToWei(strikePrice.value, 18).toString(),
+      expiry: getTimestamp(expiryDate.value.getTime()),
+      amount: valueToWei(amount.value, 18).toString(),
+    }
     getPremium({
-      props: {
-        optionType,
-        strikePrice: valueToWei(strikePrice.value, 18).toString(),
-        expiry: getTimestamp(expiryDate.value.getTime()),
-        amount: valueToWei(amount.value, 18).toString(),
-      },
+      props,
       getPromise: (promise) =>
         promise
           .then((value) => {
             if (isCancel) return
             setValue(() => weiToValue(value, 18).toNumber())
           })
-          .catch((e) => {
-            console.log('premium error', e)
+          .catch((error) => {
+            log('[getPremium][error]', {
+              props,
+              error,
+            })
+            setValue(() => 0)
           })
           .finally(() => {
             if (isCancel) return
