@@ -3,13 +3,15 @@ import { useMemo } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
-import { Span } from 'components/Typography'
+import { TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
+import { Box, Tooltip } from '@mui/material'
+import Link from 'next/link'
 
 const DisplayMaxProfit: FC = () => {
   const { amount, strikePrice, premium, tOpenCallOptions } = usePageTradeOpenOptions()
@@ -20,7 +22,19 @@ const DisplayMaxProfit: FC = () => {
 
   return (
     <FlexBetween>
-      <Span color="text.secondary">{tOpenCallOptions('maxProfit')}</Span>
+      <Tooltip title={
+          <>
+            <p>{tOpenCallOptions('maxProfitTip')}</p>
+            <br />
+            <p>{tOpenCallOptions('maxPayoutTip')}</p>
+            <br />
+            <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#limited-payout-for-call-options">Learn More</Link>
+          </>
+        }>
+        <Box>
+          <TooltipSpan color="text.secondary">{tOpenCallOptions('maxProfit')}</TooltipSpan>
+        </Box>
+      </Tooltip>
       <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
         <TokenIcon symbol="WETH" sx={{ width: 14, height: 14 }} />
         {value}

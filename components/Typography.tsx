@@ -224,9 +224,11 @@ export const TooltipSpan: Typography = (props) => {
       }}
       sx={{
         textDecoration: 'underline',
-        textDecorationStyle: 'dotted',
-        textDecorationColor: theme.palette.text.disabled,
+        textDecorationStyle: 'dashed',
+        textDecorationColor: theme.palette.grey[700],
         cursor: 'help',
+        textDecorationThickness: '1px',
+        textUnderlineOffset: '2px',
       }}
     >
       {children}

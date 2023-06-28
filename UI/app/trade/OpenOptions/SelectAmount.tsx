@@ -9,10 +9,14 @@ import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { NumberInput } from 'lib/math/components/NumberInput'
 
 import { usePageTradeOpenOptions } from '.'
+import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
+import { useMemo } from 'react'
 
 const SelectAmount: FC = () => {
-  const { amount, tOpenCallOptions } = usePageTradeOpenOptions()
+  const { amount, tOpenCallOptions, optionType } = usePageTradeOpenOptions()
   const [error, setError] = useImmer('')
+  const unit = useMemo(() => optionType === OptionType.LONG_CALL ? 'calls' : 'puts', [optionType])
+  
   return (
     <Stack spacing={1}>
       <FlexBetween>
@@ -24,7 +28,7 @@ const SelectAmount: FC = () => {
       </FlexBetween>
       <NumberInput
         value={amount.value}
-        endAdornment={<Span color="text.secondary">{tOpenCallOptions('contracts')}</Span>}
+        endAdornment={<Span color="text.secondary">{tOpenCallOptions(unit)}</Span>}
         error={error}
         onChange={(e: any) => {
           const value = e.target.value

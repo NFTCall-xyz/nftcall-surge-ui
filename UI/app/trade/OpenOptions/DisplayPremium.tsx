@@ -1,20 +1,25 @@
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
-import { Span } from 'components/Typography'
+import { TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
+import { Box, Tooltip } from '@mui/material'
 
 const DisplayPremium: FC = () => {
   const { premium, tOpenCallOptions } = usePageTradeOpenOptions()
 
   return (
     <FlexBetween>
-      <Span color="text.secondary">{tOpenCallOptions('premium')}</Span>
+      <Tooltip title={tOpenCallOptions('premiumTip')}>
+        <Box>
+          <TooltipSpan color="text.secondary">{tOpenCallOptions('premium')}</TooltipSpan>
+        </Box>
+      </Tooltip>
       <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
         {premium.loading ? (
           <CircularProgress size={14} />

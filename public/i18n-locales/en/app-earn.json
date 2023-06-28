@@ -1,6 +1,6 @@
 {
   "title": "ncETH Vault",
-  "subTitle": "Deposit ETH in exchange for nETH and earn protocol fees. Learn more.",
+  "subTitle": "Deposit WETH in exchange for ncETH and earn protocol fees. Learn more.",
   "YourStats": {
     "title": "Your Stats",
     "ncETHBalance": "ncETH Balance",
@@ -9,12 +9,12 @@
     "estimatedEarnings": "Estimated Earnings",
     "vault": {
       "title": "Vault",
-      "available": "Available"
+      "available": "Available to Withdraw"
     },
     "locked": {
       "title": "Locked",
       "ncETHBalance": "Locked ncETH",
-      "until": "Locked until",
+      "until": "Locked Until",
       "claim": "Claim"
     }
   },

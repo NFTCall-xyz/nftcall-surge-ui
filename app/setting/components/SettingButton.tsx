@@ -21,7 +21,7 @@ const SettingButton: FC<{ children?: ReactNode }> = ({ children }) => {
       <MotionDiv whileHover={{ rotate: 180 }} transition={{ duration: 0.3 }}>
         <IconButton onClick={() => dialog.open()}>
           <SettingsIcon />
-          <Span color='text.primary' ml={1}>{children}</Span>
+          {children && <Span color='text.primary' ml={1}>{children}</Span>}
         </IconButton>
       </MotionDiv>
     </FlexBox>

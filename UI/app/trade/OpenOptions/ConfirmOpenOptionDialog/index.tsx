@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack'
 import { getTimestamp } from 'app/constant'
 import { safeGet } from 'app/utils/get'
 
-import { H3, Span, Tiny } from 'components/Typography'
+import { H3, Span, TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import { OptionPositionStatus } from 'lib/graphql/option-position'
@@ -24,6 +24,8 @@ import DisplayBreakevenPrice from '../DisplayBreakevenPrice'
 import DisplayMaxLoss from '../DisplayMaxLoss'
 import DisplayMaxProfit from '../DisplayMaxProfit'
 import ConfirmOpenOptionDialogCloseIconButton from './ConfirmOpenOptionDialogCloseIconButton'
+import { Box, Tooltip } from '@mui/material'
+import Link from 'next/link'
 
 const ConfirmOpenOptionDialog: FC = () => {
   const {
@@ -66,10 +68,10 @@ const ConfirmOpenOptionDialog: FC = () => {
                 <span>{safeGet(() => format(expiryDate.value, 'yyyy-MM-dd HH:mm'))}</span>
               </Stack>
             </H3>
-            <Tiny textAlign="center">
-              You think the floor price of {name} will {optionType === OptionType.LONG_CALL ? 'rise above' : 'fall below'} {<NumberDisplay value={strikePrice.value} />} ETH on{' '}
+            <Span textAlign="center" color='text.secondary'>
+              You think the floor price of {name} will {optionType === OptionType.LONG_CALL ? 'rise above' : 'drop below'} {<NumberDisplay value={strikePrice.value} />} ETH on{' '}
               {safeGet(() => format(expiryDate.value, 'yyyy-MM-dd HH:mm'))}
-            </Tiny>
+            </Span>
           </Stack>
           <Stack spacing={2}>
             <FlexBetween>
@@ -105,25 +107,45 @@ const ConfirmOpenOptionDialog: FC = () => {
             <Divider />
 
             <FlexBetween>
-              <Span color="text.secondary">{tOpenCallOptions('premium')}</Span>
+              <Tooltip title={tOpenCallOptions('premiumTip')}>
+                <Box>
+                  <TooltipSpan color="text.secondary">{tOpenCallOptions('premium')}</TooltipSpan>
+                </Box>
+              </Tooltip>
               <Span>
                 <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
-                  <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
+                  <TokenIcon symbol="WETH" sx={{ width: 14, height: 14 }} />
                   <NumberDisplay value={premium.value} />
                 </Stack>
               </Span>
             </FlexBetween>
             <FlexBetween>
-              <Span color="text.secondary">{tOpenCallOptions('allowedSlippage')}</Span>
+              <Tooltip title={
+                  <>
+                    <p>{tOpenCallOptions('slippageTip')}</p>
+                    <br />
+                    <p>{tOpenCallOptions('slippageSettingsTip')}</p>
+                    <br />
+                    <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">Learn More</Link>
+                  </>
+                }>
+                <Box>
+                  <TooltipSpan color="text.secondary">{tOpenCallOptions('allowedSlippage')}</TooltipSpan>
+                </Box>
+              </Tooltip>
               <Span>
                 <NumberDisplay value={premium.allowedSlippage.value} options="percent" />
               </Span>
             </FlexBetween>
             <FlexBetween>
-              <Span color="text.secondary">{tOpenCallOptions('fees')}</Span>
+              <Tooltip title={tOpenCallOptions('feesTip')}>
+                <Box>
+                  <TooltipSpan color="text.secondary">{tOpenCallOptions('fees')}</TooltipSpan>
+                </Box>
+              </Tooltip>
               <Span>
                 <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
-                  <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
+                  <TokenIcon symbol="WETH" sx={{ width: 14, height: 14 }} />
                   <NumberDisplay value={executionFee} numberFormatOptions={{ maximumFractionDigits: 5 }} />
                 </Stack>
               </Span>
@@ -132,7 +154,7 @@ const ConfirmOpenOptionDialog: FC = () => {
               <Span color="text.secondary">{tOpenCallOptions('subtotal')}</Span>
               <Span>
                 <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
-                  <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
+                  <TokenIcon symbol="WETH" sx={{ width: 14, height: 14 }} />
                   <NumberDisplay value={safeGet(() => executionFee.plus(premium.maximumPremium))} />
                 </Stack>
               </Span>
