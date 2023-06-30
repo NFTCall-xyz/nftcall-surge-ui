@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
 import Stack from '@mui/material/Stack'
@@ -7,16 +8,15 @@ import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { NumberInput } from 'lib/math/components/NumberInput'
+import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 import { usePageTradeOpenOptions } from '.'
-import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
-import { useMemo } from 'react'
 
 const SelectAmount: FC = () => {
   const { amount, tOpenCallOptions, optionType } = usePageTradeOpenOptions()
   const [error, setError] = useImmer('')
-  const unit = useMemo(() => optionType === OptionType.LONG_CALL ? 'calls' : 'puts', [optionType])
-  
+  const unit = useMemo(() => (optionType === OptionType.LONG_CALL ? 'calls' : 'puts'), [optionType])
+
   return (
     <Stack spacing={1}>
       <FlexBetween>

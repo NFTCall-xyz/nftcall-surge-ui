@@ -33,15 +33,22 @@ const locale = {
     maxLoss: 'Max. Loss',
     openOptions: 'Open Position',
     approve: 'Approve',
-    limitTip: 'Due to the risk control settings of the vault, the size limit available for each NFT collection when opening a position is different.',
+    limitTip:
+      'Due to the risk control settings of the vault, the size limit available for each NFT collection when opening a position is different.',
     maxProfitTip: 'The maximum profit is the amount you can make from the option position.',
-    maxPayoutTip: 'For call options, the vault only provides limited payout, which means the vault cannot pay for any option profits resulting from a spot price increase exceeding 100%. In order to compensate traders, the protocol will adjust down the premium for buying call options.',
-    breakevenPriceTip: 'Breakeven price is the price at which the option cost is equal to the option value. In other words, it is the point at which there is neither profit nor loss.',
+    maxPayoutTip:
+      'For call options, the vault only provides limited payout, which means the vault cannot pay for any option profits resulting from a spot price increase exceeding 100%. In order to compensate traders, the protocol will adjust down the premium for buying call options.',
+    breakevenPriceTip:
+      'Breakeven price is the price at which the option cost is equal to the option value. In other words, it is the point at which there is neither profit nor loss.',
     maxLossTip: 'The maximum loss is the amount you pay for the option position, known as the premium.',
-    premiumTip: 'Premium is the total amount that you need to pay for an option position. The premium is higher for NFT collections with higher floor price volatility in the recent past.',
-    slippageTip: 'When opening a position, you will be asked to pay slightly higher than the calculated premium to guarantee the success rate of executing positions. The exceeding portion is determined by the slippage which is controlled by the user.',
-    slippageSettingsTip: 'The slippage amount can be configured under Settings, found by clicking on "Settings" icon at the top right of the page.',
-    feesTip: 'There are two transactions involved in opening a position: users send the first transaction to request open, keepers observe the blockchain for these requests then execute them. The cost of the transaction executed by the keepers is the "Execution Fee", which is currently set at 0.00005 WETH per position.',
+    premiumTip:
+      'Premium is the total amount that you need to pay for an option position. The premium is higher for NFT collections with higher floor price volatility in the recent past.',
+    slippageTip:
+      'When opening a position, you will be asked to pay slightly higher than the calculated premium to guarantee the success rate of executing positions. The exceeding portion is determined by the slippage which is controlled by the user.',
+    slippageSettingsTip:
+      'The slippage amount can be configured under Settings, found by clicking on "Settings" icon at the top right of the page.',
+    feesTip:
+      'There are two transactions involved in opening a position: users send the first transaction to request open, keepers observe the blockchain for these requests then execute them. The cost of the transaction executed by the keepers is the "Execution Fee", which is currently set at 0.00005 WETH per position.',
   },
   OptionPositions: {
     tabs: {

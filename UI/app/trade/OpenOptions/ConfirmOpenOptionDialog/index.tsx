@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
+import Link from 'next/link'
 
+import { Box, Tooltip } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -24,8 +26,6 @@ import DisplayBreakevenPrice from '../DisplayBreakevenPrice'
 import DisplayMaxLoss from '../DisplayMaxLoss'
 import DisplayMaxProfit from '../DisplayMaxProfit'
 import ConfirmOpenOptionDialogCloseIconButton from './ConfirmOpenOptionDialogCloseIconButton'
-import { Box, Tooltip } from '@mui/material'
-import Link from 'next/link'
 
 const ConfirmOpenOptionDialog: FC = () => {
   const {
@@ -68,8 +68,10 @@ const ConfirmOpenOptionDialog: FC = () => {
                 <span>{safeGet(() => format(expiryDate.value, 'yyyy-MM-dd HH:mm'))}</span>
               </Stack>
             </H3>
-            <Span textAlign="center" color='text.secondary'>
-              You think the floor price of {name} will {optionType === OptionType.LONG_CALL ? 'rise above' : 'drop below'} {<NumberDisplay value={strikePrice.value} />} ETH on{' '}
+            <Span textAlign="center" color="text.secondary">
+              You think the floor price of {name} will{' '}
+              {optionType === OptionType.LONG_CALL ? 'rise above' : 'drop below'}{' '}
+              {<NumberDisplay value={strikePrice.value} />} ETH on{' '}
               {safeGet(() => format(expiryDate.value, 'yyyy-MM-dd HH:mm'))}
             </Span>
           </Stack>
@@ -120,15 +122,22 @@ const ConfirmOpenOptionDialog: FC = () => {
               </Span>
             </FlexBetween>
             <FlexBetween>
-              <Tooltip title={
+              <Tooltip
+                title={
                   <>
                     <p>{tOpenCallOptions('slippageTip')}</p>
                     <br />
                     <p>{tOpenCallOptions('slippageSettingsTip')}</p>
                     <br />
-                    <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">Learn More</Link>
+                    <Link
+                      target="_blank"
+                      href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage"
+                    >
+                      Learn More
+                    </Link>
                   </>
-                }>
+                }
+              >
                 <Box>
                   <TooltipSpan color="text.secondary">{tOpenCallOptions('allowedSlippage')}</TooltipSpan>
                 </Box>

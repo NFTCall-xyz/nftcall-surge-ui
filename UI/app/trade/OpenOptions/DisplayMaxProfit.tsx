@@ -1,5 +1,7 @@
+import Link from 'next/link'
 import { useMemo } from 'react'
 
+import { Box, Tooltip } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
@@ -10,8 +12,6 @@ import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
-import { Box, Tooltip } from '@mui/material'
-import Link from 'next/link'
 
 const DisplayMaxProfit: FC = () => {
   const { amount, strikePrice, premium, tOpenCallOptions } = usePageTradeOpenOptions()
@@ -22,15 +22,22 @@ const DisplayMaxProfit: FC = () => {
 
   return (
     <FlexBetween>
-      <Tooltip title={
+      <Tooltip
+        title={
           <>
             <p>{tOpenCallOptions('maxProfitTip')}</p>
             <br />
             <p>{tOpenCallOptions('maxPayoutTip')}</p>
             <br />
-            <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#limited-payout-for-call-options">Learn More</Link>
+            <Link
+              target="_blank"
+              href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#limited-payout-for-call-options"
+            >
+              Learn More
+            </Link>
           </>
-        }>
+        }
+      >
         <Box>
           <TooltipSpan color="text.secondary">{tOpenCallOptions('maxProfit')}</TooltipSpan>
         </Box>

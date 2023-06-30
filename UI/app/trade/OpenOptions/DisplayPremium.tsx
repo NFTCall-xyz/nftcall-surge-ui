@@ -1,3 +1,4 @@
+import { Box, Tooltip } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
@@ -8,7 +9,6 @@ import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
-import { Box, Tooltip } from '@mui/material'
 
 const DisplayPremium: FC = () => {
   const { premium, tOpenCallOptions } = usePageTradeOpenOptions()

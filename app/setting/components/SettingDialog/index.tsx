@@ -1,6 +1,9 @@
 import { useApp } from 'app'
+import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
 import type { FC } from 'react'
 
+import { Box, Tooltip } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 
@@ -10,10 +13,6 @@ import FormDialog from 'components/dialog/FormDialog'
 import { NumberInput } from 'lib/math/components/NumberInput'
 
 import { useForm } from './useForm'
-import { useTranslation } from 'next-i18next'
-import { Box, Tooltip } from '@mui/material'
-import Link from 'next/link'
-
 
 const SettingDialog: FC = () => {
   const {
@@ -23,7 +22,7 @@ const SettingDialog: FC = () => {
   } = useApp()
 
   const { formik } = useForm()
-  const { t } = useTranslation('app-trade', { keyPrefix: 'OpenCallOptions'})
+  const { t } = useTranslation('app-trade', { keyPrefix: 'OpenCallOptions' })
 
   return (
     <FormDialog {...dialog} title="Settings" submit={formik.submitForm} isSubmitting={formik.isSubmitting}>
@@ -34,17 +33,21 @@ const SettingDialog: FC = () => {
         }}
       >
         <Stack spacing={2}>
-          <Tooltip title={
+          <Tooltip
+            title={
               <>
                 <p>{t('slippageTip')}</p>
                 <br />
-                <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">Learn More</Link>
+                <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">
+                  Learn More
+                </Link>
               </>
-            }>
+            }
+          >
             <Box>
               <TooltipSpan color="text.secondary">{t('allowedSlippage')}</TooltipSpan>
             </Box>
-          </Tooltip>          
+          </Tooltip>
           <NumberInput
             name="allowedSlippage"
             onBlur={formik.handleBlur}
