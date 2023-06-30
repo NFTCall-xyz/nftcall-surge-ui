@@ -83,7 +83,6 @@ const components = (theme: Theme): any => {
           borderRadius: '7px',
           boxShadow: 'none',
           padding: '0.6rem 1.2rem',
-          fontSize: 13,
           fontWeight: 600,
           minWidth: 84,
           '&.Mui-disabled': {
