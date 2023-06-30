@@ -126,11 +126,26 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'getPremium',
+    name: 'getPremiumDeltaStdVega',
     outputs: [
       {
         internalType: 'uint256',
         name: 'premium',
+        type: 'uint256',
+      },
+      {
+        internalType: 'int256',
+        name: 'delta',
+        type: 'int256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'vega',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'stdVega',
         type: 'uint256',
       },
     ],
@@ -171,6 +186,72 @@ const _abi = [
         internalType: 'uint256',
         name: 'put',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'S',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'K',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'vol',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'duration',
+        type: 'uint256',
+      },
+    ],
+    name: 'optionPricesDeltaStdVega',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'callPrice',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'putPrice',
+            type: 'uint256',
+          },
+          {
+            internalType: 'int256',
+            name: 'callDelta',
+            type: 'int256',
+          },
+          {
+            internalType: 'int256',
+            name: 'putDelta',
+            type: 'int256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'vega',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'stdVega',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct BlackScholes.PricesDeltaStdVega',
+        name: '',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',

@@ -65,7 +65,9 @@ export interface KeeperHelperInterface extends utils.Interface {
     'getPendingOptions(address)': FunctionFragment
     'owner()': FunctionFragment
     'renounceOwnership()': FunctionFragment
+    'sumPNLWeightedDelta(address,uint256[])': FunctionFragment
     'transferOwnership(address)': FunctionFragment
+    'updateCollectionRisk(address,int256,int256)': FunctionFragment
   }
 
   getFunction(
@@ -79,7 +81,9 @@ export interface KeeperHelperInterface extends utils.Interface {
       | 'getPendingOptions'
       | 'owner'
       | 'renounceOwnership'
+      | 'sumPNLWeightedDelta'
       | 'transferOwnership'
+      | 'updateCollectionRisk'
   ): FunctionFragment
 
   encodeFunctionData(
@@ -103,7 +107,15 @@ export interface KeeperHelperInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getPendingOptions', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'sumPNLWeightedDelta',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
+  ): string
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(
+    functionFragment: 'updateCollectionRisk',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
 
   decodeFunctionResult(functionFragment: 'batchActivateOptions', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'batchCloseOptions', data: BytesLike): Result
@@ -114,7 +126,9 @@ export interface KeeperHelperInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getPendingOptions', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'sumPNLWeightedDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'updateCollectionRisk', data: BytesLike): Result
 
   events: {
     'OwnershipTransferred(address,address)': EventFragment
@@ -202,8 +216,21 @@ export interface KeeperHelper extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
+    sumPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { PNL: BigNumber; weightedDelta: BigNumber }>
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
   }
@@ -247,8 +274,21 @@ export interface KeeperHelper extends BaseContract {
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
+  sumPNLWeightedDelta(
+    collection: PromiseOrValue<string>,
+    positionIds: PromiseOrValue<BigNumberish>[],
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, BigNumber] & { PNL: BigNumber; weightedDelta: BigNumber }>
+
   transferOwnership(
     newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  updateCollectionRisk(
+    collection: PromiseOrValue<string>,
+    delta: PromiseOrValue<BigNumberish>,
+    PNL: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
@@ -292,7 +332,20 @@ export interface KeeperHelper extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>
 
+    sumPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { PNL: BigNumber; weightedDelta: BigNumber }>
+
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
   }
 
   filters: {
@@ -341,8 +394,21 @@ export interface KeeperHelper extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
 
+    sumPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
   }
@@ -382,8 +448,21 @@ export interface KeeperHelper extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
 
+    sumPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
   }

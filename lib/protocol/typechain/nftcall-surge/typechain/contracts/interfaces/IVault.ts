@@ -112,6 +112,7 @@ export interface IVaultInterface extends utils.Interface {
     'maximumOptionAmount(address,uint8)': FunctionFragment
     'openPosition(address,address,uint8,uint256,uint256,uint256,uint256)': FunctionFragment
     'pause()': FunctionFragment
+    'positionPNLWeightedDelta(address,uint256)': FunctionFragment
     'profitFeeRatio()': FunctionFragment
     'reserve()': FunctionFragment
     'setKeeper(address)': FunctionFragment
@@ -121,6 +122,7 @@ export interface IVaultInterface extends utils.Interface {
     'unpause()': FunctionFragment
     'unrealizedPNL()': FunctionFragment
     'unrealizedPremium()': FunctionFragment
+    'updateCollectionRisk(address,int256,int256)': FunctionFragment
     'updateUnrealizedPNL()': FunctionFragment
     'withdraw(uint256,address)': FunctionFragment
   }
@@ -157,6 +159,7 @@ export interface IVaultInterface extends utils.Interface {
       | 'maximumOptionAmount'
       | 'openPosition'
       | 'pause'
+      | 'positionPNLWeightedDelta'
       | 'profitFeeRatio'
       | 'reserve'
       | 'setKeeper'
@@ -166,6 +169,7 @@ export interface IVaultInterface extends utils.Interface {
       | 'unpause'
       | 'unrealizedPNL'
       | 'unrealizedPremium'
+      | 'updateCollectionRisk'
       | 'updateUnrealizedPNL'
       | 'withdraw'
   ): FunctionFragment
@@ -238,6 +242,10 @@ export interface IVaultInterface extends utils.Interface {
     ]
   ): string
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'positionPNLWeightedDelta',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string
   encodeFunctionData(functionFragment: 'profitFeeRatio', values?: undefined): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
   encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string
@@ -247,6 +255,10 @@ export interface IVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPNL', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPremium', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'updateCollectionRisk',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
   encodeFunctionData(functionFragment: 'updateUnrealizedPNL', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'withdraw',
@@ -283,6 +295,7 @@ export interface IVaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'maximumOptionAmount', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'openPosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'positionPNLWeightedDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'profitFeeRatio', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'reserve', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setKeeper', data: BytesLike): Result
@@ -292,12 +305,13 @@ export interface IVaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'unrealizedPNL', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'unrealizedPremium', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'updateCollectionRisk', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'updateUnrealizedPNL', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result
 
   events: {
     'ActivateMarket(address,address)': EventFragment
-    'ActivatePosition(address,address,uint256,uint256,uint256)': EventFragment
+    'ActivatePosition(address,address,uint256,uint256,uint256,int256)': EventFragment
     'CancelPosition(address,address,uint256,uint256)': EventFragment
     'CreateMarket(address,uint32,address)': EventFragment
     'CreateStrike(uint256,uint256,uint256,uint256,uint256)': EventFragment
@@ -348,9 +362,10 @@ export interface ActivatePositionEventObject {
   positionId: BigNumber
   premium: BigNumber
   excessPremium: BigNumber
+  delta: BigNumber
 }
 export type ActivatePositionEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber, BigNumber],
+  [string, string, BigNumber, BigNumber, BigNumber, BigNumber],
   ActivatePositionEventObject
 >
 
@@ -635,6 +650,17 @@ export interface IVault extends BaseContract {
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        unrealizePNL: BigNumber
+        weightedDelta: BigNumber
+      }
+    >
+
     profitFeeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
 
     reserve(overrides?: CallOverrides): Promise<[string]>
@@ -655,6 +681,13 @@ export interface IVault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<[BigNumber]>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
@@ -781,6 +814,17 @@ export interface IVault extends BaseContract {
 
   pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
+  positionPNLWeightedDelta(
+    collection: PromiseOrValue<string>,
+    positionId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber] & {
+      unrealizePNL: BigNumber
+      weightedDelta: BigNumber
+    }
+  >
+
   profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
   reserve(overrides?: CallOverrides): Promise<string>
@@ -801,6 +845,13 @@ export interface IVault extends BaseContract {
   unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
   unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
+
+  updateCollectionRisk(
+    collection: PromiseOrValue<string>,
+    delta: PromiseOrValue<BigNumberish>,
+    PNL: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
@@ -835,7 +886,7 @@ export interface IVault extends BaseContract {
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<[BigNumber, BigNumber] & { premium: BigNumber; delta: BigNumber }>
 
     addMarket(
       collection: PromiseOrValue<string>,
@@ -915,6 +966,17 @@ export interface IVault extends BaseContract {
 
     pause(overrides?: CallOverrides): Promise<void>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        unrealizePNL: BigNumber
+        weightedDelta: BigNumber
+      }
+    >
+
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
     reserve(overrides?: CallOverrides): Promise<string>
@@ -932,6 +994,13 @@ export interface IVault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
     updateUnrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -952,19 +1021,21 @@ export interface IVault extends BaseContract {
       collection?: PromiseOrValue<string> | null
     ): ActivateMarketEventFilter
 
-    'ActivatePosition(address,address,uint256,uint256,uint256)'(
+    'ActivatePosition(address,address,uint256,uint256,uint256,int256)'(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       premium?: null,
-      excessPremium?: null
+      excessPremium?: null,
+      delta?: null
     ): ActivatePositionEventFilter
     ActivatePosition(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       premium?: null,
-      excessPremium?: null
+      excessPremium?: null,
+      delta?: null
     ): ActivatePositionEventFilter
 
     'CancelPosition(address,address,uint256,uint256)'(
@@ -1216,6 +1287,12 @@ export interface IVault extends BaseContract {
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
     reserve(overrides?: CallOverrides): Promise<BigNumber>
@@ -1236,6 +1313,13 @@ export interface IVault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
 
@@ -1360,6 +1444,12 @@ export interface IVault extends BaseContract {
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
     profitFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>
@@ -1380,6 +1470,13 @@ export interface IVault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
 
     updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
 

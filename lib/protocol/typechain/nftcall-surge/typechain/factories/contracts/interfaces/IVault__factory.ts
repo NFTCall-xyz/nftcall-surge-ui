@@ -418,6 +418,12 @@ const _abi = [
         name: 'excessPremium',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'int256',
+        name: 'delta',
+        type: 'int256',
+      },
     ],
     name: 'ActivatePosition',
     type: 'event',
@@ -960,6 +966,11 @@ const _abi = [
         name: 'premium',
         type: 'uint256',
       },
+      {
+        internalType: 'int256',
+        name: 'delta',
+        type: 'int256',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1366,6 +1377,35 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+    ],
+    name: 'positionPNLWeightedDelta',
+    outputs: [
+      {
+        internalType: 'int256',
+        name: 'unrealizePNL',
+        type: 'int256',
+      },
+      {
+        internalType: 'int256',
+        name: 'weightedDelta',
+        type: 'int256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'profitFeeRatio',
     outputs: [
@@ -1502,6 +1542,29 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        internalType: 'int256',
+        name: 'delta',
+        type: 'int256',
+      },
+      {
+        internalType: 'int256',
+        name: 'PNL',
+        type: 'int256',
+      },
+    ],
+    name: 'updateCollectionRisk',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

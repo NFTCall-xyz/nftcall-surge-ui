@@ -114,6 +114,7 @@ export interface VaultInterface extends utils.Interface {
     'owner()': FunctionFragment
     'pause()': FunctionFragment
     'paused()': FunctionFragment
+    'positionPNLWeightedDelta(address,uint256)': FunctionFragment
     'profitFeeRatio()': FunctionFragment
     'renounceOwnership()': FunctionFragment
     'reserve()': FunctionFragment
@@ -125,6 +126,7 @@ export interface VaultInterface extends utils.Interface {
     'unpause()': FunctionFragment
     'unrealizedPNL()': FunctionFragment
     'unrealizedPremium()': FunctionFragment
+    'updateCollectionRisk(address,int256,int256)': FunctionFragment
     'updateUnrealizedPNL()': FunctionFragment
     'withdraw(uint256,address)': FunctionFragment
   }
@@ -163,6 +165,7 @@ export interface VaultInterface extends utils.Interface {
       | 'owner'
       | 'pause'
       | 'paused'
+      | 'positionPNLWeightedDelta'
       | 'profitFeeRatio'
       | 'renounceOwnership'
       | 'reserve'
@@ -174,6 +177,7 @@ export interface VaultInterface extends utils.Interface {
       | 'unpause'
       | 'unrealizedPNL'
       | 'unrealizedPremium'
+      | 'updateCollectionRisk'
       | 'updateUnrealizedPNL'
       | 'withdraw'
   ): FunctionFragment
@@ -248,6 +252,10 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'positionPNLWeightedDelta',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string
   encodeFunctionData(functionFragment: 'profitFeeRatio', values?: undefined): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
@@ -259,6 +267,10 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPNL', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPremium', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'updateCollectionRisk',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
   encodeFunctionData(functionFragment: 'updateUnrealizedPNL', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'withdraw',
@@ -297,6 +309,7 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'positionPNLWeightedDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'profitFeeRatio', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'reserve', data: BytesLike): Result
@@ -308,12 +321,13 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'unrealizedPNL', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'unrealizedPremium', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'updateCollectionRisk', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'updateUnrealizedPNL', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result
 
   events: {
     'ActivateMarket(address,address)': EventFragment
-    'ActivatePosition(address,address,uint256,uint256,uint256)': EventFragment
+    'ActivatePosition(address,address,uint256,uint256,uint256,int256)': EventFragment
     'CancelPosition(address,address,uint256,uint256)': EventFragment
     'CreateMarket(address,uint32,address)': EventFragment
     'CreateStrike(uint256,uint256,uint256,uint256,uint256)': EventFragment
@@ -370,9 +384,10 @@ export interface ActivatePositionEventObject {
   positionId: BigNumber
   premium: BigNumber
   excessPremium: BigNumber
+  delta: BigNumber
 }
 export type ActivatePositionEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber, BigNumber],
+  [string, string, BigNumber, BigNumber, BigNumber, BigNumber],
   ActivatePositionEventObject
 >
 
@@ -683,6 +698,17 @@ export interface Vault extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        unrealizePNL: BigNumber
+        weightedDelta: BigNumber
+      }
+    >
+
     profitFeeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
@@ -713,6 +739,13 @@ export interface Vault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<[BigNumber]>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
@@ -843,6 +876,17 @@ export interface Vault extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>
 
+  positionPNLWeightedDelta(
+    collection: PromiseOrValue<string>,
+    positionId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber] & {
+      unrealizePNL: BigNumber
+      weightedDelta: BigNumber
+    }
+  >
+
   profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
@@ -870,6 +914,13 @@ export interface Vault extends BaseContract {
   unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
   unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
+
+  updateCollectionRisk(
+    collection: PromiseOrValue<string>,
+    delta: PromiseOrValue<BigNumberish>,
+    PNL: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
@@ -904,7 +955,7 @@ export interface Vault extends BaseContract {
       collection: PromiseOrValue<string>,
       positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<[BigNumber, BigNumber] & { premium: BigNumber; delta: BigNumber }>
 
     addMarket(
       collection: PromiseOrValue<string>,
@@ -988,6 +1039,17 @@ export interface Vault extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        unrealizePNL: BigNumber
+        weightedDelta: BigNumber
+      }
+    >
+
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>
@@ -1010,6 +1072,13 @@ export interface Vault extends BaseContract {
 
     unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
 
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
     updateUnrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
     withdraw(
@@ -1029,19 +1098,21 @@ export interface Vault extends BaseContract {
       collection?: PromiseOrValue<string> | null
     ): ActivateMarketEventFilter
 
-    'ActivatePosition(address,address,uint256,uint256,uint256)'(
+    'ActivatePosition(address,address,uint256,uint256,uint256,int256)'(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       premium?: null,
-      excessPremium?: null
+      excessPremium?: null,
+      delta?: null
     ): ActivatePositionEventFilter
     ActivatePosition(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       premium?: null,
-      excessPremium?: null
+      excessPremium?: null,
+      delta?: null
     ): ActivatePositionEventFilter
 
     'CancelPosition(address,address,uint256,uint256)'(
@@ -1312,6 +1383,12 @@ export interface Vault extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
@@ -1339,6 +1416,13 @@ export interface Vault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
 
@@ -1467,6 +1551,12 @@ export interface Vault extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
+    positionPNLWeightedDelta(
+      collection: PromiseOrValue<string>,
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
     profitFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
@@ -1494,6 +1584,13 @@ export interface Vault extends BaseContract {
     unrealizedPNL(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    updateCollectionRisk(
+      collection: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
 
     updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
 

@@ -7,14 +7,13 @@ export type GetNFTCollectionData = {
   price: BN
   vol: BN
   maximumOptionAmount: BN
-  openInterest: BN
 }
 
 export const getGetNFTCollectionData = (getNFTCollectionBaseData: GetNFTCollectionBaseData): GetNFTCollectionData => {
   if (!getNFTCollectionBaseData) return {} as undefined
   return {
     ...getAddresses(getNFTCollectionBaseData, ['collectionAddress']),
-    ...getWeiToValueBN(getNFTCollectionBaseData, ['price', 'maximumOptionAmount', 'openInterest'], 18),
+    ...getWeiToValueBN(getNFTCollectionBaseData, ['price', 'maximumOptionAmount'], 18),
     ...getWeiToValueBN(getNFTCollectionBaseData, ['vol'], 18),
   }
 }

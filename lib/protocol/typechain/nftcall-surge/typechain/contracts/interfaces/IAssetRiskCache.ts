@@ -5,20 +5,48 @@
 /* eslint-disable */
 import type { FunctionFragment, Result } from '@ethersproject/abi'
 import type { Listener, Provider } from '@ethersproject/providers'
-import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers'
+import type {
+  BaseContract,
+  BigNumber,
+  BigNumberish,
+  BytesLike,
+  CallOverrides,
+  ContractTransaction,
+  Overrides,
+  PopulatedTransaction,
+  Signer,
+  utils,
+} from 'ethers'
 
 import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export interface IAssetRiskCacheInterface extends utils.Interface {
   functions: {
+    'getAssetDelta(address)': FunctionFragment
     'getAssetRisk(address)': FunctionFragment
+    'updateAssetDelta(address,int256)': FunctionFragment
+    'updateAssetRisk(address,int256,int256)': FunctionFragment
   }
 
-  getFunction(nameOrSignatureOrTopic: 'getAssetRisk'): FunctionFragment
+  getFunction(
+    nameOrSignatureOrTopic: 'getAssetDelta' | 'getAssetRisk' | 'updateAssetDelta' | 'updateAssetRisk'
+  ): FunctionFragment
 
+  encodeFunctionData(functionFragment: 'getAssetDelta', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'getAssetRisk', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(
+    functionFragment: 'updateAssetDelta',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'updateAssetRisk',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
 
+  decodeFunctionResult(functionFragment: 'getAssetDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getAssetRisk', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'updateAssetDelta', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'updateAssetRisk', data: BytesLike): Result
 
   events: {}
 }
@@ -46,31 +74,106 @@ export interface IAssetRiskCache extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
+    getAssetDelta(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { delta: BigNumber }>
+
     getAssetRisk(
       asset: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { delta: BigNumber; PNL: BigNumber }>
+
+    updateAssetDelta(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    updateAssetRisk(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
   }
+
+  getAssetDelta(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
   getAssetRisk(
     asset: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { delta: BigNumber; PNL: BigNumber }>
 
+  updateAssetDelta(
+    asset: PromiseOrValue<string>,
+    delta: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  updateAssetRisk(
+    asset: PromiseOrValue<string>,
+    delta: PromiseOrValue<BigNumberish>,
+    PNL: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
   callStatic: {
+    getAssetDelta(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+
     getAssetRisk(
       asset: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { delta: BigNumber; PNL: BigNumber }>
+
+    updateAssetDelta(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    updateAssetRisk(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
   }
 
   filters: {}
 
   estimateGas: {
+    getAssetDelta(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+
     getAssetRisk(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+
+    updateAssetDelta(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    updateAssetRisk(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
   }
 
   populateTransaction: {
+    getAssetDelta(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
     getAssetRisk(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    updateAssetDelta(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    updateAssetRisk(
+      asset: PromiseOrValue<string>,
+      delta: PromiseOrValue<BigNumberish>,
+      PNL: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
   }
 }
