@@ -10,7 +10,7 @@ import { safeGet } from 'app/utils/get'
 import type { TabsProps } from 'components/tabs'
 
 import { transaction } from 'domains/controllers/adapter/transaction'
-import { useNetwork, useVault } from 'domains/data'
+import { useNFTCollections, useNetwork, useVault } from 'domains/data'
 
 import { toBN } from 'lib/math'
 import { type SendTransaction, useSendTransaction } from 'lib/protocol/hooks/sendTransaction'
@@ -88,6 +88,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
       lpToken: { wETHBalance, wETHAllowance, maxWithdraw },
     },
   } = useVault()
+  const { updateNFTCollections } = useNFTCollections()
   const tabs = useMemo(() => {
     const returnValue: TabsProps['tabs'] = [
       {
@@ -152,9 +153,20 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
         isOnlyApprove: false,
       }).finally(() => {
         updateVaults()
+        updateNFTCollections()
       })
     },
-    [account, erc20Service, lpTokenAddress, sendTransaction, updateVaults, vaultAddress, vaultService, wETHAddress]
+    [
+      account,
+      erc20Service,
+      lpTokenAddress,
+      sendTransaction,
+      updateNFTCollections,
+      updateVaults,
+      vaultAddress,
+      vaultService,
+      wETHAddress,
+    ]
   )
 
   const withdraw = useCallback(
@@ -170,9 +182,10 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
         isOnlyApprove: false,
       }).finally(() => {
         updateVaults()
+        updateNFTCollections()
       })
     },
-    [account, sendTransaction, updateVaults, vaultAddress, vaultService]
+    [account, sendTransaction, updateNFTCollections, updateVaults, vaultAddress, vaultService]
   )
 
   return { tabs, approveDeposit, deposit, withdraw, wETHBalance, wETHAllowance, maxWithdraw, ncETHPrice }
