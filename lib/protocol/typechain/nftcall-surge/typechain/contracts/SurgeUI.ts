@@ -43,19 +43,17 @@ export type NFTCollectionStructOutput = [BigNumber, BigNumber, BigNumber] & {
 export type NFTCollectionStausStruct = {
   price: PromiseOrValue<BigNumberish>
   vol: PromiseOrValue<BigNumberish>
+  delta: PromiseOrValue<BigNumberish>
+  unrealizedPNL: PromiseOrValue<BigNumberish>
   openInterest: PromiseOrValue<BigNumberish>
-  PNL: PromiseOrValue<BigNumberish>
-  weightedDelta: PromiseOrValue<BigNumberish>
-  optionTokenTotalAmount: PromiseOrValue<BigNumberish>
   optionTokenTotalValue: PromiseOrValue<BigNumberish>
   optionTokenTotalLockedValue: PromiseOrValue<BigNumberish>
-  activeCallOptionAmount: PromiseOrValue<BigNumberish>
-  activePutOptionAmount: PromiseOrValue<BigNumberish>
-  unrealizedPNL: PromiseOrValue<BigNumberish>
+  collectionWeight: PromiseOrValue<BigNumberish>
+  callOptionAmount: PromiseOrValue<BigNumberish>
+  putOptionAmount: PromiseOrValue<BigNumberish>
 }
 
 export type NFTCollectionStausStructOutput = [
-  BigNumber,
   BigNumber,
   BigNumber,
   BigNumber,
@@ -69,15 +67,14 @@ export type NFTCollectionStausStructOutput = [
 ] & {
   price: BigNumber
   vol: BigNumber
+  delta: BigNumber
+  unrealizedPNL: BigNumber
   openInterest: BigNumber
-  PNL: BigNumber
-  weightedDelta: BigNumber
-  optionTokenTotalAmount: BigNumber
   optionTokenTotalValue: BigNumber
   optionTokenTotalLockedValue: BigNumber
-  activeCallOptionAmount: BigNumber
-  activePutOptionAmount: BigNumber
-  unrealizedPNL: BigNumber
+  collectionWeight: BigNumber
+  callOptionAmount: BigNumber
+  putOptionAmount: BigNumber
 }
 
 export type OptionPositionStruct = {
@@ -156,9 +153,9 @@ export interface SurgeUIInterface extends utils.Interface {
   functions: {
     'getAnalytics(address,address)': FunctionFragment
     'getNFTCollection(address,address,address)': FunctionFragment
-    'getNFTCollectionStaus(address,address,address)': FunctionFragment
+    'getNFTCollectionStaus(address,address,address,address)': FunctionFragment
     'getNFTCollections(address[],address,address)': FunctionFragment
-    'getNFTCollectionsStaus(address[],address,address)': FunctionFragment
+    'getNFTCollectionsStaus(address[],address,address,address)': FunctionFragment
     'getPosition(address,uint256)': FunctionFragment
     'getVault(address,address,address)': FunctionFragment
     'getVaultWithUser(address,address,address,address)': FunctionFragment
@@ -183,7 +180,7 @@ export interface SurgeUIInterface extends utils.Interface {
   ): string
   encodeFunctionData(
     functionFragment: 'getNFTCollectionStaus',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
   ): string
   encodeFunctionData(
     functionFragment: 'getNFTCollections',
@@ -191,7 +188,7 @@ export interface SurgeUIInterface extends utils.Interface {
   ): string
   encodeFunctionData(
     functionFragment: 'getNFTCollectionsStaus',
-    values: [PromiseOrValue<string>[], PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
   ): string
   encodeFunctionData(
     functionFragment: 'getPosition',
@@ -258,6 +255,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddress: PromiseOrValue<string>,
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[NFTCollectionStausStructOutput]>
 
@@ -272,6 +270,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddresses: PromiseOrValue<string>[],
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[NFTCollectionStausStructOutput[]]>
 
@@ -314,6 +313,7 @@ export interface SurgeUI extends BaseContract {
     collectionAddress: PromiseOrValue<string>,
     oracleAddress: PromiseOrValue<string>,
     vaultAddress: PromiseOrValue<string>,
+    riskCacheAddress: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<NFTCollectionStausStructOutput>
 
@@ -328,6 +328,7 @@ export interface SurgeUI extends BaseContract {
     collectionAddresses: PromiseOrValue<string>[],
     oracleAddress: PromiseOrValue<string>,
     vaultAddress: PromiseOrValue<string>,
+    riskCacheAddress: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<NFTCollectionStausStructOutput[]>
 
@@ -370,6 +371,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddress: PromiseOrValue<string>,
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<NFTCollectionStausStructOutput>
 
@@ -384,6 +386,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddresses: PromiseOrValue<string>[],
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<NFTCollectionStausStructOutput[]>
 
@@ -429,6 +432,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddress: PromiseOrValue<string>,
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -443,6 +447,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddresses: PromiseOrValue<string>[],
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -486,6 +491,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddress: PromiseOrValue<string>,
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
@@ -500,6 +506,7 @@ export interface SurgeUI extends BaseContract {
       collectionAddresses: PromiseOrValue<string>[],
       oracleAddress: PromiseOrValue<string>,
       vaultAddress: PromiseOrValue<string>,
+      riskCacheAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 

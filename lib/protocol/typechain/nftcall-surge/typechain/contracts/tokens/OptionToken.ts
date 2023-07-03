@@ -69,7 +69,9 @@ export interface OptionTokenInterface extends utils.Interface {
     'tokenOfOwnerByIndex(address,uint256)': FunctionFragment
     'tokenURI(uint256)': FunctionFragment
     'totalAmount()': FunctionFragment
+    'totalAmount(uint8)': FunctionFragment
     'totalSupply()': FunctionFragment
+    'totalValue(uint8)': FunctionFragment
     'totalValue()': FunctionFragment
     'transferFrom(address,address,uint256)': FunctionFragment
     'transferOwnership(address)': FunctionFragment
@@ -104,9 +106,11 @@ export interface OptionTokenInterface extends utils.Interface {
       | 'tokenByIndex'
       | 'tokenOfOwnerByIndex'
       | 'tokenURI'
-      | 'totalAmount'
+      | 'totalAmount()'
+      | 'totalAmount(uint8)'
       | 'totalSupply'
-      | 'totalValue'
+      | 'totalValue(uint8)'
+      | 'totalValue()'
       | 'transferFrom'
       | 'transferOwnership'
       | 'vault'
@@ -169,9 +173,11 @@ export interface OptionTokenInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
   encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(functionFragment: 'totalAmount', values?: undefined): string
+  encodeFunctionData(functionFragment: 'totalAmount()', values?: undefined): string
+  encodeFunctionData(functionFragment: 'totalAmount(uint8)', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string
-  encodeFunctionData(functionFragment: 'totalValue', values?: undefined): string
+  encodeFunctionData(functionFragment: 'totalValue(uint8)', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'totalValue()', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'transferFrom',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -205,9 +211,11 @@ export interface OptionTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'tokenByIndex', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'tokenOfOwnerByIndex', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'totalAmount', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalAmount()', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalAmount(uint8)', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'totalValue', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalValue(uint8)', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalValue()', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result
@@ -456,11 +464,15 @@ export interface OptionToken extends BaseContract {
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>
 
-    totalAmount(overrides?: CallOverrides): Promise<[BigNumber]>
+    'totalAmount()'(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    totalValue(overrides?: CallOverrides): Promise<[BigNumber]>
+    'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
     transferFrom(
       from: PromiseOrValue<string>,
@@ -583,11 +595,15 @@ export interface OptionToken extends BaseContract {
 
   tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
 
-  totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+  'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
+
+  'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
-  totalValue(overrides?: CallOverrides): Promise<BigNumber>
+  'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+  'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
   transferFrom(
     from: PromiseOrValue<string>,
@@ -694,11 +710,15 @@ export interface OptionToken extends BaseContract {
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
 
-    totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
-    totalValue(overrides?: CallOverrides): Promise<BigNumber>
+    'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
     transferFrom(
       from: PromiseOrValue<string>,
@@ -897,11 +917,15 @@ export interface OptionToken extends BaseContract {
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
-    totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
-    totalValue(overrides?: CallOverrides): Promise<BigNumber>
+    'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
     transferFrom(
       from: PromiseOrValue<string>,
@@ -1025,11 +1049,21 @@ export interface OptionToken extends BaseContract {
 
     tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    totalAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    'totalAmount()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'totalAmount(uint8)'(
+      optionType: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    totalValue(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    'totalValue(uint8)'(
+      optionType: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     transferFrom(
       from: PromiseOrValue<string>,

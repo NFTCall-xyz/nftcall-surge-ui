@@ -51,6 +51,8 @@ export interface IOptionTokenInterface extends utils.Interface {
     'optionPositionState(uint256)': FunctionFragment
     'setBaseURI(string)': FunctionFragment
     'totalAmount()': FunctionFragment
+    'totalAmount(uint8)': FunctionFragment
+    'totalValue(uint8)': FunctionFragment
     'totalValue()': FunctionFragment
     'vault()': FunctionFragment
   }
@@ -65,8 +67,10 @@ export interface IOptionTokenInterface extends utils.Interface {
       | 'optionPosition'
       | 'optionPositionState'
       | 'setBaseURI'
-      | 'totalAmount'
-      | 'totalValue'
+      | 'totalAmount()'
+      | 'totalAmount(uint8)'
+      | 'totalValue(uint8)'
+      | 'totalValue()'
       | 'vault'
   ): FunctionFragment
 
@@ -91,8 +95,10 @@ export interface IOptionTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'optionPosition', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'optionPositionState', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'totalAmount', values?: undefined): string
-  encodeFunctionData(functionFragment: 'totalValue', values?: undefined): string
+  encodeFunctionData(functionFragment: 'totalAmount()', values?: undefined): string
+  encodeFunctionData(functionFragment: 'totalAmount(uint8)', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'totalValue(uint8)', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'totalValue()', values?: undefined): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
 
   decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
@@ -103,8 +109,10 @@ export interface IOptionTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'optionPosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'optionPositionState', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setBaseURI', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'totalAmount', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'totalValue', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalAmount()', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalAmount(uint8)', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalValue(uint8)', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'totalValue()', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result
 
   events: {
@@ -239,9 +247,13 @@ export interface IOptionToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
-    totalAmount(overrides?: CallOverrides): Promise<[BigNumber]>
+    'totalAmount()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    totalValue(overrides?: CallOverrides): Promise<[BigNumber]>
+    'totalAmount(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'totalValue(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
     vault(overrides?: CallOverrides): Promise<[string]>
   }
@@ -286,9 +298,13 @@ export interface IOptionToken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
-  totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+  'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
 
-  totalValue(overrides?: CallOverrides): Promise<BigNumber>
+  'totalAmount(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+  'totalValue(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+  'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
   vault(overrides?: CallOverrides): Promise<string>
 
@@ -324,9 +340,13 @@ export interface IOptionToken extends BaseContract {
 
     setBaseURI(baseURI: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
 
-    totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    totalValue(overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalValue(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<string>
   }
@@ -408,9 +428,13 @@ export interface IOptionToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
-    totalAmount(overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    totalValue(overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalValue(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<BigNumber>
   }
@@ -456,9 +480,13 @@ export interface IOptionToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
-    totalAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    'totalAmount()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    totalValue(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    'totalAmount(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'totalValue(uint8)'(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'totalValue()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>
   }
