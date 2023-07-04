@@ -13,8 +13,10 @@ query getOptionPositions($first: Int!, $skip: Int!, $collectionAddress: Bytes!, 
     optionType
     status
     expiration
-    spotPrice
+    entryPrice
     strikePrice
+    delta
+    settlementPrice
     amount
     premium
     excessPremium

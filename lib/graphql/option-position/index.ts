@@ -40,8 +40,10 @@ export type OptionPositionBaseData = {
   positionId: number
   optionType: OptionType
   expiration: number
-  spotPrice: string
+  entryPrice: string
   strikePrice: string
+  delta: string
+  settlementPrice: string
   amount: string
   premium: string
   excessPremium: string

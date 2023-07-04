@@ -10,8 +10,10 @@ export type OptionPosition = {
   collectionAddress: string
   positionId: number
   optionType: OptionType
-  spotPrice: BN
+  entryPrice: BN
   strikePrice: BN
+  settlementPrice: BN
+  delta: BN
   amount: BN
   premium: BN
   excessPremium: BN
@@ -38,12 +40,14 @@ export const getPositions = (positions: OptionPositionBaseData[]) => {
           'amount',
           'premium',
           'strikePrice',
-          'spotPrice',
+          'entryPrice',
           'returnedPremium',
           'revenue',
           'excessPremium',
           'keeperFee',
           'exerciseFee',
+          'delta',
+          'settlementPrice',
         ],
         18
       ),
