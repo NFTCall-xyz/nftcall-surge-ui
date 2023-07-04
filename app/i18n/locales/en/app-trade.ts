@@ -62,6 +62,7 @@ const locale = {
       size: 'Size',
       floorPrice: 'Floor Price',
       strikePrice: 'Strike Price',
+      settlementPrice: 'Settlement Price',
       expiryDate: 'Expiration Date',
       premium: 'Premium',
       PNL: 'PNL',

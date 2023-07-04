@@ -29,7 +29,7 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
 }) => {
   const [loading, setLoaidng] = useImmer(false)
   const { forceClosePendingPosition } = useOptionPosition()
-  const { collections } = useNFTCollections()
+  const { collections, updateNFTCollections } = useNFTCollections()
   const {
     contracts: { surgeUIService },
     address: { SurgeUI },
@@ -122,6 +122,7 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
                   setRowData((row) => {
                     row.status = OptionPositionStatus.Cancelled
                   })
+                  updateNFTCollections()
                 })
                 .finally(() => {
                   setLoaidng(false)

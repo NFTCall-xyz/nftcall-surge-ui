@@ -12,6 +12,7 @@ import { numberCellRenderer, tokenIconCellRenderer } from 'components/table/rend
 import {
   NFTCollectionRenderer,
   PNLCellRenderer,
+  PriceCellRenderer,
   expiryDateRenderer,
   optionTypeRenderer,
   statusCellRenderer,
@@ -79,6 +80,12 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
             width: 200,
             headerRenderer,
             cellRenderer: tokenIconCellRenderer,
+          },
+          {
+            dataKey: isActive ? 'floorPrice' : 'settlementPrice',
+            width: 200,
+            headerRenderer,
+            cellRenderer: PriceCellRenderer,
           },
           {
             dataKey: 'expiryDate',

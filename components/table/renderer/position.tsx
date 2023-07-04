@@ -11,6 +11,7 @@ import { Span, Tiny } from 'components/Typography'
 
 import NFTCollectionTableComponent from 'domains/data/NFTCollection/components/NFTCollectionTableComponent'
 import OptionPositionPNL from 'domains/data/optionPosition/components/OptionPositionPNL'
+import OptionPositionPrice from 'domains/data/optionPosition/components/OptionPositionPrice'
 import OptionPositionStaus from 'domains/data/optionPosition/components/OptionPositionStaus'
 
 import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
@@ -31,10 +32,15 @@ export const PNLCellRenderer = (props: TableCellProps) => {
   return <OptionPositionPNL {...props} />
 }
 
+export const PriceCellRenderer = (props: TableCellProps) => {
+  return <OptionPositionPrice {...props} />
+}
+
 export const expiryDateRenderer = ({ cellData }: TableCellProps) => {
   const expiryDiff = (() => {
     if (!cellData) return ''
     const startDate = new Date()
+    if (new Date(cellData).getTime() < startDate.getTime()) return 'Pending'
     const hoursDiff = differenceInHours(cellData, startDate)
     const daysDiff = differenceInDays(cellData, startDate)
     const result = `${daysDiff} days ${hoursDiff % 24} hrs later`
