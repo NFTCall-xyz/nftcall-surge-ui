@@ -3,6 +3,7 @@ import type { ColumnProps, TableHeaderProps, TableProps } from 'react-virtualize
 export interface BasicTableProps<D = any> {
   loading: boolean
   columns: TableColumnsProps[]
+  rowKey?: string
   rowHeight?: number
   headerHeight?: number
   data: Array<D>

@@ -75,7 +75,7 @@ const DataFetcher: FC<{
 }
 
 const PCTable: FC<BasicTableProps> = (props) => {
-  const { columns, data, dataFetcher } = props
+  const { columns, data, dataFetcher, rowKey } = props
   const { onRowClick } = props.tableProps || {}
 
   const table = useMemo(() => {
@@ -94,10 +94,10 @@ const PCTable: FC<BasicTableProps> = (props) => {
         </td>
       )),
       body: data.map((row, rowIndex) => (
-        <DataFetcher key={rowIndex} {...{ rowIndex, onRowClick, dataFetcher, row, columns }} />
+        <DataFetcher key={rowKey ? row[rowKey] : rowIndex} {...{ rowIndex, onRowClick, dataFetcher, row, columns }} />
       )),
     }
-  }, [columns, data, dataFetcher, onRowClick])
+  }, [columns, data, dataFetcher, onRowClick, rowKey])
 
   return (
     <ROOT className="table basic-table">

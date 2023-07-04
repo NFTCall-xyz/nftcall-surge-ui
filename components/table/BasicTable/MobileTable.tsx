@@ -190,7 +190,7 @@ const DataFetcher: FC<{
 }
 
 const MobileTable: FC<BasicTableProps> = (props) => {
-  const { columns, data, dataFetcher } = props
+  const { columns, data, dataFetcher, rowKey } = props
 
   const table = useMemo(() => {
     return {
@@ -199,7 +199,7 @@ const MobileTable: FC<BasicTableProps> = (props) => {
         data &&
         data.map((row, rowIndex) => (
           <DataFetcher
-            key={rowIndex}
+            key={rowKey ? row[rowKey] : rowIndex}
             {...{
               data,
               row,
@@ -210,7 +210,7 @@ const MobileTable: FC<BasicTableProps> = (props) => {
           />
         )),
     }
-  }, [columns, data, dataFetcher])
+  }, [columns, data, dataFetcher, rowKey])
 
   return (
     <ROOT className="table basic-table">

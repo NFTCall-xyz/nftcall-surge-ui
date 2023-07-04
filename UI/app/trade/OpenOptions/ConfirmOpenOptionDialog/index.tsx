@@ -27,6 +27,8 @@ import DisplayMaxLoss from '../DisplayMaxLoss'
 import DisplayMaxProfit from '../DisplayMaxProfit'
 import ConfirmOpenOptionDialogCloseIconButton from './ConfirmOpenOptionDialogCloseIconButton'
 
+let optionId = 0
+
 const ConfirmOpenOptionDialog: FC = () => {
   const {
     tOpenCallOptions,
@@ -191,6 +193,7 @@ const ConfirmOpenOptionDialog: FC = () => {
                     status: OptionPositionStatus.Pending,
                     expiration: toBN(data.expiry).multipliedBy(Math.pow(10, 3)).toNumber(),
                     updateTimestamp: Date.now(),
+                    id: optionId++,
                   },
                   ...sourceData,
                 ])
