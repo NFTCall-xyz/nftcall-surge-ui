@@ -10,7 +10,12 @@ type AccountProps = {
   onlyENSName?: boolean
 }
 export const Account: FC<AccountProps> = ({ onlyENSName }) => {
-  const { account, ENSName } = useWallet()
+  const {
+    account,
+    ens: { useGetENSName },
+  } = useWallet()
+
+  const ENSName = useGetENSName(account)
 
   if (onlyENSName) {
     return <Fragment>{ENSName || textCenterEllipsis(account)}</Fragment>

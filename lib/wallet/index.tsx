@@ -24,8 +24,6 @@ const useWalletService = () => {
     isActivating,
     isActive,
     provider: walletProvider,
-    ENSNames,
-    ENSName,
     account,
   } = useWeb3React()
 
@@ -73,8 +71,6 @@ const useWalletService = () => {
     isActivating,
     isActive,
     provider,
-    ENSNames,
-    ENSName,
     account,
     status,
 

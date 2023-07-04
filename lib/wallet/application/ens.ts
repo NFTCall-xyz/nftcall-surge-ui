@@ -7,7 +7,7 @@ export const useENS = (provider: Web3Provider) => {
 
   const useGetENSName = useCallback(
     function useGetENSName(address: string) {
-      const [ENSName, setENSName] = useImmer(undefined)
+      const [ENSName, setENSName] = useImmer<string>(undefined)
 
       useEffect(() => {
         if (!address || !provider) return
