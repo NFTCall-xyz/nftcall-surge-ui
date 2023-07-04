@@ -9,13 +9,14 @@ import Stack from '@mui/material/Stack'
 
 import { safeGet } from 'app/utils/get'
 
-import { H5, Paragraph, Tiny } from 'components/Typography'
+import { H5, Paragraph, Tiny, TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import { toBN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { NumberInput } from 'lib/math/components/NumberInput'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
+import Tooltip from '@mui/material/Tooltip'
 
 import { usePageEarn } from '../..'
 
@@ -28,7 +29,7 @@ const Withdraw: FC = () => {
 
   const [value, setValue] = useImmer(0)
   const { receiveAmount, withdrawalFee } = useMemo(() => {
-    const totalAmount = safeGet(() => toBN(value).div(ncETHPrice)) || toBN(0)
+    const totalAmount = safeGet(() => ncETHPrice.times(value)) || toBN(0)
     const withdrawalFee = totalAmount.multipliedBy(0.003)
     return {
       withdrawalFee,
@@ -76,9 +77,13 @@ const Withdraw: FC = () => {
                   <Tiny color="text.secondary">
                     1 ncETH = {<NumberDisplay value={ncETHPrice} options="number" />} WETH
                   </Tiny>
-                  <Tiny color="text.secondary">
-                    Withdrawal fee: {<NumberDisplay value={withdrawalFee} options="number" />} WETH
-                  </Tiny>
+                  <Tooltip title={tTabs('withdraw.feeTip')}>
+                    <Box>
+                      <TooltipSpan fontSize={12}>
+                        Withdrawal fee: {<NumberDisplay value={withdrawalFee} options="number" />} WETH
+                      </TooltipSpan>
+                    </Box>
+                  </Tooltip>
                 </Stack>
               </Stack>
 

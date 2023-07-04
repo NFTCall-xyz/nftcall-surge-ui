@@ -27,7 +27,7 @@ const Deposit: FC = () => {
   } = usePageEarn()
   const [value, setValue] = useImmer(0)
   const receiveAmount = useMemo(() => {
-    return safeGet(() => ncETHPrice.multipliedBy(value))
+    return safeGet(() => toBN(value).div(ncETHPrice))
   }, [ncETHPrice, value])
 
   const depositAvailable = useMemo(() => {
