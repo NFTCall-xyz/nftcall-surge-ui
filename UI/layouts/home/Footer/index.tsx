@@ -98,7 +98,7 @@ const Footer: FC = () => {
         >
           <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} alignItems="center">
             <Paragraph color="text.disabled" textAlign="center">
-              {`Copyright Ⓒ ${currentDate.getFullYear()} NFTCall. All Rights Reserved.`}
+              {`Ⓒ ${currentDate.getFullYear()} NFTCall. All Rights Reserved.`}
             </Paragraph>
           </Stack>
           <SocialLinks />

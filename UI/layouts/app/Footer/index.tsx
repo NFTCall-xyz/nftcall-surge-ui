@@ -51,7 +51,7 @@ const Footer: FC = () => {
           </Stack>
         </Stack>
         <CopyRight className="copy-right" variant="caption" color="grey.400">
-          {`Copyright Ⓒ ${currentDate.getFullYear()} NFTCall. All Rights Reserved.`}
+          {`Ⓒ ${currentDate.getFullYear()} NFTCall. All Rights Reserved.`}
         </CopyRight>
       </Content>
     </ROOT>
