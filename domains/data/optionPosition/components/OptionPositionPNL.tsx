@@ -17,7 +17,7 @@ type OptionPositionPNLProps = {
   setRowData: Updater<OptionPosition>
 }
 const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
-  rowData: { optionType, status, strikePrice, amount, premium },
+  rowData: { optionType, status, strikePrice, amount, premium, exerciseFee },
 }) => {
   const {
     collection: {
@@ -40,11 +40,11 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
       optionValue = strikePrice.minus(floorPrice).multipliedBy(amount)
     }
 
-    PNL = BN.max(optionValue.minus(premium), premium.multipliedBy(-1))
+    PNL = BN.max(optionValue.minus(exerciseFee).minus(premium), premium.multipliedBy(-1))
     PNLRate = PNL.dividedBy(premium)
 
     return { PNL, PNLRate }
-  }, [amount, floorPrice, optionType, premium, status, strikePrice])
+  }, [amount, exerciseFee, floorPrice, optionType, premium, status, strikePrice])
 
   return (
     <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
