@@ -160,7 +160,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'spotPrice',
+        name: 'entryPrice',
         type: 'uint256',
       },
     ],
@@ -508,7 +508,7 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'spotPrice',
+        name: 'entryPrice',
         type: 'uint256',
       },
       {
@@ -605,6 +605,12 @@ const _abi = [
         name: 'exerciseFee',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'settlementPrice',
+        type: 'uint256',
+      },
     ],
     name: 'ExercisePosition',
     type: 'event',
@@ -628,6 +634,12 @@ const _abi = [
         indexed: true,
         internalType: 'uint256',
         name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'settlementPrice',
         type: 'uint256',
       },
     ],
@@ -738,7 +750,7 @@ const _abi = [
           },
           {
             internalType: 'uint256',
-            name: 'spotPrice',
+            name: 'entryPrice',
             type: 'uint256',
           },
           {
@@ -1458,7 +1470,7 @@ const _abi = [
         components: [
           {
             internalType: 'uint256',
-            name: 'spotPrice',
+            name: 'entryPrice',
             type: 'uint256',
           },
           {

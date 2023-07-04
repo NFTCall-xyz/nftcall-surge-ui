@@ -13,7 +13,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'spotPrice',
+        name: 'entryPrice',
         type: 'uint256',
       },
       {
@@ -47,7 +47,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'spotPrice',
+        name: 'entryPrice',
         type: 'uint256',
       },
       {

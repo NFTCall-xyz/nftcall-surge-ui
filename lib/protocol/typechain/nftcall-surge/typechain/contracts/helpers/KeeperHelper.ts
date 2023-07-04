@@ -41,14 +41,14 @@ export type OptionPositionStructOutput = [number, number, string, BigNumber, Big
 }
 
 export type StrikeStruct = {
-  spotPrice: PromiseOrValue<BigNumberish>
+  entryPrice: PromiseOrValue<BigNumberish>
   strikePrice: PromiseOrValue<BigNumberish>
   duration: PromiseOrValue<BigNumberish>
   expiry: PromiseOrValue<BigNumberish>
 }
 
 export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
-  spotPrice: BigNumber
+  entryPrice: BigNumber
   strikePrice: BigNumber
   duration: BigNumber
   expiry: BigNumber

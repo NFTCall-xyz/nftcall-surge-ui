@@ -21,14 +21,14 @@ import type {
 import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export type StrikeStruct = {
-  spotPrice: PromiseOrValue<BigNumberish>
+  entryPrice: PromiseOrValue<BigNumberish>
   strikePrice: PromiseOrValue<BigNumberish>
   duration: PromiseOrValue<BigNumberish>
   expiry: PromiseOrValue<BigNumberish>
 }
 
 export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
-  spotPrice: BigNumber
+  entryPrice: BigNumber
   strikePrice: BigNumber
   duration: BigNumber
   expiry: BigNumber
@@ -38,7 +38,7 @@ export declare namespace IVault {
   export type OpenPositionEventParametersStruct = {
     optionType: PromiseOrValue<BigNumberish>
     expiration: PromiseOrValue<BigNumberish>
-    spotPrice: PromiseOrValue<BigNumberish>
+    entryPrice: PromiseOrValue<BigNumberish>
     strikePrice: PromiseOrValue<BigNumberish>
     amount: PromiseOrValue<BigNumberish>
     premium: PromiseOrValue<BigNumberish>
@@ -56,7 +56,7 @@ export declare namespace IVault {
   ] & {
     optionType: number
     expiration: BigNumber
-    spotPrice: BigNumber
+    entryPrice: BigNumber
     strikePrice: BigNumber
     amount: BigNumber
     premium: BigNumber
@@ -318,8 +318,8 @@ export interface IVaultInterface extends utils.Interface {
     'DeactivateMarket(address,address)': EventFragment
     'DefreezeMarket(address,address)': EventFragment
     'DestoryStrike(uint256)': EventFragment
-    'ExercisePosition(address,address,uint256,uint256,uint256)': EventFragment
-    'ExpirePosition(address,address,uint256)': EventFragment
+    'ExercisePosition(address,address,uint256,uint256,uint256,uint256)': EventFragment
+    'ExpirePosition(address,address,uint256,uint256)': EventFragment
     'FailPosition(address,address,uint256,uint256)': EventFragment
     'FreezeMarket(address,address)': EventFragment
     'KeeperAddressUpdated(address)': EventFragment
@@ -394,7 +394,7 @@ export interface CreateStrikeEventObject {
   strikeId: BigNumber
   duration: BigNumber
   expiration: BigNumber
-  spotPrice: BigNumber
+  entryPrice: BigNumber
   strikePrice: BigNumber
 }
 export type CreateStrikeEvent = TypedEvent<
@@ -433,9 +433,10 @@ export interface ExercisePositionEventObject {
   positionId: BigNumber
   revenue: BigNumber
   exerciseFee: BigNumber
+  settlementPrice: BigNumber
 }
 export type ExercisePositionEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber, BigNumber],
+  [string, string, BigNumber, BigNumber, BigNumber, BigNumber],
   ExercisePositionEventObject
 >
 
@@ -445,8 +446,9 @@ export interface ExpirePositionEventObject {
   owner: string
   collection: string
   positionId: BigNumber
+  settlementPrice: BigNumber
 }
-export type ExpirePositionEvent = TypedEvent<[string, string, BigNumber], ExpirePositionEventObject>
+export type ExpirePositionEvent = TypedEvent<[string, string, BigNumber, BigNumber], ExpirePositionEventObject>
 
 export type ExpirePositionEventFilter = TypedEventFilter<ExpirePositionEvent>
 
@@ -1062,14 +1064,14 @@ export interface IVault extends BaseContract {
       strikeId?: PromiseOrValue<BigNumberish> | null,
       duration?: null,
       expiration?: null,
-      spotPrice?: null,
+      entryPrice?: null,
       strikePrice?: null
     ): CreateStrikeEventFilter
     CreateStrike(
       strikeId?: PromiseOrValue<BigNumberish> | null,
       duration?: null,
       expiration?: null,
-      spotPrice?: null,
+      entryPrice?: null,
       strikePrice?: null
     ): CreateStrikeEventFilter
 
@@ -1094,30 +1096,34 @@ export interface IVault extends BaseContract {
     'DestoryStrike(uint256)'(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
     DestoryStrike(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
 
-    'ExercisePosition(address,address,uint256,uint256,uint256)'(
+    'ExercisePosition(address,address,uint256,uint256,uint256,uint256)'(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       revenue?: null,
-      exerciseFee?: null
+      exerciseFee?: null,
+      settlementPrice?: null
     ): ExercisePositionEventFilter
     ExercisePosition(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
       positionId?: PromiseOrValue<BigNumberish> | null,
       revenue?: null,
-      exerciseFee?: null
+      exerciseFee?: null,
+      settlementPrice?: null
     ): ExercisePositionEventFilter
 
-    'ExpirePosition(address,address,uint256)'(
+    'ExpirePosition(address,address,uint256,uint256)'(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      settlementPrice?: null
     ): ExpirePositionEventFilter
     ExpirePosition(
       owner?: PromiseOrValue<string> | null,
       collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      settlementPrice?: null
     ): ExpirePositionEventFilter
 
     'FailPosition(address,address,uint256,uint256)'(
