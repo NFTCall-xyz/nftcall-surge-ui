@@ -3,14 +3,15 @@ import type { LogDescription } from 'ethers/lib/utils'
 import { useCallback, useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
+import { usePost } from 'app/hooks/request'
 import { createContextWithProvider } from 'app/utils/createContext'
-import { safeGet } from 'app/utils/get'
+import { getWeiToValueBN, safeGet } from 'app/utils/get'
 
 import { transaction } from 'domains/controllers/adapter/transaction'
 import { useNFTCollections, useNetwork, useVault } from 'domains/data'
 
 import { useSendTransaction } from 'lib/protocol/hooks/sendTransaction'
-import type { OpenPositionProps } from 'lib/protocol/typechain/nftcall-surge'
+import type { GetPositionPNLWeightedDeltaProps, OpenPositionProps } from 'lib/protocol/typechain/nftcall-surge'
 
 import type { OptionPosition } from './Positions/Table/request/getPositions'
 
@@ -89,7 +90,6 @@ const useNFTCollection = () => {
               )
               .filter((i: any) => i)
           )
-          console.log(logs)
           const result = logs.find((i) => i.name === 'OpenPosition')
           if (!result) return
           const positionId = result.args.positionId.toNumber()
@@ -129,10 +129,32 @@ const useNFTCollection = () => {
 const usePositions = () => {
   const [sourceData, setSourceData] = useImmer<OptionPosition[]>([])
   const [collectionAddress, setCollectionAddress] = useImmer('')
+  const {
+    address: { Vault },
+    contracts: { vaultService },
+  } = useNetwork()
+
+  const useGetPositionPNLWeightedDelta = useCallback(
+    function useGetPositionPNLWeightedDelta() {
+      return usePost((props: Pick<GetPositionPNLWeightedDeltaProps, 'collection' | 'positionId'>) =>
+        vaultService
+          .getPositionPNLWeightedDelta({
+            Vault,
+            ...props,
+          })
+          .then((data) => getWeiToValueBN(data, ['unrealizePNL', 'weightedDelta'], 18))
+      )
+    },
+    [Vault, vaultService]
+  )
 
   return {
     sourceData,
     setSourceData,
+
+    hooks: {
+      useGetPositionPNLWeightedDelta,
+    },
 
     filter: {
       collectionAddress,
@@ -148,9 +170,11 @@ export default createContextWithProvider(() => {
     displayCollections,
   } = useNFTCollections()
   const collection = useNFTCollection()
+
   const {
     vault: { executionFee },
   } = useVault()
+
   const positions = usePositions()
 
   return {

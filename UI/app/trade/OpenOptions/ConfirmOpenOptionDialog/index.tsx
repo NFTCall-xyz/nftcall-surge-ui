@@ -190,6 +190,9 @@ const ConfirmOpenOptionDialog: FC = () => {
                   {
                     ...data,
                     ...props,
+                    strikePrice: toBN(data.strikePrice),
+                    amount: toBN(data.amount),
+                    maximumPremium: toBN(data.maximumPremium),
                     status: OptionPositionStatus.Pending,
                     expiration: toBN(data.expiry).multipliedBy(Math.pow(10, 3)).toNumber(),
                     updateTimestamp: Date.now(),

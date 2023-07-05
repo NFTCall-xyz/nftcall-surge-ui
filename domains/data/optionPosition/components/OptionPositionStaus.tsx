@@ -58,11 +58,6 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
             })
             .then((data) => {
               if (isCancel) return
-              console.log('OptionPositionStatus', {
-                optionTokenAddress: collection.address.optionToken,
-                positionId,
-                data,
-              })
               if (data.state === OptionPositionStateProtocol.PENDING) {
                 run()
               } else {

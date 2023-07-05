@@ -76,6 +76,11 @@ export interface GetPremiumProps extends BaseVaultProps {
   amount: string
 }
 
+export interface GetPositionPNLWeightedDeltaProps extends BaseVaultProps {
+  collection: string
+  positionId: number
+}
+
 export class VaultService extends BaseService<Vault> {
   provider: providers.Provider
 
@@ -89,6 +94,7 @@ export class VaultService extends BaseService<Vault> {
     this.withdraw = this.withdraw.bind(this)
     this.forceClosePendingPosition = this.forceClosePendingPosition.bind(this)
     this.getPremium = this.getPremium.bind(this)
+    this.getPositionPNLWeightedDelta = this.getPositionPNLWeightedDelta.bind(this)
   }
 
   public async approveDeposit(props: DepositProps) {
@@ -287,5 +293,11 @@ export class VaultService extends BaseService<Vault> {
     const { Vault, collection, optionType, strikePrice, expiry, amount } = props
     const VaultContract = this.getContractInstance(Vault)
     return await VaultContract.estimatePremium(collection, optionType, strikePrice, expiry, amount)
+  }
+
+  public async getPositionPNLWeightedDelta(props: GetPositionPNLWeightedDeltaProps) {
+    const { Vault, collection, positionId } = props
+    const VaultContract = this.getContractInstance(Vault)
+    return await VaultContract.positionPNLWeightedDelta(collection, positionId)
   }
 }
