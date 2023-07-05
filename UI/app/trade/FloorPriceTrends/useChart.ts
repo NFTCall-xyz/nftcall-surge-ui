@@ -1,4 +1,4 @@
-import { isSameDay } from 'date-fns'
+import { format, subDays } from 'date-fns'
 import { useWallet } from 'domains'
 import { cloneDeep } from 'lodash'
 import type { MouseEvent } from 'react'
@@ -73,29 +73,20 @@ export const useChart = () => {
     if (!sourceData.length) return []
     const getMapData = () => {
       const returnValue = cloneDeep(sourceData)
-      const { length } = returnValue
-      if (length < dayButton.value) return returnValue
-      const startIndex = length - dayButton.value
-      return returnValue.slice(startIndex, length)
+      const startTime = subDays(Date.now(), dayButton.value).getTime()
+      return returnValue.filter((i) => i.createTime >= startTime)
     }
 
     const returnValue = getMapData()
 
-    const targetDate = returnValue[returnValue.length - 1].createTime
-
-    if (isSameDay(targetDate, new Date())) {
-      returnValue[returnValue.length - 1].vol = toBN(collection.data.vol)
-      returnValue[returnValue.length - 1].floorPrice = collection.data.price
-    } else {
-      returnValue.push({
-        createTime: targetDate + DAY,
-        floorPrice: collection.data.price,
-        vol: toBN(collection.data.vol),
-      } as any)
-    }
+    returnValue.push({
+      createTime: Date.now(),
+      floorPrice: displayCollections[collection.address.collection].floorPrice,
+      vol: displayCollections[collection.address.collection].vol,
+    } as any)
 
     return returnValue.map(({ createTime, floorPrice, vol }) => ({ x: createTime, floorPrice, vol }))
-  }, [collection.data.price, collection.data.vol, dayButton.value, sourceData])
+  }, [collection.address.collection, dayButton.value, displayCollections, sourceData])
 
   const change24 = useMemo(() => {
     return safeGet(() => floorPrice24Change[collection.address.collection]) || toBN(0)
@@ -185,7 +176,7 @@ export const useChart = () => {
                   }
                 },
                 title: (context) => {
-                  return `${context[0].label.split(',').slice(0, -1)}`
+                  return `${format((context[0].raw as any).x, 'yyyy-MM-dd HH:00')}`
                 },
               },
             },

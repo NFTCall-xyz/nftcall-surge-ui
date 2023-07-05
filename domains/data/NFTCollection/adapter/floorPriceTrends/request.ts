@@ -11,7 +11,7 @@ export const getFloorPriceTrends = (props: GetFloorPriceTrendsProps): Promise<Fl
   const fn = (): Promise<any> =>
     fetch(
       parseParams(`https://api.nftcall.xyz/api/v1/collection/${NFTAddress}/price`, {
-        time_interval: 1800,
+        time_interval: 3600,
         start: startTimestamp,
         end: endTimestamp,
       }),
