@@ -21,11 +21,13 @@ const SelectStrikePrice: FC = () => {
   const {
     collection: {
       collection: {
+        id,
         data: { price },
       },
     },
   } = usePageTrade()
   const {
+    optionType,
     strikePrice: { value, set, tags, diffPercent, min, max, checked },
     tOpenCallOptions,
   } = usePageTradeOpenOptions()
@@ -40,6 +42,7 @@ const SelectStrikePrice: FC = () => {
         </RiseOrFall>
       </FlexBetween>
       <NumberInput
+        key={id + optionType}
         value={value}
         endAdornment={<Span color="text.secondary">ETH</Span>}
         error={error}

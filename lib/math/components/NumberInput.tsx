@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useImmer } from 'use-immer'
 
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
@@ -20,13 +21,15 @@ export function NumberInput({
   startAdornment,
 }: any) {
   const theme = useTheme()
+  const [init, setInit] = useImmer(true)
+
   return (
     <FormControl error={!!error} variant="standard">
       <OutlinedInput
         disabled={disabled}
         name={name}
         aria-describedby="helper-text"
-        value={value}
+        value={init && value == '0' ? '' : value}
         onChange={(e) => {
           let newValue = e.target.value
 
@@ -35,12 +38,21 @@ export function NumberInput({
             newValue = newValue.replace(nonNumeric, '')
           }
 
+          if (newValue.startsWith('.')) {
+            newValue = '0' + newValue
+          }
+
           if (newValue != '0' && !newValue.startsWith('0.')) {
             newValue = newValue.replace(/^0+/, '')
           }
 
-          e.target.value = newValue || '0'
+          if (!newValue) {
+            setInit(() => true)
+          } else {
+            setInit(() => false)
+          }
 
+          e.target.value = newValue || '0'
           onChange(e)
         }}
         onBlur={onBlur}
