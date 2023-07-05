@@ -27,7 +27,8 @@ const locale = {
     },
     withdraw: {
       action: 'Withdraw',
-      feeTip: 'Withdrawal incurs a fee of 0.3%, which will be added to the backstop pool to mitigate potential losses in the vault.',
+      feeTip:
+        'Withdrawal incurs a fee of 0.3%, which will be added to the backstop pool to mitigate potential losses in the vault.',
     },
   },
   stats: {

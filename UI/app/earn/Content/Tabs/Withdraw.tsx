@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
+import Tooltip from '@mui/material/Tooltip'
 
 import { safeGet } from 'app/utils/get'
 
@@ -16,7 +17,6 @@ import { toBN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { NumberInput } from 'lib/math/components/NumberInput'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
-import Tooltip from '@mui/material/Tooltip'
 
 import { usePageEarn } from '../..'
 
