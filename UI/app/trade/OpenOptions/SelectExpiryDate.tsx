@@ -56,6 +56,9 @@ const SelectExpiryDate: FC = () => {
           if (newValue === 3) {
             expiryDate += MINUTES * 10
           }
+          if (newValue === 30) {
+            expiryDate -= MINUTES * 10
+          }
           set(new Date(expiryDate))
           setNow(now)
           setTagId(newValue)
