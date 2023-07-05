@@ -25,6 +25,7 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
       setNFTCollectionAddress,
     },
     floorPrice24Change,
+    displayCollections,
   } = usePageTrade()
   const isSelected = useMemo(
     () => collection.address.collection === address.collection,
@@ -52,12 +53,12 @@ const NFTCollection: FC<NFTCollectionProps> = ({ collection }) => {
         <Stack spacing={1} alignItems="end">
           <Stack spacing={0.5} direction="row" alignItems="center">
             <TokenIcon symbol={'ETH'} sx={{ width: 16, height: 16 }} />
-            <NumberDisplay value={collection.data.price} abbreviate={{}} />
+            <NumberDisplay value={displayCollections[collection.address.collection].floorPrice} abbreviate={{}} />
           </Stack>
-          <RiseOrFall value={floorPrice24Change.value[collection.address.collection]}>
+          <RiseOrFall value={floorPrice24Change[collection.address.collection]}>
             <Tiny color="unset">
               <NumberDisplay
-                value={floorPrice24Change.value[collection.address.collection]}
+                value={floorPrice24Change[collection.address.collection]}
                 abbreviate={{}}
                 numberFormatOptions={{ signDisplay: 'always' }}
                 options="percent"

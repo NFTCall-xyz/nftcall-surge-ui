@@ -14,7 +14,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { Paragraph, Tiny } from 'components/Typography'
 import FlexRowAlign from 'components/flexbox/FlexRowAlign'
 
-import type { FloorPriceTrendsProps } from 'domains/data/NFTCollection/application/floorPrice24Change/types'
+import type { FloorPriceTrendsProps } from 'domains/data/NFTCollection/adapter/floorPriceTrends/types'
 import NFTCollectionTitle from 'domains/data/NFTCollection/components/NFTCollectionTitle'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'

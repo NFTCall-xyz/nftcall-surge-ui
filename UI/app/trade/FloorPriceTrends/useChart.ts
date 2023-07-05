@@ -16,11 +16,12 @@ import { safeGet } from 'app/utils/get'
 import type {
   FloorPriceTrends,
   FloorPriceTrendsChartProps,
-} from 'domains/data/NFTCollection/application/floorPrice24Change//types'
-import { getFloorPriceTrends } from 'domains/data/NFTCollection/application/floorPrice24Change/request'
+} from 'domains/data/NFTCollection/adapter/floorPriceTrends//types'
+import { getFloorPriceTrends } from 'domains/data/NFTCollection/adapter/floorPriceTrends/request'
 import { useMath } from 'domains/utils'
 
 import { toBN } from 'lib/math'
+import { ChainId } from 'lib/wallet/constant/chains'
 
 import { usePageTrade } from '..'
 
@@ -45,6 +46,7 @@ export const useChart = () => {
   const {
     collection: { collection },
     floorPrice24Change,
+    displayCollections,
   } = usePageTrade()
   const { chainId } = useWallet()
   const matches = useMediaQuery(theme.breakpoints.down('sm'))
@@ -55,7 +57,7 @@ export const useChart = () => {
   useEffect(() => {
     const endTimestamp = getCurrentTimestamp()
     post({
-      chainId: 1,
+      chainId: ChainId.ethereum,
       NFTAddress: collection.address.ethereumCollection,
       startTimestamp: endTimestamp - getTimestamp(90 * DAY),
       endTimestamp,
@@ -96,8 +98,8 @@ export const useChart = () => {
   }, [collection.data.price, collection.data.vol, dayButton.value, sourceData])
 
   const change24 = useMemo(() => {
-    return safeGet(() => floorPrice24Change.value[collection.address.collection]) || toBN(0)
-  }, [collection.address.collection, floorPrice24Change.value])
+    return safeGet(() => floorPrice24Change[collection.address.collection]) || toBN(0)
+  }, [collection.address.collection, floorPrice24Change])
 
   const props = useMemo(
     () =>
@@ -245,8 +247,8 @@ export const useChart = () => {
     loading,
     dayButton,
     change24,
-    currentFloorPrice: collection.data.price,
-    volatility: collection.data.vol,
+    currentFloorPrice: displayCollections[collection.address.collection].floorPrice,
+    volatility: displayCollections[collection.address.collection].vol,
     collection: collection,
   }
 }
