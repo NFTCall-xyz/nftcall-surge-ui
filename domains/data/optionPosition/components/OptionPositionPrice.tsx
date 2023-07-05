@@ -17,13 +17,13 @@ type OptionPositionPriceProps = {
 const OptionPositionPrice: FC<OptionPositionPriceProps> = ({
   rowData: { collectionAddress, status, settlementPrice },
 }) => {
-  const { collections } = usePageTrade()
+  const { displayCollections } = usePageTrade()
 
   const value = useMemo(() => {
     return status === OptionPositionStatus.Pending || status === OptionPositionStatus.Active
-      ? safeGet(() => collections.find((collection) => collection.address.collection === collectionAddress).data.price)
+      ? safeGet(() => displayCollections[collectionAddress].floorPrice)
       : settlementPrice
-  }, [collectionAddress, collections, settlementPrice, status])
+  }, [collectionAddress, displayCollections, settlementPrice, status])
 
   return (
     <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>

@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { createContextWithProvider } from 'app/utils/createContext'
 
 import type { GetNFTCollectionData } from 'store/surgeUI/getNFTCollection/adapter/getGetNFTCollectionData'
@@ -5,7 +7,7 @@ import type { GetNFTCollectionData } from 'store/surgeUI/getNFTCollection/adapte
 import type { Market } from '../network/adapter/markets'
 import { useCollectionsData } from './application/collections'
 import type { BaseCollection } from './application/collections/adapter/getCollection'
-import { useFloorPrice24Change } from './application/floorPrice24Change'
+import { useCollectionsStats } from './application/collectionsStats'
 
 export type NFTCollection = Market & {
   data: GetNFTCollectionData
@@ -14,9 +16,24 @@ export type NFTCollection = Market & {
 
 const useNFTCollectionService = () => {
   const { collections, updateNFTCollections } = useCollectionsData()
-  const floorPrice24Change = useFloorPrice24Change(collections)
+  const collectionsStats = useCollectionsStats(collections)
 
-  return { collections, updateNFTCollections, floorPrice24Change }
+  const displayCollections = useMemo(() => {
+    const { apiFloorPrice, apiVol } = collectionsStats
+    return collections.reduce((obj, collection) => {
+      const {
+        address,
+        data: { price, vol },
+      } = collection
+      obj[address.collection] = {
+        floorPrice: apiFloorPrice[address.collection] || price,
+        vol: apiVol[address.collection] || vol,
+      }
+      return obj
+    }, {} as Record<string, { floorPrice: BN; vol: BN }>)
+  }, [collections, collectionsStats])
+
+  return { collections, updateNFTCollections, collectionsStats, displayCollections }
 }
 const { Provider: NFTCollectionProvider, createUseContext } = createContextWithProvider(useNFTCollectionService)
 export const createNFTCollectionContext = createUseContext

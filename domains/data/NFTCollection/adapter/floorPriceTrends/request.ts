@@ -10,9 +10,8 @@ export const getFloorPriceTrends = (props: GetFloorPriceTrendsProps): Promise<Fl
 
   const fn = (): Promise<any> =>
     fetch(
-      parseParams('https://api.nftcall.xyz/api/v1/prices', {
-        chain_id: chainId,
-        address: NFTAddress,
+      parseParams(`https://api.nftcall.xyz/api/v1/collection/${NFTAddress}/price`, {
+        time_interval: 1800,
         start: startTimestamp,
         end: endTimestamp,
       }),
@@ -37,7 +36,7 @@ export const getFloorPriceTrends = (props: GetFloorPriceTrendsProps): Promise<Fl
         NFTAddress,
         MainNetworkNFT: item.address,
         floorPrice: weiToValue(item.price, 18),
-        vol: weiToValue(item.vol, 4),
+        vol: weiToValue(item.vol, 18),
         createTime: timestamps.time,
       }
     })
