@@ -27,17 +27,6 @@ const components = (theme: Theme): any => {
           margin: 0,
           padding: 0,
           boxSizing: 'border-box',
-          '&::-webkit-scrollbar': {
-            width: '0.5em',
-          },
-          '&::-webkit-scrollbar-track': {
-            backgroundColor: theme.palette.background.paper,
-            width: '1em',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: theme.palette.divider,
-            borderRadius: 10,
-          },
         },
         html: {
           width: '100%',
@@ -64,7 +53,6 @@ const components = (theme: Theme): any => {
             },
           },
         },
-        '#root': { width: '100%', height: '100%' },
         '#nprogress .bar': {
           zIndex: '2000 !important',
           backgroundColor: primary.main,
