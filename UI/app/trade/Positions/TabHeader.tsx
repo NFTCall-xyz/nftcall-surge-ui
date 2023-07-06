@@ -34,7 +34,7 @@ const TabHeader: FCC = ({ children }) => {
             label={tOptionPositionsTabs('collectionAddress')}
           >
             <MenuItem value={''}>
-              <ListItemText sx={{ margin: 0 }} primary="all" primaryTypographyProps={{ variant: 'body2' }} />
+              <ListItemText sx={{ margin: 0 }} primary="All" primaryTypographyProps={{ variant: 'body2' }} />
             </MenuItem>
             {collections.map((collection) => {
               return (

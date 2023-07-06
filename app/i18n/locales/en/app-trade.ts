@@ -54,7 +54,7 @@ const locale = {
     tabs: {
       activePositions: 'Active Positions',
       history: 'History',
-      collectionAddress: 'collection',
+      collectionAddress: 'Collection',
     },
     table: {
       collectionAddress: 'Collection',
