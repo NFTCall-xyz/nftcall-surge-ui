@@ -2,6 +2,8 @@ import { useMemo } from 'react'
 
 import { useAppSelector } from 'store/helpers'
 
+import { getAnalyticsSelect } from './getAnalytics'
+import { getGetAnalyticsData } from './getAnalytics/adapter/getGetAnalyticsData'
 import { getNFTCollectionSelect } from './getNFTCollection'
 import { getGetNFTCollectionData } from './getNFTCollection/adapter/getGetNFTCollectionData'
 import { getNFTCollectionsSelect } from './getNFTCollections'
@@ -13,12 +15,14 @@ export const useSurgeUIStateData = () => {
   const getNFTCollectionsBaseData = useAppSelector(getNFTCollectionsSelect.selectData)
   const getNFTCollectionBaseData = useAppSelector(getNFTCollectionSelect.selectData)
   const getVaultBaseData = useAppSelector(getVaultSelect.selectData)
+  const getAnalyticsBaseData = useAppSelector(getAnalyticsSelect.selectData)
   const returnValue = useMemo(() => {
     return {
       getNFTCollections: getGetNFTCollectionsData(getNFTCollectionsBaseData),
       getNFTCollection: getGetNFTCollectionData(getNFTCollectionBaseData),
       getVault: getGetVaultData(getVaultBaseData),
+      getAnalytics: getGetAnalyticsData(getAnalyticsBaseData),
     }
-  }, [getNFTCollectionsBaseData, getNFTCollectionBaseData, getVaultBaseData])
+  }, [getNFTCollectionsBaseData, getNFTCollectionBaseData, getVaultBaseData, getAnalyticsBaseData])
   return returnValue
 }

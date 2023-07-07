@@ -33,6 +33,11 @@ export interface GetPositionProps extends BaseSurgeUIProps {
   positionId: number
 }
 
+export interface GetAnalyticsProps extends BaseSurgeUIProps {
+  vaultAddress: string
+  lpTokenAddress: string
+}
+
 export class SurgeUIService extends BaseService<SurgeUI> {
   provider: providers.Provider
 
@@ -43,6 +48,7 @@ export class SurgeUIService extends BaseService<SurgeUI> {
     this.getNFTCollection = this.getNFTCollection.bind(this)
     this.getVault = this.getVault.bind(this)
     this.getPosition = this.getPosition.bind(this)
+    this.getAnalytics = this.getAnalytics.bind(this)
   }
 
   public async getNFTCollections(props: GetNFTCollectionsProps) {
@@ -73,5 +79,11 @@ export class SurgeUIService extends BaseService<SurgeUI> {
     const { SurgeUI, optionTokenAddress, positionId } = props
     const SurgeUIContract = this.getContractInstance(SurgeUI)
     return await SurgeUIContract.getPosition(optionTokenAddress, positionId)
+  }
+
+  public async getAnalytics(props: GetAnalyticsProps) {
+    const { SurgeUI, lpTokenAddress, vaultAddress } = props
+    const SurgeUIContract = this.getContractInstance(SurgeUI)
+    return await SurgeUIContract.getAnalytics(vaultAddress, lpTokenAddress)
   }
 }

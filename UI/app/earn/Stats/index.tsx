@@ -32,7 +32,7 @@ const Stats: FC = () => {
       price: (
         <Stack spacing={0.5} direction="row" alignItems="center">
           <TokenIcon symbol={'WETH'} sx={{ width: 24, height: 24 }} />
-          <NumberDisplay value={stats.ncETHPrice} abbreviate={{}} />
+          <NumberDisplay value={stats.ncETHPrice} abbreviate={{ maximumFractionDigits: 3 }} />
         </Stack>
       ),
       title: 'ncETHPrice',

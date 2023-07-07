@@ -24,17 +24,18 @@ const usePageEffect = () => {
 
 const useStats = () => {
   const {
-    vault: { totalAssets, unrealizedPNL, unrealizedPremium, totalSupply },
+    vault: { unrealizedPNL, unrealizedPremium, totalSupply },
+    analytics: { TVL, ncETHPrice },
   } = useVault()
   const stats = useMemo(() => {
     const returnValue = {
-      TVL: totalAssets,
+      TVL,
       APY: safeGet(() => (unrealizedPremium.isZero() ? toBN(0) : unrealizedPNL.div(unrealizedPremium))),
-      ncETHPrice: safeGet(() => (totalSupply.isZero() ? toBN(1) : totalAssets.div(totalSupply))),
+      ncETHPrice,
       ncETHTotalSupply: totalSupply,
     }
     return returnValue
-  }, [totalAssets, totalSupply, unrealizedPNL, unrealizedPremium])
+  }, [TVL, ncETHPrice, totalSupply, unrealizedPNL, unrealizedPremium])
 
   return stats
 }
