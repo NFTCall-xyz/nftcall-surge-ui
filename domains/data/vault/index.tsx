@@ -7,7 +7,8 @@ import type { GetVaultData } from 'store/surgeUI/getVault/adapter/getGetVaultDat
 import type { Market } from '../network/adapter/markets'
 import { useVaultData } from './application/vault'
 
-const EXERCISE_FEE_RATE = toBN(0.005)
+const NOMINAL_FEE_RATE = toBN(0.005) // 0.5% of the nominal amount
+const PROFIT_FEE_RATE = toBN(0.125) // 12.5% of the option value
 
 export type Vault = Market & {
   vault: GetVaultData
@@ -16,7 +17,7 @@ export type Vault = Market & {
 const useVaultService = () => {
   const { vault, updateVaults } = useVaultData()
 
-  return { vault, updateVaults, constants: { EXERCISE_FEE_RATE } }
+  return { vault, updateVaults, constants: { NOMINAL_FEE_RATE, PROFIT_FEE_RATE } }
 }
 const { Provider: VaultProvider, createUseContext } = createContextWithProvider(useVaultService)
 export const createVaultContext = createUseContext

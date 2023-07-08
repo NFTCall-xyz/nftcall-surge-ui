@@ -12,13 +12,18 @@ import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
+import { useVault } from 'domains/data'
 
 const DisplayMaxProfit: FC = () => {
   const { amount, strikePrice, premium, tOpenCallOptions } = usePageTradeOpenOptions()
+  const {
+    constants: { NOMINAL_FEE_RATE },
+  } = useVault()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
-    return <NumberDisplay value={strikePrice ? strikePrice.value * amount.value - premium.value.toNumber() : 0} />
-  }, [amount.value, premium.loading, premium.value, strikePrice])
+    const exerciseFee = NOMINAL_FEE_RATE.times(strikePrice.value).times(amount.value)
+    return <NumberDisplay value={strikePrice ? strikePrice.value * amount.value - premium.value.toNumber() - exerciseFee.toNumber() : 0} />
+  }, [NOMINAL_FEE_RATE, amount.value, premium.loading, premium.value, strikePrice])
 
   return (
     <FlexBetween>
