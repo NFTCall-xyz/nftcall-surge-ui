@@ -49,7 +49,7 @@ const Withdraw: FC = () => {
             <Stack spacing={4}>
               <Stack spacing={2}>
                 <FlexBetween flexDirection={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'start', sm: 'center' }}>
-                  <H5>Withdraw Amount</H5>
+                  <H5>Redeem Amount</H5>
                   <Tiny color="text.secondary">
                     available: {<NumberDisplay value={maxWithdraw} options="number" />} ncETH
                   </Tiny>

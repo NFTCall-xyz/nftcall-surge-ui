@@ -139,7 +139,7 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
           </Fragment>
         )}
         {chart.loading ? (
-          <FlexRowAlign paddingTop={2} height={100}>
+          <FlexRowAlign paddingTop={2} height={300}>
             <CircularProgress />
           </FlexRowAlign>
         ) : (

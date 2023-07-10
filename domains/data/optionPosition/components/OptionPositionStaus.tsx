@@ -9,7 +9,7 @@ import TableCell from '@mui/material/TableCell'
 import { SECONDS } from 'app/constant'
 import { getWeiToValueBN } from 'app/utils/get'
 
-import { Span } from 'components/Typography'
+import { Span, TooltipSpan } from 'components/Typography'
 
 import { useNFTCollections, useNetwork, useOptionPosition } from 'domains/data'
 
@@ -18,6 +18,9 @@ import {
   OptionPositionStatus,
   getOptionPositionStatusByProtocol,
 } from 'lib/graphql/option-position'
+import Tooltip from '@mui/material/Tooltip'
+import Box from '@mui/material/Box'
+import Link from 'next/link'
 
 type OptionPositionStausProps = {
   rowData: OptionPosition
@@ -94,7 +97,23 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surgeUIService, status])
 
-  if (status !== OptionPositionStatus.Pending) {
+  if (status === OptionPositionStatus.Failed) {
+    return (
+      <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
+        <Tooltip title={
+          <>
+            <p>Failed to open the position due to the slippage.</p>
+            <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">Learn More</Link>
+          </>
+        }>
+          <Box>
+            <TooltipSpan>{status}</TooltipSpan>
+          </Box>
+        </Tooltip>
+      </TableCell>
+    )
+  }
+  else if (status !== OptionPositionStatus.Pending) {
     return (
       <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
         <Span color="text.secondary">{status}</Span>
