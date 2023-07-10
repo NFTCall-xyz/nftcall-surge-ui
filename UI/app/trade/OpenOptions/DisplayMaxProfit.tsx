@@ -8,11 +8,13 @@ import Stack from '@mui/material/Stack'
 import { TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
+import { useVault } from 'domains/data'
+
+import { toBN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
-import { useVault } from 'domains/data'
 
 const DisplayMaxProfit: FC = () => {
   const { amount, strikePrice, premium, tOpenCallOptions } = usePageTradeOpenOptions()
@@ -22,7 +24,11 @@ const DisplayMaxProfit: FC = () => {
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
     const exerciseFee = NOMINAL_FEE_RATE.times(strikePrice.value).times(amount.value)
-    return <NumberDisplay value={strikePrice ? strikePrice.value * amount.value - premium.value.toNumber() - exerciseFee.toNumber() : 0} />
+    return (
+      <NumberDisplay
+        value={strikePrice ? toBN(strikePrice.value).times(amount.value).minus(premium.value).minus(exerciseFee) : 0}
+      />
+    )
   }, [NOMINAL_FEE_RATE, amount.value, premium.loading, premium.value, strikePrice])
 
   return (

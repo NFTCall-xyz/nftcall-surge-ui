@@ -91,11 +91,11 @@ const useStrikePrice = (optionType: OptionType, setInit: Updater<boolean>) => {
     let min = toBN(0)
     let max = toBN(0)
     if (optionType === OptionType.LONG_CALL) {
-      min = price.multipliedBy(1.1)
-      max = price.multipliedBy(2)
+      min = price.times(1.1)
+      max = price.times(2)
     } else {
-      min = price.multipliedBy(0.4)
-      max = price.multipliedBy(0.9)
+      min = price.times(0.4)
+      max = price.times(0.9)
     }
 
     return {
@@ -265,7 +265,7 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
     setting: { allowedSlippage },
   } = useApp()
   const maximumPremium = useMemo(() => {
-    return toBN(1 + allowedSlippage.value).multipliedBy(returnValue)
+    return toBN(1 + allowedSlippage.value).times(returnValue)
   }, [allowedSlippage.value, returnValue])
 
   return {

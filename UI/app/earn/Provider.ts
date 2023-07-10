@@ -54,7 +54,7 @@ const useYourStats = ({ stats }: UseYourStatsProps) => {
     const returnValue = {
       ncETHBalance: balance,
       lockedNcETHBalance: lockedBalance,
-      totalValue: safeGet(() => balance.plus(lockedBalance).multipliedBy(stats.ncETHPrice)),
+      totalValue: safeGet(() => balance.plus(lockedBalance).times(stats.ncETHPrice)),
       estimatedEarnings: toBN(0), // TODO: calculate
     }
     return returnValue

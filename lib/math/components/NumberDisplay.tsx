@@ -68,7 +68,7 @@ const NumberDisplay: FC<NumberDisplayProps> = ({
         suffix,
       } = getAbbreviateData(v, abbreviate)
       return `${getFormatValue(
-        safeGet(() => scaledValue.multipliedBy(sign ? 1 : -1) || 0),
+        safeGet(() => scaledValue.times(sign ? 1 : -1) || 0),
         { maximumFractionDigits }
       )}${suffix || ''}`
     }

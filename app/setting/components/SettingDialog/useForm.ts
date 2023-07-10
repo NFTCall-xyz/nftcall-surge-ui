@@ -19,7 +19,7 @@ export const useForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      allowedSlippage: toBN(allowedSlippage.value).multipliedBy(100).toString(),
+      allowedSlippage: toBN(allowedSlippage.value).times(100).toString(),
     },
     validationSchema,
     onSubmit: (values) => {

@@ -39,7 +39,7 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
       PNLRate = PNL.dividedBy(premium)
       return { PNL, PNLRate }
     } else if (status === OptionPositionStatus.Expired) {
-      PNL = premium.multipliedBy(-1)
+      PNL = premium.times(-1)
       PNLRate = PNL.dividedBy(premium)
       return { PNL, PNLRate }
     }

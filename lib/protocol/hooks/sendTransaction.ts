@@ -30,7 +30,7 @@ export const useSendTransaction = () => {
 
       return signer.estimateGas(tx).then((gasLimit) => {
         if (gasLimit && !gasLimit.isZero()) {
-          tx.gasLimit = EthersBN.from(toBN(gasLimit).multipliedBy(2).toString())
+          tx.gasLimit = EthersBN.from(toBN(gasLimit).times(2).toString())
         }
         return signer.sendTransaction(tx)
       })

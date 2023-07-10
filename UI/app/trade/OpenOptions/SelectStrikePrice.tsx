@@ -80,7 +80,7 @@ const SelectStrikePrice: FC = () => {
           return (
             <ToggleButton
               size="small"
-              value={safeGet(() => price.multipliedBy(i + 1).toNumber()) || i}
+              value={safeGet(() => price.times(i + 1).toNumber()) || i}
               key={i}
               sx={{ fontSize: 12 }}
             >

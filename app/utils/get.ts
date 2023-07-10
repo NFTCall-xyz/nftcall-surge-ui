@@ -37,7 +37,7 @@ export const getAddresses = <T, K extends keyof T>(obj: T, keys: K[]) => {
 export const getNumber = <T, K extends keyof T>(obj: T, keys: K[], decimals = 3) => {
   return keys.reduce((o, k) => {
     o[k] = toBN(obj[k] as any)
-      .multipliedBy(Math.pow(10, decimals))
+      .times(Math.pow(10, decimals))
       .toNumber()
     return o
   }, {} as Record<K, number>)

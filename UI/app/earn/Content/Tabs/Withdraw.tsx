@@ -30,7 +30,7 @@ const Withdraw: FC = () => {
   const [value, setValue] = useImmer(0)
   const { receiveAmount, withdrawalFee } = useMemo(() => {
     const totalAmount = safeGet(() => ncETHPrice.times(value)) || toBN(0)
-    const withdrawalFee = totalAmount.multipliedBy(0.003)
+    const withdrawalFee = totalAmount.times(0.003)
     return {
       withdrawalFee,
       receiveAmount: totalAmount.minus(withdrawalFee),
