@@ -24,7 +24,7 @@ const Withdraw: FC = () => {
   const {
     theme,
     tTabs,
-    tabs: { maxWithdraw, ncETHPrice, withdraw },
+    tabs: { maxWithdraw, ncETHPrice, withdraw, allowance, approveWithdraw },
   } = usePageEarn()
 
   const [value, setValue] = useImmer(0)
@@ -36,6 +36,10 @@ const Withdraw: FC = () => {
       receiveAmount: totalAmount.minus(withdrawalFee),
     }
   }, [ncETHPrice, value])
+
+  const withdrawAvailable = useMemo(() => {
+    return safeGet(() => allowance.gt(value))
+  }, [allowance, value])
 
   return (
     <Box paddingTop={2}>
@@ -87,15 +91,27 @@ const Withdraw: FC = () => {
                 </Stack>
               </Stack>
 
-              <Button
-                variant="contained"
-                disabled={!value}
-                onClick={() => {
-                  withdraw(value.toString())
-                }}
-              >
-                {tTabs('withdraw.action')}
-              </Button>
+              {withdrawAvailable ? (
+                <Button
+                  variant="contained"
+                  disabled={!value}
+                  onClick={() => {
+                    withdraw(value.toString())
+                  }}
+                >
+                  {tTabs('withdraw.action')}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  disabled={!value}
+                  onClick={() => {
+                    approveWithdraw(value.toString())
+                  }}
+                >
+                  {tTabs('approve.action')}
+                </Button>
+              )}
             </Stack>
           </Box>
         </Grid>

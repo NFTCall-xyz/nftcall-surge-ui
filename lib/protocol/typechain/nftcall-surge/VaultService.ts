@@ -59,7 +59,12 @@ export interface OpenPositionProps extends BaseVaultProps {
 
 export interface WithdrawProps extends BaseVaultProps {
   userAddress: tEthereumAddress
+  lpTokenAddress: tEthereumAddress
   amount: string
+  approveService: {
+    approve: (args: ApproveType) => EthereumTransactionTypeExtended
+    isApproved: (args: ApproveType) => Promise<boolean>
+  }
 }
 
 export interface ForceClosePendingPositionProps extends BaseVaultProps {
@@ -92,6 +97,7 @@ export class VaultService extends BaseService<Vault> {
     this.approveOpenPosition = this.approveOpenPosition.bind(this)
     this.openPosition = this.openPosition.bind(this)
     this.withdraw = this.withdraw.bind(this)
+    this.approveWithdraw = this.approveWithdraw.bind(this)
     this.forceClosePendingPosition = this.forceClosePendingPosition.bind(this)
     this.getPremium = this.getPremium.bind(this)
     this.getPositionPNLWeightedDelta = this.getPositionPNLWeightedDelta.bind(this)
@@ -243,17 +249,59 @@ export class VaultService extends BaseService<Vault> {
     return txs
   }
 
+  public async approveWithdraw(props: WithdrawProps) {
+    const {
+      userAddress,
+      lpTokenAddress,
+      Vault,
+      approveService: { isApproved, approve },
+      amount,
+    } = props
+    const txs: EthereumTransactionTypeExtended[] = []
+    const convertedAmount = valueToWei(amount, 18).toString()
+
+    const approveProps = {
+      token: lpTokenAddress,
+      user: userAddress,
+      spender: Vault,
+      amount: convertedAmount,
+    }
+
+    const approved = await isApproved(approveProps)
+    if (!approved) {
+      approveProps.amount = DEFAULT_APPROVE_AMOUNT
+      const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
+      txs.push(approveTx)
+    }
+
+    return txs
+  }
+
   public async withdraw(props: WithdrawProps) {
     const {
       Vault,
       userAddress,
-
+      lpTokenAddress,
+      approveService: { isApproved, approve },
       amount,
     } = props
     const VaultContract = this.getContractInstance(Vault)
     const txs: EthereumTransactionTypeExtended[] = []
 
     const convertedAmount = amount === '-1' ? constants.MaxUint256.toString() : valueToWei(amount, 18).toString()
+
+    const approveProps = {
+      token: lpTokenAddress,
+      user: userAddress,
+      spender: Vault,
+      amount: convertedAmount,
+    }
+    const approved = await isApproved(approveProps)
+    if (!approved) {
+      approveProps.amount = DEFAULT_APPROVE_AMOUNT
+      const approveTx: EthereumTransactionTypeExtended = approve(approveProps)
+      txs.push(approveTx)
+    }
 
     const txCallback: () => Promise<transactionType> = this.generateTxCallback({
       rawTxMethod: async () => VaultContract.populateTransaction.withdraw(convertedAmount, userAddress),

@@ -101,15 +101,17 @@ export type VaultLPTokenStruct = {
   wETHBalance: PromiseOrValue<BigNumberish>
   wETHAllowance: PromiseOrValue<BigNumberish>
   balance: PromiseOrValue<BigNumberish>
+  allowance: PromiseOrValue<BigNumberish>
   lockedBalance: PromiseOrValue<BigNumberish>
   maxWithdraw: PromiseOrValue<BigNumberish>
   releaseTime: PromiseOrValue<BigNumberish>
 }
 
-export type VaultLPTokenStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+export type VaultLPTokenStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
   wETHBalance: BigNumber
   wETHAllowance: BigNumber
   balance: BigNumber
+  allowance: BigNumber
   lockedBalance: BigNumber
   maxWithdraw: BigNumber
   releaseTime: BigNumber

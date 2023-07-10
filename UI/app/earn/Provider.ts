@@ -86,7 +86,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
   const {
     updateVaults,
     vault: {
-      lpToken: { wETHBalance, wETHAllowance, maxWithdraw },
+      lpToken: { allowance, wETHBalance, wETHAllowance, maxWithdraw },
     },
   } = useVault()
   const { updateNFTCollections } = useNFTCollections()
@@ -170,13 +170,44 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
     ]
   )
 
+  const approveWithdraw = useCallback(
+    (amount: string) => {
+      return transaction({
+        createTransaction: vaultService.approveWithdraw({
+          Vault: vaultAddress,
+          userAddress: account,
+          lpTokenAddress,
+          amount,
+          approveService: erc20Service,
+        }),
+        setStatus: () => {},
+        sendTransaction,
+        isOnlyApprove: true,
+      }).finally(() => {
+        updateVaults()
+        updateNFTCollections()
+      })
+    },
+    [
+      account,
+      erc20Service,
+      lpTokenAddress,
+      sendTransaction,
+      updateNFTCollections,
+      updateVaults,
+      vaultAddress,
+      vaultService,
+    ]
+  )
   const withdraw = useCallback(
     (amount: string) => {
       return transaction({
         createTransaction: vaultService.withdraw({
           Vault: vaultAddress,
           userAddress: account,
+          lpTokenAddress,
           amount,
+          approveService: erc20Service,
         }),
         setStatus: () => {},
         sendTransaction,
@@ -186,10 +217,30 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
         updateNFTCollections()
       })
     },
-    [account, sendTransaction, updateNFTCollections, updateVaults, vaultAddress, vaultService]
+    [
+      account,
+      erc20Service,
+      lpTokenAddress,
+      sendTransaction,
+      updateNFTCollections,
+      updateVaults,
+      vaultAddress,
+      vaultService,
+    ]
   )
 
-  return { tabs, approveDeposit, deposit, withdraw, wETHBalance, wETHAllowance, maxWithdraw, ncETHPrice }
+  return {
+    tabs,
+    approveDeposit,
+    deposit,
+    approveWithdraw,
+    withdraw,
+    allowance,
+    wETHBalance,
+    wETHAllowance,
+    maxWithdraw,
+    ncETHPrice,
+  }
 }
 
 export default createContextWithProvider(() => {

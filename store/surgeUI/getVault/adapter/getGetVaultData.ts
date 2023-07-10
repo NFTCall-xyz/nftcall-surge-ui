@@ -5,6 +5,7 @@ import type { GetVaultBaseData } from './getGetVaultBaseData'
 export type GetVaultData = {
   lpToken: {
     balance: BN
+    allowance: BN
     wETHBalance: BN
     wETHAllowance: BN
     lockedBalance: BN
@@ -27,7 +28,7 @@ export const getGetVaultData = (getVaultBaseData: GetVaultBaseData): GetVaultDat
     lpToken: {
       ...getWeiToValueBN(
         getVaultBaseData.lpToken,
-        ['balance', 'lockedBalance', 'maxWithdraw', 'wETHBalance', 'wETHAllowance'],
+        ['balance', 'allowance', 'lockedBalance', 'maxWithdraw', 'wETHBalance', 'wETHAllowance'],
         18
       ),
       ...getNumber(getVaultBaseData.lpToken, ['releaseTime']),

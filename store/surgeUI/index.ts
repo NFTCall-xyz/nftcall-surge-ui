@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
+import getAnalyticsReducer from './getAnalytics'
 import getNFTCollectionReducer from './getNFTCollection'
 import getNFTCollectionsReducer from './getNFTCollections'
 import getVaultReducer from './getVault'
-import getAnalyticsReducer from './getAnalytics'
 
 const surgeUIReducer = combineReducers({
   getNFTCollections: getNFTCollectionsReducer,
