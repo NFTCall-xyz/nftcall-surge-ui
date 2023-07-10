@@ -14,6 +14,7 @@ import OptionPositionPNL from 'domains/data/optionPosition/components/OptionPosi
 import OptionPositionPrice from 'domains/data/optionPosition/components/OptionPositionPrice'
 import OptionPositionStaus from 'domains/data/optionPosition/components/OptionPositionStaus'
 
+import { OptionPositionStatus } from 'lib/graphql/option-position'
 import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 type TableCellProps = {
@@ -36,15 +37,22 @@ export const PriceCellRenderer = (props: TableCellProps) => {
   return <OptionPositionPrice {...props} />
 }
 
-export const expiryDateRenderer = ({ cellData }: TableCellProps) => {
+export const expiryDateRenderer = ({ cellData, rowData: { status } }: TableCellProps) => {
   const expiryDiff = (() => {
     if (!cellData) return ''
     const startDate = new Date()
-    if (new Date(cellData).getTime() < startDate.getTime()) return 'Pending'
-    const hoursDiff = differenceInHours(cellData, startDate)
-    const daysDiff = differenceInDays(cellData, startDate)
-    const result = `${daysDiff} days ${hoursDiff % 24} hrs later`
-    return result
+    if (status === OptionPositionStatus.Active || status === OptionPositionStatus.Pending) {
+      if (new Date(cellData).getTime() < startDate.getTime()) {
+        return 'Pending'
+      } else {
+        const hoursDiff = differenceInHours(cellData, startDate)
+        const daysDiff = differenceInDays(cellData, startDate)
+        const result = `${daysDiff} days ${hoursDiff % 24} hrs later`
+        return result
+      }
+    } else {
+      return ''
+    }
   })()
 
   return (
