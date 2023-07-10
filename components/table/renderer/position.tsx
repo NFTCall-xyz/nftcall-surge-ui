@@ -89,6 +89,6 @@ export const statusCellRenderer = (props: TableCellProps) => {
   return <OptionPositionStaus {...props} />
 }
 
-export const NFTCollectionRenderer = ({ cellData }: TableCellProps) => {
-  return <NFTCollectionTableComponent collectionAddress={cellData} />
+export const NFTCollectionRenderer = ({ cellData, rowData: { positionId } }: TableCellProps) => {
+  return <NFTCollectionTableComponent collectionAddress={cellData} positionId={positionId} />
 }

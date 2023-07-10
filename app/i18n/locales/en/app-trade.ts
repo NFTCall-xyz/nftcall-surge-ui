@@ -57,7 +57,7 @@ const locale = {
       collectionAddress: 'Collection',
     },
     table: {
-      collectionAddress: 'Collection',
+      collectionAddress: 'Position ID',
       type: 'Type',
       size: 'Size',
       floorPrice: 'Floor Price',
