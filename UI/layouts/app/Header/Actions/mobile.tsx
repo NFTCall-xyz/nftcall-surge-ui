@@ -14,6 +14,8 @@ import SettingButton from 'app/setting/components/SettingButton'
 import ChainButton from 'lib/wallet/components/ChainButton'
 import ConnectButton from 'lib/wallet/components/ConnectButton'
 
+import GetMockETH from './components/GetMockETH'
+
 const ROOT = styled(Stack)``
 
 const ActionsMobile: FC = () => {
@@ -31,6 +33,12 @@ const ActionsMobile: FC = () => {
       </IconButton>
       <Drawer anchor="right" open={openDrawer} onClose={() => setOpenDrawer(false)}>
         <List>
+          <ListItem>
+            <SettingButton />
+          </ListItem>
+          <ListItem>
+            <GetMockETH />
+          </ListItem>
           <ListItem>
             <SettingButton />
           </ListItem>
