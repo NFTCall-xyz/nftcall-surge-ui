@@ -362,6 +362,14 @@ const components = (theme: Theme): any => {
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: theme.palette.grey[700],
+          fontSize: 12,
+        },
+      },
+    }
   }
 }
 
