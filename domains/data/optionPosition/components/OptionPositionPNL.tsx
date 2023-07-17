@@ -17,7 +17,7 @@ type OptionPositionPNLProps = {
   setRowData: Updater<OptionPosition>
 }
 const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
-  rowData: { collectionAddress, positionId, status, premium, revenue },
+  rowData: { collectionAddress, positionId, status, premium, revenue, expiration },
 }) => {
   const [PNLInner, setPNLInner] = useImmer<string>('')
   const [PNLRateInner, setPNLRateInner] = useImmer<string>('')
@@ -48,7 +48,7 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
   }, [PNLInner, PNLRateInner, premium, revenue, status])
 
   useEffect(() => {
-    if (status !== OptionPositionStatus.Active) return
+    if (status !== OptionPositionStatus.Active || new Date(expiration).getTime() < Date.now()) return
 
     post({
       collection: collectionAddress,
