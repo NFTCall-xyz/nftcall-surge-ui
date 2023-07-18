@@ -4,9 +4,11 @@ import CardContent from '@mui/material/CardContent'
 import Stack from '@mui/material/Stack'
 
 import ConfirmOpenOptionDialog from './ConfirmOpenOptionDialog'
+import DisplayAdjustedVolatility from './DisplayAdjustedVolatility'
 import DisplayBreakevenPrice from './DisplayBreakevenPrice'
 import DisplayMaxLoss from './DisplayMaxLoss'
 import DisplayMaxProfit from './DisplayMaxProfit'
+import DisplayOraclePrice from './DisplayOraclePrice'
 import DisplayPremium from './DisplayPremium'
 import DisplayYourBalance from './DisplayYourBalance'
 import OpenOptionsAction from './OpenOptionsAction'
@@ -31,6 +33,8 @@ const OpenOptions: FC<OpenOptionsProps> = () => {
           <SelectStrikePrice />
           <SelectExpiryDate />
           <Stack spacing={1}>
+            <DisplayOraclePrice />
+            <DisplayAdjustedVolatility />
             <DisplayMaxProfit />
             <DisplayBreakevenPrice />
             <DisplayMaxLoss />

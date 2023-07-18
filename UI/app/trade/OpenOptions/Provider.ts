@@ -182,10 +182,7 @@ const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumP
 
   const {
     collection: {
-      collection: {
-        address,
-        data: { price },
-      },
+      collection: { address },
     },
   } = usePageTrade()
   const {
@@ -291,7 +288,7 @@ export default createContextWithProvider(() => {
     collection: {
       collection: {
         id,
-        data: { price },
+        data: { price, vol },
         info: { name },
       },
       wETHBalance,
@@ -341,6 +338,7 @@ export default createContextWithProvider(() => {
     openOptions,
     setSourceData,
     price,
+    vol,
     premium,
     wETHBalance,
     wETHAllowance,

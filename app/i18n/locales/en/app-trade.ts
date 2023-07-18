@@ -33,6 +33,8 @@ const locale = {
     maxLoss: 'Max. Loss',
     openOptions: 'Open Position',
     approve: 'Approve',
+    oraclePrice: 'Oracle Price',
+    adjustedVolatility: 'Adjusted Volatility',
     limitTip:
       'Due to the risk control settings of the vault, the size limit available for each NFT collection when opening a position is different.',
     maxProfitTip: 'The maximum profit is the amount you can make from the option position.',
