@@ -8,7 +8,7 @@ const locale = {
     totalVolume: 'Total Volume',
     totalPremium: 'Total Premium',
     winrate: 'Winrate',
-  }
+  },
 }
 
 export default locale

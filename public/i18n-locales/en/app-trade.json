@@ -33,6 +33,8 @@
     "maxLoss": "Max. Loss",
     "openOptions": "Open Position",
     "approve": "Approve",
+    "oraclePrice": "Oracle Price",
+    "adjustedVolatility": "Adjusted Volatility",
     "limitTip": "Due to the risk control settings of the vault, the size limit available for each NFT collection when opening a position is different.",
     "maxProfitTip": "The maximum profit is the amount you can make from the option position.",
     "maxPayoutTip": "For call options, the vault only provides limited payout, which means the vault cannot pay for any option profits resulting from a spot price increase exceeding 100%. In order to compensate traders, the protocol will adjust down the premium for buying call options.",
@@ -47,10 +49,10 @@
     "tabs": {
       "activePositions": "Active Positions",
       "history": "History",
-      "collectionAddress": "collection"
+      "collectionAddress": "Collection"
     },
     "table": {
-      "collectionAddress": "Collection",
+      "collectionAddress": "Position ID",
       "type": "Type",
       "size": "Size",
       "floorPrice": "Floor Price",
