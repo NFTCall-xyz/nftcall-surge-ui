@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 
 import FloorPriceTrends from './FloorPriceTrends'
+import MobileTrade from './Mobile'
 import OpenOptions from './OpenOptions'
 import Positions from './Positions'
 import PageProvider from './Provider'
@@ -34,4 +35,4 @@ const Trade: FC = () => {
   )
 }
 
-export default PageProvider.withProvider(Trade)
+export default PageProvider.withProvider(Trade, MobileTrade)

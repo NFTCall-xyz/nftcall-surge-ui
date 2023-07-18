@@ -2,14 +2,17 @@ import type { FC } from 'react'
 import { Fragment, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { CircularProgress } from '@mui/material'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import Card from '@mui/material/Card'
+import CircularProgress from '@mui/material/CircularProgress'
+import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { styled } from '@mui/material/styles'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+
+import { useIsMobile } from 'app/hooks/useIsMobile'
 
 import { Paragraph, Tiny } from 'components/Typography'
 import FlexRowAlign from 'components/flexbox/FlexRowAlign'
@@ -21,6 +24,7 @@ import NumberDisplay from 'lib/math/components/NumberDisplay'
 import RiseOrFall from 'lib/math/components/RiseOrFall'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
+import { usePageTrade } from '..'
 import Chart from './Chart'
 import { useChart } from './useChart'
 
@@ -34,11 +38,13 @@ const NFTCollectionInfo = styled(Stack)``
 const Right = styled('div')``
 
 const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
+  const {
+    collection: { mobileDialog },
+  } = usePageTrade()
   const { t: tFloorPriceTrends } = useTranslation('app-trade', { keyPrefix: 'floorPriceTrends' })
 
   const chart = useChart()
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.up('xl'))
+  const isMobile = useIsMobile()
 
   const collectionInfo = useMemo(
     () => (
@@ -106,17 +112,29 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
     [chart.dayButton.list, chart.dayButton.onChange, chart.dayButton.value, tFloorPriceTrends]
   )
 
+  const openSelectNFTCollection = useMemo(() => {
+    if (!isMobile) return null
+    return (
+      <IconButton aria-label="expand row" size="small" onClick={mobileDialog.open}>
+        {mobileDialog.visible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      </IconButton>
+    )
+  }, [isMobile, mobileDialog.open, mobileDialog.visible])
+
   return (
     <ROOT>
       <Stack spacing={2}>
-        {matches ? (
+        {!isMobile ? (
           <Stack alignItems="center" justifyContent="space-between" direction="row">
             {collectionInfo}
             {chartButtons}
           </Stack>
         ) : (
           <Fragment>
-            {collectionInfo}
+            <Stack alignItems="center" justifyContent="space-between" direction="row">
+              {collectionInfo}
+              {openSelectNFTCollection}
+            </Stack>
             {chartButtons}
           </Fragment>
         )}

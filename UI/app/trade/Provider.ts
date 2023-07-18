@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
 import { usePost } from 'app/hooks/request'
+import { useDialog } from 'app/hooks/useDialog'
 import { createContextWithProvider } from 'app/utils/createContext'
 import { getWeiToValueBN, safeGet } from 'app/utils/get'
 
@@ -34,6 +35,7 @@ const useNFTCollection = () => {
 
   const sendTransaction = useSendTransaction()
   const { account } = useWallet()
+  const mobileDialog = useDialog()
 
   const {
     address: { Vault: vaultAddress, WETH: wETHAddress },
@@ -123,6 +125,7 @@ const useNFTCollection = () => {
     approveOpenPosition,
     openOptions,
     setNFTCollectionAddress,
+    mobileDialog,
   }
 }
 
