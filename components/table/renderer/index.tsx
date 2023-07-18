@@ -10,6 +10,7 @@ import { Paragraph } from 'components/Typography'
 import LinkToAddress from 'components/button/LinkToAddress'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
+import RiseOrFall from 'lib/math/components/RiseOrFall'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import type { TableHeaderRenderer } from '../BasicTable/types'
@@ -67,6 +68,16 @@ export const percentCellRenderer: TableCellRenderer = ({ cellData }) => {
   return (
     <TableCell align="center" component="div">
       <NumberDisplay value={cellData} options="percent" />
+    </TableCell>
+  )
+}
+
+export const percentRiseOrFallCellRenderer: TableCellRenderer = ({ cellData }) => {
+  return (
+    <TableCell align="center" component="div">
+      <RiseOrFall value={cellData}>
+        <NumberDisplay value={cellData} options="percent" numberFormatOptions={{ signDisplay: 'always' }} />
+      </RiseOrFall>
     </TableCell>
   )
 }

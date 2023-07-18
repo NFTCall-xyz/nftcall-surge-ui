@@ -1,20 +1,23 @@
 import { request as RQ } from 'graphql-request'
 
-import document from './active/index.graphql'
+import document from './index.graphql'
 
 export type GraphqlTraderBaseData = {
-  totalTradingVolume: string
-  totalPremiumCollected: string
+  id: string
   totalTrades: number
+  totalVolume: string
+  totalRevenue: string
+  totalPremium: string
+  totalExercisedOptionPosition: number
 }
 
 export type ResponseType = { traders: GraphqlTraderBaseData[]; user: GraphqlTraderBaseData[] }
 
 export type RequestType = {
-  id?: string
+  userAddress?: string
 }
 
 export const graphqlRequest = (url: string, variables: RequestType) => {
-  variables.id = variables.id || '1'
+  variables.userAddress = variables.userAddress || ''
   return RQ<ResponseType>(url, document, variables)
 }

@@ -22,6 +22,10 @@ const MenuList = [
     linkTo: '/app/earn',
   },
   {
+    key: 'Leaderboard',
+    linkTo: '/app/leaderboard',
+  },
+  {
     key: 'Docs',
     linkTo: 'https://docs.nftcall.xyz/',
     target: '_blank',
