@@ -1,4 +1,4 @@
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunchOutlined'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import Fab from '@mui/material/Fab'
@@ -35,18 +35,16 @@ const MobileTrade: FC = () => {
       <Fab
         sx={{
           position: 'fixed',
-          bottom: 16,
           right: 16,
-          bgcolor: 'primary.main',
-          '&:hover': {
-            bgcolor: 'primary.light',
-          },
+          bottom: 16,
         }}
+        variant='extended'
         size="large"
         color="primary"
         onClick={() => dialog.open()}
       >
-        <ShoppingCartCheckoutIcon />
+        <RocketLaunchIcon sx={{ mr: 1 }} />
+        Open Position
       </Fab>
 
       <Dialog {...{ ...dialog, title: `Open ${id} Options` }} fullScreen>
