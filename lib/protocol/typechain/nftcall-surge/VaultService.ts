@@ -308,7 +308,7 @@ export class VaultService extends BaseService<Vault> {
     }
 
     const txCallback: () => Promise<transactionType> = this.generateTxCallback({
-      rawTxMethod: async () => VaultContract.populateTransaction.withdraw(convertedAmount, userAddress),
+      rawTxMethod: async () => VaultContract.populateTransaction.redeem(convertedAmount, userAddress),
       from: userAddress,
       value: DEFAULT_NULL_VALUE_ON_TX,
     })
