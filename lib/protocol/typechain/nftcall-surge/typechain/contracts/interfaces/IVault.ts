@@ -91,9 +91,11 @@ export interface IVaultInterface extends utils.Interface {
     'MINIMUM_DURATION()': FunctionFragment
     'MINIMUM_PUT_STRIKE_PRICE_RATIO()': FunctionFragment
     'RESERVE_RATIO()': FunctionFragment
+    'TIME_SCALE()': FunctionFragment
     'activateMarket(address)': FunctionFragment
     'activePosition(address,uint256)': FunctionFragment
     'addMarket(address,uint32,address)': FunctionFragment
+    'adjustedVolatility(address,uint8,uint256,uint256)': FunctionFragment
     'backstopPool()': FunctionFragment
     'closePosition(address,uint256)': FunctionFragment
     'deactivateMarket(address)': FunctionFragment
@@ -114,6 +116,7 @@ export interface IVaultInterface extends utils.Interface {
     'pause()': FunctionFragment
     'positionPNLWeightedDelta(address,uint256)': FunctionFragment
     'profitFeeRatio()': FunctionFragment
+    'redeem(uint256,address)': FunctionFragment
     'reserve()': FunctionFragment
     'setKeeper(address)': FunctionFragment
     'strike(uint256)': FunctionFragment
@@ -138,9 +141,11 @@ export interface IVaultInterface extends utils.Interface {
       | 'MINIMUM_DURATION'
       | 'MINIMUM_PUT_STRIKE_PRICE_RATIO'
       | 'RESERVE_RATIO'
+      | 'TIME_SCALE'
       | 'activateMarket'
       | 'activePosition'
       | 'addMarket'
+      | 'adjustedVolatility'
       | 'backstopPool'
       | 'closePosition'
       | 'deactivateMarket'
@@ -161,6 +166,7 @@ export interface IVaultInterface extends utils.Interface {
       | 'pause'
       | 'positionPNLWeightedDelta'
       | 'profitFeeRatio'
+      | 'redeem'
       | 'reserve'
       | 'setKeeper'
       | 'strike'
@@ -183,6 +189,7 @@ export interface IVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MINIMUM_DURATION', values?: undefined): string
   encodeFunctionData(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', values?: undefined): string
   encodeFunctionData(functionFragment: 'RESERVE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'TIME_SCALE', values?: undefined): string
   encodeFunctionData(functionFragment: 'activateMarket', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
     functionFragment: 'activePosition',
@@ -191,6 +198,15 @@ export interface IVaultInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'addMarket',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'adjustedVolatility',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string
   encodeFunctionData(functionFragment: 'backstopPool', values?: undefined): string
   encodeFunctionData(
@@ -247,6 +263,7 @@ export interface IVaultInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
   encodeFunctionData(functionFragment: 'profitFeeRatio', values?: undefined): string
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
   encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'strike', values: [PromiseOrValue<BigNumberish>]): string
@@ -274,9 +291,11 @@ export interface IVaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'MINIMUM_DURATION', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'RESERVE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'TIME_SCALE', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'activateMarket', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'adjustedVolatility', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'backstopPool', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deactivateMarket', data: BytesLike): Result
@@ -297,6 +316,7 @@ export interface IVaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'positionPNLWeightedDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'profitFeeRatio', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'reserve', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setKeeper', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'strike', data: BytesLike): Result
@@ -554,6 +574,8 @@ export interface IVault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<[BigNumber]>
+
     activateMarket(
       collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -571,6 +593,14 @@ export interface IVault extends BaseContract {
       optionToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
 
     backstopPool(overrides?: CallOverrides): Promise<[string]>
 
@@ -665,6 +695,12 @@ export interface IVault extends BaseContract {
 
     profitFeeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
 
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
     reserve(overrides?: CallOverrides): Promise<[string]>
 
     setKeeper(
@@ -718,6 +754,8 @@ export interface IVault extends BaseContract {
 
   RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
 
+  TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
+
   activateMarket(
     collection: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -735,6 +773,14 @@ export interface IVault extends BaseContract {
     optionToken: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
+
+  adjustedVolatility(
+    collection: PromiseOrValue<string>,
+    optionType: PromiseOrValue<BigNumberish>,
+    strikePrice: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
 
   backstopPool(overrides?: CallOverrides): Promise<string>
 
@@ -829,6 +875,12 @@ export interface IVault extends BaseContract {
 
   profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
+  redeem(
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
   reserve(overrides?: CallOverrides): Promise<string>
 
   setKeeper(
@@ -882,6 +934,8 @@ export interface IVault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
+
     activateMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
 
     activePosition(
@@ -896,6 +950,14 @@ export interface IVault extends BaseContract {
       optionToken: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<number>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
     backstopPool(overrides?: CallOverrides): Promise<string>
 
@@ -980,6 +1042,12 @@ export interface IVault extends BaseContract {
     >
 
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
     reserve(overrides?: CallOverrides): Promise<string>
 
@@ -1198,6 +1266,8 @@ export interface IVault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
+
     activateMarket(
       collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1214,6 +1284,14 @@ export interface IVault extends BaseContract {
       weight: PromiseOrValue<BigNumberish>,
       optionToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>
 
     backstopPool(overrides?: CallOverrides): Promise<BigNumber>
@@ -1301,6 +1379,12 @@ export interface IVault extends BaseContract {
 
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
     reserve(overrides?: CallOverrides): Promise<BigNumber>
 
     setKeeper(
@@ -1355,6 +1439,8 @@ export interface IVault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
     activateMarket(
       collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1371,6 +1457,14 @@ export interface IVault extends BaseContract {
       weight: PromiseOrValue<BigNumberish>,
       optionToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     backstopPool(overrides?: CallOverrides): Promise<PopulatedTransaction>
@@ -1457,6 +1551,12 @@ export interface IVault extends BaseContract {
     ): Promise<PopulatedTransaction>
 
     profitFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
 
     reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>
 

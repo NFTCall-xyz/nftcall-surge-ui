@@ -41,7 +41,7 @@ export declare namespace BlackScholes {
 export interface IPricerInterface extends utils.Interface {
   functions: {
     'delta(uint256,uint256,uint256,uint256)': FunctionFragment
-    'getAdjustedVol(address,uint8,uint256)': FunctionFragment
+    'getAdjustedVol(address,uint8,uint256,uint256)': FunctionFragment
     'getPremiumDeltaStdVega(uint8,uint256,uint256,uint256,uint256)': FunctionFragment
     'optionPrices(uint256,uint256,uint256,uint256)': FunctionFragment
     'optionPricesDeltaStdVega(uint256,uint256,uint256,uint256)': FunctionFragment
@@ -67,7 +67,12 @@ export interface IPricerInterface extends utils.Interface {
   ): string
   encodeFunctionData(
     functionFragment: 'getAdjustedVol',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string
   encodeFunctionData(
     functionFragment: 'getPremiumDeltaStdVega',
@@ -142,6 +147,7 @@ export interface IPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { adjustedVol: BigNumber }>
 
@@ -190,6 +196,7 @@ export interface IPricer extends BaseContract {
     asset: PromiseOrValue<string>,
     ot: PromiseOrValue<BigNumberish>,
     K: PromiseOrValue<BigNumberish>,
+    lockValue: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
@@ -238,6 +245,7 @@ export interface IPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -289,6 +297,7 @@ export interface IPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -331,6 +340,7 @@ export interface IPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 

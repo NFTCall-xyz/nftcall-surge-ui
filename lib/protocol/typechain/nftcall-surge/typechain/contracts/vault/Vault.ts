@@ -91,9 +91,11 @@ export interface VaultInterface extends utils.Interface {
     'MINIMUM_DURATION()': FunctionFragment
     'MINIMUM_PUT_STRIKE_PRICE_RATIO()': FunctionFragment
     'RESERVE_RATIO()': FunctionFragment
+    'TIME_SCALE()': FunctionFragment
     'activateMarket(address)': FunctionFragment
     'activePosition(address,uint256)': FunctionFragment
     'addMarket(address,uint32,address)': FunctionFragment
+    'adjustedVolatility(address,uint8,uint256,uint256)': FunctionFragment
     'backstopPool()': FunctionFragment
     'closePosition(address,uint256)': FunctionFragment
     'deactivateMarket(address)': FunctionFragment
@@ -116,6 +118,7 @@ export interface VaultInterface extends utils.Interface {
     'paused()': FunctionFragment
     'positionPNLWeightedDelta(address,uint256)': FunctionFragment
     'profitFeeRatio()': FunctionFragment
+    'redeem(uint256,address)': FunctionFragment
     'renounceOwnership()': FunctionFragment
     'reserve()': FunctionFragment
     'setKeeper(address)': FunctionFragment
@@ -142,9 +145,11 @@ export interface VaultInterface extends utils.Interface {
       | 'MINIMUM_DURATION'
       | 'MINIMUM_PUT_STRIKE_PRICE_RATIO'
       | 'RESERVE_RATIO'
+      | 'TIME_SCALE'
       | 'activateMarket'
       | 'activePosition'
       | 'addMarket'
+      | 'adjustedVolatility'
       | 'backstopPool'
       | 'closePosition'
       | 'deactivateMarket'
@@ -167,6 +172,7 @@ export interface VaultInterface extends utils.Interface {
       | 'paused'
       | 'positionPNLWeightedDelta'
       | 'profitFeeRatio'
+      | 'redeem'
       | 'renounceOwnership'
       | 'reserve'
       | 'setKeeper'
@@ -191,6 +197,7 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MINIMUM_DURATION', values?: undefined): string
   encodeFunctionData(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', values?: undefined): string
   encodeFunctionData(functionFragment: 'RESERVE_RATIO', values?: undefined): string
+  encodeFunctionData(functionFragment: 'TIME_SCALE', values?: undefined): string
   encodeFunctionData(functionFragment: 'activateMarket', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
     functionFragment: 'activePosition',
@@ -199,6 +206,15 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'addMarket',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'adjustedVolatility',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string
   encodeFunctionData(functionFragment: 'backstopPool', values?: undefined): string
   encodeFunctionData(
@@ -257,6 +273,7 @@ export interface VaultInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
   encodeFunctionData(functionFragment: 'profitFeeRatio', values?: undefined): string
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
   encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string
@@ -286,9 +303,11 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'MINIMUM_DURATION', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'RESERVE_RATIO', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'TIME_SCALE', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'activateMarket', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'adjustedVolatility', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'backstopPool', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deactivateMarket', data: BytesLike): Result
@@ -311,6 +330,7 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'positionPNLWeightedDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'profitFeeRatio', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'reserve', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setKeeper', data: BytesLike): Result
@@ -598,6 +618,8 @@ export interface Vault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<[BigNumber]>
+
     activateMarket(
       collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -615,6 +637,14 @@ export interface Vault extends BaseContract {
       optionToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { adjustedVol: BigNumber }>
 
     backstopPool(overrides?: CallOverrides): Promise<[string]>
 
@@ -713,6 +743,12 @@ export interface Vault extends BaseContract {
 
     profitFeeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
 
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
     reserve(overrides?: CallOverrides): Promise<[string]>
@@ -776,6 +812,8 @@ export interface Vault extends BaseContract {
 
   RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
 
+  TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
+
   activateMarket(
     collection: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -793,6 +831,14 @@ export interface Vault extends BaseContract {
     optionToken: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
+
+  adjustedVolatility(
+    collection: PromiseOrValue<string>,
+    optionType: PromiseOrValue<BigNumberish>,
+    strikePrice: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
 
   backstopPool(overrides?: CallOverrides): Promise<string>
 
@@ -891,6 +937,12 @@ export interface Vault extends BaseContract {
 
   profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
+  redeem(
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
 
   reserve(overrides?: CallOverrides): Promise<string>
@@ -951,6 +1003,8 @@ export interface Vault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
+
     activateMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
 
     activePosition(
@@ -965,6 +1019,14 @@ export interface Vault extends BaseContract {
       optionToken: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<number>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
     backstopPool(overrides?: CallOverrides): Promise<string>
 
@@ -1053,6 +1115,12 @@ export interface Vault extends BaseContract {
     >
 
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
+
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>
 
@@ -1290,6 +1358,8 @@ export interface Vault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<BigNumber>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
+
     activateMarket(
       collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1306,6 +1376,14 @@ export interface Vault extends BaseContract {
       weight: PromiseOrValue<BigNumberish>,
       optionToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>
 
     backstopPool(overrides?: CallOverrides): Promise<BigNumber>
@@ -1397,6 +1475,12 @@ export interface Vault extends BaseContract {
 
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
 
     reserve(overrides?: CallOverrides): Promise<BigNumber>
@@ -1458,6 +1542,8 @@ export interface Vault extends BaseContract {
 
     RESERVE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
+    TIME_SCALE(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
     activateMarket(
       collection: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1474,6 +1560,14 @@ export interface Vault extends BaseContract {
       weight: PromiseOrValue<BigNumberish>,
       optionToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    adjustedVolatility(
+      collection: PromiseOrValue<string>,
+      optionType: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     backstopPool(overrides?: CallOverrides): Promise<PopulatedTransaction>
@@ -1564,6 +1658,12 @@ export interface Vault extends BaseContract {
     ): Promise<PopulatedTransaction>
 
     profitFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    redeem(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
 

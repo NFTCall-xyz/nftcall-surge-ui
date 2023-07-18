@@ -43,7 +43,7 @@ export declare namespace BlackScholes {
 export interface OptionPricerInterface extends utils.Interface {
   functions: {
     'delta(uint256,uint256,uint256,uint256)': FunctionFragment
-    'getAdjustedVol(address,uint8,uint256)': FunctionFragment
+    'getAdjustedVol(address,uint8,uint256,uint256)': FunctionFragment
     'getPremiumDeltaStdVega(uint8,uint256,uint256,uint256,uint256)': FunctionFragment
     'initialize(address,address,address)': FunctionFragment
     'optionPrices(uint256,uint256,uint256,uint256)': FunctionFragment
@@ -79,7 +79,12 @@ export interface OptionPricerInterface extends utils.Interface {
   ): string
   encodeFunctionData(
     functionFragment: 'getAdjustedVol',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string
   encodeFunctionData(
     functionFragment: 'getPremiumDeltaStdVega',
@@ -187,6 +192,7 @@ export interface OptionPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>
 
@@ -256,6 +262,7 @@ export interface OptionPricer extends BaseContract {
     asset: PromiseOrValue<string>,
     ot: PromiseOrValue<BigNumberish>,
     K: PromiseOrValue<BigNumberish>,
+    lockValue: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
@@ -321,6 +328,7 @@ export interface OptionPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -395,6 +403,7 @@ export interface OptionPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -461,6 +470,7 @@ export interface OptionPricer extends BaseContract {
       asset: PromiseOrValue<string>,
       ot: PromiseOrValue<BigNumberish>,
       K: PromiseOrValue<BigNumberish>,
+      lockValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 

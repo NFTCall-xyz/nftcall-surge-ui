@@ -29,13 +29,16 @@ export interface LPTokenInterface extends utils.Interface {
     'approve(address,uint256)': FunctionFragment
     'asset()': FunctionFragment
     'balanceOf(address)': FunctionFragment
+    'collect(address)': FunctionFragment
     'convertToAssets(uint256)': FunctionFragment
     'convertToShares(uint256)': FunctionFragment
     'decimals()': FunctionFragment
     'decreaseAllowance(address,uint256)': FunctionFragment
+    'decreaseTotalAssets(uint256)': FunctionFragment
     'deposit(uint256,address,address)': FunctionFragment
     'deposit(uint256,address)': FunctionFragment
     'increaseAllowance(address,uint256)': FunctionFragment
+    'increaseTotalAssets(uint256)': FunctionFragment
     'initialize(address,uint256)': FunctionFragment
     'lockedBalanceOf(address)': FunctionFragment
     'maxDeposit(address)': FunctionFragment
@@ -61,6 +64,7 @@ export interface LPTokenInterface extends utils.Interface {
     'transfer(address,uint256)': FunctionFragment
     'transferFrom(address,address,uint256)': FunctionFragment
     'transferOwnership(address)': FunctionFragment
+    'untitledAssets()': FunctionFragment
     'vault()': FunctionFragment
     'withdraw(uint256,address,address)': FunctionFragment
   }
@@ -74,13 +78,16 @@ export interface LPTokenInterface extends utils.Interface {
       | 'approve'
       | 'asset'
       | 'balanceOf'
+      | 'collect'
       | 'convertToAssets'
       | 'convertToShares'
       | 'decimals'
       | 'decreaseAllowance'
+      | 'decreaseTotalAssets'
       | 'deposit(uint256,address,address)'
       | 'deposit(uint256,address)'
       | 'increaseAllowance'
+      | 'increaseTotalAssets'
       | 'initialize'
       | 'lockedBalanceOf'
       | 'maxDeposit'
@@ -106,6 +113,7 @@ export interface LPTokenInterface extends utils.Interface {
       | 'transfer'
       | 'transferFrom'
       | 'transferOwnership'
+      | 'untitledAssets'
       | 'vault'
       | 'withdraw'
   ): FunctionFragment
@@ -120,6 +128,7 @@ export interface LPTokenInterface extends utils.Interface {
   ): string
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'collect', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string
@@ -127,6 +136,7 @@ export interface LPTokenInterface extends utils.Interface {
     functionFragment: 'decreaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
+  encodeFunctionData(functionFragment: 'decreaseTotalAssets', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(
     functionFragment: 'deposit(uint256,address,address)',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>]
@@ -139,6 +149,7 @@ export interface LPTokenInterface extends utils.Interface {
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
+  encodeFunctionData(functionFragment: 'increaseTotalAssets', values: [PromiseOrValue<BigNumberish>]): string
   encodeFunctionData(
     functionFragment: 'initialize',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -176,6 +187,7 @@ export interface LPTokenInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'untitledAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'withdraw',
@@ -189,13 +201,16 @@ export interface LPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'collect', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'decreaseTotalAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deposit(uint256,address,address)', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deposit(uint256,address)', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'increaseTotalAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'lockedBalanceOf', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'maxDeposit', data: BytesLike): Result
@@ -221,29 +236,34 @@ export interface LPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'untitledAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result
 
   events: {
     'Approval(address,address,uint256)': EventFragment
     'Claim(address,uint256)': EventFragment
+    'Collect(address,uint256)': EventFragment
     'Deposit(address,address,uint256,uint256)': EventFragment
     'Initialize(address,uint256)': EventFragment
     'OwnershipTransferred(address,address)': EventFragment
     'Transfer(address,address,uint256)': EventFragment
     'UpdateMaximumVaultBalance(uint256)': EventFragment
     'UpdateMinimumAssetToShareRatio(uint256)': EventFragment
+    'UpdateTotalAssets(uint256)': EventFragment
     'Withdraw(address,address,address,uint256,uint256)': EventFragment
   }
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'Collect'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Initialize'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateMaximumVaultBalance'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateMinimumAssetToShareRatio'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateTotalAssets'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment
 }
 
@@ -263,6 +283,14 @@ export interface ClaimEventObject {
 export type ClaimEvent = TypedEvent<[string, BigNumber], ClaimEventObject>
 
 export type ClaimEventFilter = TypedEventFilter<ClaimEvent>
+
+export interface CollectEventObject {
+  receiver: string
+  amount: BigNumber
+}
+export type CollectEvent = TypedEvent<[string, BigNumber], CollectEventObject>
+
+export type CollectEventFilter = TypedEventFilter<CollectEvent>
 
 export interface DepositEventObject {
   sender: string
@@ -312,6 +340,13 @@ export interface UpdateMinimumAssetToShareRatioEventObject {
 export type UpdateMinimumAssetToShareRatioEvent = TypedEvent<[BigNumber], UpdateMinimumAssetToShareRatioEventObject>
 
 export type UpdateMinimumAssetToShareRatioEventFilter = TypedEventFilter<UpdateMinimumAssetToShareRatioEvent>
+
+export interface UpdateTotalAssetsEventObject {
+  amount: BigNumber
+}
+export type UpdateTotalAssetsEvent = TypedEvent<[BigNumber], UpdateTotalAssetsEventObject>
+
+export type UpdateTotalAssetsEventFilter = TypedEventFilter<UpdateTotalAssetsEvent>
 
 export interface WithdrawEventObject {
   sender: string
@@ -369,6 +404,11 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
 
+    collect(
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
     convertToAssets(
       shares: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -384,6 +424,11 @@ export interface LPToken extends BaseContract {
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    decreaseTotalAssets(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
@@ -406,6 +451,11 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
+    increaseTotalAssets(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
     initialize(
       vaultAddress: PromiseOrValue<string>,
       maxVaultBalance: PromiseOrValue<BigNumberish>,
@@ -418,7 +468,7 @@ export interface LPToken extends BaseContract {
 
     maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
 
-    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
+    maxRedeem(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
 
     maxWithdraw(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
 
@@ -487,6 +537,8 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
+    untitledAssets(overrides?: CallOverrides): Promise<[BigNumber]>
+
     vault(overrides?: CallOverrides): Promise<[string]>
 
     withdraw(
@@ -519,6 +571,11 @@ export interface LPToken extends BaseContract {
 
   balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
+  collect(
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
   convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
   convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
@@ -528,6 +585,11 @@ export interface LPToken extends BaseContract {
   decreaseAllowance(
     spender: PromiseOrValue<string>,
     subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  decreaseTotalAssets(
+    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
@@ -550,6 +612,11 @@ export interface LPToken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
+  increaseTotalAssets(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
   initialize(
     vaultAddress: PromiseOrValue<string>,
     maxVaultBalance: PromiseOrValue<BigNumberish>,
@@ -562,7 +629,7 @@ export interface LPToken extends BaseContract {
 
   maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
-  maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  maxRedeem(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
   maxWithdraw(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -631,6 +698,8 @@ export interface LPToken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
+  untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
+
   vault(overrides?: CallOverrides): Promise<string>
 
   withdraw(
@@ -663,6 +732,8 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
+    collect(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+
     convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
     convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
@@ -674,6 +745,8 @@ export interface LPToken extends BaseContract {
       subtractedValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>
+
+    decreaseTotalAssets(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
 
     'deposit(uint256,address,address)'(
       assets: PromiseOrValue<BigNumberish>,
@@ -694,6 +767,8 @@ export interface LPToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>
 
+    increaseTotalAssets(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+
     initialize(
       vaultAddress: PromiseOrValue<string>,
       maxVaultBalance: PromiseOrValue<BigNumberish>,
@@ -706,7 +781,7 @@ export interface LPToken extends BaseContract {
 
     maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
-    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    maxRedeem(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
     maxWithdraw(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -766,6 +841,8 @@ export interface LPToken extends BaseContract {
 
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
 
+    untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
+
     vault(overrides?: CallOverrides): Promise<string>
 
     withdraw(
@@ -790,6 +867,9 @@ export interface LPToken extends BaseContract {
 
     'Claim(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter
     Claim(user?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter
+
+    'Collect(address,uint256)'(receiver?: PromiseOrValue<string> | null, amount?: null): CollectEventFilter
+    Collect(receiver?: PromiseOrValue<string> | null, amount?: null): CollectEventFilter
 
     'Deposit(address,address,uint256,uint256)'(
       sender?: PromiseOrValue<string> | null,
@@ -833,6 +913,9 @@ export interface LPToken extends BaseContract {
     'UpdateMinimumAssetToShareRatio(uint256)'(ratio?: null): UpdateMinimumAssetToShareRatioEventFilter
     UpdateMinimumAssetToShareRatio(ratio?: null): UpdateMinimumAssetToShareRatioEventFilter
 
+    'UpdateTotalAssets(uint256)'(amount?: null): UpdateTotalAssetsEventFilter
+    UpdateTotalAssets(amount?: null): UpdateTotalAssetsEventFilter
+
     'Withdraw(address,address,address,uint256,uint256)'(
       sender?: PromiseOrValue<string> | null,
       receiver?: PromiseOrValue<string> | null,
@@ -872,6 +955,11 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
+    collect(
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
     convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
 
     convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
@@ -881,6 +969,11 @@ export interface LPToken extends BaseContract {
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    decreaseTotalAssets(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
@@ -903,6 +996,11 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
+    increaseTotalAssets(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
     initialize(
       vaultAddress: PromiseOrValue<string>,
       maxVaultBalance: PromiseOrValue<BigNumberish>,
@@ -915,7 +1013,7 @@ export interface LPToken extends BaseContract {
 
     maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
-    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    maxRedeem(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
     maxWithdraw(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -984,6 +1082,8 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
+    untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
+
     vault(overrides?: CallOverrides): Promise<BigNumber>
 
     withdraw(
@@ -1017,6 +1117,11 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
+    collect(
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
     convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
@@ -1026,6 +1131,11 @@ export interface LPToken extends BaseContract {
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    decreaseTotalAssets(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
@@ -1048,6 +1158,11 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
 
+    increaseTotalAssets(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
     initialize(
       vaultAddress: PromiseOrValue<string>,
       maxVaultBalance: PromiseOrValue<BigNumberish>,
@@ -1060,7 +1175,7 @@ export interface LPToken extends BaseContract {
 
     maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    maxRedeem(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     maxWithdraw(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
@@ -1128,6 +1243,8 @@ export interface LPToken extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
+
+    untitledAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>
 

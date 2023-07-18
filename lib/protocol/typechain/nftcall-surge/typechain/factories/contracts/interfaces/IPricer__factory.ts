@@ -86,6 +86,11 @@ const _abi = [
         name: 'K',
         type: 'uint256',
       },
+      {
+        internalType: 'uint256',
+        name: 'lockValue',
+        type: 'uint256',
+      },
     ],
     name: 'getAdjustedVol',
     outputs: [
