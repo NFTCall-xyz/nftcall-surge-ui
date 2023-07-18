@@ -30,7 +30,7 @@ const SelectNFTCollection: FC = () => {
   }
 
   return (
-    <Card>
+    <Card sx={{ borderColor: { xs: 'transparent', lg: 'divider' } }}>
       <CardHeader title={<H3>{t('title')}</H3>} />
       <CardContent sx={{ overflow: 'auto', height: '100%' }}>
         <Stack spacing={2}>

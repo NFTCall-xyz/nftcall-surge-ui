@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Fragment, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
@@ -12,7 +12,7 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { styled } from '@mui/material/styles'
 
-import { useIsMobile } from 'app/hooks/useIsMobile'
+import { useIsDownLg } from 'app/hooks/useIsMobile'
 
 import { Paragraph, Tiny } from 'components/Typography'
 import FlexRowAlign from 'components/flexbox/FlexRowAlign'
@@ -35,8 +35,6 @@ const ROOT = styled(Card)(({ theme }) => ({
 
 const NFTCollectionInfo = styled(Stack)``
 
-const Right = styled('div')``
-
 const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
   const {
     collection: { mobileDialog },
@@ -44,7 +42,16 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
   const { t: tFloorPriceTrends } = useTranslation('app-trade', { keyPrefix: 'floorPriceTrends' })
 
   const chart = useChart()
-  const isMobile = useIsMobile()
+  const isDownLg = useIsDownLg()
+
+  const openSelectNFTCollection = useMemo(() => {
+    if (!isDownLg) return null
+    return (
+      <IconButton aria-label="expand row" size="small" onClick={mobileDialog.open}>
+        {mobileDialog.visible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      </IconButton>
+    )
+  }, [isDownLg, mobileDialog.open, mobileDialog.visible])
 
   const collectionInfo = useMemo(
     () => (
@@ -53,7 +60,10 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
         direction={{ xs: 'column', sm: 'row' }}
         alignItems={{ xs: 'start', sm: 'end' }}
       >
-        <NFTCollectionTitle collection={chart.collection} />
+        <Stack alignItems="center" justifyContent="space-between" direction="row" width={{ xs: 1, sm: 'auto' }} spacing={2}>
+          <NFTCollectionTitle collection={chart.collection} />
+          {openSelectNFTCollection}
+        </Stack>
         <Stack direction="row" spacing={4}>
           <Stack spacing={0.5}>
             <Tiny color="text.secondary" fontWeight={400}>
@@ -94,50 +104,27 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
         </Stack>
       </NFTCollectionInfo>
     ),
-    [chart, tFloorPriceTrends]
+    [chart, tFloorPriceTrends, openSelectNFTCollection]
   )
 
   const chartButtons = useMemo(
     () => (
-      <Right>
-        <ToggleButtonGroup color="primary" value={chart.dayButton.value} exclusive onChange={chart.dayButton.onChange}>
-          {chart.dayButton.list.map((day) => (
-            <ToggleButton value={day} key={day} sx={{ fontSize: 12 }}>
-              {day} {tFloorPriceTrends('days')}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
-      </Right>
+      <ToggleButtonGroup color="primary" value={chart.dayButton.value} exclusive onChange={chart.dayButton.onChange}>
+        {chart.dayButton.list.map((day) => (
+          <ToggleButton value={day} key={day} sx={{ fontSize: 12 }}>
+            {day} {tFloorPriceTrends('days')}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
     ),
     [chart.dayButton.list, chart.dayButton.onChange, chart.dayButton.value, tFloorPriceTrends]
   )
 
-  const openSelectNFTCollection = useMemo(() => {
-    if (!isMobile) return null
-    return (
-      <IconButton aria-label="expand row" size="small" onClick={mobileDialog.open}>
-        {mobileDialog.visible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-      </IconButton>
-    )
-  }, [isMobile, mobileDialog.open, mobileDialog.visible])
-
   return (
     <ROOT>
-      <Stack spacing={2}>
-        {!isMobile ? (
-          <Stack alignItems="center" justifyContent="space-between" direction="row">
-            {collectionInfo}
-            {chartButtons}
-          </Stack>
-        ) : (
-          <Fragment>
-            <Stack alignItems="center" justifyContent="space-between" direction="row">
-              {collectionInfo}
-              {openSelectNFTCollection}
-            </Stack>
-            {chartButtons}
-          </Fragment>
-        )}
+      <Stack spacing={3}>
+        {collectionInfo}
+        {chartButtons}
         {chart.loading ? (
           <FlexRowAlign paddingTop={2} height={300}>
             <CircularProgress />

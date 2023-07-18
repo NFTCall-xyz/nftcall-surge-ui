@@ -37,7 +37,6 @@ const MobileTrade: FC = () => {
           position: 'fixed',
           bottom: 16,
           right: 16,
-          color: 'common.white',
           bgcolor: 'primary.main',
           '&:hover': {
             bgcolor: 'primary.light',

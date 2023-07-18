@@ -6,3 +6,10 @@ export const useIsMobile = () => {
 
   return matches
 }
+
+export const useIsDownLg = () => {
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('lg'))
+
+  return matches
+}
