@@ -51,6 +51,10 @@ const locale = {
       'The slippage amount can be configured under Settings, found by clicking on "Settings" icon at the top right of the page.',
     feesTip:
       'There are two transactions involved in opening a position: users send the first transaction to request open, keepers observe the blockchain for these requests then execute them. The cost of the transaction executed by the keepers is the "Execution Fee", which is currently set at 0.00005 WETH per position.',
+    adjustedVolatilityTip:
+      'Adjusted volatility is used to calculate the options premium in order to hedge the risks. When demand for options is high, the adjusted volatility increases; when supply is high, it decreases.',
+    oraclePriceTip:
+      'The floor price is quoted from the oracle. When the oracle price changes, the corresponding range of selectable strike price will also change accordingly. The oracle price may have a slight difference from the real-time price.',
   },
   OptionPositions: {
     tabs: {

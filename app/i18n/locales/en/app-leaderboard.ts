@@ -8,6 +8,8 @@ const locale = {
     totalVolume: 'Total Volume',
     totalPremium: 'Total Premium',
     winrate: 'Winrate',
+    relativePNL: 'Relative PNL',
+    PNL: 'Total PNL',
   },
 }
 

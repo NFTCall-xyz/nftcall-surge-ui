@@ -75,7 +75,7 @@ export const useTable = (): BasicTableProps => {
             cellRenderer: percentCellRenderer,
           },
           {
-            dataKey: 'Relative PnL',
+            dataKey: 'relativePNL',
             cellData: 'PNLRate',
             width: 200,
             headerRenderer,

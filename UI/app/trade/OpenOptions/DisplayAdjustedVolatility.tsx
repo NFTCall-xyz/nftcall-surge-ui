@@ -1,8 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, Tooltip } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
-import { Span } from 'components/Typography'
+import { TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
@@ -14,9 +14,11 @@ const DisplayAdjustedVolatility: FC = () => {
 
   return (
     <FlexBetween>
-      <Box>
-        <Span color="text.secondary">{tOpenCallOptions('adjustedVolatility')}</Span>
-      </Box>
+      <Tooltip title={tOpenCallOptions('adjustedVolatilityTip')}>
+        <Box>
+          <TooltipSpan color="text.secondary">{tOpenCallOptions('adjustedVolatility')}</TooltipSpan>
+        </Box>
+      </Tooltip>
       <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
         {adjustedVolatility.loading ? (
           <CircularProgress size={14} />
