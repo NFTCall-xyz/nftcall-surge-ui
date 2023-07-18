@@ -1,0 +1,7 @@
+query getVaults($id: ID!) {
+  vaults(where: { id: $id }) {
+    totalTradingVolume
+    totalPremiumCollected
+    totalTrades
+  }
+}
