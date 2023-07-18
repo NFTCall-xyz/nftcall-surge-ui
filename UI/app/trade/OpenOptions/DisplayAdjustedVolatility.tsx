@@ -10,7 +10,7 @@ import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { usePageTradeOpenOptions } from '.'
 
 const DisplayAdjustedVolatility: FC = () => {
-  const { premium, vol, tOpenCallOptions } = usePageTradeOpenOptions()
+  const { adjustedVolatility, tOpenCallOptions } = usePageTradeOpenOptions()
 
   return (
     <FlexBetween>
@@ -18,7 +18,11 @@ const DisplayAdjustedVolatility: FC = () => {
         <Span color="text.secondary">{tOpenCallOptions('adjustedVolatility')}</Span>
       </Box>
       <Stack spacing={0.5} direction="row" alignItems="center" fontSize={14}>
-        {premium.loading ? <CircularProgress size={14} /> : <NumberDisplay value={vol} options="percent" />}
+        {adjustedVolatility.loading ? (
+          <CircularProgress size={14} />
+        ) : (
+          <NumberDisplay value={adjustedVolatility.value} options="percent" />
+        )}
       </Stack>
     </FlexBetween>
   )

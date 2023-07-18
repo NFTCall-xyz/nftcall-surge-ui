@@ -12,7 +12,11 @@ import { log } from 'app/utils/dev'
 import { useNetwork } from 'domains/data'
 
 import { toBN, valueToWei, weiToValue } from 'lib/math'
-import { OptionType, type GetPremiumProps as ProtocolGetPremiumProps } from 'lib/protocol/typechain/nftcall-surge'
+import {
+  OptionType,
+  type GetAdjustedVolatilityProps as ProtocolGetAdjustedVolatilityProps,
+  type GetPremiumProps as ProtocolGetPremiumProps,
+} from 'lib/protocol/typechain/nftcall-surge'
 
 import { usePageTrade } from '..'
 
@@ -170,10 +174,101 @@ const useExpiryDate = (setInit: Updater<boolean>) => {
   }
 }
 
-type UsePremiumProps = {
+type UseAdjustedVolatilityProps = {
   amount: ReturnType<typeof useAmount>
   optionType: OptionType
   strikePrice: ReturnType<typeof useStrikePrice>
+}
+const useAdjustedVolatility = ({ amount, optionType, strikePrice }: UseAdjustedVolatilityProps) => {
+  const [value, setValue] = useImmer<number>(0)
+  const [loading, setLoading] = useImmer<boolean>(false)
+
+  const {
+    collection: {
+      collection: { address },
+    },
+  } = usePageTrade()
+  const {
+    address: { Vault },
+    contracts: { vaultService },
+  } = useNetwork()
+
+  type GetAdjustedVolatilityProps = {
+    props: Pick<ProtocolGetAdjustedVolatilityProps, 'optionType' | 'strikePrice' | 'amount'>
+    getPromise: (promise: Promise<BN>) => void
+  }
+
+  const getAdjustedVolatility = useMemo(
+    () =>
+      debounce(({ props: { optionType, strikePrice, amount }, getPromise }: GetAdjustedVolatilityProps) => {
+        return getPromise(
+          vaultService
+            .getAdjustedVolatility({
+              Vault,
+              collection: address.collection,
+              optionType,
+              strikePrice,
+              amount,
+            })
+            .then((data) => weiToValue(data, 0))
+        )
+      }, 300),
+    [Vault, address.collection, vaultService]
+  )
+
+  useEffect(() => {
+    if (!strikePrice.value) {
+      setLoading(() => false)
+      return
+    }
+    setLoading(() => true)
+    let isCancel = false
+    const props = {
+      optionType,
+      strikePrice: valueToWei(strikePrice.value, 18).toString(),
+      amount: valueToWei(amount.value, 18).toString(),
+    }
+    getAdjustedVolatility({
+      props,
+      getPromise: (promise) =>
+        promise
+          .then((value) => {
+            if (isCancel) return
+            setValue(() => weiToValue(value, 18).toNumber())
+          })
+          .catch((error) => {
+            log('[getAdjustedVolatility][error]', {
+              props,
+              error,
+            })
+            setValue(() => 0)
+          })
+          .finally(() => {
+            if (isCancel) return
+            setLoading(() => false)
+          }),
+    })
+
+    return () => {
+      isCancel = true
+    }
+  }, [amount.value, getAdjustedVolatility, optionType, setLoading, setValue, strikePrice.value])
+
+  const returnValue = useMemo(() => {
+    if (!amount.value || !value) return toBN(0)
+    return toBN(value)
+  }, [amount.value, value])
+
+  return {
+    value: returnValue,
+    set: setValue,
+
+    loading: loading,
+    setLoading: setLoading,
+  }
+}
+
+type UsePremiumProps = UseAdjustedVolatilityProps & {
   expiryDate: ReturnType<typeof useExpiryDate>
 }
 const usePremium = ({ amount, optionType, strikePrice, expiryDate }: UsePremiumProps) => {
@@ -307,6 +402,7 @@ export default createContextWithProvider(() => {
   const expiryDate = useExpiryDate(setInit)
   const amount = useAmount(setInit)
   const premium = usePremium({ amount, optionType, strikePrice, expiryDate })
+  const adjustedVolatility = useAdjustedVolatility({ amount, optionType, strikePrice })
 
   useEffect(() => {
     if (!id) return
@@ -339,6 +435,7 @@ export default createContextWithProvider(() => {
     setSourceData,
     price,
     vol,
+    adjustedVolatility,
     premium,
     wETHBalance,
     wETHAllowance,
