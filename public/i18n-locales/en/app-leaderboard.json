@@ -7,6 +7,8 @@
     "trades": "Trades",
     "totalVolume": "Total Volume",
     "totalPremium": "Total Premium",
-    "winrate": "Winrate"
+    "winrate": "Winrate",
+    "relativePNL": "Relative PNL",
+    "PNL": "Total PNL"
   }
 }
