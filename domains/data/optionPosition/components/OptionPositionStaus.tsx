@@ -1,10 +1,13 @@
 import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
+import Link from 'next/link'
 import { useEffect } from 'react'
 import { type Updater, useImmer } from 'use-immer'
 
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
+import Tooltip from '@mui/material/Tooltip'
 
 import { SECONDS } from 'app/constant'
 import { getWeiToValueBN } from 'app/utils/get'
@@ -18,9 +21,6 @@ import {
   OptionPositionStatus,
   getOptionPositionStatusByProtocol,
 } from 'lib/graphql/option-position'
-import Tooltip from '@mui/material/Tooltip'
-import Box from '@mui/material/Box'
-import Link from 'next/link'
 
 type OptionPositionStausProps = {
   rowData: OptionPosition
@@ -100,20 +100,23 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
   if (status === OptionPositionStatus.Failed) {
     return (
       <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
-        <Tooltip title={
-          <>
-            <p>Failed to open the position due to the slippage.</p>
-            <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">Learn More</Link>
-          </>
-        }>
+        <Tooltip
+          title={
+            <>
+              <p>Failed to open the position due to the slippage.</p>
+              <Link target="_blank" href="https://docs.nftcall.xyz/nftcall-surge/overview/options-trading#slippage">
+                Learn More
+              </Link>
+            </>
+          }
+        >
           <Box>
             <TooltipSpan>{status}</TooltipSpan>
           </Box>
         </Tooltip>
       </TableCell>
     )
-  }
-  else if (status !== OptionPositionStatus.Pending) {
+  } else if (status !== OptionPositionStatus.Pending) {
     return (
       <TableCell align="center" component="div" sx={{ span: { fontSize: 14 } }}>
         <Span color="text.secondary">{status}</Span>

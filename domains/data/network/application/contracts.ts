@@ -2,7 +2,7 @@ import { useWallet } from 'domains'
 import { useMemo } from 'react'
 
 import { ERC20Service } from 'lib/protocol/typechain/erc20'
-import { SurgeUIService, VaultService, WETHService } from 'lib/protocol/typechain/nftcall-surge'
+import { NFTCallOracleService, SurgeUIService, VaultService, WETHService } from 'lib/protocol/typechain/nftcall-surge'
 
 export const useContracts = () => {
   const { provider } = useWallet()
@@ -12,6 +12,7 @@ export const useContracts = () => {
       surgeUIService: new SurgeUIService(provider),
       vaultService: new VaultService(provider),
       wETHService: new WETHService(provider),
+      oracleService: new NFTCallOracleService(provider),
     }
   }, [provider])
 
