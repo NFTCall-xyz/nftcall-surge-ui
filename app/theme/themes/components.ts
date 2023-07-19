@@ -369,7 +369,7 @@ const components = (theme: Theme): any => {
           fontSize: 12,
         },
       },
-    }
+    },
   }
 }
 

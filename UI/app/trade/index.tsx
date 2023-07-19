@@ -1,6 +1,9 @@
 import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
+
+import { useIsDownLg } from 'app/hooks/useIsMobile'
 
 import FloorPriceTrends from './FloorPriceTrends'
 import MobileTrade from './Mobile'
@@ -8,8 +11,6 @@ import OpenOptions from './OpenOptions'
 import Positions from './Positions'
 import PageProvider from './Provider'
 import SelectNFTCollection from './SelectNFTCollection'
-import { useIsDownLg } from 'app/hooks/useIsMobile'
-import Drawer from '@mui/material/Drawer'
 
 export const usePageTrade = PageProvider.createUseContext()
 
@@ -22,7 +23,7 @@ const Trade: FC = () => {
     },
   } = usePageTrade()
   usePageEffect()
-  
+
   return (
     <Box>
       <Grid container spacing={2}>

@@ -38,7 +38,7 @@ const MobileTrade: FC = () => {
           right: 16,
           bottom: 16,
         }}
-        variant='extended'
+        variant="extended"
         size="large"
         color="primary"
         onClick={() => dialog.open()}

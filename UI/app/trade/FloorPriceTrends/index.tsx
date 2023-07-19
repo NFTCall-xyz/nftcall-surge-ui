@@ -60,7 +60,13 @@ const FloorPriceTrends: FC<FloorPriceTrendsProps> = () => {
         direction={{ xs: 'column', sm: 'row' }}
         alignItems={{ xs: 'start', sm: 'end' }}
       >
-        <Stack alignItems="center" justifyContent="space-between" direction="row" width={{ xs: 1, sm: 'auto' }} spacing={2}>
+        <Stack
+          alignItems="center"
+          justifyContent="space-between"
+          direction="row"
+          width={{ xs: 1, sm: 'auto' }}
+          spacing={2}
+        >
           <NFTCollectionTitle collection={chart.collection} />
           {openSelectNFTCollection}
         </Stack>
