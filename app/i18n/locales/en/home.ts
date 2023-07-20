@@ -3,7 +3,7 @@ const locale = {
     title: 'Speculate, Hedge or Earn Premiums from <NFTOptions>NFT Options</NFTOptions>',
     subTitle:
       'NFTCall is an NFT options trading platform on Layer-2 that uses a peer-to-pool model and auto market making mechanism.',
-    tradeNow: 'Trade Now',
+    tradeNow: 'Paper Trading',
     watchVideo: 'Watch Video',
     NFTOptions: 'NFT Options',
   },
@@ -19,7 +19,7 @@ const locale = {
   },
   features: {
     title: 'What is NFTCall?',
-    tradeNow: 'Trade Now',
+    tradeNow: 'Paper Trading',
     list: {
       0: {
         title: 'Peer-to-pool model',
@@ -63,7 +63,7 @@ const locale = {
     title: 'Available on popular Layer-2 networks',
     subTitle: 'NFTCall will be deployed on Arbitrum and ZkSync Era.',
     tag: 'Networks',
-    tradeNow: 'Trade Now',
+    tradeNow: 'Paper Trading',
     list: {
       0: {
         title: 'Arbitrum',
@@ -78,7 +78,7 @@ const locale = {
   cta: {
     title: 'Start Trading Now!',
     subTitle: 'Speculate, hedge and earn income from NFT options.',
-    tradeNow: 'Trade Now',
+    tradeNow: 'Paper Trading',
   },
 }
 

@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack'
 
 import { H1, H3, Span } from 'components/Typography'
 
-import Stats from '../Stats'
+// import Stats from '../Stats'
 import ImageSrc from '../images/hero-pic.png'
 
 const Hero: FC = () => {
