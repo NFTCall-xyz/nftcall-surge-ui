@@ -57,7 +57,7 @@ const Hero: FC = () => {
           />
         </Box>
       </Stack>
-      <Stats />
+      {/* <Stats /> */}
     </Stack>
   )
 }
