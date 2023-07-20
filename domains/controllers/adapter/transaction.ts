@@ -15,9 +15,9 @@ const defaultWaitingPromise = (promise: Promise<any>) => {
   return toast.promise(
     promise,
     {
-      pending: 'Transaction is pending',
-      success: 'Transaction success 👌',
-      error: 'Transaction rejected 🤯',
+      pending: 'Transaction is pending 🤔',
+      success: 'Transaction is successful 👌',
+      error: 'Transaction is rejected 🤯',
     },
     {
       position: toast.POSITION.BOTTOM_RIGHT,
