@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Fragment, useMemo } from 'react'
-import { useImmer } from 'use-immer'
+import { type Updater, useImmer } from 'use-immer'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
@@ -165,22 +165,44 @@ const DataFetcher: FC<{
   row: any
   columns: any[]
   dataFetcher: (data: any) => Promise<any>
-}> = ({ data, rowIndex, dataFetcher, row, columns }) => {
-  const [rowData, setRowData] = useImmer(row)
+  setData?: Updater<any[]>
+  rowKey?: string
+  keyData?: string
+}> = ({ data, rowIndex, dataFetcher, row, columns, setData, rowKey, keyData }) => {
+  const [internalRowData, setInternalRowData] = useImmer(row)
   useEffect(() => {
     if (!dataFetcher) {
-      setRowData(row)
+      setInternalRowData(row)
       return
     } else {
-      dataFetcher(row).then((data) => setRowData(data))
+      dataFetcher(row).then((data) => setInternalRowData(data))
     }
-  }, [dataFetcher, row, setRowData])
+  }, [dataFetcher, row, setInternalRowData])
+
+  const setRowData = useCallback(
+    (data: any) => {
+      if (setData && rowKey) {
+        setData((draft) => {
+          const index = draft.findIndex((i) => i[rowKey] === keyData)
+          if (index === -1) return
+          if (typeof data === 'function') {
+            draft[index] = data(draft[index])
+          } else {
+            draft[index] = data
+          }
+        })
+      }
+
+      setInternalRowData(data)
+    },
+    [keyData, rowKey, setData, setInternalRowData]
+  )
 
   return (
     <CollapsibleRow
       {...{
         data,
-        row: rowData,
+        row: internalRowData,
         rowIndex,
         columns,
         setRowData,
@@ -190,27 +212,34 @@ const DataFetcher: FC<{
 }
 
 const MobileTable: FC<BasicTableProps> = (props) => {
-  const { columns, data, dataFetcher, rowKey } = props
+  const { columns, data, dataFetcher, rowKey, setData } = props
 
   const table = useMemo(() => {
     return {
       head: <CollapsibleHead columns={columns} />,
       body:
         data &&
-        data.map((row, rowIndex) => (
-          <DataFetcher
-            key={rowKey ? row[rowKey] : rowIndex}
-            {...{
-              data,
-              row,
-              rowIndex,
-              columns,
-              dataFetcher,
-            }}
-          />
-        )),
+        data.map((row, rowIndex) => {
+          const keyData = rowKey ? row[rowKey] : rowIndex
+
+          return (
+            <DataFetcher
+              key={keyData}
+              {...{
+                data,
+                row,
+                rowIndex,
+                columns,
+                dataFetcher,
+                setData,
+                rowKey,
+                keyData,
+              }}
+            />
+          )
+        }),
     }
-  }, [columns, data, dataFetcher, rowKey])
+  }, [columns, data, dataFetcher, rowKey, setData])
 
   return (
     <ROOT className="table basic-table">

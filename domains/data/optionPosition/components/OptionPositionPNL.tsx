@@ -1,7 +1,7 @@
 import { usePageTrade } from 'UI/app/trade'
 import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
 import { useEffect, useMemo } from 'react'
-import { type Updater, useImmer } from 'use-immer'
+import { type Updater } from 'use-immer'
 
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
@@ -17,10 +17,18 @@ type OptionPositionPNLProps = {
   setRowData: Updater<OptionPosition>
 }
 const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
-  rowData: { collectionAddress, positionId, status, premium, revenue, expiration },
+  rowData: {
+    collectionAddress,
+    positionId,
+    status,
+    premium,
+    revenue,
+    expiration,
+    PNL: PNLInner,
+    PNLRate: PNLRateInner,
+  },
+  setRowData,
 }) => {
-  const [PNLInner, setPNLInner] = useImmer<string>('')
-  const [PNLRateInner, setPNLRateInner] = useImmer<string>('')
   const {
     positions: {
       hooks: { useGetPositionPNLWeightedDelta },
@@ -48,14 +56,18 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
   }, [PNLInner, PNLRateInner, premium, revenue, status])
 
   useEffect(() => {
-    if (status !== OptionPositionStatus.Active || new Date(expiration).getTime() < Date.now()) return
+    if (status !== OptionPositionStatus.Active || new Date(expiration).getTime() < Date.now() || !PNLInner.isZero())
+      return
 
     post({
       collection: collectionAddress,
       positionId,
     }).then(({ unrealizePNL }) => {
-      setPNLInner(() => unrealizePNL.toString())
-      setPNLRateInner(() => unrealizePNL.dividedBy(premium).toString())
+      setRowData((draft) => {
+        draft.PNL = toBN(unrealizePNL)
+        draft.PNLRate = toBN(unrealizePNL).dividedBy(premium)
+        return draft
+      })
     })
 
     return () => {

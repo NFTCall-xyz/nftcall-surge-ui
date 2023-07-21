@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useMemo } from 'react'
-import { useImmer } from 'use-immer'
+import { type Updater, useImmer } from 'use-immer'
 
 import Card from '@mui/material/Card'
 import Stack from '@mui/material/Stack'
@@ -15,23 +15,45 @@ import { styled } from '@mui/material/styles'
 import type { BasicTableProps } from './types'
 import { getCellData } from './utils'
 
-const Tr: typeof Card = (props: any) => <Card component="tr" {...props} />
+const Tr = (props: any) => <Card component="tr" {...props} />
 const DataFetcher: FC<{
   rowIndex: any
   onRowClick: any
   row: any
   columns: any[]
   dataFetcher: (data: any) => Promise<any>
-}> = ({ rowIndex, onRowClick, dataFetcher, row, columns }) => {
-  const [rowData, setRowData] = useImmer(row)
+  setData?: Updater<any[]>
+  rowKey?: string
+  keyData?: string
+}> = ({ rowIndex, onRowClick, dataFetcher, row, columns, setData, rowKey, keyData }) => {
+  const [internalRowData, setInternalRowData] = useImmer(row)
   useEffect(() => {
     if (!dataFetcher) {
-      setRowData(row)
+      setInternalRowData(row)
       return
     } else {
-      dataFetcher(row).then((data) => setRowData(data))
+      dataFetcher(row).then((data) => setInternalRowData(data))
     }
-  }, [dataFetcher, row, setRowData])
+  }, [dataFetcher, row, setInternalRowData])
+
+  const setRowData = useCallback(
+    (data: any) => {
+      if (setData && rowKey) {
+        setData((draft) => {
+          const index = draft.findIndex((i) => i[rowKey] === keyData)
+          if (index === -1) return
+          if (typeof data === 'function') {
+            draft[index] = data(draft[index])
+          } else {
+            draft[index] = data
+          }
+        })
+      }
+
+      setInternalRowData(data)
+    },
+    [keyData, rowKey, setData, setInternalRowData]
+  )
 
   return (
     <TableRow
@@ -39,10 +61,10 @@ const DataFetcher: FC<{
       className={clsx(['ReactVirtualized__Table__row'], {
         clickable: !!onRowClick,
       })}
-      onClick={(e) =>
+      onClick={(e: any) =>
         onRowClick &&
         onRowClick({
-          rowData,
+          rowData: internalRowData,
           index: rowIndex,
           event: e,
         })
@@ -59,12 +81,12 @@ const DataFetcher: FC<{
           }}
         >
           {column.cellRenderer({
-            cellData: getCellData(rowData, column),
+            cellData: getCellData(internalRowData, column),
             columnData: column,
             columnIndex,
             dataKey: column.dataKey,
             isScrolling: false,
-            rowData,
+            rowData: internalRowData,
             setRowData,
             rowIndex,
           })}
@@ -75,7 +97,7 @@ const DataFetcher: FC<{
 }
 
 const PCTable: FC<BasicTableProps> = (props) => {
-  const { columns, data, dataFetcher, rowKey } = props
+  const { columns, data, dataFetcher, rowKey, setData } = props
   const { onRowClick } = props.tableProps || {}
 
   const table = useMemo(() => {
@@ -93,11 +115,17 @@ const PCTable: FC<BasicTableProps> = (props) => {
           {column.headerRenderer(column)}
         </td>
       )),
-      body: data.map((row, rowIndex) => (
-        <DataFetcher key={rowKey ? row[rowKey] : rowIndex} {...{ rowIndex, onRowClick, dataFetcher, row, columns }} />
-      )),
+      body: data.map((row, rowIndex) => {
+        const keyData = rowKey ? row[rowKey] : rowIndex
+        return (
+          <DataFetcher
+            key={keyData}
+            {...{ rowIndex, onRowClick, dataFetcher, row, columns, setData, rowKey, keyData }}
+          />
+        )
+      }),
     }
-  }, [columns, data, dataFetcher, onRowClick, rowKey])
+  }, [columns, data, dataFetcher, onRowClick, rowKey, setData])
 
   return (
     <ROOT className="table basic-table">

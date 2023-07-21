@@ -173,8 +173,9 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
   return {
     loading: dataFetcher.loading,
     columns,
-    rowKey: 'id',
     data,
     loadMore,
+    rowKey: 'id',
+    setData: setSourceData,
   }
 }

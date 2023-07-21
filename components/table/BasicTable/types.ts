@@ -1,9 +1,11 @@
 import type { ColumnProps, TableHeaderProps, TableProps } from 'react-virtualized'
+import type { Updater } from 'use-immer'
 
 export interface BasicTableProps<D = any> {
   loading: boolean
   columns: TableColumnsProps[]
   rowKey?: string
+  setData?: Updater<D>
   rowHeight?: number
   headerHeight?: number
   data: Array<D>
