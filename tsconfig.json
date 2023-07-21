@@ -17,8 +17,13 @@
     "verbatimModuleSyntax": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "lib/protocol/src"]
 }
