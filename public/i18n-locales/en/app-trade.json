@@ -37,7 +37,7 @@
     "adjustedVolatility": "Adjusted Volatility",
     "limitTip": "Due to the risk control settings of the vault, the size limit available for each NFT collection when opening a position is different.",
     "maxProfitTip": "The maximum profit is the amount you can make from the option position.",
-    "maxPayoutTip": "For call options, the vault only provides limited payout, which means the vault cannot pay for any option profits resulting from a spot price increase exceeding 100%. In order to compensate traders, the protocol will adjust down the premium for buying call options.",
+    "maxPayoutTip": "For call options, the vault only provides limited payout, which means that the maximum payout from the vault equals to the current floor price. In order to compensate traders, the protocol will adjust down the premium for buying call options.",
     "breakevenPriceTip": "Breakeven price is the price at which the option cost is equal to the option value. In other words, it is the point at which there is neither profit nor loss.",
     "maxLossTip": "The maximum loss is the amount you pay for the option position, known as the premium.",
     "premiumTip": "Premium is the total amount that you need to pay for an option position. The premium is higher for NFT collections with higher floor price volatility in the recent past.",

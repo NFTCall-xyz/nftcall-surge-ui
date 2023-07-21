@@ -9,8 +9,8 @@ import { TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import { useVault } from 'domains/data'
-import { BN, toBN } from 'lib/math'
 
+import { BN, toBN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
@@ -27,11 +27,7 @@ const DisplayMaxProfit: FC = () => {
       premium.value.times(PROFIT_FEE_RATE),
       toBN(strikePrice.value).times(amount.value).times(NOMINAL_FEE_RATE)
     )
-    return (
-      <NumberDisplay
-        value={price ? price.times(amount.value).minus(premium.value).minus(exerciseFee) : 0}
-      />
-    )
+    return <NumberDisplay value={price ? price.times(amount.value).minus(premium.value).minus(exerciseFee) : 0} />
   }, [NOMINAL_FEE_RATE, PROFIT_FEE_RATE, amount.value, premium.loading, premium.value, strikePrice, price])
 
   return (

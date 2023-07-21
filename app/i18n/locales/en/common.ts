@@ -46,6 +46,11 @@ const locale = {
     back: 'Back',
     confirm: 'Confirm',
   },
+  setting: {
+    slippageTip:
+      'When opening a position, you will be asked to pay slightly higher than the calculated premium to guarantee the success rate of executing positions. The exceeding portion is determined by the slippage which is controlled by the user.',
+    allowedSlippage: 'Allowed Slippage',
+  },
 }
 
 export default locale

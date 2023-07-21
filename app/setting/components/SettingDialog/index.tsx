@@ -22,7 +22,7 @@ const SettingDialog: FC = () => {
   } = useApp()
 
   const { formik } = useForm()
-  const { t } = useTranslation('app-trade', { keyPrefix: 'OpenCallOptions' })
+  const { t } = useTranslation('common', { keyPrefix: 'setting' })
 
   return (
     <FormDialog {...dialog} title="Settings" submit={formik.submitForm} isSubmitting={formik.isSubmitting}>

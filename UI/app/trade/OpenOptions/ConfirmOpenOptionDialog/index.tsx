@@ -31,6 +31,7 @@ let optionId = 0
 
 const ConfirmOpenOptionDialog: FC = () => {
   const {
+    t,
     tOpenCallOptions,
     confirmOpenOptionDialog: { visible, close },
 
@@ -127,7 +128,7 @@ const ConfirmOpenOptionDialog: FC = () => {
               <Tooltip
                 title={
                   <>
-                    <p>{tOpenCallOptions('slippageTip')}</p>
+                    <p>{t('setting.slippageTip')}</p>
                     <br />
                     <p>{tOpenCallOptions('slippageSettingsTip')}</p>
                     <br />

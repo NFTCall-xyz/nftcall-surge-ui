@@ -378,6 +378,7 @@ const useConfirmOpenOptionDialog = () => {
 }
 
 export default createContextWithProvider(() => {
+  const { t } = useTranslation()
   const { t: tOpenCallOptions } = useTranslation('app-trade', { keyPrefix: 'OpenCallOptions' })
   const {
     collection: {
@@ -418,6 +419,7 @@ export default createContextWithProvider(() => {
   }, [id, optionType])
 
   return {
+    t,
     tOpenCallOptions,
     confirmOpenOptionDialog,
 
