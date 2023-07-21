@@ -13,6 +13,7 @@ import NFTCollectionTableComponent from 'domains/data/NFTCollection/components/N
 import OptionPositionPNL from 'domains/data/optionPosition/components/OptionPositionPNL'
 import OptionPositionPrice from 'domains/data/optionPosition/components/OptionPositionPrice'
 import OptionPositionStaus from 'domains/data/optionPosition/components/OptionPositionStaus'
+import OptionPositionTrader from 'domains/data/optionPosition/components/OptionPositionTrader'
 
 import { OptionPositionStatus } from 'lib/graphql/option-position'
 import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
@@ -99,4 +100,8 @@ export const statusCellRenderer = (props: TableCellProps) => {
 
 export const NFTCollectionRenderer = ({ cellData, rowData: { positionId } }: TableCellProps) => {
   return <NFTCollectionTableComponent collectionAddress={cellData} positionId={positionId} />
+}
+
+export const traderCellRenderer = (props: TableCellProps) => {
+  return <OptionPositionTrader {...props} />
 }

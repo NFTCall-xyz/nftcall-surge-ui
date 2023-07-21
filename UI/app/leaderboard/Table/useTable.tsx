@@ -8,11 +8,11 @@ import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicT
 import {
   cellRenderer,
   headerRenderer,
-  linkToAddressCellRenderer,
   percentCellRenderer,
   percentRiseOrFallCellRenderer,
+  tokenIconCellRenderer,
 } from 'components/table/renderer'
-import { tokenIconCellRenderer } from 'components/table/renderer'
+import { traderCellRenderer } from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
@@ -47,7 +47,7 @@ export const useTable = (): BasicTableProps => {
             cellData: 'id',
             width: 200,
             headerRenderer,
-            cellRenderer: linkToAddressCellRenderer,
+            cellRenderer: traderCellRenderer,
           },
           {
             dataKey: 'trades',
