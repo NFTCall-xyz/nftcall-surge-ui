@@ -4,6 +4,9 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { Fragment, useMemo } from 'react'
 
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles'
+
 import SettingDialog from 'app/setting/components/SettingDialog'
 
 import MotionDiv from 'lib/framer-motion/components/MotionDiv'
@@ -13,6 +16,13 @@ import ConnectDialog from 'lib/wallet/components/ConnectDialog'
 
 import AppLayout from './app'
 import HomeLayout from './home'
+
+const ROOT = styled(Box)`
+  ${() => ({
+    position: 'relative',
+    overflow: 'hidden',
+  })}
+`
 
 const ActiveLayout: FCC = (props) => {
   const {
@@ -76,12 +86,14 @@ const Layout: FC<MyAppProps> = ({ Component, pageProps }) => {
         <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:site" content="@nftcall_xyz" />
       </Head>
-      <ActiveLayout>
-        <Page />
-        <ChainDialog />
-        <ConnectDialog />
-        <SettingDialog />
-      </ActiveLayout>
+      <ROOT>
+        <ActiveLayout>
+          <Page />
+          <ChainDialog />
+          <ConnectDialog />
+          <SettingDialog />
+        </ActiveLayout>
+      </ROOT>
     </Fragment>
   )
 }
