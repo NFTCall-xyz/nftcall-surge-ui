@@ -7,6 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
 
+import { safeGet } from 'app/utils/get'
+
 import { OptionPositionStatus } from 'lib/graphql/option-position'
 import { toBN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
@@ -56,7 +58,11 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
   }, [PNLInner, PNLRateInner, premium, revenue, status])
 
   useEffect(() => {
-    if (status !== OptionPositionStatus.Active || new Date(expiration).getTime() < Date.now() || !PNLInner.isZero())
+    if (
+      status !== OptionPositionStatus.Active ||
+      new Date(expiration).getTime() < Date.now() ||
+      !safeGet(() => PNLInner.isZero())
+    )
       return
 
     post({

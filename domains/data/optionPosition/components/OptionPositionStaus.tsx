@@ -138,6 +138,7 @@ const OptionPositionStaus: FC<OptionPositionStausProps> = ({
                 .then(() => {
                   setRowData((row) => {
                     row.status = OptionPositionStatus.Cancelled
+                    return row
                   })
                   updateNFTCollections()
                 })
