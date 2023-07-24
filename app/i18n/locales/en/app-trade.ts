@@ -66,7 +66,7 @@ const locale = {
       collectionAddress: 'Position ID',
       type: 'Type',
       size: 'Size',
-      floorPrice: 'Floor Price',
+      floorPrice: 'Oracle Price',
       strikePrice: 'Strike Price',
       settlementPrice: 'Settlement Price',
       expiryDate: 'Expiration Date',
