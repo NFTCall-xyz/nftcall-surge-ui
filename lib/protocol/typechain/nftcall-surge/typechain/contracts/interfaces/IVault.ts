@@ -18,13 +18,13 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export type StrikeStruct = {
-  entryPrice: PromiseOrValue<BigNumberish>
-  strikePrice: PromiseOrValue<BigNumberish>
-  duration: PromiseOrValue<BigNumberish>
-  expiry: PromiseOrValue<BigNumberish>
+  entryPrice: BigNumberish
+  strikePrice: BigNumberish
+  duration: BigNumberish
+  expiry: BigNumberish
 }
 
 export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -36,13 +36,13 @@ export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & 
 
 export declare namespace IVault {
   export type OpenPositionEventParametersStruct = {
-    optionType: PromiseOrValue<BigNumberish>
-    expiration: PromiseOrValue<BigNumberish>
-    entryPrice: PromiseOrValue<BigNumberish>
-    strikePrice: PromiseOrValue<BigNumberish>
-    amount: PromiseOrValue<BigNumberish>
-    premium: PromiseOrValue<BigNumberish>
-    keeperFee: PromiseOrValue<BigNumberish>
+    optionType: BigNumberish
+    expiration: BigNumberish
+    entryPrice: BigNumberish
+    strikePrice: BigNumberish
+    amount: BigNumberish
+    premium: BigNumberish
+    keeperFee: BigNumberish
   }
 
   export type OpenPositionEventParametersStructOutput = [
@@ -64,11 +64,11 @@ export declare namespace IVault {
   }
 
   export type CollectionConfigurationStruct = {
-    frozen: PromiseOrValue<boolean>
-    activated: PromiseOrValue<boolean>
-    id: PromiseOrValue<BigNumberish>
-    weight: PromiseOrValue<BigNumberish>
-    optionToken: PromiseOrValue<string>
+    frozen: boolean
+    activated: boolean
+    id: BigNumberish
+    weight: BigNumberish
+    optionToken: string
   }
 
   export type CollectionConfigurationStructOutput = [boolean, boolean, number, number, string] & {
@@ -190,97 +190,51 @@ export interface IVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MINIMUM_PUT_STRIKE_PRICE_RATIO', values?: undefined): string
   encodeFunctionData(functionFragment: 'RESERVE_RATIO', values?: undefined): string
   encodeFunctionData(functionFragment: 'TIME_SCALE', values?: undefined): string
-  encodeFunctionData(functionFragment: 'activateMarket', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'activePosition',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'addMarket',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string
+  encodeFunctionData(functionFragment: 'activateMarket', values: [string]): string
+  encodeFunctionData(functionFragment: 'activePosition', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'addMarket', values: [string, BigNumberish, string]): string
   encodeFunctionData(
     functionFragment: 'adjustedVolatility',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(functionFragment: 'backstopPool', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'closePosition',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(functionFragment: 'deactivateMarket', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'defreezeMarket', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'deposit',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string
+  encodeFunctionData(functionFragment: 'closePosition', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'deactivateMarket', values: [string]): string
+  encodeFunctionData(functionFragment: 'defreezeMarket', values: [string]): string
+  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string]): string
   encodeFunctionData(
     functionFragment: 'estimatePremium',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(functionFragment: 'feeRatio', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'forceClosePendingPosition',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(functionFragment: 'freezeMarket', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'isActiveMarket', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'isFrozenMarket', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'forceClosePendingPosition', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'freezeMarket', values: [string]): string
+  encodeFunctionData(functionFragment: 'isActiveMarket', values: [string]): string
+  encodeFunctionData(functionFragment: 'isFrozenMarket', values: [string]): string
   encodeFunctionData(functionFragment: 'isPaused', values?: undefined): string
   encodeFunctionData(functionFragment: 'keeper', values?: undefined): string
-  encodeFunctionData(functionFragment: 'marketConfiguration', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'marketConfiguration', values: [string]): string
   encodeFunctionData(functionFragment: 'markets', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'maximumOptionAmount',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
+  encodeFunctionData(functionFragment: 'maximumOptionAmount', values: [string, BigNumberish]): string
   encodeFunctionData(
     functionFragment: 'openPosition',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'positionPNLWeightedDelta',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
+  encodeFunctionData(functionFragment: 'positionPNLWeightedDelta', values: [string, BigNumberish]): string
   encodeFunctionData(functionFragment: 'profitFeeRatio', values?: undefined): string
-  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish, string]): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
-  encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'strike', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'setKeeper', values: [string]): string
+  encodeFunctionData(functionFragment: 'strike', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalLockedAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPNL', values?: undefined): string
   encodeFunctionData(functionFragment: 'unrealizedPremium', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'updateCollectionRisk',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string
+  encodeFunctionData(functionFragment: 'updateCollectionRisk', values: [string, BigNumberish, BigNumberish]): string
   encodeFunctionData(functionFragment: 'updateUnrealizedPNL', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'withdraw',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string
+  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, string]): string
 
   decodeFunctionResult(functionFragment: 'KEEPER_FEE', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'MAXIMUM_CALL_STRIKE_PRICE_RATIO', data: BytesLike): Result
@@ -343,7 +297,7 @@ export interface IVaultInterface extends utils.Interface {
     'FailPosition(address,address,uint256,uint256)': EventFragment
     'FreezeMarket(address,address)': EventFragment
     'KeeperAddressUpdated(address)': EventFragment
-    'OpenPosition(address,address,address,uint256,tuple)': EventFragment
+    'OpenPosition(address,address,address,uint256,(uint8,uint256,uint256,uint256,uint256,uint256,uint256))': EventFragment
     'PauseVault(address)': EventFragment
     'UnpauseVault(address)': EventFragment
     'UpdateLPTokenPrice(address,uint256)': EventFragment
@@ -534,6 +488,8 @@ export type UpdateLPTokenPriceEvent = TypedEvent<[string, BigNumber], UpdateLPTo
 export type UpdateLPTokenPriceEventFilter = TypedEventFilter<UpdateLPTokenPriceEvent>
 
 export interface IVault extends BaseContract {
+  contractName: 'IVault'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -576,115 +532,99 @@ export interface IVault extends BaseContract {
 
     TIME_SCALE(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    activateMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     activePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     addMarket(
-      collection: PromiseOrValue<string>,
-      weight: PromiseOrValue<BigNumberish>,
-      optionToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      weight: BigNumberish,
+      optionToken: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     adjustedVolatility(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>
 
     backstopPool(overrides?: CallOverrides): Promise<[string]>
 
     closePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    deactivateMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    defreezeMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      onBehalfOf: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     estimatePremium(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { premium: BigNumber }>
 
     feeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
 
     forceClosePendingPosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    freezeMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    freezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>
+    isActiveMarket(collection: string, overrides?: CallOverrides): Promise<[boolean]>
 
-    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>
+    isFrozenMarket(collection: string, overrides?: CallOverrides): Promise<[boolean]>
 
     isPaused(overrides?: CallOverrides): Promise<[boolean]>
 
     keeper(overrides?: CallOverrides): Promise<[string]>
 
     marketConfiguration(
-      collection: PromiseOrValue<string>,
+      collection: string,
       overrides?: CallOverrides
     ): Promise<[IVault.CollectionConfigurationStructOutput]>
 
     markets(overrides?: CallOverrides): Promise<[string[]]>
 
-    maximumOptionAmount(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
     openPosition(
-      collection: PromiseOrValue<string>,
-      onBehalfOf: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      onBehalfOf: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+    pause(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     positionPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      collection: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -695,45 +635,34 @@ export interface IVault extends BaseContract {
 
     profitFeeRatio(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    redeem(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    redeem(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     reserve(overrides?: CallOverrides): Promise<[string]>
 
-    setKeeper(
-      keeperAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[StrikeStructOutput]>
+    strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<[StrikeStructOutput]>
 
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+    unpause(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<[BigNumber]>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<[BigNumber]>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+    updateUnrealizedPNL(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    withdraw(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    withdraw(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
   }
 
   KEEPER_FEE(overrides?: CallOverrides): Promise<BigNumber>
@@ -756,115 +685,99 @@ export interface IVault extends BaseContract {
 
   TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
 
-  activateMarket(
-    collection: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   activePosition(
-    collection: PromiseOrValue<string>,
-    positionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    positionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   addMarket(
-    collection: PromiseOrValue<string>,
-    weight: PromiseOrValue<BigNumberish>,
-    optionToken: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    weight: BigNumberish,
+    optionToken: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   adjustedVolatility(
-    collection: PromiseOrValue<string>,
-    optionType: PromiseOrValue<BigNumberish>,
-    strikePrice: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
+    collection: string,
+    optionType: BigNumberish,
+    strikePrice: BigNumberish,
+    amount: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
   backstopPool(overrides?: CallOverrides): Promise<string>
 
   closePosition(
-    collection: PromiseOrValue<string>,
-    positionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    positionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  deactivateMarket(
-    collection: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  defreezeMarket(
-    collection: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   deposit(
-    amount: PromiseOrValue<BigNumberish>,
-    onBehalfOf: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    onBehalfOf: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   estimatePremium(
-    collection: PromiseOrValue<string>,
-    optionType: PromiseOrValue<BigNumberish>,
-    strikePrice: PromiseOrValue<BigNumberish>,
-    expiry: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
+    collection: string,
+    optionType: BigNumberish,
+    strikePrice: BigNumberish,
+    expiry: BigNumberish,
+    amount: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
   feeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
   forceClosePendingPosition(
-    collection: PromiseOrValue<string>,
-    positionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    positionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  freezeMarket(
-    collection: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  freezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+  isActiveMarket(collection: string, overrides?: CallOverrides): Promise<boolean>
 
-  isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+  isFrozenMarket(collection: string, overrides?: CallOverrides): Promise<boolean>
 
   isPaused(overrides?: CallOverrides): Promise<boolean>
 
   keeper(overrides?: CallOverrides): Promise<string>
 
   marketConfiguration(
-    collection: PromiseOrValue<string>,
+    collection: string,
     overrides?: CallOverrides
   ): Promise<IVault.CollectionConfigurationStructOutput>
 
   markets(overrides?: CallOverrides): Promise<string[]>
 
-  maximumOptionAmount(
-    collection: PromiseOrValue<string>,
-    optionType: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>
+  maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
   openPosition(
-    collection: PromiseOrValue<string>,
-    onBehalfOf: PromiseOrValue<string>,
-    optionType: PromiseOrValue<BigNumberish>,
-    strikePrice: PromiseOrValue<BigNumberish>,
-    expiry: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    maximumPremium: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    onBehalfOf: string,
+    optionType: BigNumberish,
+    strikePrice: BigNumberish,
+    expiry: BigNumberish,
+    amount: BigNumberish,
+    maximumPremium: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+  pause(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   positionPNLWeightedDelta(
-    collection: PromiseOrValue<string>,
-    positionId: PromiseOrValue<BigNumberish>,
+    collection: string,
+    positionId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -875,45 +788,34 @@ export interface IVault extends BaseContract {
 
   profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
-  redeem(
-    amount: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  redeem(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   reserve(overrides?: CallOverrides): Promise<string>
 
-  setKeeper(
-    keeperAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<StrikeStructOutput>
+  strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<StrikeStructOutput>
 
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
   totalLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
 
-  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+  unpause(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
   unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
 
   updateCollectionRisk(
-    collection: PromiseOrValue<string>,
-    delta: PromiseOrValue<BigNumberish>,
-    PNL: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    delta: BigNumberish,
+    PNL: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+  updateUnrealizedPNL(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  withdraw(
-    amount: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  withdraw(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   callStatic: {
     KEEPER_FEE(overrides?: CallOverrides): Promise<BigNumber>
@@ -936,103 +838,82 @@ export interface IVault extends BaseContract {
 
     TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
 
-    activateMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    activateMarket(collection: string, overrides?: CallOverrides): Promise<void>
 
     activePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      collection: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { premium: BigNumber; delta: BigNumber }>
 
-    addMarket(
-      collection: PromiseOrValue<string>,
-      weight: PromiseOrValue<BigNumberish>,
-      optionToken: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<number>
+    addMarket(collection: string, weight: BigNumberish, optionToken: string, overrides?: CallOverrides): Promise<number>
 
     adjustedVolatility(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     backstopPool(overrides?: CallOverrides): Promise<string>
 
-    closePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    closePosition(collection: string, positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    deactivateMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    deactivateMarket(collection: string, overrides?: CallOverrides): Promise<void>
 
-    defreezeMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    defreezeMarket(collection: string, overrides?: CallOverrides): Promise<void>
 
-    deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    deposit(amount: BigNumberish, onBehalfOf: string, overrides?: CallOverrides): Promise<void>
 
     estimatePremium(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     feeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
-    forceClosePendingPosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    forceClosePendingPosition(collection: string, positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    freezeMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    freezeMarket(collection: string, overrides?: CallOverrides): Promise<void>
 
-    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+    isActiveMarket(collection: string, overrides?: CallOverrides): Promise<boolean>
 
-    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+    isFrozenMarket(collection: string, overrides?: CallOverrides): Promise<boolean>
 
     isPaused(overrides?: CallOverrides): Promise<boolean>
 
     keeper(overrides?: CallOverrides): Promise<string>
 
     marketConfiguration(
-      collection: PromiseOrValue<string>,
+      collection: string,
       overrides?: CallOverrides
     ): Promise<IVault.CollectionConfigurationStructOutput>
 
     markets(overrides?: CallOverrides): Promise<string[]>
 
-    maximumOptionAmount(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     openPosition(
-      collection: PromiseOrValue<string>,
-      onBehalfOf: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
+      collection: string,
+      onBehalfOf: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { positionId: BigNumber; premium: BigNumber }>
 
     pause(overrides?: CallOverrides): Promise<void>
 
     positionPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      collection: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -1043,17 +924,13 @@ export interface IVault extends BaseContract {
 
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
-    redeem(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    redeem(amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>
 
     reserve(overrides?: CallOverrides): Promise<string>
 
-    setKeeper(keeperAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    setKeeper(keeperAddress: string, overrides?: CallOverrides): Promise<void>
 
-    strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<StrikeStructOutput>
+    strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<StrikeStructOutput>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -1066,77 +943,67 @@ export interface IVault extends BaseContract {
     unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>
 
     updateUnrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
-    withdraw(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    withdraw(amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>
   }
 
   filters: {
-    'ActivateMarket(address,address)'(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): ActivateMarketEventFilter
-    ActivateMarket(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): ActivateMarketEventFilter
+    'ActivateMarket(address,address)'(operator?: string | null, collection?: string | null): ActivateMarketEventFilter
+    ActivateMarket(operator?: string | null, collection?: string | null): ActivateMarketEventFilter
 
     'ActivatePosition(address,address,uint256,uint256,uint256,int256)'(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       premium?: null,
       excessPremium?: null,
       delta?: null
     ): ActivatePositionEventFilter
     ActivatePosition(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       premium?: null,
       excessPremium?: null,
       delta?: null
     ): ActivatePositionEventFilter
 
     'CancelPosition(address,address,uint256,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       returnedPremium?: null
     ): CancelPositionEventFilter
     CancelPosition(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       returnedPremium?: null
     ): CancelPositionEventFilter
 
     'CreateMarket(address,uint32,address)'(
-      collection?: PromiseOrValue<string> | null,
+      collection?: string | null,
       weight?: null,
       optionToken?: null
     ): CreateMarketEventFilter
-    CreateMarket(collection?: PromiseOrValue<string> | null, weight?: null, optionToken?: null): CreateMarketEventFilter
+    CreateMarket(collection?: string | null, weight?: null, optionToken?: null): CreateMarketEventFilter
 
     'CreateStrike(uint256,uint256,uint256,uint256,uint256)'(
-      strikeId?: PromiseOrValue<BigNumberish> | null,
+      strikeId?: BigNumberish | null,
       duration?: null,
       expiration?: null,
       entryPrice?: null,
       strikePrice?: null
     ): CreateStrikeEventFilter
     CreateStrike(
-      strikeId?: PromiseOrValue<BigNumberish> | null,
+      strikeId?: BigNumberish | null,
       duration?: null,
       expiration?: null,
       entryPrice?: null,
@@ -1144,107 +1011,89 @@ export interface IVault extends BaseContract {
     ): CreateStrikeEventFilter
 
     'DeactivateMarket(address,address)'(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
+      operator?: string | null,
+      collection?: string | null
     ): DeactivateMarketEventFilter
-    DeactivateMarket(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): DeactivateMarketEventFilter
+    DeactivateMarket(operator?: string | null, collection?: string | null): DeactivateMarketEventFilter
 
-    'DefreezeMarket(address,address)'(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): DefreezeMarketEventFilter
-    DefreezeMarket(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): DefreezeMarketEventFilter
+    'DefreezeMarket(address,address)'(operator?: string | null, collection?: string | null): DefreezeMarketEventFilter
+    DefreezeMarket(operator?: string | null, collection?: string | null): DefreezeMarketEventFilter
 
-    'DestoryStrike(uint256)'(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
-    DestoryStrike(strikeId?: PromiseOrValue<BigNumberish> | null): DestoryStrikeEventFilter
+    'DestoryStrike(uint256)'(strikeId?: BigNumberish | null): DestoryStrikeEventFilter
+    DestoryStrike(strikeId?: BigNumberish | null): DestoryStrikeEventFilter
 
     'ExercisePosition(address,address,uint256,uint256,uint256,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       revenue?: null,
       exerciseFee?: null,
       settlementPrice?: null
     ): ExercisePositionEventFilter
     ExercisePosition(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       revenue?: null,
       exerciseFee?: null,
       settlementPrice?: null
     ): ExercisePositionEventFilter
 
     'ExpirePosition(address,address,uint256,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       settlementPrice?: null
     ): ExpirePositionEventFilter
     ExpirePosition(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       settlementPrice?: null
     ): ExpirePositionEventFilter
 
     'FailPosition(address,address,uint256,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       returnedPremium?: null
     ): FailPositionEventFilter
     FailPosition(
-      owner?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      owner?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       returnedPremium?: null
     ): FailPositionEventFilter
 
-    'FreezeMarket(address,address)'(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): FreezeMarketEventFilter
-    FreezeMarket(
-      operator?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null
-    ): FreezeMarketEventFilter
+    'FreezeMarket(address,address)'(operator?: string | null, collection?: string | null): FreezeMarketEventFilter
+    FreezeMarket(operator?: string | null, collection?: string | null): FreezeMarketEventFilter
 
-    'KeeperAddressUpdated(address)'(keeperAddress?: PromiseOrValue<string> | null): KeeperAddressUpdatedEventFilter
-    KeeperAddressUpdated(keeperAddress?: PromiseOrValue<string> | null): KeeperAddressUpdatedEventFilter
+    'KeeperAddressUpdated(address)'(keeperAddress?: string | null): KeeperAddressUpdatedEventFilter
+    KeeperAddressUpdated(keeperAddress?: string | null): KeeperAddressUpdatedEventFilter
 
-    'OpenPosition(address,address,address,uint256,tuple)'(
+    'OpenPosition(address,address,address,uint256,(uint8,uint256,uint256,uint256,uint256,uint256,uint256))'(
       caller?: null,
-      receiver?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      receiver?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       parameters?: null
     ): OpenPositionEventFilter
     OpenPosition(
       caller?: null,
-      receiver?: PromiseOrValue<string> | null,
-      collection?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      receiver?: string | null,
+      collection?: string | null,
+      positionId?: BigNumberish | null,
       parameters?: null
     ): OpenPositionEventFilter
 
-    'PauseVault(address)'(operator?: PromiseOrValue<string> | null): PauseVaultEventFilter
-    PauseVault(operator?: PromiseOrValue<string> | null): PauseVaultEventFilter
+    'PauseVault(address)'(operator?: string | null): PauseVaultEventFilter
+    PauseVault(operator?: string | null): PauseVaultEventFilter
 
-    'UnpauseVault(address)'(operator?: PromiseOrValue<string> | null): UnpauseVaultEventFilter
-    UnpauseVault(operator?: PromiseOrValue<string> | null): UnpauseVaultEventFilter
+    'UnpauseVault(address)'(operator?: string | null): UnpauseVaultEventFilter
+    UnpauseVault(operator?: string | null): UnpauseVaultEventFilter
 
-    'UpdateLPTokenPrice(address,uint256)'(
-      lpToken?: PromiseOrValue<string> | null,
-      newPrice?: null
-    ): UpdateLPTokenPriceEventFilter
-    UpdateLPTokenPrice(lpToken?: PromiseOrValue<string> | null, newPrice?: null): UpdateLPTokenPriceEventFilter
+    'UpdateLPTokenPrice(address,uint256)'(lpToken?: string | null, newPrice?: null): UpdateLPTokenPriceEventFilter
+    UpdateLPTokenPrice(lpToken?: string | null, newPrice?: null): UpdateLPTokenPriceEventFilter
   }
 
   estimateGas: {
@@ -1268,156 +1117,125 @@ export interface IVault extends BaseContract {
 
     TIME_SCALE(overrides?: CallOverrides): Promise<BigNumber>
 
-    activateMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     activePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     addMarket(
-      collection: PromiseOrValue<string>,
-      weight: PromiseOrValue<BigNumberish>,
-      optionToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      weight: BigNumberish,
+      optionToken: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     adjustedVolatility(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     backstopPool(overrides?: CallOverrides): Promise<BigNumber>
 
     closePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    deactivateMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    defreezeMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    deposit(amount: BigNumberish, onBehalfOf: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     estimatePremium(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     feeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
     forceClosePendingPosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    freezeMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    freezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    isActiveMarket(collection: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    isFrozenMarket(collection: string, overrides?: CallOverrides): Promise<BigNumber>
 
     isPaused(overrides?: CallOverrides): Promise<BigNumber>
 
     keeper(overrides?: CallOverrides): Promise<BigNumber>
 
-    marketConfiguration(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    marketConfiguration(collection: string, overrides?: CallOverrides): Promise<BigNumber>
 
     markets(overrides?: CallOverrides): Promise<BigNumber>
 
-    maximumOptionAmount(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     openPosition(
-      collection: PromiseOrValue<string>,
-      onBehalfOf: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      onBehalfOf: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    pause(overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     positionPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      collection: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     profitFeeRatio(overrides?: CallOverrides): Promise<BigNumber>
 
-    redeem(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    redeem(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     reserve(overrides?: CallOverrides): Promise<BigNumber>
 
-    setKeeper(
-      keeperAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    unpause(overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<BigNumber>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<BigNumber>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    updateUnrealizedPNL(overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    withdraw(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    withdraw(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
   }
 
   populateTransaction: {
@@ -1441,155 +1259,132 @@ export interface IVault extends BaseContract {
 
     TIME_SCALE(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    activateMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     activePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     addMarket(
-      collection: PromiseOrValue<string>,
-      weight: PromiseOrValue<BigNumberish>,
-      optionToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      weight: BigNumberish,
+      optionToken: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     adjustedVolatility(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     backstopPool(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     closePosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    deactivateMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    defreezeMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      onBehalfOf: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     estimatePremium(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     feeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     forceClosePendingPosition(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    freezeMarket(
-      collection: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    freezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    isActiveMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    isActiveMarket(collection: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    isFrozenMarket(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    isFrozenMarket(collection: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     isPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     keeper(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    marketConfiguration(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    marketConfiguration(collection: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     markets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     maximumOptionAmount(
-      collection: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
+      collection: string,
+      optionType: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     openPosition(
-      collection: PromiseOrValue<string>,
-      onBehalfOf: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      onBehalfOf: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+    pause(overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     positionPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      collection: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     profitFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    redeem(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    redeem(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    setKeeper(
-      keeperAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    strike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalLockedAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+    unpause(overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     unrealizedPNL(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     unrealizedPremium(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    updateUnrealizedPNL(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+    updateUnrealizedPNL(overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    withdraw(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    withdraw(amount: BigNumberish, to: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
   }
 }

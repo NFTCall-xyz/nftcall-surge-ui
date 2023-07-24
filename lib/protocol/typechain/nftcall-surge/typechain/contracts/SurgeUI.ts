@@ -16,12 +16,9 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../common'
 
-export type AnalyticsStruct = {
-  TVL: PromiseOrValue<BigNumberish>
-  ncETHPrice: PromiseOrValue<BigNumberish>
-}
+export type AnalyticsStruct = { TVL: BigNumberish; ncETHPrice: BigNumberish }
 
 export type AnalyticsStructOutput = [BigNumber, BigNumber] & {
   TVL: BigNumber
@@ -29,9 +26,9 @@ export type AnalyticsStructOutput = [BigNumber, BigNumber] & {
 }
 
 export type NFTCollectionStruct = {
-  price: PromiseOrValue<BigNumberish>
-  vol: PromiseOrValue<BigNumberish>
-  maximumOptionAmount: PromiseOrValue<BigNumberish>
+  price: BigNumberish
+  vol: BigNumberish
+  maximumOptionAmount: BigNumberish
 }
 
 export type NFTCollectionStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -41,16 +38,16 @@ export type NFTCollectionStructOutput = [BigNumber, BigNumber, BigNumber] & {
 }
 
 export type NFTCollectionStausStruct = {
-  price: PromiseOrValue<BigNumberish>
-  vol: PromiseOrValue<BigNumberish>
-  delta: PromiseOrValue<BigNumberish>
-  unrealizedPNL: PromiseOrValue<BigNumberish>
-  openInterest: PromiseOrValue<BigNumberish>
-  optionTokenTotalValue: PromiseOrValue<BigNumberish>
-  optionTokenTotalLockedValue: PromiseOrValue<BigNumberish>
-  collectionWeight: PromiseOrValue<BigNumberish>
-  callOptionAmount: PromiseOrValue<BigNumberish>
-  putOptionAmount: PromiseOrValue<BigNumberish>
+  price: BigNumberish
+  vol: BigNumberish
+  delta: BigNumberish
+  unrealizedPNL: BigNumberish
+  openInterest: BigNumberish
+  optionTokenTotalValue: BigNumberish
+  optionTokenTotalLockedValue: BigNumberish
+  collectionWeight: BigNumberish
+  callOptionAmount: BigNumberish
+  putOptionAmount: BigNumberish
 }
 
 export type NFTCollectionStausStructOutput = [
@@ -78,13 +75,13 @@ export type NFTCollectionStausStructOutput = [
 }
 
 export type OptionPositionStruct = {
-  state: PromiseOrValue<BigNumberish>
-  optionType: PromiseOrValue<BigNumberish>
-  payer: PromiseOrValue<string>
-  strikeId: PromiseOrValue<BigNumberish>
-  amount: PromiseOrValue<BigNumberish>
-  premium: PromiseOrValue<BigNumberish>
-  maximumPremium: PromiseOrValue<BigNumberish>
+  state: BigNumberish
+  optionType: BigNumberish
+  payer: string
+  strikeId: BigNumberish
+  amount: BigNumberish
+  premium: BigNumberish
+  maximumPremium: BigNumberish
 }
 
 export type OptionPositionStructOutput = [number, number, string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -98,35 +95,46 @@ export type OptionPositionStructOutput = [number, number, string, BigNumber, Big
 }
 
 export type VaultLPTokenStruct = {
-  wETHBalance: PromiseOrValue<BigNumberish>
-  wETHAllowance: PromiseOrValue<BigNumberish>
-  balance: PromiseOrValue<BigNumberish>
-  allowance: PromiseOrValue<BigNumberish>
-  lockedBalance: PromiseOrValue<BigNumberish>
-  maxWithdraw: PromiseOrValue<BigNumberish>
-  releaseTime: PromiseOrValue<BigNumberish>
+  wETHBalance: BigNumberish
+  wETHAllowance: BigNumberish
+  balance: BigNumberish
+  allowance: BigNumberish
+  lockedBalance: BigNumberish
+  maxWithdraw: BigNumberish
+  maxRedeem: BigNumberish
+  releaseTime: BigNumberish
 }
 
-export type VaultLPTokenStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+export type VaultLPTokenStructOutput = [
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber
+] & {
   wETHBalance: BigNumber
   wETHAllowance: BigNumber
   balance: BigNumber
   allowance: BigNumber
   lockedBalance: BigNumber
   maxWithdraw: BigNumber
+  maxRedeem: BigNumber
   releaseTime: BigNumber
 }
 
 export type VaultStruct = {
   lpToken: VaultLPTokenStruct
-  ncETHPrice: PromiseOrValue<BigNumberish>
-  wETHAllowance: PromiseOrValue<BigNumberish>
-  totalSupply: PromiseOrValue<BigNumberish>
-  totalAssets: PromiseOrValue<BigNumberish>
-  executionFee: PromiseOrValue<BigNumberish>
-  totalLockedAssets: PromiseOrValue<BigNumberish>
-  unrealizedPNL: PromiseOrValue<BigNumberish>
-  unrealizedPremium: PromiseOrValue<BigNumberish>
+  ncETHPrice: BigNumberish
+  wETHAllowance: BigNumberish
+  totalSupply: BigNumberish
+  totalAssets: BigNumberish
+  executionFee: BigNumberish
+  totalLockedAssets: BigNumberish
+  unrealizedPNL: BigNumberish
+  unrealizedPremium: BigNumberish
 }
 
 export type VaultStructOutput = [
@@ -175,35 +183,14 @@ export interface SurgeUIInterface extends utils.Interface {
       | 'getVaultWithUser'
   ): FunctionFragment
 
-  encodeFunctionData(functionFragment: 'getAnalytics', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'getNFTCollection',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'getNFTCollectionStaus',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'getNFTCollections',
-    values: [PromiseOrValue<string>[], PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'getNFTCollectionsStaus',
-    values: [PromiseOrValue<string>[], PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'getPosition',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'getVault',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'getVaultWithUser',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
+  encodeFunctionData(functionFragment: 'getAnalytics', values: [string, string]): string
+  encodeFunctionData(functionFragment: 'getNFTCollection', values: [string, string, string]): string
+  encodeFunctionData(functionFragment: 'getNFTCollectionStaus', values: [string, string, string, string]): string
+  encodeFunctionData(functionFragment: 'getNFTCollections', values: [string[], string, string]): string
+  encodeFunctionData(functionFragment: 'getNFTCollectionsStaus', values: [string[], string, string, string]): string
+  encodeFunctionData(functionFragment: 'getPosition', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'getVault', values: [string, string, string]): string
+  encodeFunctionData(functionFragment: 'getVaultWithUser', values: [string, string, string, string]): string
 
   decodeFunctionResult(functionFragment: 'getAnalytics', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getNFTCollection', data: BytesLike): Result
@@ -218,6 +205,8 @@ export interface SurgeUIInterface extends utils.Interface {
 }
 
 export interface SurgeUI extends BaseContract {
+  contractName: 'SurgeUI'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -241,175 +230,171 @@ export interface SurgeUI extends BaseContract {
 
   functions: {
     getAnalytics(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
       overrides?: CallOverrides
     ): Promise<[AnalyticsStructOutput]>
 
     getNFTCollection(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<[NFTCollectionStructOutput]>
 
     getNFTCollectionStaus(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<[NFTCollectionStausStructOutput]>
 
     getNFTCollections(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<[NFTCollectionStructOutput[]]>
 
     getNFTCollectionsStaus(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<[NFTCollectionStausStructOutput[]]>
 
     getPosition(
-      optionTokenAddress: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      optionTokenAddress: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[OptionPositionStructOutput]>
 
     getVault(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
       overrides?: CallOverrides
     ): Promise<[VaultStructOutput]>
 
     getVaultWithUser(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
-      userAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
+      userAddress: string,
       overrides?: CallOverrides
     ): Promise<[VaultStructOutput]>
   }
 
-  getAnalytics(
-    vaultAddress: PromiseOrValue<string>,
-    lpTokenAddress: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<AnalyticsStructOutput>
+  getAnalytics(vaultAddress: string, lpTokenAddress: string, overrides?: CallOverrides): Promise<AnalyticsStructOutput>
 
   getNFTCollection(
-    collectionAddress: PromiseOrValue<string>,
-    oracleAddress: PromiseOrValue<string>,
-    vaultAddress: PromiseOrValue<string>,
+    collectionAddress: string,
+    oracleAddress: string,
+    vaultAddress: string,
     overrides?: CallOverrides
   ): Promise<NFTCollectionStructOutput>
 
   getNFTCollectionStaus(
-    collectionAddress: PromiseOrValue<string>,
-    oracleAddress: PromiseOrValue<string>,
-    vaultAddress: PromiseOrValue<string>,
-    riskCacheAddress: PromiseOrValue<string>,
+    collectionAddress: string,
+    oracleAddress: string,
+    vaultAddress: string,
+    riskCacheAddress: string,
     overrides?: CallOverrides
   ): Promise<NFTCollectionStausStructOutput>
 
   getNFTCollections(
-    collectionAddresses: PromiseOrValue<string>[],
-    oracleAddress: PromiseOrValue<string>,
-    vaultAddress: PromiseOrValue<string>,
+    collectionAddresses: string[],
+    oracleAddress: string,
+    vaultAddress: string,
     overrides?: CallOverrides
   ): Promise<NFTCollectionStructOutput[]>
 
   getNFTCollectionsStaus(
-    collectionAddresses: PromiseOrValue<string>[],
-    oracleAddress: PromiseOrValue<string>,
-    vaultAddress: PromiseOrValue<string>,
-    riskCacheAddress: PromiseOrValue<string>,
+    collectionAddresses: string[],
+    oracleAddress: string,
+    vaultAddress: string,
+    riskCacheAddress: string,
     overrides?: CallOverrides
   ): Promise<NFTCollectionStausStructOutput[]>
 
   getPosition(
-    optionTokenAddress: PromiseOrValue<string>,
-    positionId: PromiseOrValue<BigNumberish>,
+    optionTokenAddress: string,
+    positionId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<OptionPositionStructOutput>
 
   getVault(
-    vaultAddress: PromiseOrValue<string>,
-    lpTokenAddress: PromiseOrValue<string>,
-    wETHAddress: PromiseOrValue<string>,
+    vaultAddress: string,
+    lpTokenAddress: string,
+    wETHAddress: string,
     overrides?: CallOverrides
   ): Promise<VaultStructOutput>
 
   getVaultWithUser(
-    vaultAddress: PromiseOrValue<string>,
-    lpTokenAddress: PromiseOrValue<string>,
-    wETHAddress: PromiseOrValue<string>,
-    userAddress: PromiseOrValue<string>,
+    vaultAddress: string,
+    lpTokenAddress: string,
+    wETHAddress: string,
+    userAddress: string,
     overrides?: CallOverrides
   ): Promise<VaultStructOutput>
 
   callStatic: {
     getAnalytics(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
       overrides?: CallOverrides
     ): Promise<AnalyticsStructOutput>
 
     getNFTCollection(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<NFTCollectionStructOutput>
 
     getNFTCollectionStaus(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<NFTCollectionStausStructOutput>
 
     getNFTCollections(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<NFTCollectionStructOutput[]>
 
     getNFTCollectionsStaus(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<NFTCollectionStausStructOutput[]>
 
     getPosition(
-      optionTokenAddress: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      optionTokenAddress: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<OptionPositionStructOutput>
 
     getVault(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
       overrides?: CallOverrides
     ): Promise<VaultStructOutput>
 
     getVaultWithUser(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
-      userAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
+      userAddress: string,
       overrides?: CallOverrides
     ): Promise<VaultStructOutput>
   }
@@ -417,119 +402,107 @@ export interface SurgeUI extends BaseContract {
   filters: {}
 
   estimateGas: {
-    getAnalytics(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    getAnalytics(vaultAddress: string, lpTokenAddress: string, overrides?: CallOverrides): Promise<BigNumber>
 
     getNFTCollection(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getNFTCollectionStaus(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getNFTCollections(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getNFTCollectionsStaus(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
-    getPosition(
-      optionTokenAddress: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    getPosition(optionTokenAddress: string, positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     getVault(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getVaultWithUser(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
-      userAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
+      userAddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>
   }
 
   populateTransaction: {
-    getAnalytics(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    getAnalytics(vaultAddress: string, lpTokenAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     getNFTCollection(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getNFTCollectionStaus(
-      collectionAddress: PromiseOrValue<string>,
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddress: string,
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getNFTCollections(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getNFTCollectionsStaus(
-      collectionAddresses: PromiseOrValue<string>[],
-      oracleAddress: PromiseOrValue<string>,
-      vaultAddress: PromiseOrValue<string>,
-      riskCacheAddress: PromiseOrValue<string>,
+      collectionAddresses: string[],
+      oracleAddress: string,
+      vaultAddress: string,
+      riskCacheAddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getPosition(
-      optionTokenAddress: PromiseOrValue<string>,
-      positionId: PromiseOrValue<BigNumberish>,
+      optionTokenAddress: string,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getVault(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getVaultWithUser(
-      vaultAddress: PromiseOrValue<string>,
-      lpTokenAddress: PromiseOrValue<string>,
-      wETHAddress: PromiseOrValue<string>,
-      userAddress: PromiseOrValue<string>,
+      vaultAddress: string,
+      lpTokenAddress: string,
+      wETHAddress: string,
+      userAddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
   }

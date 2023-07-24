@@ -18,13 +18,13 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../common'
 
 export declare namespace NFTCallOracle {
   export type UpdateInputStruct = {
-    price: PromiseOrValue<BigNumberish>
-    vol: PromiseOrValue<BigNumberish>
-    index: PromiseOrValue<BigNumberish>
+    price: BigNumberish
+    vol: BigNumberish
+    index: BigNumberish
   }
 
   export type UpdateInputStructOutput = [number, number, BigNumber] & {
@@ -41,7 +41,7 @@ export interface NFTCallOracleInterface extends utils.Interface {
     'VOL_DECIMALS()': FunctionFragment
     'VOL_UNIT()': FunctionFragment
     'addAssets(address[])': FunctionFragment
-    'batchSetAssetPrice(uint256[],tuple[][])': FunctionFragment
+    'batchSetAssetPrice(uint256[],(uint16,uint16,uint256)[][])': FunctionFragment
     'getAddressList()': FunctionFragment
     'getAssetPrice(address)': FunctionFragment
     'getAssetPriceAndVol(address)': FunctionFragment
@@ -90,30 +90,27 @@ export interface NFTCallOracleInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'PRICE_UNIT', values?: undefined): string
   encodeFunctionData(functionFragment: 'VOL_DECIMALS', values?: undefined): string
   encodeFunctionData(functionFragment: 'VOL_UNIT', values?: undefined): string
-  encodeFunctionData(functionFragment: 'addAssets', values: [PromiseOrValue<string>[]]): string
+  encodeFunctionData(functionFragment: 'addAssets', values: [string[]]): string
   encodeFunctionData(
     functionFragment: 'batchSetAssetPrice',
-    values: [PromiseOrValue<BigNumberish>[], NFTCallOracle.UpdateInputStruct[][]]
+    values: [BigNumberish[], NFTCallOracle.UpdateInputStruct[][]]
   ): string
   encodeFunctionData(functionFragment: 'getAddressList', values?: undefined): string
-  encodeFunctionData(functionFragment: 'getAssetPrice', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'getAssetPriceAndVol', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'getAssetVol', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'getAssets', values: [PromiseOrValue<string>[]]): string
-  encodeFunctionData(functionFragment: 'getIndexes', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'isEmergencyAdmin', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'getAssetPrice', values: [string]): string
+  encodeFunctionData(functionFragment: 'getAssetPriceAndVol', values: [string]): string
+  encodeFunctionData(functionFragment: 'getAssetVol', values: [string]): string
+  encodeFunctionData(functionFragment: 'getAssets', values: [string[]]): string
+  encodeFunctionData(functionFragment: 'getIndexes', values: [string]): string
+  encodeFunctionData(functionFragment: 'isEmergencyAdmin', values: [string]): string
   encodeFunctionData(functionFragment: 'operator', values?: undefined): string
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
-  encodeFunctionData(functionFragment: 'replaceAsset', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'setEmergencyAdmin',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
-  ): string
-  encodeFunctionData(functionFragment: 'setOperator', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'setPause', values: [PromiseOrValue<boolean>]): string
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'replaceAsset', values: [string, string]): string
+  encodeFunctionData(functionFragment: 'setEmergencyAdmin', values: [string, boolean]): string
+  encodeFunctionData(functionFragment: 'setOperator', values: [string]): string
+  encodeFunctionData(functionFragment: 'setPause', values: [boolean]): string
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string
 
   decodeFunctionResult(functionFragment: 'PRICE_DECIMALS', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'PRICE_UNIT', data: BytesLike): Result
@@ -143,7 +140,7 @@ export interface NFTCallOracleInterface extends utils.Interface {
     'OwnershipTransferred(address,address)': EventFragment
     'Paused(address)': EventFragment
     'ReplaceAsset(address,address)': EventFragment
-    'SetAssetData(uint256[],tuple[][])': EventFragment
+    'SetAssetData(uint256[],(uint16,uint16,uint256)[][])': EventFragment
     'SetEmergencyAdmin(address,bool)': EventFragment
     'Unpaused(address)': EventFragment
   }
@@ -215,6 +212,8 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>
 
 export interface NFTCallOracle extends BaseContract {
+  contractName: 'NFTCallOracle'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -245,39 +244,36 @@ export interface NFTCallOracle extends BaseContract {
 
     VOL_UNIT(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    addAssets(
-      assets: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    addAssets(assets: string[], overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     batchSetAssetPrice(
-      indexes: PromiseOrValue<BigNumberish>[],
+      indexes: BigNumberish[],
       inputs: NFTCallOracle.UpdateInputStruct[][],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     getAddressList(overrides?: CallOverrides): Promise<[string[]]>
 
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { price: BigNumber }>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber] & { price: BigNumber }>
 
     getAssetPriceAndVol(
-      asset: PromiseOrValue<string>,
+      asset: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { price: BigNumber; vol: BigNumber }>
 
-    getAssetVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { vol: BigNumber }>
+    getAssetVol(asset: string, overrides?: CallOverrides): Promise<[BigNumber] & { vol: BigNumber }>
 
     getAssets(
-      assets: PromiseOrValue<string>[],
+      assets: string[],
       overrides?: CallOverrides
     ): Promise<[[BigNumber, BigNumber][]] & { prices: [BigNumber, BigNumber][] }>
 
     getIndexes(
-      asset: PromiseOrValue<string>,
+      asset: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { OuterIndex: BigNumber; InnerIndex: BigNumber }>
 
-    isEmergencyAdmin(admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>
+    isEmergencyAdmin(admin: string, overrides?: CallOverrides): Promise<[boolean]>
 
     operator(overrides?: CallOverrides): Promise<[string]>
 
@@ -285,34 +281,25 @@ export interface NFTCallOracle extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     replaceAsset(
-      oldAsset: PromiseOrValue<string>,
-      newAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      oldAsset: string,
+      newAsset: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     setEmergencyAdmin(
-      admin: PromiseOrValue<string>,
-      enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      admin: string,
+      enabled: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    setOperator(
-      newOperator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    setOperator(newOperator: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    setPause(
-      val: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    setPause(val: boolean, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
   }
 
   PRICE_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>
@@ -323,36 +310,33 @@ export interface NFTCallOracle extends BaseContract {
 
   VOL_UNIT(overrides?: CallOverrides): Promise<BigNumber>
 
-  addAssets(
-    assets: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  addAssets(assets: string[], overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   batchSetAssetPrice(
-    indexes: PromiseOrValue<BigNumberish>[],
+    indexes: BigNumberish[],
     inputs: NFTCallOracle.UpdateInputStruct[][],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   getAddressList(overrides?: CallOverrides): Promise<string[]>
 
-  getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
   getAssetPriceAndVol(
-    asset: PromiseOrValue<string>,
+    asset: string,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { price: BigNumber; vol: BigNumber }>
 
-  getAssetVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  getAssetVol(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-  getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
+  getAssets(assets: string[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
 
   getIndexes(
-    asset: PromiseOrValue<string>,
+    asset: string,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { OuterIndex: BigNumber; InnerIndex: BigNumber }>
 
-  isEmergencyAdmin(admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+  isEmergencyAdmin(admin: string, overrides?: CallOverrides): Promise<boolean>
 
   operator(overrides?: CallOverrides): Promise<string>
 
@@ -360,34 +344,25 @@ export interface NFTCallOracle extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>
 
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+  renounceOwnership(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   replaceAsset(
-    oldAsset: PromiseOrValue<string>,
-    newAsset: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    oldAsset: string,
+    newAsset: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   setEmergencyAdmin(
-    admin: PromiseOrValue<string>,
-    enabled: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    admin: string,
+    enabled: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  setOperator(
-    newOperator: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  setOperator(newOperator: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  setPause(
-    val: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  setPause(val: boolean, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   callStatic: {
     PRICE_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>
@@ -398,33 +373,33 @@ export interface NFTCallOracle extends BaseContract {
 
     VOL_UNIT(overrides?: CallOverrides): Promise<BigNumber>
 
-    addAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>
+    addAssets(assets: string[], overrides?: CallOverrides): Promise<void>
 
     batchSetAssetPrice(
-      indexes: PromiseOrValue<BigNumberish>[],
+      indexes: BigNumberish[],
       inputs: NFTCallOracle.UpdateInputStruct[][],
       overrides?: CallOverrides
     ): Promise<void>
 
     getAddressList(overrides?: CallOverrides): Promise<string[]>
 
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
     getAssetPriceAndVol(
-      asset: PromiseOrValue<string>,
+      asset: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { price: BigNumber; vol: BigNumber }>
 
-    getAssetVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetVol(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
+    getAssets(assets: string[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
 
     getIndexes(
-      asset: PromiseOrValue<string>,
+      asset: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { OuterIndex: BigNumber; InnerIndex: BigNumber }>
 
-    isEmergencyAdmin(admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>
+    isEmergencyAdmin(admin: string, overrides?: CallOverrides): Promise<boolean>
 
     operator(overrides?: CallOverrides): Promise<string>
 
@@ -434,64 +409,41 @@ export interface NFTCallOracle extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>
 
-    replaceAsset(
-      oldAsset: PromiseOrValue<string>,
-      newAsset: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    replaceAsset(oldAsset: string, newAsset: string, overrides?: CallOverrides): Promise<void>
 
-    setEmergencyAdmin(
-      admin: PromiseOrValue<string>,
-      enabled: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    setEmergencyAdmin(admin: string, enabled: boolean, overrides?: CallOverrides): Promise<void>
 
-    setOperator(newOperator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    setOperator(newOperator: string, overrides?: CallOverrides): Promise<void>
 
-    setPause(val: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>
+    setPause(val: boolean, overrides?: CallOverrides): Promise<void>
 
-    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>
   }
 
   filters: {
     'ChangeOperator(address,address)'(
-      oldOperator?: PromiseOrValue<string> | null,
-      newOperator?: PromiseOrValue<string> | null
+      oldOperator?: string | null,
+      newOperator?: string | null
     ): ChangeOperatorEventFilter
-    ChangeOperator(
-      oldOperator?: PromiseOrValue<string> | null,
-      newOperator?: PromiseOrValue<string> | null
-    ): ChangeOperatorEventFilter
+    ChangeOperator(oldOperator?: string | null, newOperator?: string | null): ChangeOperatorEventFilter
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter
+    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter
 
     'Paused(address)'(account?: null): PausedEventFilter
     Paused(account?: null): PausedEventFilter
 
-    'ReplaceAsset(address,address)'(
-      oldAsset?: PromiseOrValue<string> | null,
-      newAsset?: PromiseOrValue<string> | null
-    ): ReplaceAssetEventFilter
-    ReplaceAsset(
-      oldAsset?: PromiseOrValue<string> | null,
-      newAsset?: PromiseOrValue<string> | null
-    ): ReplaceAssetEventFilter
+    'ReplaceAsset(address,address)'(oldAsset?: string | null, newAsset?: string | null): ReplaceAssetEventFilter
+    ReplaceAsset(oldAsset?: string | null, newAsset?: string | null): ReplaceAssetEventFilter
 
-    'SetAssetData(uint256[],tuple[][])'(indexes?: null, inputs?: null): SetAssetDataEventFilter
+    'SetAssetData(uint256[],(uint16,uint16,uint256)[][])'(indexes?: null, inputs?: null): SetAssetDataEventFilter
     SetAssetData(indexes?: null, inputs?: null): SetAssetDataEventFilter
 
-    'SetEmergencyAdmin(address,bool)'(
-      admin?: PromiseOrValue<string> | null,
-      enabled?: null
-    ): SetEmergencyAdminEventFilter
-    SetEmergencyAdmin(admin?: PromiseOrValue<string> | null, enabled?: null): SetEmergencyAdminEventFilter
+    'SetEmergencyAdmin(address,bool)'(admin?: string | null, enabled?: null): SetEmergencyAdminEventFilter
+    SetEmergencyAdmin(admin?: string | null, enabled?: null): SetEmergencyAdminEventFilter
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter
     Unpaused(account?: null): UnpausedEventFilter
@@ -506,30 +458,27 @@ export interface NFTCallOracle extends BaseContract {
 
     VOL_UNIT(overrides?: CallOverrides): Promise<BigNumber>
 
-    addAssets(
-      assets: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    addAssets(assets: string[], overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     batchSetAssetPrice(
-      indexes: PromiseOrValue<BigNumberish>[],
+      indexes: BigNumberish[],
       inputs: NFTCallOracle.UpdateInputStruct[][],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     getAddressList(overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssetPriceAndVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetPriceAndVol(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssetVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetVol(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>
+    getAssets(assets: string[], overrides?: CallOverrides): Promise<BigNumber>
 
-    getIndexes(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getIndexes(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    isEmergencyAdmin(admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    isEmergencyAdmin(admin: string, overrides?: CallOverrides): Promise<BigNumber>
 
     operator(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -537,34 +486,17 @@ export interface NFTCallOracle extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    replaceAsset(
-      oldAsset: PromiseOrValue<string>,
-      newAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    replaceAsset(oldAsset: string, newAsset: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    setEmergencyAdmin(
-      admin: PromiseOrValue<string>,
-      enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setEmergencyAdmin(admin: string, enabled: boolean, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    setOperator(
-      newOperator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setOperator(newOperator: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    setPause(
-      val: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setPause(val: boolean, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
   }
 
   populateTransaction: {
@@ -576,30 +508,27 @@ export interface NFTCallOracle extends BaseContract {
 
     VOL_UNIT(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    addAssets(
-      assets: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    addAssets(assets: string[], overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     batchSetAssetPrice(
-      indexes: PromiseOrValue<BigNumberish>[],
+      indexes: BigNumberish[],
       inputs: NFTCallOracle.UpdateInputStruct[][],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     getAddressList(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getAssetPriceAndVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssetPriceAndVol(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getAssetVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssetVol(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssets(assets: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getIndexes(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getIndexes(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    isEmergencyAdmin(admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    isEmergencyAdmin(admin: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     operator(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
@@ -607,33 +536,24 @@ export interface NFTCallOracle extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     replaceAsset(
-      oldAsset: PromiseOrValue<string>,
-      newAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      oldAsset: string,
+      newAsset: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     setEmergencyAdmin(
-      admin: PromiseOrValue<string>,
-      enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      admin: string,
+      enabled: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    setOperator(
-      newOperator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    setOperator(newOperator: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    setPause(
-      val: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    setPause(val: boolean, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
   }
 }

@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../common'
 import type { NFTCallOracle, NFTCallOracleInterface } from '../../contracts/NFTCallOracle'
 
 const _abi = [
@@ -539,19 +538,20 @@ export class NFTCallOracle__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'NFTCallOracle'
   }
 
   override deploy(
-    newOperator: PromiseOrValue<string>,
-    assets: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOperator: string,
+    assets: string[],
+    overrides?: Overrides & { from?: string }
   ): Promise<NFTCallOracle> {
     return super.deploy(newOperator, assets, overrides || {}) as Promise<NFTCallOracle>
   }
   override getDeployTransaction(
-    newOperator: PromiseOrValue<string>,
-    assets: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOperator: string,
+    assets: string[],
+    overrides?: Overrides & { from?: string }
   ): TransactionRequest {
     return super.getDeployTransaction(newOperator, assets, overrides || {})
   }
@@ -561,6 +561,9 @@ export class NFTCallOracle__factory extends ContractFactory {
   override connect(signer: Signer): NFTCallOracle__factory {
     return super.connect(signer) as NFTCallOracle__factory
   }
+  static readonly contractName: 'NFTCallOracle'
+
+  public readonly contractName: 'NFTCallOracle'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

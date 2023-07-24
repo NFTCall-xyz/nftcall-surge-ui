@@ -7,7 +7,7 @@ import type { FunctionFragment, Result } from '@ethersproject/abi'
 import type { Listener, Provider } from '@ethersproject/providers'
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export interface DecimalMathInterface extends utils.Interface {
   functions: {
@@ -41,6 +41,8 @@ export interface DecimalMathInterface extends utils.Interface {
 }
 
 export interface DecimalMath extends BaseContract {
+  contractName: 'DecimalMath'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

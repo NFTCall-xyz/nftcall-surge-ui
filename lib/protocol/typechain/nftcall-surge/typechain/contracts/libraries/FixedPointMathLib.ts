@@ -6,7 +6,7 @@
 import type { Listener, Provider } from '@ethersproject/providers'
 import type { BaseContract, Signer, utils } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export interface FixedPointMathLibInterface extends utils.Interface {
   functions: {}
@@ -15,6 +15,8 @@ export interface FixedPointMathLibInterface extends utils.Interface {
 }
 
 export interface FixedPointMathLib extends BaseContract {
+  contractName: 'FixedPointMathLib'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

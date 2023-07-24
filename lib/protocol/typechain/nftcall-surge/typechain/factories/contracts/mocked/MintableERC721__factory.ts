@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../../common'
 import type { MintableERC721, MintableERC721Interface } from '../../../contracts/mocked/MintableERC721'
 
 const _abi = [
@@ -449,19 +448,16 @@ export class MintableERC721__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'MintableERC721'
   }
 
-  override deploy(
-    name: PromiseOrValue<string>,
-    symbol: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<MintableERC721> {
+  override deploy(name: string, symbol: string, overrides?: Overrides & { from?: string }): Promise<MintableERC721> {
     return super.deploy(name, symbol, overrides || {}) as Promise<MintableERC721>
   }
   override getDeployTransaction(
-    name: PromiseOrValue<string>,
-    symbol: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    name: string,
+    symbol: string,
+    overrides?: Overrides & { from?: string }
   ): TransactionRequest {
     return super.getDeployTransaction(name, symbol, overrides || {})
   }
@@ -471,6 +467,9 @@ export class MintableERC721__factory extends ContractFactory {
   override connect(signer: Signer): MintableERC721__factory {
     return super.connect(signer) as MintableERC721__factory
   }
+  static readonly contractName: 'MintableERC721'
+
+  public readonly contractName: 'MintableERC721'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

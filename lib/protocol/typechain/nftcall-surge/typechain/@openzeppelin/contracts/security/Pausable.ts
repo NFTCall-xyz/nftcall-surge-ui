@@ -7,7 +7,7 @@ import type { EventFragment, FunctionFragment, Result } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers'
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../../common'
 
 export interface PausableInterface extends utils.Interface {
   functions: {
@@ -44,6 +44,8 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>
 
 export interface Pausable extends BaseContract {
+  contractName: 'Pausable'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

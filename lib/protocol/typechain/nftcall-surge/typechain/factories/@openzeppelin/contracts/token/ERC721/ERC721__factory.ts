@@ -7,7 +7,6 @@ import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
 import type { ERC721, ERC721Interface } from '../../../../../@openzeppelin/contracts/token/ERC721/ERC721'
-import type { PromiseOrValue } from '../../../../../common'
 
 const _abi = [
   {
@@ -372,19 +371,16 @@ export class ERC721__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'ERC721'
   }
 
-  override deploy(
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ERC721> {
+  override deploy(name_: string, symbol_: string, overrides?: Overrides & { from?: string }): Promise<ERC721> {
     return super.deploy(name_, symbol_, overrides || {}) as Promise<ERC721>
   }
   override getDeployTransaction(
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    name_: string,
+    symbol_: string,
+    overrides?: Overrides & { from?: string }
   ): TransactionRequest {
     return super.getDeployTransaction(name_, symbol_, overrides || {})
   }
@@ -394,6 +390,9 @@ export class ERC721__factory extends ContractFactory {
   override connect(signer: Signer): ERC721__factory {
     return super.connect(signer) as ERC721__factory
   }
+  static readonly contractName: 'ERC721'
+
+  public readonly contractName: 'ERC721'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

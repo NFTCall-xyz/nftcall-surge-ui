@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../common'
 import type { Reserve, ReserveInterface } from '../../contracts/Reserve'
 
 const _abi = [
@@ -106,12 +105,13 @@ export class Reserve__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'Reserve'
   }
 
-  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<Reserve> {
+  override deploy(overrides?: Overrides & { from?: string }): Promise<Reserve> {
     return super.deploy(overrides || {}) as Promise<Reserve>
   }
-  override getDeployTransaction(overrides?: Overrides & { from?: PromiseOrValue<string> }): TransactionRequest {
+  override getDeployTransaction(overrides?: Overrides & { from?: string }): TransactionRequest {
     return super.getDeployTransaction(overrides || {})
   }
   override attach(address: string): Reserve {
@@ -120,6 +120,9 @@ export class Reserve__factory extends ContractFactory {
   override connect(signer: Signer): Reserve__factory {
     return super.connect(signer) as Reserve__factory
   }
+  static readonly contractName: 'Reserve'
+
+  public readonly contractName: 'Reserve'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

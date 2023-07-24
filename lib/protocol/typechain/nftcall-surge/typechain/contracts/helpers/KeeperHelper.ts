@@ -18,16 +18,16 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export type OptionPositionStruct = {
-  state: PromiseOrValue<BigNumberish>
-  optionType: PromiseOrValue<BigNumberish>
-  payer: PromiseOrValue<string>
-  strikeId: PromiseOrValue<BigNumberish>
-  amount: PromiseOrValue<BigNumberish>
-  premium: PromiseOrValue<BigNumberish>
-  maximumPremium: PromiseOrValue<BigNumberish>
+  state: BigNumberish
+  optionType: BigNumberish
+  payer: string
+  strikeId: BigNumberish
+  amount: BigNumberish
+  premium: BigNumberish
+  maximumPremium: BigNumberish
 }
 
 export type OptionPositionStructOutput = [number, number, string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -41,10 +41,10 @@ export type OptionPositionStructOutput = [number, number, string, BigNumber, Big
 }
 
 export type StrikeStruct = {
-  entryPrice: PromiseOrValue<BigNumberish>
-  strikePrice: PromiseOrValue<BigNumberish>
-  duration: PromiseOrValue<BigNumberish>
-  expiry: PromiseOrValue<BigNumberish>
+  entryPrice: BigNumberish
+  strikePrice: BigNumberish
+  duration: BigNumberish
+  expiry: BigNumberish
 }
 
 export type StrikeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -86,36 +86,18 @@ export interface KeeperHelperInterface extends utils.Interface {
       | 'updateCollectionRisk'
   ): FunctionFragment
 
-  encodeFunctionData(
-    functionFragment: 'batchActivateOptions',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'batchCloseOptions',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'batchForceClosePendingPositions',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
-  ): string
-  encodeFunctionData(functionFragment: 'getActiveOptions', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'getExpiredOptions', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'getOptionData',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
-  ): string
-  encodeFunctionData(functionFragment: 'getPendingOptions', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'batchActivateOptions', values: [string, BigNumberish[]]): string
+  encodeFunctionData(functionFragment: 'batchCloseOptions', values: [string, BigNumberish[]]): string
+  encodeFunctionData(functionFragment: 'batchForceClosePendingPositions', values: [string, BigNumberish[]]): string
+  encodeFunctionData(functionFragment: 'getActiveOptions', values: [string]): string
+  encodeFunctionData(functionFragment: 'getExpiredOptions', values: [string]): string
+  encodeFunctionData(functionFragment: 'getOptionData', values: [string, BigNumberish[]]): string
+  encodeFunctionData(functionFragment: 'getPendingOptions', values: [string]): string
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'sumPNLWeightedDelta',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
-  ): string
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'updateCollectionRisk',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string
+  encodeFunctionData(functionFragment: 'sumPNLWeightedDelta', values: [string, BigNumberish[]]): string
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string
+  encodeFunctionData(functionFragment: 'updateCollectionRisk', values: [string, BigNumberish, BigNumberish]): string
 
   decodeFunctionResult(functionFragment: 'batchActivateOptions', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'batchCloseOptions', data: BytesLike): Result
@@ -146,6 +128,8 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>
 
 export interface KeeperHelper extends BaseContract {
+  contractName: 'KeeperHelper'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -169,36 +153,30 @@ export interface KeeperHelper extends BaseContract {
 
   functions: {
     batchActivateOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     batchCloseOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     batchForceClosePendingPositions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    getActiveOptions(
-      collection: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>
+    getActiveOptions(collection: string, overrides?: CallOverrides): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>
 
-    getExpiredOptions(
-      collection: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>
+    getExpiredOptions(collection: string, overrides?: CallOverrides): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>
 
     getOptionData(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<
       [OptionPositionStructOutput[], StrikeStructOutput[]] & {
@@ -207,59 +185,53 @@ export interface KeeperHelper extends BaseContract {
       }
     >
 
-    getPendingOptions(
-      collection: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>
+    getPendingOptions(collection: string, overrides?: CallOverrides): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>
 
     owner(overrides?: CallOverrides): Promise<[string]>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     sumPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { PNL: BigNumber; weightedDelta: BigNumber }>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
   }
 
   batchActivateOptions(
-    collection: PromiseOrValue<string>,
-    positionIds: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    positionIds: BigNumberish[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   batchCloseOptions(
-    collection: PromiseOrValue<string>,
-    positionIds: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    positionIds: BigNumberish[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   batchForceClosePendingPositions(
-    collection: PromiseOrValue<string>,
-    positionIds: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    positionIds: BigNumberish[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  getActiveOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>
+  getActiveOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber[]>
 
-  getExpiredOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>
+  getExpiredOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber[]>
 
   getOptionData(
-    collection: PromiseOrValue<string>,
-    positionIds: PromiseOrValue<BigNumberish>[],
+    collection: string,
+    positionIds: BigNumberish[],
     overrides?: CallOverrides
   ): Promise<
     [OptionPositionStructOutput[], StrikeStructOutput[]] & {
@@ -268,56 +240,45 @@ export interface KeeperHelper extends BaseContract {
     }
   >
 
-  getPendingOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>
+  getPendingOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber[]>
 
   owner(overrides?: CallOverrides): Promise<string>
 
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+  renounceOwnership(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   sumPNLWeightedDelta(
-    collection: PromiseOrValue<string>,
-    positionIds: PromiseOrValue<BigNumberish>[],
+    collection: string,
+    positionIds: BigNumberish[],
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { PNL: BigNumber; weightedDelta: BigNumber }>
 
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   updateCollectionRisk(
-    collection: PromiseOrValue<string>,
-    delta: PromiseOrValue<BigNumberish>,
-    PNL: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collection: string,
+    delta: BigNumberish,
+    PNL: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   callStatic: {
-    batchActivateOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides
-    ): Promise<void>
+    batchActivateOptions(collection: string, positionIds: BigNumberish[], overrides?: CallOverrides): Promise<void>
 
-    batchCloseOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides
-    ): Promise<void>
+    batchCloseOptions(collection: string, positionIds: BigNumberish[], overrides?: CallOverrides): Promise<void>
 
     batchForceClosePendingPositions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>
 
-    getActiveOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>
+    getActiveOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber[]>
 
-    getExpiredOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>
+    getExpiredOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber[]>
 
     getOptionData(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<
       [OptionPositionStructOutput[], StrikeStructOutput[]] & {
@@ -326,144 +287,127 @@ export interface KeeperHelper extends BaseContract {
       }
     >
 
-    getPendingOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>
+    getPendingOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber[]>
 
     owner(overrides?: CallOverrides): Promise<string>
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>
 
     sumPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { PNL: BigNumber; weightedDelta: BigNumber }>
 
-    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>
   }
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter
+    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter
   }
 
   estimateGas: {
     batchActivateOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     batchCloseOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     batchForceClosePendingPositions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    getActiveOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getActiveOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getExpiredOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getExpiredOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getOptionData(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    getOptionData(collection: string, positionIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>
 
-    getPendingOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getPendingOptions(collection: string, overrides?: CallOverrides): Promise<BigNumber>
 
     owner(overrides?: CallOverrides): Promise<BigNumber>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    sumPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    sumPNLWeightedDelta(collection: string, positionIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
   }
 
   populateTransaction: {
     batchActivateOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     batchCloseOptions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     batchForceClosePendingPositions(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      positionIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    getActiveOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getActiveOptions(collection: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getExpiredOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getExpiredOptions(collection: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     getOptionData(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
-    getPendingOptions(collection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getPendingOptions(collection: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     sumPNLWeightedDelta(
-      collection: PromiseOrValue<string>,
-      positionIds: PromiseOrValue<BigNumberish>[],
+      collection: string,
+      positionIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     updateCollectionRisk(
-      collection: PromiseOrValue<string>,
-      delta: PromiseOrValue<BigNumberish>,
-      PNL: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      collection: string,
+      delta: BigNumberish,
+      PNL: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
   }
 }

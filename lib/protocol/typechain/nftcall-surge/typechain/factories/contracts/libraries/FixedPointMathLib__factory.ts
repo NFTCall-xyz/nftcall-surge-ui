@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../../common'
 import type { FixedPointMathLib, FixedPointMathLibInterface } from '../../../contracts/libraries/FixedPointMathLib'
 
 const _abi = [
@@ -42,12 +41,13 @@ export class FixedPointMathLib__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'FixedPointMathLib'
   }
 
-  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<FixedPointMathLib> {
+  override deploy(overrides?: Overrides & { from?: string }): Promise<FixedPointMathLib> {
     return super.deploy(overrides || {}) as Promise<FixedPointMathLib>
   }
-  override getDeployTransaction(overrides?: Overrides & { from?: PromiseOrValue<string> }): TransactionRequest {
+  override getDeployTransaction(overrides?: Overrides & { from?: string }): TransactionRequest {
     return super.getDeployTransaction(overrides || {})
   }
   override attach(address: string): FixedPointMathLib {
@@ -56,6 +56,9 @@ export class FixedPointMathLib__factory extends ContractFactory {
   override connect(signer: Signer): FixedPointMathLib__factory {
     return super.connect(signer) as FixedPointMathLib__factory
   }
+  static readonly contractName: 'FixedPointMathLib'
+
+  public readonly contractName: 'FixedPointMathLib'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

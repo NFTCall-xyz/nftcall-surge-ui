@@ -18,7 +18,7 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export interface ILPTokenInterface extends utils.Interface {
   functions: {
@@ -50,18 +50,15 @@ export interface ILPTokenInterface extends utils.Interface {
       | 'vault'
   ): FunctionFragment
 
-  encodeFunctionData(functionFragment: 'collect', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'decreaseTotalAssets', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(
-    functionFragment: 'deposit',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(functionFragment: 'increaseTotalAssets', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(functionFragment: 'lockedBalanceOf', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'collect', values: [string]): string
+  encodeFunctionData(functionFragment: 'decreaseTotalAssets', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string, string]): string
+  encodeFunctionData(functionFragment: 'increaseTotalAssets', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'lockedBalanceOf', values: [string]): string
   encodeFunctionData(functionFragment: 'maximumVaultBalance', values?: undefined): string
-  encodeFunctionData(functionFragment: 'releaseTime', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'setMaximumVaultBalance', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(functionFragment: 'setMinimumAssetToShareRatio', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'releaseTime', values: [string]): string
+  encodeFunctionData(functionFragment: 'setMaximumVaultBalance', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setMinimumAssetToShareRatio', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'untitledAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
 
@@ -140,6 +137,8 @@ export type UpdateTotalAssetsEvent = TypedEvent<[BigNumber], UpdateTotalAssetsEv
 export type UpdateTotalAssetsEventFilter = TypedEventFilter<UpdateTotalAssetsEvent>
 
 export interface ILPToken extends BaseContract {
+  contractName: 'ILPToken'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -162,42 +161,33 @@ export interface ILPToken extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    collect(
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    decreaseTotalAssets(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      user: PromiseOrValue<string>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      user: string,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    increaseTotalAssets(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    increaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    lockedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
+    lockedBalanceOf(user: string, overrides?: CallOverrides): Promise<[BigNumber]>
 
     maximumVaultBalance(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    releaseTime(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
+    releaseTime(user: string, overrides?: CallOverrides): Promise<[BigNumber]>
 
     setMaximumVaultBalance(
-      maxVaultBalance: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      maxVaultBalance: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     setMinimumAssetToShareRatio(
-      ratio: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      ratio: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     untitledAssets(overrides?: CallOverrides): Promise<[BigNumber]>
@@ -205,42 +195,33 @@ export interface ILPToken extends BaseContract {
     vault(overrides?: CallOverrides): Promise<[string]>
   }
 
-  collect(
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  decreaseTotalAssets(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   deposit(
-    assets: PromiseOrValue<BigNumberish>,
-    user: PromiseOrValue<string>,
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    assets: BigNumberish,
+    user: string,
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  increaseTotalAssets(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  increaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  lockedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  lockedBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
   maximumVaultBalance(overrides?: CallOverrides): Promise<BigNumber>
 
-  releaseTime(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  releaseTime(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
   setMaximumVaultBalance(
-    maxVaultBalance: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    maxVaultBalance: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   setMinimumAssetToShareRatio(
-    ratio: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ratio: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
@@ -248,28 +229,23 @@ export interface ILPToken extends BaseContract {
   vault(overrides?: CallOverrides): Promise<string>
 
   callStatic: {
-    collect(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    collect(receiver: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    decreaseTotalAssets(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    decreaseTotalAssets(amount: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      user: PromiseOrValue<string>,
-      receiver: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    deposit(assets: BigNumberish, user: string, receiver: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    increaseTotalAssets(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    increaseTotalAssets(amount: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    lockedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    lockedBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
     maximumVaultBalance(overrides?: CallOverrides): Promise<BigNumber>
 
-    releaseTime(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    releaseTime(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    setMaximumVaultBalance(maxVaultBalance: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    setMaximumVaultBalance(maxVaultBalance: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    setMinimumAssetToShareRatio(ratio: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    setMinimumAssetToShareRatio(ratio: BigNumberish, overrides?: CallOverrides): Promise<void>
 
     untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -277,14 +253,14 @@ export interface ILPToken extends BaseContract {
   }
 
   filters: {
-    'Claim(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter
-    Claim(user?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter
+    'Claim(address,uint256)'(user?: string | null, amount?: null): ClaimEventFilter
+    Claim(user?: string | null, amount?: null): ClaimEventFilter
 
-    'Collect(address,uint256)'(receiver?: PromiseOrValue<string> | null, amount?: null): CollectEventFilter
-    Collect(receiver?: PromiseOrValue<string> | null, amount?: null): CollectEventFilter
+    'Collect(address,uint256)'(receiver?: string | null, amount?: null): CollectEventFilter
+    Collect(receiver?: string | null, amount?: null): CollectEventFilter
 
-    'Initialize(address,uint256)'(vault?: PromiseOrValue<string> | null, maxVaultBalance?: null): InitializeEventFilter
-    Initialize(vault?: PromiseOrValue<string> | null, maxVaultBalance?: null): InitializeEventFilter
+    'Initialize(address,uint256)'(vault?: string | null, maxVaultBalance?: null): InitializeEventFilter
+    Initialize(vault?: string | null, maxVaultBalance?: null): InitializeEventFilter
 
     'UpdateMaximumVaultBalance(uint256)'(maxVaultBalance?: null): UpdateMaximumVaultBalanceEventFilter
     UpdateMaximumVaultBalance(maxVaultBalance?: null): UpdateMaximumVaultBalanceEventFilter
@@ -297,43 +273,28 @@ export interface ILPToken extends BaseContract {
   }
 
   estimateGas: {
-    collect(
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    decreaseTotalAssets(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      user: PromiseOrValue<string>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      user: string,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    increaseTotalAssets(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    increaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    lockedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    lockedBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
     maximumVaultBalance(overrides?: CallOverrides): Promise<BigNumber>
 
-    releaseTime(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    releaseTime(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    setMaximumVaultBalance(
-      maxVaultBalance: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setMaximumVaultBalance(maxVaultBalance: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    setMinimumAssetToShareRatio(
-      ratio: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setMinimumAssetToShareRatio(ratio: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -341,42 +302,33 @@ export interface ILPToken extends BaseContract {
   }
 
   populateTransaction: {
-    collect(
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    decreaseTotalAssets(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      user: PromiseOrValue<string>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      user: string,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    increaseTotalAssets(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    increaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    lockedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    lockedBalanceOf(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     maximumVaultBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    releaseTime(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    releaseTime(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     setMaximumVaultBalance(
-      maxVaultBalance: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      maxVaultBalance: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     setMinimumAssetToShareRatio(
-      ratio: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      ratio: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     untitledAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>

@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../../common'
 import type { BlackScholes, BlackScholesInterface } from '../../../contracts/libraries/BlackScholes'
 
 const _abi = [
@@ -287,12 +286,13 @@ export class BlackScholes__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'BlackScholes'
   }
 
-  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BlackScholes> {
+  override deploy(overrides?: Overrides & { from?: string }): Promise<BlackScholes> {
     return super.deploy(overrides || {}) as Promise<BlackScholes>
   }
-  override getDeployTransaction(overrides?: Overrides & { from?: PromiseOrValue<string> }): TransactionRequest {
+  override getDeployTransaction(overrides?: Overrides & { from?: string }): TransactionRequest {
     return super.getDeployTransaction(overrides || {})
   }
   override attach(address: string): BlackScholes {
@@ -301,6 +301,9 @@ export class BlackScholes__factory extends ContractFactory {
   override connect(signer: Signer): BlackScholes__factory {
     return super.connect(signer) as BlackScholes__factory
   }
+  static readonly contractName: 'BlackScholes'
+
+  public readonly contractName: 'BlackScholes'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

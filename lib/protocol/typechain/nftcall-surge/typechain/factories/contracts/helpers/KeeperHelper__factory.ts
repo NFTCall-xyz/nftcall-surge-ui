@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../../common'
 import type { KeeperHelper, KeeperHelperInterface } from '../../../contracts/helpers/KeeperHelper'
 
 const _abi = [
@@ -341,18 +340,13 @@ export class KeeperHelper__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'KeeperHelper'
   }
 
-  override deploy(
-    vault_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<KeeperHelper> {
+  override deploy(vault_: string, overrides?: Overrides & { from?: string }): Promise<KeeperHelper> {
     return super.deploy(vault_, overrides || {}) as Promise<KeeperHelper>
   }
-  override getDeployTransaction(
-    vault_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): TransactionRequest {
+  override getDeployTransaction(vault_: string, overrides?: Overrides & { from?: string }): TransactionRequest {
     return super.getDeployTransaction(vault_, overrides || {})
   }
   override attach(address: string): KeeperHelper {
@@ -361,6 +355,9 @@ export class KeeperHelper__factory extends ContractFactory {
   override connect(signer: Signer): KeeperHelper__factory {
     return super.connect(signer) as KeeperHelper__factory
   }
+  static readonly contractName: 'KeeperHelper'
+
+  public readonly contractName: 'KeeperHelper'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

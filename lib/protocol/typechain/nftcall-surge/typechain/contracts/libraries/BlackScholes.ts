@@ -16,15 +16,15 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export declare namespace BlackScholes {
   export type BlackScholesInputsStruct = {
-    timeToExpirySec: PromiseOrValue<BigNumberish>
-    volatilityDecimal: PromiseOrValue<BigNumberish>
-    spotDecimal: PromiseOrValue<BigNumberish>
-    strikePriceDecimal: PromiseOrValue<BigNumberish>
-    rateDecimal: PromiseOrValue<BigNumberish>
+    timeToExpirySec: BigNumberish
+    volatilityDecimal: BigNumberish
+    spotDecimal: BigNumberish
+    strikePriceDecimal: BigNumberish
+    rateDecimal: BigNumberish
   }
 
   export type BlackScholesInputsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -36,12 +36,12 @@ export declare namespace BlackScholes {
   }
 
   export type PricesDeltaStdVegaStruct = {
-    callPrice: PromiseOrValue<BigNumberish>
-    putPrice: PromiseOrValue<BigNumberish>
-    callDelta: PromiseOrValue<BigNumberish>
-    putDelta: PromiseOrValue<BigNumberish>
-    vega: PromiseOrValue<BigNumberish>
-    stdVega: PromiseOrValue<BigNumberish>
+    callPrice: BigNumberish
+    putPrice: BigNumberish
+    callDelta: BigNumberish
+    putDelta: BigNumberish
+    vega: BigNumberish
+    stdVega: BigNumberish
   }
 
   export type PricesDeltaStdVegaStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -67,7 +67,7 @@ export interface BlackScholesInterface extends utils.Interface {
     nameOrSignatureOrTopic: '_stdNormalCDF' | 'delta' | 'optionPrices' | 'pricesDeltaStdVega' | 'vega'
   ): FunctionFragment
 
-  encodeFunctionData(functionFragment: '_stdNormalCDF', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: '_stdNormalCDF', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'delta', values: [BlackScholes.BlackScholesInputsStruct]): string
   encodeFunctionData(functionFragment: 'optionPrices', values: [BlackScholes.BlackScholesInputsStruct]): string
   encodeFunctionData(functionFragment: 'pricesDeltaStdVega', values: [BlackScholes.BlackScholesInputsStruct]): string
@@ -83,6 +83,8 @@ export interface BlackScholesInterface extends utils.Interface {
 }
 
 export interface BlackScholes extends BaseContract {
+  contractName: 'BlackScholes'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -105,7 +107,7 @@ export interface BlackScholes extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    _stdNormalCDF(x: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+    _stdNormalCDF(x: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
     delta(
       bsInput: BlackScholes.BlackScholesInputsStruct,
@@ -133,7 +135,7 @@ export interface BlackScholes extends BaseContract {
     ): Promise<[BigNumber] & { vegaDecimal: BigNumber }>
   }
 
-  _stdNormalCDF(x: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+  _stdNormalCDF(x: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
   delta(
     bsInput: BlackScholes.BlackScholesInputsStruct,
@@ -158,7 +160,7 @@ export interface BlackScholes extends BaseContract {
   vega(bsInput: BlackScholes.BlackScholesInputsStruct, overrides?: CallOverrides): Promise<BigNumber>
 
   callStatic: {
-    _stdNormalCDF(x: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    _stdNormalCDF(x: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     delta(
       bsInput: BlackScholes.BlackScholesInputsStruct,
@@ -186,7 +188,7 @@ export interface BlackScholes extends BaseContract {
   filters: {}
 
   estimateGas: {
-    _stdNormalCDF(x: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    _stdNormalCDF(x: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     delta(bsInput: BlackScholes.BlackScholesInputsStruct, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -198,7 +200,7 @@ export interface BlackScholes extends BaseContract {
   }
 
   populateTransaction: {
-    _stdNormalCDF(x: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    _stdNormalCDF(x: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     delta(bsInput: BlackScholes.BlackScholesInputsStruct, overrides?: CallOverrides): Promise<PopulatedTransaction>
 

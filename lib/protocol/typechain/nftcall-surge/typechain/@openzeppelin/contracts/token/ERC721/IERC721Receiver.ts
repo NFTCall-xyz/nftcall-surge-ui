@@ -18,7 +18,7 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../../../common'
 
 export interface IERC721ReceiverInterface extends utils.Interface {
   functions: {
@@ -27,10 +27,7 @@ export interface IERC721ReceiverInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'onERC721Received'): FunctionFragment
 
-  encodeFunctionData(
-    functionFragment: 'onERC721Received',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
-  ): string
+  encodeFunctionData(functionFragment: 'onERC721Received', values: [string, string, BigNumberish, BytesLike]): string
 
   decodeFunctionResult(functionFragment: 'onERC721Received', data: BytesLike): Result
 
@@ -38,6 +35,8 @@ export interface IERC721ReceiverInterface extends utils.Interface {
 }
 
 export interface IERC721Receiver extends BaseContract {
+  contractName: 'IERC721Receiver'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -61,28 +60,28 @@ export interface IERC721Receiver extends BaseContract {
 
   functions: {
     onERC721Received(
-      operator: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      from: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
   }
 
   onERC721Received(
-    operator: PromiseOrValue<string>,
-    from: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    operator: string,
+    from: string,
+    tokenId: BigNumberish,
+    data: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   callStatic: {
     onERC721Received(
-      operator: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
+      operator: string,
+      from: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>
   }
@@ -91,21 +90,21 @@ export interface IERC721Receiver extends BaseContract {
 
   estimateGas: {
     onERC721Received(
-      operator: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      from: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
   }
 
   populateTransaction: {
     onERC721Received(
-      operator: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      from: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
   }
 }

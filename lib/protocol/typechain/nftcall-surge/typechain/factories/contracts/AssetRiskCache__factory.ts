@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../common'
 import type { AssetRiskCache, AssetRiskCacheInterface } from '../../contracts/AssetRiskCache'
 
 const _abi = [
@@ -174,12 +173,13 @@ export class AssetRiskCache__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'AssetRiskCache'
   }
 
-  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<AssetRiskCache> {
+  override deploy(overrides?: Overrides & { from?: string }): Promise<AssetRiskCache> {
     return super.deploy(overrides || {}) as Promise<AssetRiskCache>
   }
-  override getDeployTransaction(overrides?: Overrides & { from?: PromiseOrValue<string> }): TransactionRequest {
+  override getDeployTransaction(overrides?: Overrides & { from?: string }): TransactionRequest {
     return super.getDeployTransaction(overrides || {})
   }
   override attach(address: string): AssetRiskCache {
@@ -188,6 +188,9 @@ export class AssetRiskCache__factory extends ContractFactory {
   override connect(signer: Signer): AssetRiskCache__factory {
     return super.connect(signer) as AssetRiskCache__factory
   }
+  static readonly contractName: 'AssetRiskCache'
+
+  public readonly contractName: 'AssetRiskCache'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

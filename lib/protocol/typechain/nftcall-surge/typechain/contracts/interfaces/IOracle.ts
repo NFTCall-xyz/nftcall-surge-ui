@@ -7,7 +7,7 @@ import type { FunctionFragment, Result } from '@ethersproject/abi'
 import type { Listener, Provider } from '@ethersproject/providers'
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export interface IOracleInterface extends utils.Interface {
   functions: {
@@ -18,9 +18,9 @@ export interface IOracleInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'getAssetPrice' | 'getAssetPriceAndVol' | 'getAssets'): FunctionFragment
 
-  encodeFunctionData(functionFragment: 'getAssetPrice', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'getAssetPriceAndVol', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'getAssets', values: [PromiseOrValue<string>[]]): string
+  encodeFunctionData(functionFragment: 'getAssetPrice', values: [string]): string
+  encodeFunctionData(functionFragment: 'getAssetPriceAndVol', values: [string]): string
+  encodeFunctionData(functionFragment: 'getAssets', values: [string[]]): string
 
   decodeFunctionResult(functionFragment: 'getAssetPrice', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getAssetPriceAndVol', data: BytesLike): Result
@@ -30,6 +30,8 @@ export interface IOracleInterface extends utils.Interface {
 }
 
 export interface IOracle extends BaseContract {
+  contractName: 'IOracle'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -52,54 +54,54 @@ export interface IOracle extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>
 
     getAssetPriceAndVol(
-      asset: PromiseOrValue<string>,
+      asset: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { price: BigNumber; vol: BigNumber }>
 
     getAssets(
-      assets: PromiseOrValue<string>[],
+      assets: string[],
       overrides?: CallOverrides
     ): Promise<[[BigNumber, BigNumber][]] & { prices: [BigNumber, BigNumber][] }>
   }
 
-  getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
   getAssetPriceAndVol(
-    asset: PromiseOrValue<string>,
+    asset: string,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { price: BigNumber; vol: BigNumber }>
 
-  getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
+  getAssets(assets: string[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
 
   callStatic: {
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
     getAssetPriceAndVol(
-      asset: PromiseOrValue<string>,
+      asset: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { price: BigNumber; vol: BigNumber }>
 
-    getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
+    getAssets(assets: string[], overrides?: CallOverrides): Promise<[BigNumber, BigNumber][]>
   }
 
   filters: {}
 
   estimateGas: {
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssetPriceAndVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    getAssetPriceAndVol(asset: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>
+    getAssets(assets: string[], overrides?: CallOverrides): Promise<BigNumber>
   }
 
   populateTransaction: {
-    getAssetPrice(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getAssetPriceAndVol(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssetPriceAndVol(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    getAssets(assets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getAssets(assets: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>
   }
 }

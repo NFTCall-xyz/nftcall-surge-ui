@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../../common'
 import type { OptionToken, OptionTokenInterface } from '../../../contracts/tokens/OptionToken'
 
 const _abi = [
@@ -1021,23 +1020,24 @@ export class OptionToken__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'OptionToken'
   }
 
   override deploy(
-    collectionAddress: PromiseOrValue<string>,
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    baseURI: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collectionAddress: string,
+    name_: string,
+    symbol_: string,
+    baseURI: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<OptionToken> {
     return super.deploy(collectionAddress, name_, symbol_, baseURI, overrides || {}) as Promise<OptionToken>
   }
   override getDeployTransaction(
-    collectionAddress: PromiseOrValue<string>,
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    baseURI: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    collectionAddress: string,
+    name_: string,
+    symbol_: string,
+    baseURI: string,
+    overrides?: Overrides & { from?: string }
   ): TransactionRequest {
     return super.getDeployTransaction(collectionAddress, name_, symbol_, baseURI, overrides || {})
   }
@@ -1047,6 +1047,9 @@ export class OptionToken__factory extends ContractFactory {
   override connect(signer: Signer): OptionToken__factory {
     return super.connect(signer) as OptionToken__factory
   }
+  static readonly contractName: 'OptionToken'
+
+  public readonly contractName: 'OptionToken'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

@@ -18,16 +18,16 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export type OptionPositionStruct = {
-  state: PromiseOrValue<BigNumberish>
-  optionType: PromiseOrValue<BigNumberish>
-  payer: PromiseOrValue<string>
-  strikeId: PromiseOrValue<BigNumberish>
-  amount: PromiseOrValue<BigNumberish>
-  premium: PromiseOrValue<BigNumberish>
-  maximumPremium: PromiseOrValue<BigNumberish>
+  state: BigNumberish
+  optionType: BigNumberish
+  payer: string
+  strikeId: BigNumberish
+  amount: BigNumberish
+  premium: BigNumberish
+  maximumPremium: BigNumberish
 }
 
 export type OptionPositionStructOutput = [number, number, string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -116,73 +116,48 @@ export interface OptionTokenInterface extends utils.Interface {
       | 'vault'
   ): FunctionFragment
 
-  encodeFunctionData(
-    functionFragment: 'activePosition',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'approve',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'closePosition', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'activePosition', values: [BigNumberish, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string
+  encodeFunctionData(functionFragment: 'closePosition', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'collection', values?: undefined): string
-  encodeFunctionData(functionFragment: 'forceClosePendingPosition', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string
-  encodeFunctionData(functionFragment: 'lockedValue', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'forceClosePendingPosition', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'initialize', values: [string]): string
+  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string
+  encodeFunctionData(functionFragment: 'lockedValue', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'name', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'openPosition',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
-  encodeFunctionData(functionFragment: 'optionPosition', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(functionFragment: 'optionPositionState', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'optionPosition', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'optionPositionState', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string
-  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, string, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
+    values: [string, string, BigNumberish, BytesLike]
   ): string
-  encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
-  ): string
-  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string
+  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [string]): string
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string
-  encodeFunctionData(functionFragment: 'tokenByIndex', values: [PromiseOrValue<BigNumberish>]): string
-  encodeFunctionData(
-    functionFragment: 'tokenOfOwnerByIndex',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'tokenByIndex', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'tokenOfOwnerByIndex', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'totalAmount()', values?: undefined): string
-  encodeFunctionData(functionFragment: 'totalAmount(uint8)', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'totalAmount(uint8)', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string
-  encodeFunctionData(functionFragment: 'totalValue(uint8)', values: [PromiseOrValue<BigNumberish>]): string
+  encodeFunctionData(functionFragment: 'totalValue(uint8)', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'totalValue()', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'transferFrom',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string
+  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
 
   decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
@@ -333,6 +308,8 @@ export type UpdateBaseURIEvent = TypedEvent<[string], UpdateBaseURIEventObject>
 export type UpdateBaseURIEventFilter = TypedEventFilter<UpdateBaseURIEvent>
 
 export interface OptionToken extends BaseContract {
+  contractName: 'OptionToken'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -356,424 +333,335 @@ export interface OptionToken extends BaseContract {
 
   functions: {
     activePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      premium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      positionId: BigNumberish,
+      premium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    approve(to: string, tokenId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>
 
-    closePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     collection(overrides?: CallOverrides): Promise<[string]>
 
     forceClosePendingPosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>
+    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
 
-    initialize(
-      vaultAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    initialize(vaultAddress: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>
+    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>
 
-    lockedValue(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+    lockedValue(positionId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
     name(overrides?: CallOverrides): Promise<[string]>
 
     openPosition(
-      payer: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikeId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      payer: string,
+      to: string,
+      optionType: BigNumberish,
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     optionPosition(
-      positionId: PromiseOrValue<BigNumberish>,
+      positionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[OptionPositionStructOutput] & { position: OptionPositionStructOutput }>
 
-    optionPositionState(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[number] & { state: number }>
+    optionPositionState(positionId: BigNumberish, overrides?: CallOverrides): Promise<[number] & { state: number }>
 
     owner(overrides?: CallOverrides): Promise<[string]>
 
-    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>
+    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     'safeTransferFrom(address,address,uint256)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    setBaseURI(
-      baseURI: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    setBaseURI(baseURI: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>
 
     symbol(overrides?: CallOverrides): Promise<[string]>
 
-    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
-    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
 
     'totalAmount()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+    'totalAmount(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>
+    'totalValue(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>
 
     'totalValue()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     vault(overrides?: CallOverrides): Promise<[string]>
   }
 
   activePosition(
-    positionId: PromiseOrValue<BigNumberish>,
-    premium: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    positionId: BigNumberish,
+    premium: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  approve(
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  approve(to: string, tokenId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>
 
-  closePosition(
-    positionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   collection(overrides?: CallOverrides): Promise<string>
 
   forceClosePendingPosition(
-    positionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    positionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+  getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
 
-  initialize(
-    vaultAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  initialize(vaultAddress: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  isApprovedForAll(
-    owner: PromiseOrValue<string>,
-    operator: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>
+  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>
 
-  lockedValue(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+  lockedValue(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
   name(overrides?: CallOverrides): Promise<string>
 
   openPosition(
-    payer: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    optionType: PromiseOrValue<BigNumberish>,
-    strikeId: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    maximumPremium: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    payer: string,
+    to: string,
+    optionType: BigNumberish,
+    strikeId: BigNumberish,
+    amount: BigNumberish,
+    maximumPremium: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  optionPosition(
-    positionId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<OptionPositionStructOutput>
+  optionPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<OptionPositionStructOutput>
 
-  optionPositionState(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<number>
+  optionPositionState(positionId: BigNumberish, overrides?: CallOverrides): Promise<number>
 
   owner(overrides?: CallOverrides): Promise<string>
 
-  ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
 
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>
+  renounceOwnership(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   'safeTransferFrom(address,address,uint256)'(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    tokenId: BigNumberish,
+    data: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
   setApprovalForAll(
-    operator: PromiseOrValue<string>,
-    approved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    operator: string,
+    approved: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  setBaseURI(
-    baseURI: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  setBaseURI(baseURI: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>
+  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>
 
   symbol(overrides?: CallOverrides): Promise<string>
 
-  tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+  tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-  tokenOfOwnerByIndex(
-    owner: PromiseOrValue<string>,
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>
+  tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-  tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
 
   'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
 
-  'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+  'totalAmount(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
-  'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+  'totalValue(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
   'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
   transferFrom(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
+  transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   vault(overrides?: CallOverrides): Promise<string>
 
   callStatic: {
-    activePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      premium: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    activePosition(positionId: BigNumberish, premium: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    approve(to: PromiseOrValue<string>, tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    approve(to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    closePosition(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    closePosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
     collection(overrides?: CallOverrides): Promise<string>
 
-    forceClosePendingPosition(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>
+    forceClosePendingPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
 
-    initialize(vaultAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    initialize(vaultAddress: string, overrides?: CallOverrides): Promise<void>
 
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>
+    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>
 
-    lockedValue(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    lockedValue(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     name(overrides?: CallOverrides): Promise<string>
 
     openPosition(
-      payer: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikeId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
+      payer: string,
+      to: string,
+      optionType: BigNumberish,
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
-    optionPosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<OptionPositionStructOutput>
+    optionPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<OptionPositionStructOutput>
 
-    optionPositionState(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<number>
+    optionPositionState(positionId: BigNumberish, overrides?: CallOverrides): Promise<number>
 
     owner(overrides?: CallOverrides): Promise<string>
 
-    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>
 
     'safeTransferFrom(address,address,uint256)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>
 
-    setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>
 
-    setBaseURI(baseURI: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    setBaseURI(baseURI: string, overrides?: CallOverrides): Promise<void>
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>
 
     symbol(overrides?: CallOverrides): Promise<string>
 
-    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
 
     'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
-    'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    'totalValue(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>
+    transferFrom(from: string, to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
-    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>
+    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>
 
     vault(overrides?: CallOverrides): Promise<string>
   }
 
   filters: {
-    'ActivePosition(uint256,uint256)'(
-      positionId?: PromiseOrValue<BigNumberish> | null,
-      premium?: null
-    ): ActivePositionEventFilter
-    ActivePosition(positionId?: PromiseOrValue<BigNumberish> | null, premium?: null): ActivePositionEventFilter
+    'ActivePosition(uint256,uint256)'(positionId?: BigNumberish | null, premium?: null): ActivePositionEventFilter
+    ActivePosition(positionId?: BigNumberish | null, premium?: null): ActivePositionEventFilter
 
     'Approval(address,address,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      approved?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
+      owner?: string | null,
+      approved?: string | null,
+      tokenId?: BigNumberish | null
     ): ApprovalEventFilter
-    Approval(
-      owner?: PromiseOrValue<string> | null,
-      approved?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): ApprovalEventFilter
+    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: PromiseOrValue<string> | null,
-      operator?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      operator?: string | null,
       approved?: null
     ): ApprovalForAllEventFilter
-    ApprovalForAll(
-      owner?: PromiseOrValue<string> | null,
-      operator?: PromiseOrValue<string> | null,
-      approved?: null
-    ): ApprovalForAllEventFilter
+    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter
 
-    'ClosePosition(uint256)'(positionId?: PromiseOrValue<BigNumberish> | null): ClosePositionEventFilter
-    ClosePosition(positionId?: PromiseOrValue<BigNumberish> | null): ClosePositionEventFilter
+    'ClosePosition(uint256)'(positionId?: BigNumberish | null): ClosePositionEventFilter
+    ClosePosition(positionId?: BigNumberish | null): ClosePositionEventFilter
 
-    'ForceClosePosition(uint256)'(positionId?: PromiseOrValue<BigNumberish> | null): ForceClosePositionEventFilter
-    ForceClosePosition(positionId?: PromiseOrValue<BigNumberish> | null): ForceClosePositionEventFilter
+    'ForceClosePosition(uint256)'(positionId?: BigNumberish | null): ForceClosePositionEventFilter
+    ForceClosePosition(positionId?: BigNumberish | null): ForceClosePositionEventFilter
 
-    'Initialize(address)'(vault?: PromiseOrValue<string> | null): InitializeEventFilter
-    Initialize(vault?: PromiseOrValue<string> | null): InitializeEventFilter
+    'Initialize(address)'(vault?: string | null): InitializeEventFilter
+    Initialize(vault?: string | null): InitializeEventFilter
 
     'OpenPosition(address,address,uint256,uint8,uint256,uint256,uint256)'(
       payer?: null,
-      to?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      to?: string | null,
+      positionId?: BigNumberish | null,
       optionType?: null,
       strikeId?: null,
       amount?: null,
@@ -781,8 +669,8 @@ export interface OptionToken extends BaseContract {
     ): OpenPositionEventFilter
     OpenPosition(
       payer?: null,
-      to?: PromiseOrValue<string> | null,
-      positionId?: PromiseOrValue<BigNumberish> | null,
+      to?: string | null,
+      positionId?: BigNumberish | null,
       optionType?: null,
       strikeId?: null,
       amount?: null,
@@ -790,24 +678,17 @@ export interface OptionToken extends BaseContract {
     ): OpenPositionEventFilter
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter
+    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter
 
     'Transfer(address,address,uint256)'(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
+      from?: string | null,
+      to?: string | null,
+      tokenId?: BigNumberish | null
     ): TransferEventFilter
-    Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): TransferEventFilter
+    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter
 
     'UpdateBaseURI(string)'(baseURI?: null): UpdateBaseURIEventFilter
     UpdateBaseURI(baseURI?: null): UpdateBaseURIEventFilter
@@ -815,267 +696,207 @@ export interface OptionToken extends BaseContract {
 
   estimateGas: {
     activePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      premium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      positionId: BigNumberish,
+      premium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    approve(to: string, tokenId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    closePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     collection(overrides?: CallOverrides): Promise<BigNumber>
 
-    forceClosePendingPosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    forceClosePendingPosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    initialize(
-      vaultAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    initialize(vaultAddress: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    lockedValue(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    lockedValue(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     name(overrides?: CallOverrides): Promise<BigNumber>
 
     openPosition(
-      payer: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikeId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      payer: string,
+      to: string,
+      optionType: BigNumberish,
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    optionPosition(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    optionPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    optionPositionState(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    optionPositionState(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     owner(overrides?: CallOverrides): Promise<BigNumber>
 
-    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     'safeTransferFrom(address,address,uint256)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    setBaseURI(
-      baseURI: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    setBaseURI(baseURI: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>
 
-    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
-    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     'totalAmount()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    'totalAmount(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    'totalAmount(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>
 
-    'totalValue(uint8)'(optionType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>
+    'totalValue(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
     'totalValue()'(overrides?: CallOverrides): Promise<BigNumber>
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<BigNumber>
   }
 
   populateTransaction: {
     activePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      premium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      positionId: BigNumberish,
+      premium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    approve(to: string, tokenId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    closePosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     collection(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     forceClosePendingPosition(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      positionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    initialize(
-      vaultAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    initialize(vaultAddress: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    lockedValue(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    lockedValue(positionId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     openPosition(
-      payer: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      optionType: PromiseOrValue<BigNumberish>,
-      strikeId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      maximumPremium: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      payer: string,
+      to: string,
+      optionType: BigNumberish,
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      maximumPremium: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    optionPosition(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    optionPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    optionPositionState(
-      positionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    optionPositionState(positionId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>
+    renounceOwnership(overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     'safeTransferFrom(address,address,uint256)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    setBaseURI(
-      baseURI: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    setBaseURI(baseURI: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     'totalAmount()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    'totalAmount(uint8)'(
-      optionType: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    'totalAmount(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    'totalValue(uint8)'(
-      optionType: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    'totalValue(uint8)'(optionType: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     'totalValue()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
+    transferOwnership(newOwner: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>
   }

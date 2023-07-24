@@ -7,7 +7,6 @@ import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
 import type { ERC20, ERC20Interface } from '../../../../../@openzeppelin/contracts/token/ERC20/ERC20'
-import type { PromiseOrValue } from '../../../../../common'
 
 const _abi = [
   {
@@ -312,19 +311,16 @@ export class ERC20__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'ERC20'
   }
 
-  override deploy(
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ERC20> {
+  override deploy(name_: string, symbol_: string, overrides?: Overrides & { from?: string }): Promise<ERC20> {
     return super.deploy(name_, symbol_, overrides || {}) as Promise<ERC20>
   }
   override getDeployTransaction(
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    name_: string,
+    symbol_: string,
+    overrides?: Overrides & { from?: string }
   ): TransactionRequest {
     return super.getDeployTransaction(name_, symbol_, overrides || {})
   }
@@ -334,6 +330,9 @@ export class ERC20__factory extends ContractFactory {
   override connect(signer: Signer): ERC20__factory {
     return super.connect(signer) as ERC20__factory
   }
+  static readonly contractName: 'ERC20'
+
+  public readonly contractName: 'ERC20'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

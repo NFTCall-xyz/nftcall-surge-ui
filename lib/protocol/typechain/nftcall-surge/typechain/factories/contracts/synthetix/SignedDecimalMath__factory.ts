@@ -6,7 +6,6 @@
 import type { Provider, TransactionRequest } from '@ethersproject/providers'
 import { Contract, ContractFactory, type Overrides, Signer, utils } from 'ethers'
 
-import type { PromiseOrValue } from '../../../common'
 import type { SignedDecimalMath, SignedDecimalMathInterface } from '../../../contracts/synthetix/SignedDecimalMath'
 
 const _abi = [
@@ -105,12 +104,13 @@ export class SignedDecimalMath__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
+    this.contractName = 'SignedDecimalMath'
   }
 
-  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<SignedDecimalMath> {
+  override deploy(overrides?: Overrides & { from?: string }): Promise<SignedDecimalMath> {
     return super.deploy(overrides || {}) as Promise<SignedDecimalMath>
   }
-  override getDeployTransaction(overrides?: Overrides & { from?: PromiseOrValue<string> }): TransactionRequest {
+  override getDeployTransaction(overrides?: Overrides & { from?: string }): TransactionRequest {
     return super.getDeployTransaction(overrides || {})
   }
   override attach(address: string): SignedDecimalMath {
@@ -119,6 +119,9 @@ export class SignedDecimalMath__factory extends ContractFactory {
   override connect(signer: Signer): SignedDecimalMath__factory {
     return super.connect(signer) as SignedDecimalMath__factory
   }
+  static readonly contractName: 'SignedDecimalMath'
+
+  public readonly contractName: 'SignedDecimalMath'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

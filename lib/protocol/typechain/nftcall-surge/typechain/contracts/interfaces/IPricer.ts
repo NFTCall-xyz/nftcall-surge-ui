@@ -16,16 +16,16 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export declare namespace BlackScholes {
   export type PricesDeltaStdVegaStruct = {
-    callPrice: PromiseOrValue<BigNumberish>
-    putPrice: PromiseOrValue<BigNumberish>
-    callDelta: PromiseOrValue<BigNumberish>
-    putDelta: PromiseOrValue<BigNumberish>
-    vega: PromiseOrValue<BigNumberish>
-    stdVega: PromiseOrValue<BigNumberish>
+    callPrice: BigNumberish
+    putPrice: BigNumberish
+    callDelta: BigNumberish
+    putDelta: BigNumberish
+    vega: BigNumberish
+    stdVega: BigNumberish
   }
 
   export type PricesDeltaStdVegaStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -58,49 +58,23 @@ export interface IPricerInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'delta',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'getAdjustedVol',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'getPremiumDeltaStdVega',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'optionPrices',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'optionPricesDeltaStdVega',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
 
   decodeFunctionResult(functionFragment: 'delta', data: BytesLike): Result
@@ -113,6 +87,8 @@ export interface IPricerInterface extends utils.Interface {
 }
 
 export interface IPricer extends BaseContract {
+  contractName: 'IPricer'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -136,27 +112,27 @@ export interface IPricer extends BaseContract {
 
   functions: {
     delta(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      druation: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
     getAdjustedVol(
-      asset: PromiseOrValue<string>,
-      ot: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      lockValue: PromiseOrValue<BigNumberish>,
+      asset: string,
+      ot: BigNumberish,
+      K: BigNumberish,
+      lockValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { adjustedVol: BigNumber }>
 
     getPremiumDeltaStdVega(
-      optionType: PromiseOrValue<BigNumberish>,
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      optionType: BigNumberish,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -168,44 +144,44 @@ export interface IPricer extends BaseContract {
     >
 
     optionPrices(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { call: BigNumber; put: BigNumber }>
 
     optionPricesDeltaStdVega(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BlackScholes.PricesDeltaStdVegaStructOutput]>
   }
 
   delta(
-    S: PromiseOrValue<BigNumberish>,
-    K: PromiseOrValue<BigNumberish>,
-    vol: PromiseOrValue<BigNumberish>,
-    druation: PromiseOrValue<BigNumberish>,
+    S: BigNumberish,
+    K: BigNumberish,
+    vol: BigNumberish,
+    druation: BigNumberish,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
   getAdjustedVol(
-    asset: PromiseOrValue<string>,
-    ot: PromiseOrValue<BigNumberish>,
-    K: PromiseOrValue<BigNumberish>,
-    lockValue: PromiseOrValue<BigNumberish>,
+    asset: string,
+    ot: BigNumberish,
+    K: BigNumberish,
+    lockValue: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
   getPremiumDeltaStdVega(
-    optionType: PromiseOrValue<BigNumberish>,
-    S: PromiseOrValue<BigNumberish>,
-    K: PromiseOrValue<BigNumberish>,
-    vol: PromiseOrValue<BigNumberish>,
-    duration: PromiseOrValue<BigNumberish>,
+    optionType: BigNumberish,
+    S: BigNumberish,
+    K: BigNumberish,
+    vol: BigNumberish,
+    duration: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -217,44 +193,44 @@ export interface IPricer extends BaseContract {
   >
 
   optionPrices(
-    S: PromiseOrValue<BigNumberish>,
-    K: PromiseOrValue<BigNumberish>,
-    vol: PromiseOrValue<BigNumberish>,
-    duration: PromiseOrValue<BigNumberish>,
+    S: BigNumberish,
+    K: BigNumberish,
+    vol: BigNumberish,
+    duration: BigNumberish,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { call: BigNumber; put: BigNumber }>
 
   optionPricesDeltaStdVega(
-    S: PromiseOrValue<BigNumberish>,
-    K: PromiseOrValue<BigNumberish>,
-    vol: PromiseOrValue<BigNumberish>,
-    duration: PromiseOrValue<BigNumberish>,
+    S: BigNumberish,
+    K: BigNumberish,
+    vol: BigNumberish,
+    duration: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BlackScholes.PricesDeltaStdVegaStructOutput>
 
   callStatic: {
     delta(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      druation: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
     getAdjustedVol(
-      asset: PromiseOrValue<string>,
-      ot: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      lockValue: PromiseOrValue<BigNumberish>,
+      asset: string,
+      ot: BigNumberish,
+      K: BigNumberish,
+      lockValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getPremiumDeltaStdVega(
-      optionType: PromiseOrValue<BigNumberish>,
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      optionType: BigNumberish,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -266,18 +242,18 @@ export interface IPricer extends BaseContract {
     >
 
     optionPrices(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { call: BigNumber; put: BigNumber }>
 
     optionPricesDeltaStdVega(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BlackScholes.PricesDeltaStdVegaStructOutput>
   }
@@ -286,86 +262,86 @@ export interface IPricer extends BaseContract {
 
   estimateGas: {
     delta(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      druation: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getAdjustedVol(
-      asset: PromiseOrValue<string>,
-      ot: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      lockValue: PromiseOrValue<BigNumberish>,
+      asset: string,
+      ot: BigNumberish,
+      K: BigNumberish,
+      lockValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getPremiumDeltaStdVega(
-      optionType: PromiseOrValue<BigNumberish>,
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      optionType: BigNumberish,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     optionPrices(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     optionPricesDeltaStdVega(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
   }
 
   populateTransaction: {
     delta(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      druation: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getAdjustedVol(
-      asset: PromiseOrValue<string>,
-      ot: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      lockValue: PromiseOrValue<BigNumberish>,
+      asset: string,
+      ot: BigNumberish,
+      K: BigNumberish,
+      lockValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getPremiumDeltaStdVega(
-      optionType: PromiseOrValue<BigNumberish>,
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      optionType: BigNumberish,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     optionPrices(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     optionPricesDeltaStdVega(
-      S: PromiseOrValue<BigNumberish>,
-      K: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
   }

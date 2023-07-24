@@ -16,7 +16,7 @@ import type {
   utils,
 } from 'ethers'
 
-import type { OnEvent, PromiseOrValue, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
+import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../../common'
 
 export interface IPremiumInterface extends utils.Interface {
   functions: {
@@ -29,21 +29,11 @@ export interface IPremiumInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'getCallPremium',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'getPutPremium',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(functionFragment: 'precision', values?: undefined): string
 
@@ -55,6 +45,8 @@ export interface IPremiumInterface extends utils.Interface {
 }
 
 export interface IPremium extends BaseContract {
+  contractName: 'IPremium'
+
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
@@ -78,18 +70,18 @@ export interface IPremium extends BaseContract {
 
   functions: {
     getCallPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>
 
     getPutPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>
 
@@ -97,18 +89,18 @@ export interface IPremium extends BaseContract {
   }
 
   getCallPremium(
-    entryPrice: PromiseOrValue<BigNumberish>,
-    strikePrice: PromiseOrValue<BigNumberish>,
-    duration: PromiseOrValue<BigNumberish>,
-    vol: PromiseOrValue<BigNumberish>,
+    entryPrice: BigNumberish,
+    strikePrice: BigNumberish,
+    duration: BigNumberish,
+    vol: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
   getPutPremium(
-    entryPrice: PromiseOrValue<BigNumberish>,
-    strikePrice: PromiseOrValue<BigNumberish>,
-    duration: PromiseOrValue<BigNumberish>,
-    vol: PromiseOrValue<BigNumberish>,
+    entryPrice: BigNumberish,
+    strikePrice: BigNumberish,
+    duration: BigNumberish,
+    vol: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>
 
@@ -116,18 +108,18 @@ export interface IPremium extends BaseContract {
 
   callStatic: {
     getCallPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getPutPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -138,18 +130,18 @@ export interface IPremium extends BaseContract {
 
   estimateGas: {
     getCallPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
     getPutPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -158,18 +150,18 @@ export interface IPremium extends BaseContract {
 
   populateTransaction: {
     getCallPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     getPutPremium(
-      entryPrice: PromiseOrValue<BigNumberish>,
-      strikePrice: PromiseOrValue<BigNumberish>,
-      duration: PromiseOrValue<BigNumberish>,
-      vol: PromiseOrValue<BigNumberish>,
+      entryPrice: BigNumberish,
+      strikePrice: BigNumberish,
+      duration: BigNumberish,
+      vol: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
