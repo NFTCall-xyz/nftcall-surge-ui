@@ -12,7 +12,7 @@
   "MAYC": "0x88898d1596204a25c93ce4832d3fb98a99058fe8",
   "KeeperHelper": "0xf650f5e41a4b1cac27fb90a0ca5464954cc4adb8",
   "BackstopPool": "0xbce6833f72806e6757d072400980fd74446cf31d",
-  "SurgeUI": "0x5aa376f84338f2d8d0ec66470f983ace87ba0682",
+  "SurgeUI": "0xd4c1b23e3cc95d19b46afcee1239b52473a8b6cc",
   "markets": {
     "BAYC": {
       "OptionToken": "0x277cc2f9Cddb23f419493DE6a34910C719E469Fd"
