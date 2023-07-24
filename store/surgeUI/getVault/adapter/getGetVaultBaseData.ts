@@ -10,6 +10,7 @@ export type GetVaultBaseData = {
     wETHAllowance: string
     lockedBalance: string
     maxWithdraw: string
+    maxRedeem: string
     releaseTime: string
   }
 
@@ -28,6 +29,7 @@ export const getGetVaultBaseData = (value: VaultStructOutput): GetVaultBaseData 
       'balance',
       'allowance',
       'lockedBalance',
+      'maxRedeem',
       'maxWithdraw',
       'releaseTime',
       'wETHBalance',

@@ -10,6 +10,7 @@ export type GetVaultData = {
     wETHAllowance: BN
     lockedBalance: BN
     maxWithdraw: BN
+    maxRedeem: BN
     releaseTime: number
   }
 
@@ -28,7 +29,7 @@ export const getGetVaultData = (getVaultBaseData: GetVaultBaseData): GetVaultDat
     lpToken: {
       ...getWeiToValueBN(
         getVaultBaseData.lpToken,
-        ['balance', 'allowance', 'lockedBalance', 'maxWithdraw', 'wETHBalance', 'wETHAllowance'],
+        ['balance', 'allowance', 'lockedBalance', 'maxWithdraw', 'maxRedeem', 'wETHBalance', 'wETHAllowance'],
         18
       ),
       ...getNumber(getVaultBaseData.lpToken, ['releaseTime']),

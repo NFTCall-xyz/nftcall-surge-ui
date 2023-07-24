@@ -24,7 +24,7 @@ const Withdraw: FC = () => {
   const {
     theme,
     tTabs,
-    tabs: { maxWithdraw, ncETHPrice, withdraw, allowance, approveWithdraw },
+    tabs: { maxRedeem, ncETHPrice, withdraw, allowance, approveWithdraw },
   } = usePageEarn()
 
   const [value, setValue] = useImmer(0)
@@ -51,20 +51,20 @@ const Withdraw: FC = () => {
                 <FlexBetween flexDirection={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'start', sm: 'center' }}>
                   <H5>Redeem Amount</H5>
                   <Tiny color="text.secondary">
-                    available: {<NumberDisplay value={maxWithdraw} options="number" />} ncETH
+                    available: {<NumberDisplay value={maxRedeem} options="number" />} ncETH
                   </Tiny>
                 </FlexBetween>
                 <NumberInput
                   value={value}
                   onChange={(e: any) => {
-                    if (e.target.value > maxWithdraw.toNumber()) {
-                      setValue(maxWithdraw.toNumber())
+                    if (e.target.value > maxRedeem.toNumber()) {
+                      setValue(maxRedeem.toNumber())
                     } else {
                       setValue(e.target.value)
                     }
                   }}
                   onMax={() => {
-                    setValue(maxWithdraw.toNumber())
+                    setValue(maxRedeem.toNumber())
                   }}
                   endAdornment={'ncETH'}
                 />

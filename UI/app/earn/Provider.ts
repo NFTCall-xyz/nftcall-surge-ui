@@ -86,7 +86,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
   const {
     updateVaults,
     vault: {
-      lpToken: { allowance, wETHBalance, wETHAllowance, maxWithdraw },
+      lpToken: { allowance, wETHBalance, wETHAllowance, maxRedeem },
     },
   } = useVault()
   const { updateNFTCollections } = useNFTCollections()
@@ -238,7 +238,7 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
     allowance,
     wETHBalance,
     wETHAllowance,
-    maxWithdraw,
+    maxRedeem,
     ncETHPrice,
   }
 }
