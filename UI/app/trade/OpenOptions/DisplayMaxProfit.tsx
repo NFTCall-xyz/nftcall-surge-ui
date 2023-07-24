@@ -24,7 +24,7 @@ const DisplayMaxProfit: FC = () => {
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
     const exerciseFee = BN.min(
-      price.times(PROFIT_FEE_RATE),
+      price && price.times(PROFIT_FEE_RATE),
       toBN(strikePrice.value).times(amount.value).times(NOMINAL_FEE_RATE)
     )
     return <NumberDisplay value={price ? price.times(amount.value).minus(premium.value).minus(exerciseFee) : 0} />
