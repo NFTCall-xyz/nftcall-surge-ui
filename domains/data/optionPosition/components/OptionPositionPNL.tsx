@@ -40,7 +40,7 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
   const { post, cancel, loading } = useGetPositionPNLWeightedDelta()
 
   const { PNL, PNLRate } = useMemo(() => {
-    if (PNLInner) return { PNL: toBN(PNLInner), PNLRate: toBN(PNLRateInner) }
+    if (safeGet(() => !PNLInner.isZero())) return { PNL: toBN(PNLInner), PNLRate: toBN(PNLRateInner) }
     let PNL = toBN(0)
     let PNLRate = toBN(0)
 
