@@ -1,4 +1,4 @@
-import { CardHeader } from '@mui/material'
+import { CardHeader, CardContent } from '@mui/material'
 import Card from '@mui/material/Card'
 
 import { H3 } from 'components/Typography'
@@ -15,7 +15,9 @@ const Positions: FC<PositionsProps> = () => {
   return (
     <Card>
       <CardHeader title={<H3>{tCollectionStats('title')}</H3>} />
-      <BasicTable {...table} />
+      <CardContent sx={{ paddingX: 3, paddingY: 0 }}>
+        <BasicTable {...table} />
+      </CardContent>
     </Card>
   )
 }

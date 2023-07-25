@@ -82,7 +82,7 @@ export const useTable = ({ isActive }: PositionsProps): BasicTableProps => {
             cellRenderer: tokenIconCellRenderer,
           },
           {
-            dataKey: isActive ? 'floorPrice' : 'settlementPrice',
+            dataKey: isActive ? 'oraclePrice' : 'settlementPrice',
             width: 200,
             headerRenderer,
             cellRenderer: PriceCellRenderer,

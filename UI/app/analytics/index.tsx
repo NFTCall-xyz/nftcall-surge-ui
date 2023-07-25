@@ -20,17 +20,17 @@ const Analytics: FC = () => {
   return (
     <Container maxWidth="lg">
       <Stack spacing={2}>
-        <Stack spacing={2}>
+        <Stack spacing={1} marginBottom={2}>
           <H1>{t('title')}</H1>
           <Paragraph color="text.secondary">{t('subTitle')}</Paragraph>
         </Stack>
         <Stats />
         <Box>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <TVLTrends />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <NcETHPriceTrends />
             </Grid>
           </Grid>

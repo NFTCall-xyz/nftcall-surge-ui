@@ -16,7 +16,7 @@ const Earn: FC = () => {
   return (
     <Container maxWidth="lg">
       <Stack spacing={2}>
-        <Stack spacing={2}>
+        <Stack spacing={1} marginBottom={2}>
           <H1>{t('title')}</H1>
           <Paragraph color="text.secondary">{t('subTitle')}</Paragraph>
         </Stack>

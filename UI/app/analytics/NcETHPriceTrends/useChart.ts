@@ -97,9 +97,9 @@ export const useChart = () => {
                 let { gradient } = lineChart.current
                 if (width !== chartWidth || height !== chartHeight) {
                   gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
-                  gradient.addColorStop(0, 'rgb(92, 225, 230, 0)')
-                  gradient.addColorStop(0.5, 'rgba(92, 225, 230, 0.1)')
-                  gradient.addColorStop(1, 'rgba(92, 225, 230, 0.2)')
+                  gradient.addColorStop(0, 'rgb(35, 198, 87, 0)')
+                  gradient.addColorStop(0.5, 'rgba(35, 198, 87, 0.1)')
+                  gradient.addColorStop(1, 'rgba(35, 198, 87, 0.2)')
                   lineChart.current = {
                     width: chartWidth,
                     height: chartHeight,
@@ -109,8 +109,8 @@ export const useChart = () => {
                 return gradient
               },
               fill: 'start',
-              borderColor: theme.palette.primary.main,
-              pointBackgroundColor: theme.palette.primary.main,
+              borderColor: theme.palette.secondary.main,
+              pointBackgroundColor: theme.palette.secondary.main,
               pointRadius: (context) => {
                 return context.dataset.data.length > 14 ? 0 : 3
               },
@@ -176,7 +176,7 @@ export const useChart = () => {
           },
         },
       } as NcETHPriceTrendsChartProps),
-    [matches, data, theme.palette.primary.main, theme.palette.text.secondary, theme.palette.grey]
+    [matches, data, theme.palette.secondary.main, theme.palette.text.secondary, theme.palette.grey]
   )
 
   return {
