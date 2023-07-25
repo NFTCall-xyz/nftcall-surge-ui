@@ -25,7 +25,9 @@ const OptionPositionExpiryDate: FC<OptionPositionExpiryDateProps> = ({ rowData: 
       } else {
         const hoursDiff = differenceInHours(expiration, startDate)
         const daysDiff = differenceInDays(expiration, startDate)
-        const result = `${daysDiff} ${daysDiff === 1 ? 'day' : 'days'} ${hoursDiff % 24} ${hoursDiff % 24 === 1 ? 'hr' : 'hrs'} later`
+        const result = `${daysDiff} ${daysDiff === 1 ? 'day' : 'days'} ${hoursDiff % 24} ${
+          hoursDiff % 24 === 1 ? 'hr' : 'hrs'
+        } later`
 
         if (!daysDiff) return '-1'
         return result
@@ -59,7 +61,9 @@ const OptionPositionExpiryDateCountDown: FC<{ expiration: number }> = ({ expirat
       const startDate = new Date()
       const hoursDiff = differenceInHours(expiration, startDate)
       const minutesDiff = differenceInMinutes(expiration, startDate)
-      const result = `${hoursDiff % 24} ${hoursDiff % 24 === 1 ? 'hr' : 'hrs'} ${minutesDiff % 60} ${minutesDiff % 60 === 1 ? 'min' : 'mins'} later`
+      const result = `${hoursDiff % 24} ${hoursDiff % 24 === 1 ? 'hr' : 'hrs'} ${minutesDiff % 60} ${
+        minutesDiff % 60 === 1 ? 'min' : 'mins'
+      } later`
 
       setExpiryDiff(result)
     }

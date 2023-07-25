@@ -13,11 +13,11 @@ import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 import { safeGet } from 'app/utils/get'
 
+import { getFloorPriceTrends } from 'domains/data/NFTCollection/adapter/floorPriceTrends/request'
 import type {
   FloorPriceTrends,
   FloorPriceTrendsChartProps,
 } from 'domains/data/NFTCollection/adapter/floorPriceTrends/types'
-import { getFloorPriceTrends } from 'domains/data/NFTCollection/adapter/floorPriceTrends/request'
 import { useMath } from 'domains/utils'
 
 import { toBN } from 'lib/math'
