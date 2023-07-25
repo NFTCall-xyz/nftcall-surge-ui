@@ -7,6 +7,7 @@ import { useWhyDidYouUpdate } from 'app/utils/dev/hooks/useWhyDidYouUpdate'
 import { useNetwork } from 'domains/data'
 
 import type { GetStoreNFTCollectionsProps } from 'store/surgeUI/getNFTCollections/adapter'
+import type { GetStoreNFTCollectionsStausProps } from 'store/surgeUI/getNFTCollectionsStaus/adapter'
 import { useSurgeUIStateData } from 'store/surgeUI/useSurgeUIStateData'
 
 import type { NFTCollection } from '../..'
@@ -22,15 +23,17 @@ const useCollectionsSouceData = () => {
       const data =
         storeData.getNFTCollections.find((i) => i.collectionAddress === address.collection) || ({} as undefined)
       const info = collectionInfos[id]
+      const status = storeData.getNFTCollectionsStaus.find((i) => i.collectionAddress === address.collection)
 
       return {
         ...market,
         data,
         info,
+        status,
       } as NFTCollection
     })
     return returnValue
-  }, [collectionInfos, markets, storeData.getNFTCollections])
+  }, [collectionInfos, markets, storeData.getNFTCollections, storeData.getNFTCollectionsStaus])
 
   useWhyDidYouUpdate('[Collection][CollectionsSouceData]', [markets, storeData.getNFTCollections])
   return collectionSouceData
@@ -40,7 +43,7 @@ const useCollectionsRequest = () => {
   const {
     contracts: { surgeUIService },
     markets,
-    address: { NFTCallOracle, Vault, SurgeUI },
+    address: { NFTCallOracle, Vault, SurgeUI, AssetRiskCache },
   } = useNetwork()
   const { surgeUI } = useControllers()
   const query: GetStoreNFTCollectionsProps = useMemo(
@@ -56,12 +59,27 @@ const useCollectionsRequest = () => {
 
   surgeUI.getNFTCollections.usePolling(query, (query) => !query.collectionAddresses.length, MINUTES)
 
+  const queryStaus: GetStoreNFTCollectionsStausProps = useMemo(
+    () => ({
+      ...query,
+      riskCacheAddress: AssetRiskCache,
+    }),
+    [AssetRiskCache, query]
+  )
+
+  surgeUI.getNFTCollectionsStaus.usePolling(queryStaus, (query) => !query.collectionAddresses.length, 15 * MINUTES)
+
   const updateNFTCollections = useCallback(() => {
     surgeUI.getNFTCollections.polling.restart()
   }, [surgeUI.getNFTCollections.polling])
 
+  const updateNFTCollectionsStaus = useCallback(() => {
+    surgeUI.getNFTCollectionsStaus.polling.restart()
+  }, [surgeUI.getNFTCollectionsStaus.polling])
+
   return {
     updateNFTCollections,
+    updateNFTCollectionsStaus,
   }
 }
 

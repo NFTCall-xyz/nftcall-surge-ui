@@ -8,7 +8,7 @@ import { useNFTCollections } from 'domains/data'
 
 type NFTCollectionTableComponentProps = {
   collectionAddress: string
-  positionId: number
+  positionId?: number
 }
 const NFTCollectionTableComponent: FC<NFTCollectionTableComponentProps> = ({ collectionAddress, positionId }) => {
   const { collections } = useNFTCollections()
@@ -24,7 +24,8 @@ const NFTCollectionTableComponent: FC<NFTCollectionTableComponentProps> = ({ col
         <Avatar sx={{ width: 40 }} src={imageUrl} />
         <Stack spacing={1}>
           <H5>
-            {id}-{positionId}
+            {id}
+            {typeof positionId !== 'undefined' && ` - ${positionId}`}
           </H5>
           <Tiny ellipsis maxWidth="150px">
             {name}

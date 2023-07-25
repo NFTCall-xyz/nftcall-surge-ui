@@ -3,11 +3,13 @@ import { createContextWithProvider } from 'app/utils/createContext'
 import { usePageProgressController } from 'lib/nprogress/store/nprogress'
 
 import { useSurgeUIController } from 'store/surgeUI/useSurgeUIController'
+import { useThegraphController } from 'store/thegraph/useThegraphController'
 
 export const useControllersService = () => {
   const pageProcess = usePageProgressController()
   const surgeUI = useSurgeUIController()
-  return { pageProcess, surgeUI }
+  const thegraph = useThegraphController()
+  return { pageProcess, surgeUI, thegraph }
 }
 
 const { Provider: ControllersProvider, createUseContext } = createContextWithProvider(useControllersService)

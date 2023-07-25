@@ -15,6 +15,13 @@ export interface GetNFTCollectionsProps extends BaseSurgeUIProps {
   vaultAddress: string
 }
 
+export interface GetNFTCollectionsStausProps extends BaseSurgeUIProps {
+  collectionAddresses: string[]
+  oracleAddress: string
+  vaultAddress: string
+  riskCacheAddress: string
+}
+
 export interface GetNFTCollectionProps extends BaseSurgeUIProps {
   collectionAddress: string
   oracleAddress: string
@@ -49,6 +56,7 @@ export class SurgeUIService extends BaseService<SurgeUI> {
     this.getVault = this.getVault.bind(this)
     this.getPosition = this.getPosition.bind(this)
     this.getAnalytics = this.getAnalytics.bind(this)
+    this.getNFTCollectionsStaus = this.getNFTCollectionsStaus.bind(this)
   }
 
   public async getNFTCollections(props: GetNFTCollectionsProps) {
@@ -63,6 +71,18 @@ export class SurgeUIService extends BaseService<SurgeUI> {
     const SurgeUIContract = this.getContractInstance(SurgeUI)
 
     return await SurgeUIContract.getNFTCollection(collectionAddress, oracleAddress, vaultAddress)
+  }
+
+  public async getNFTCollectionsStaus(props: GetNFTCollectionsStausProps) {
+    const { SurgeUI, collectionAddresses, oracleAddress, vaultAddress, riskCacheAddress } = props
+    const SurgeUIContract = this.getContractInstance(SurgeUI)
+
+    return await SurgeUIContract.getNFTCollectionsStaus(
+      collectionAddresses,
+      oracleAddress,
+      vaultAddress,
+      riskCacheAddress
+    )
   }
 
   public async getVault(props: GetVaultProps) {

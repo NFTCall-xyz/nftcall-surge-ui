@@ -64,6 +64,16 @@ export const numberCellRenderer: TableCellRenderer = ({ cellData }) => {
   )
 }
 
+export const numberRiseOrFallCellRenderer: TableCellRenderer = ({ cellData }) => {
+  return (
+    <TableCell align="center" component="div">
+      <RiseOrFall value={cellData}>
+        <NumberDisplay value={cellData} options="number" numberFormatOptions={{ signDisplay: 'always' }} />
+      </RiseOrFall>
+    </TableCell>
+  )
+}
+
 export const percentCellRenderer: TableCellRenderer = ({ cellData }) => {
   return (
     <TableCell align="center" component="div">

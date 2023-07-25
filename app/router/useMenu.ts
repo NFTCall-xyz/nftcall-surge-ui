@@ -22,6 +22,10 @@ const MenuList = [
     linkTo: '/app/earn',
   },
   {
+    key: 'Analytics',
+    linkTo: '/app/analytics',
+  },
+  {
     key: 'Leaderboard',
     linkTo: '/app/leaderboard',
   },

@@ -6,6 +6,7 @@ import theme from 'app/theme/store'
 import nprogress from 'lib/nprogress/store/nprogress'
 
 import surgeUI from './surgeUI'
+import thegraph from './thegraph'
 
 export function makeStore() {
   return configureStore({
@@ -13,6 +14,7 @@ export function makeStore() {
       theme,
       nprogress,
       surgeUI,
+      thegraph,
     },
   })
 }

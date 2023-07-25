@@ -8,15 +8,19 @@ import { useNetwork } from 'domains/data'
 
 import type { GetStoreVaultProps } from 'store/surgeUI/getVault/adapter'
 import { useSurgeUIStateData } from 'store/surgeUI/useSurgeUIStateData'
+import { useThegraphStateData } from 'store/thegraph/useThegraphStateData'
+import type { VaultProps } from 'store/thegraph/vault/adapter'
 
 const useVaultSouceData = () => {
-  const storeData = useSurgeUIStateData()
+  const storeSurgeUIData = useSurgeUIStateData()
+  const storeThegraphData = useThegraphStateData()
   const vaultSouceData = useMemo(() => {
-    const vault = storeData.getVault
-    return vault
-  }, [storeData.getVault])
+    const vault = storeSurgeUIData.getVault
+    const vaultThegraph = storeThegraphData.vault
+    return { ...vault, ...vaultThegraph }
+  }, [storeSurgeUIData.getVault, storeThegraphData.vault])
 
-  useWhyDidYouUpdate('[Vault][VaultSouceData]', [storeData.getVault])
+  useWhyDidYouUpdate('[Vault][VaultSouceData]', [storeSurgeUIData.getVault])
   return vaultSouceData
 }
 
@@ -24,9 +28,10 @@ const useVaultRequest = () => {
   const {
     contracts: { surgeUIService },
     address: { LPToken, Vault, SurgeUI, WETH },
+    thegraphUrl,
   } = useNetwork()
   const { account } = useWallet()
-  const { surgeUI } = useControllers()
+  const { surgeUI, thegraph } = useControllers()
   const query: GetStoreVaultProps = useMemo(
     () => ({
       userAddress: account,
@@ -41,9 +46,13 @@ const useVaultRequest = () => {
 
   surgeUI.getVault.usePolling(query, (query) => !query.vaultAddress, MINUTES)
 
+  const queryVault: VaultProps = useMemo(() => ({ thegraphUrl }), [thegraphUrl])
+  thegraph.vault.usePolling(queryVault, (query) => !query.thegraphUrl, MINUTES)
+
   const updateVaults = useCallback(() => {
     surgeUI.getVault.polling.restart()
-  }, [surgeUI.getVault.polling])
+    thegraph.vault.polling.restart()
+  }, [surgeUI.getVault.polling, thegraph.vault.polling])
 
   return {
     updateVaults,

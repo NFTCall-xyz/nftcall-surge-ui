@@ -1,6 +1,6 @@
 import { request as RQ } from 'graphql-request'
 
-import document from './active/index.graphql'
+import document from './index.graphql'
 
 export type GraphqlVaultBaseData = {
   totalTradingVolume: string

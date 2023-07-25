@@ -11,19 +11,14 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
 import { usePost } from 'app/hooks/request'
-import { safeGet } from 'app/utils/get'
 
+import { getNcETHPriceTrends } from 'domains/data/NFTCollection/adapter/ncETHPriceTrends/request'
 import type {
-  FloorPriceTrends,
-  FloorPriceTrendsChartProps,
-} from 'domains/data/NFTCollection/adapter/floorPriceTrends/types'
-import { getFloorPriceTrends } from 'domains/data/NFTCollection/adapter/floorPriceTrends/request'
-import { useMath } from 'domains/utils'
+  NcETHPriceTrends,
+  NcETHPriceTrendsChartProps,
+} from 'domains/data/NFTCollection/adapter/ncETHPriceTrends/types'
 
-import { toBN } from 'lib/math'
-import { ChainId } from 'lib/wallet/constant/chains'
-
-import { usePageTrade } from '..'
+import { usePageAnalytics } from '..'
 
 const DayButtonList = [7, 14, 30, 90]
 const useDayButton = () => {
@@ -39,26 +34,20 @@ const useDayButton = () => {
 }
 
 export const useChart = () => {
-  const { NF } = useMath()
+  const { analytics } = usePageAnalytics()
   const lineChart = useRef({ width: 0, height: 0, gradient: undefined })
   const theme = useTheme()
   const dayButton = useDayButton()
-  const {
-    collection: { collection },
-    floorPrice24Change,
-    displayCollections,
-  } = usePageTrade()
   const { chainId } = useWallet()
   const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const { post, cancel, loading } = usePost(getFloorPriceTrends)
-  const [sourceData, setSourceData] = useImmer<FloorPriceTrends[]>([])
+  const { post, cancel, loading } = usePost(getNcETHPriceTrends)
+  const [sourceData, setSourceData] = useImmer<NcETHPriceTrends[]>([])
 
   useEffect(() => {
     const endTimestamp = getCurrentTimestamp()
     post({
-      chainId: ChainId.ethereum,
-      NFTAddress: collection.address.ethereumCollection,
+      chainId,
       startTimestamp: endTimestamp - getTimestamp(90 * DAY),
       endTimestamp,
     }).then((data) => setSourceData(() => data))
@@ -67,7 +56,7 @@ export const useChart = () => {
       cancel()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, collection.address.collection])
+  }, [chainId])
 
   const data = useMemo(() => {
     if (!sourceData.length) return []
@@ -81,16 +70,11 @@ export const useChart = () => {
 
     returnValue.push({
       createTime: Date.now(),
-      floorPrice: displayCollections[collection.address.collection].floorPrice,
-      vol: displayCollections[collection.address.collection].vol,
+      ncETHPrice: analytics.ncETHPrice,
     } as any)
 
-    return returnValue.map(({ createTime, floorPrice, vol }) => ({ x: createTime, floorPrice, vol }))
-  }, [collection.address.collection, dayButton.value, displayCollections, sourceData])
-
-  const change24 = useMemo(() => {
-    return safeGet(() => floorPrice24Change[collection.address.collection]) || toBN(0)
-  }, [collection.address.collection, floorPrice24Change])
+    return returnValue.map(({ createTime, ncETHPrice }) => ({ x: createTime, ncETHPrice }))
+  }, [analytics.ncETHPrice, dayButton.value, sourceData])
 
   const props = useMemo(
     () =>
@@ -99,8 +83,8 @@ export const useChart = () => {
         data: {
           datasets: [
             {
-              label: 'FloorPrice',
-              data: data.map((i) => ({ ...i, y: i.floorPrice })),
+              label: 'ncETH Price',
+              data: data.map((i) => ({ ...i, y: i.ncETHPrice })),
               tension: 0.3,
               backgroundColor: (context) => {
                 const chart = context.chart
@@ -135,21 +119,6 @@ export const useChart = () => {
               pointHoverBorderWidth: 2,
               yAxisID: 'y',
             },
-            {
-              label: 'Volatility',
-              data: data.map((i) => ({ ...i, y: i.vol })),
-              tension: 0.3,
-              fill: 'start',
-              borderColor: theme.palette.secondary.main,
-              pointBackgroundColor: theme.palette.secondary.main,
-              pointRadius: (context) => {
-                return context.dataset.data.length > 14 ? 0 : 3
-              },
-              pointHoverRadius: 6,
-              pointHoverBorderColor: '#fff',
-              pointHoverBorderWidth: 2,
-              yAxisID: 'y1',
-            },
           ],
         },
         options: {
@@ -169,10 +138,8 @@ export const useChart = () => {
               callbacks: {
                 label: (context) => {
                   switch (context.dataset.label) {
-                    case 'FloorPrice':
+                    case 'ncETHPrice':
                       return `${context.dataset.label}: ${context.parsed.y.toFixed(2)} ETH`
-                    case 'Volatility':
-                      return `${context.dataset.label}: ${NF.format(context.parsed.y, NF.options('percent'))}`
                   }
                 },
                 title: (context) => {
@@ -206,40 +173,16 @@ export const useChart = () => {
                 padding: matches ? 0 : 20,
               },
             },
-            y1: {
-              position: 'right',
-              grace: '15%',
-              grid: {
-                display: false,
-                color: theme.palette.grey[50],
-              },
-              ticks: {
-                callback: (value) => NF.format(value, NF.options('percent')),
-                color: theme.palette.text.secondary,
-                padding: matches ? 0 : 20,
-              },
-            },
           },
         },
-      } as FloorPriceTrendsChartProps),
-    [
-      matches,
-      data,
-      theme.palette.primary.main,
-      theme.palette.secondary.main,
-      theme.palette.text.secondary,
-      theme.palette.grey,
-      NF,
-    ]
+      } as NcETHPriceTrendsChartProps),
+    [matches, data, theme.palette.primary.main, theme.palette.text.secondary, theme.palette.grey]
   )
 
   return {
     props,
     loading,
     dayButton,
-    change24,
-    currentFloorPrice: displayCollections[collection.address.collection].floorPrice,
-    volatility: displayCollections[collection.address.collection].vol,
-    collection: collection,
+    currentncETHPrice: analytics.ncETHPrice,
   }
 }
