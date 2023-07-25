@@ -1,4 +1,4 @@
-import { CardHeader, CardContent } from '@mui/material'
+import { CardContent, CardHeader } from '@mui/material'
 import Card from '@mui/material/Card'
 
 import { H3 } from 'components/Typography'
