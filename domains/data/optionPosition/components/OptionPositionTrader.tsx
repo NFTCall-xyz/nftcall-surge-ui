@@ -14,7 +14,7 @@ const OptionPositionTrader: FC<OptionPositionTraderProps> = ({ rowData: { id } }
 
   return (
     <TableCell align="center" component="div" sx={{ paddingY: 3 }}>
-      <Stack direction="row">
+      <Stack direction="row" spacing={1}>
         <LinkToAddress address={id} />
         {account?.toLowerCase() === id.toLowerCase() && <Chip label={'You'} variant="outlined" />}
       </Stack>

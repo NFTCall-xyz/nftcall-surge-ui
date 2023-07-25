@@ -42,7 +42,7 @@ export const useTable = (): BasicTableProps => {
           {
             dataKey: 'trader',
             cellData: 'id',
-            width: 200,
+            width: 250,
             headerRenderer,
             cellRenderer: traderCellRenderer,
           },

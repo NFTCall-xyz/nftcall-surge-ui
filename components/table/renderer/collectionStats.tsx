@@ -32,7 +32,7 @@ export const floorPriceRenderer = ({ cellData, rowData: { floorPrice24Change } }
           <TokenIcon symbol="ETH" sx={{ width: 14, height: 14 }} />
           <NumberDisplay value={cellData} options="number" />
         </Stack>
-        <RiseOrFall value={floorPrice24Change}>
+        <RiseOrFall value={floorPrice24Change} fontSize={14}>
           <NumberDisplay value={floorPrice24Change} options="percent" numberFormatOptions={{ signDisplay: 'always' }} />
         </RiseOrFall>
       </Stack>
