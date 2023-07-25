@@ -16,7 +16,7 @@ const useAnalyticsSouceData = () => {
     return analytics
   }, [storeData.getAnalytics])
 
-  useWhyDidYouUpdate('[Analytics][AnalyticsSouceData]', [storeData.getAnalytics])
+  useWhyDidYouUpdate('[Vault][AnalyticsSouceData]', [storeData.getAnalytics])
   return analyticsSouceData
 }
 
@@ -52,7 +52,7 @@ export const useAnalyticsData = () => {
 
   const analytics = useMemo(() => analyticsSouceData, [analyticsSouceData])
 
-  useWhyDidYouUpdate('[Analytics][analytics]', analytics)
+  useWhyDidYouUpdate('[Vault][analytics]', analytics)
 
   const { updateAnalytics } = useAnalyticsRequest()
 

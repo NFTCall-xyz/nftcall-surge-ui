@@ -9,8 +9,8 @@ fragment traderFields on Trader {
   updateTimestamp
 }
 
-query getTraders {
-  traders(first: 50, orderBy: totalTrades, orderDirection: desc) {
+query getTraders($userAddress: ID!) {
+  traders(where: { id: $userAddress }) {
     ...traderFields
   }
 }

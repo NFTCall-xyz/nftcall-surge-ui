@@ -90,16 +90,19 @@ const useYourStats = ({ stats }: UseYourStatsProps) => {
       totalAssets,
       totalLockedAssets,
     },
+    trader,
   } = useVault()
   const your = useMemo(() => {
     const returnValue = {
       ncETHBalance: balance,
       lockedNcETHBalance: lockedBalance,
-      totalValue: safeGet(() => balance.plus(lockedBalance).times(stats.ncETHPrice)),
-      estimatedEarnings: toBN(0), // TODO: calculate
+      totalValue: safeGet(() => balance.plus(lockedBalance).times(stats.ncETHPrice)) || toBN(0),
+      estimatedEarnings: toBN(0),
     }
+
+    returnValue.estimatedEarnings = returnValue.totalValue.minus(safeGet(() => trader.depositAmount) || toBN(0))
     return returnValue
-  }, [balance, lockedBalance, stats.ncETHPrice])
+  }, [balance, lockedBalance, stats.ncETHPrice, trader?.depositAmount])
 
   const vault = useMemo(() => {
     const returnValue = {

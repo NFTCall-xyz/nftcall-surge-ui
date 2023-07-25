@@ -4,7 +4,7 @@ import type { BaseGraphqlRequestType } from 'lib/graphql/type'
 
 import { getTraders } from './getTraders'
 
-type Props = BaseGraphqlRequestType & RequestType
+export type Props = BaseGraphqlRequestType & RequestType
 export const request = ({ thegraphUrl, ...props }: Props) => {
   if (!thegraphUrl) return Promise.reject({ message: 'network error' })
   const variables: RequestType = props

@@ -1,4 +1,3 @@
-import { useWallet } from 'domains'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useImmer } from 'use-immer'
 
@@ -23,14 +22,12 @@ import type { Trader } from './request/getTraders'
 const pageSize = 50
 
 export const useTable = (): BasicTableProps => {
-  const { tTable } = usePageLeaderboard()
+  const { tTable, trader } = usePageLeaderboard()
 
-  const [data, setData] = useImmer<Trader[]>([])
+  const [sourceData, setData] = useImmer<Trader[]>([])
   const [pageIndex, setPageIndex] = useImmer(0)
   const dataFetcher = usePost(request)
   const [noMoreSourceData, setNoMoreSourceData] = useImmer(false)
-
-  const { account } = useWallet()
 
   const columns = useMemo(
     () =>
@@ -99,42 +96,55 @@ export const useTable = (): BasicTableProps => {
 
   const end = useMemo(() => {
     if (!noMoreSourceData) return false
-    return skip > data.length
-  }, [data.length, noMoreSourceData, skip])
+    return skip > sourceData.length
+  }, [sourceData.length, noMoreSourceData, skip])
   const { thegraphUrl } = useNetwork()
 
   const onFetch = useCallback(() => {
     return dataFetcher
       .post({
         thegraphUrl,
-        userAddress: account,
       })
       .then((rowData) => {
         if (rowData.length < pageSize) setNoMoreSourceData(true)
         setData((data) => data.concat(rowData))
       })
-  }, [dataFetcher, thegraphUrl, account, setNoMoreSourceData, setData])
+  }, [dataFetcher, thegraphUrl, setNoMoreSourceData, setData])
 
   const loadMore = useMemo(() => {
     return {
       end,
       disabled: dataFetcher.loading,
       onLoadMore: () => {
-        if (!account) return setNoMoreSourceData(true)
         if (noMoreSourceData) return Promise.resolve()
         setPageIndex(pageIndex + 1)
         return onFetch()
       },
     }
-  }, [account, dataFetcher.loading, end, noMoreSourceData, onFetch, pageIndex, setNoMoreSourceData, setPageIndex])
+  }, [dataFetcher.loading, end, noMoreSourceData, onFetch, pageIndex, setPageIndex])
 
   useEffect(() => {
-    if (!account) return
     setData([])
     setPageIndex(1)
     onFetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account])
+  }, [])
+
+  const data = useMemo(() => {
+    if (trader) {
+      const findUser = sourceData.find((t) => t.id === trader.id)
+      if (!findUser) {
+        return [
+          ...sourceData,
+          {
+            ...trader,
+            rank: 0,
+          },
+        ]
+      }
+    }
+    return sourceData
+  }, [sourceData, trader])
 
   return {
     loading: dataFetcher.loading,
