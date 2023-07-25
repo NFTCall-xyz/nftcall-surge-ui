@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { Grid, Stack } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
@@ -23,7 +24,11 @@ const Stats: FC = () => {
     {
       price: (
         <div>
-          <NumberDisplay value={stats.APY} options="percent" />
+          {stats.APY.loading ? (
+            <CircularProgress size={24} />
+          ) : (
+            <NumberDisplay value={stats.APY.value} options="percent" />
+          )}
         </div>
       ),
       title: 'APY',

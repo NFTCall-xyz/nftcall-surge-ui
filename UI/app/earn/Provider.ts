@@ -1,9 +1,12 @@
 import { useWallet } from 'domains'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { useImmer } from 'use-immer'
 
 import { useTheme } from '@mui/material/styles'
 
+import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
+import { usePost } from 'app/hooks/request'
 import { createContextWithProvider } from 'app/utils/createContext'
 import { safeGet } from 'app/utils/get'
 
@@ -11,6 +14,8 @@ import type { TabsProps } from 'components/tabs'
 
 import { transaction } from 'domains/controllers/adapter/transaction'
 import { useNFTCollections, useNetwork, useVault } from 'domains/data'
+import { getNcETHPriceTrends } from 'domains/data/NFTCollection/adapter/ncETHPriceTrends/request'
+import type { NcETHPriceTrends } from 'domains/data/NFTCollection/adapter/ncETHPriceTrends/types'
 
 import { toBN } from 'lib/math'
 import { type SendTransaction, useSendTransaction } from 'lib/protocol/hooks/sendTransaction'
@@ -22,23 +27,59 @@ const usePageEffect = () => {
   return {}
 }
 
+const useStatsAPY = () => {
+  const { post, cancel, loading } = usePost(getNcETHPriceTrends)
+  const [sourceData, setSourceData] = useImmer<NcETHPriceTrends[]>([])
+  const { chainId } = useWallet()
+  const { analytics } = useVault()
+
+  useEffect(() => {
+    post({
+      chainId,
+      startTimestamp: getCurrentTimestamp() - getTimestamp(7 * DAY),
+      endTimestamp: getCurrentTimestamp() - getTimestamp(6 * DAY),
+    }).then((data) => setSourceData(() => data))
+
+    return () => {
+      cancel()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId])
+
+  const value = useMemo(() => {
+    const currentNcETHPrice = analytics.ncETHPrice
+    const ncETHPrice7DaysAgo = safeGet(() => sourceData[0].ncETHPrice) || toBN(1)
+    return ncETHPrice7DaysAgo.minus(currentNcETHPrice).div(currentNcETHPrice).div(7).multipliedBy(365)
+  }, [analytics.ncETHPrice, sourceData])
+
+  return {
+    loading,
+    value,
+  }
+}
+
 const useStats = () => {
   const {
-    vault: { unrealizedPNL, unrealizedPremium, totalSupply },
+    vault: { totalSupply },
     analytics: { TVL, ncETHPrice },
   } = useVault()
   const stats = useMemo(() => {
     const returnValue = {
       TVL,
-      APY: safeGet(() => (unrealizedPremium.isZero() ? toBN(0) : unrealizedPNL.div(unrealizedPremium))),
       ncETHPrice,
       ncETHTotalSupply: totalSupply,
     }
     return returnValue
-  }, [TVL, ncETHPrice, totalSupply, unrealizedPNL, unrealizedPremium])
+  }, [TVL, ncETHPrice, totalSupply])
 
-  return stats
+  const APY = useStatsAPY()
+
+  return {
+    ...stats,
+    APY,
+  }
 }
+
 type UseYourStatsProps = {
   stats: ReturnType<typeof useStats>
 }
