@@ -10,25 +10,25 @@ import FlexBetween from 'components/flexbox/FlexBetween'
 
 import { useVault } from 'domains/data'
 
-import { BN, toBN } from 'lib/math'
+import { BN } from 'lib/math'
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
 
 import { usePageTradeOpenOptions } from '.'
 
 const DisplayMaxProfit: FC = () => {
-  const { price, strikePrice, amount, premium, tOpenCallOptions } = usePageTradeOpenOptions()
+  const { price, amount, premium, strikePrice, tOpenCallOptions } = usePageTradeOpenOptions()
   const {
-    constants: { NOMINAL_FEE_RATE, PROFIT_FEE_RATE },
+    constants: { NOTIONAL_FEE_RATE, PROFIT_FEE_RATE },
   } = useVault()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
-    const exerciseFee = BN.min(
-      price && price.times(PROFIT_FEE_RATE),
-      toBN(strikePrice.value).times(amount.value).times(NOMINAL_FEE_RATE)
-    )
+    const exerciseFee = price ? BN.min(
+      PROFIT_FEE_RATE.times(price).times(amount.value), 
+      NOTIONAL_FEE_RATE.times(price.plus(strikePrice.value)).times(amount.value)
+    ): 0
     return <NumberDisplay value={price ? price.times(amount.value).minus(premium.value).minus(exerciseFee) : 0} />
-  }, [NOMINAL_FEE_RATE, PROFIT_FEE_RATE, amount.value, premium.loading, premium.value, strikePrice, price])
+  }, [NOTIONAL_FEE_RATE, PROFIT_FEE_RATE, amount.value, premium.loading, premium.value, price, strikePrice])
 
   return (
     <FlexBetween>

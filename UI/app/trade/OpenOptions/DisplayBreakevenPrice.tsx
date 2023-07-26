@@ -21,14 +21,14 @@ import { usePageTradeOpenOptions } from '.'
 const DisplayBreakevenPrice: FC = () => {
   const { optionType, strikePrice, premium, amount, tOpenCallOptions, init } = usePageTradeOpenOptions()
   const {
-    constants: { NOMINAL_FEE_RATE, PROFIT_FEE_RATE },
+    constants: { NOTIONAL_FEE_RATE, PROFIT_FEE_RATE },
   } = useVault()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
     if (init || !premium.value) return <NumberDisplay value={0} />
     const exerciseFee = BN.min(
       premium.value.times(PROFIT_FEE_RATE),
-      toBN(strikePrice.value).times(amount.value).times(NOMINAL_FEE_RATE)
+      premium.value.plus(strikePrice.value * amount.value).times(NOTIONAL_FEE_RATE)
     )
     const totalCost = premium.value.plus(exerciseFee)
     if (optionType === OptionType.LONG_CALL) {
@@ -37,7 +37,7 @@ const DisplayBreakevenPrice: FC = () => {
       return <NumberDisplay value={safeGet(() => toBN(strikePrice.value).minus(totalCost.div(amount.value)))} />
     }
   }, [
-    NOMINAL_FEE_RATE,
+    NOTIONAL_FEE_RATE,
     PROFIT_FEE_RATE,
     amount.value,
     init,
