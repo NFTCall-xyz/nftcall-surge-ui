@@ -58,7 +58,7 @@ export const useTable = (): BasicTableProps => {
             cellRenderer: percentCellRenderer,
           },
           {
-            dataKey: 'leverage',
+            dataKey: 'ratio',
             width: 200,
             headerRenderer,
             cellRenderer: numberCellRenderer,

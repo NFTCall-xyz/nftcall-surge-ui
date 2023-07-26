@@ -17,7 +17,7 @@ export type CollectionStats = {
   volatility: BN
   delta: BN
   utilizationRate: BN
-  leverage: BN
+  ratio: BN
   unrealizedPnL: BN
 }
 const usePageEffect = () => {
@@ -64,7 +64,7 @@ const useCollectionStats = () => {
             utilizationRate: safeGet(() =>
               collection.status.optionTokenTotalValue.div(TVL.times(collection.status.collectionWeight))
             ),
-            leverage: safeGet(() => collection.status.callOptionAmount.div(collection.status.putOptionAmount)),
+            ratio: safeGet(() => collection.status.putOptionAmount.div(collection.status.callOptionAmount)),
             unrealizedPnL: collection.status.unrealizedPNL,
           } as CollectionStats)
       )

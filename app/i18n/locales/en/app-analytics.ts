@@ -28,7 +28,7 @@ const locale = {
       volatility: 'Volatility',
       delta: 'Delta',
       utilizationRate: 'Utilization Rate',
-      leverage: 'Call/Put',
+      ratio: 'Put/Call Ratio',
       unrealizedPnL: 'Unrealized PnL',
     },
   },
