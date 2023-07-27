@@ -1,6 +1,7 @@
 {
   "title": "ncETH Vault",
-  "subTitle": "Deposit WETH in exchange for ncETH and earn protocol fees. Learn more.",
+  "subTitle": "Deposit WETH in exchange for ncETH and earn protocol fees.",
+  "learnMore": "Learn More",
   "YourStats": {
     "title": "Your Stats",
     "ncETHBalance": "ncETH Balance",

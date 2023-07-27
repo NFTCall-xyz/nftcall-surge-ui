@@ -23,10 +23,12 @@ const DisplayMaxProfit: FC = () => {
   } = useVault()
   const value = useMemo(() => {
     if (premium.loading) return <CircularProgress size={14} />
-    const exerciseFee = price ? BN.min(
-      PROFIT_FEE_RATE.times(price).times(amount.value), 
-      NOTIONAL_FEE_RATE.times(price.plus(strikePrice.value)).times(amount.value)
-    ): 0
+    const exerciseFee = price
+      ? BN.min(
+          PROFIT_FEE_RATE.times(price).times(amount.value),
+          NOTIONAL_FEE_RATE.times(price.plus(strikePrice.value)).times(amount.value)
+        )
+      : 0
     return <NumberDisplay value={price ? price.times(amount.value).minus(premium.value).minus(exerciseFee) : 0} />
   }, [NOTIONAL_FEE_RATE, PROFIT_FEE_RATE, amount.value, premium.loading, premium.value, price, strikePrice])
 
