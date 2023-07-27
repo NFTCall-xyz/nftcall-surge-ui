@@ -1,7 +1,7 @@
 import { isEmpty, noop } from 'lodash'
 import { useEffect, useRef } from 'react'
 
-import { log } from '..'
+import { getStringObj, log } from '..'
 
 export type IProps = Record<string, any>
 
@@ -71,6 +71,9 @@ export const useWhyDidYouUpdate = __DEV__
         }
 
         prevProps.current = props
+        try {
+          ;(window as any)[componentName] = getStringObj(props)
+        } catch (error) {}
       })
     }
   : (noop as undefined)

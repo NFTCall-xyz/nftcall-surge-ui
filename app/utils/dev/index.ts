@@ -27,7 +27,7 @@ const BNObjToStrObj = (obj: any) => {
   return o
 }
 
-const getStringObj = (obj: any): any => {
+export const getStringObj = (obj: any): any => {
   if (obj instanceof Array) {
     return BNArrToStrArr(obj)
   } else {
