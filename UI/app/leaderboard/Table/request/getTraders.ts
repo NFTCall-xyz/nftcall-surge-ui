@@ -22,14 +22,12 @@ const getTrader = (rank: number, t: GraphqlTraderBaseData) => {
     rank,
     ...t,
     ...getAddresses(t, ['id']),
-    ...getWeiToValueBN(t, ['totalRevenue', 'totalPremium', 'depositAmount'], 18),
+    ...getWeiToValueBN(t, ['totalRevenue', 'totalPremium', 'depositAmount', 'PNL'], 18),
     ...getWeiToValueBN(t, ['totalVolume'], 18 * 2),
     winrate: t.totalTrades ? toBN(t.totalExercisedOptionPosition).div(t.totalTrades).toNumber() : 0,
-    PNL: toBN(0),
     PNLRate: toBN(0),
   }
 
-  returnValue.PNL = returnValue.totalRevenue.minus(returnValue.totalPremium)
   returnValue.PNLRate = returnValue.PNL.dividedBy(returnValue.totalPremium)
 
   return returnValue

@@ -1,5 +1,6 @@
 fragment traderFields on Trader {
   id
+  PNL
   depositAmount
   totalTrades
   totalVolume

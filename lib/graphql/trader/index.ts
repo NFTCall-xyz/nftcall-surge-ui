@@ -6,6 +6,7 @@ import userAddressDocument from './userAddress.graphql'
 export type GraphqlTraderBaseData = {
   id: string
   totalTrades: number
+  PNL: string
   totalVolume: string
   depositAmount: string
   totalRevenue: string

@@ -1,5 +1,6 @@
 fragment traderFields on Trader {
   id
+  PNL
   depositAmount
   totalTrades
   totalVolume
@@ -10,7 +11,7 @@ fragment traderFields on Trader {
 }
 
 query getTraders {
-  traders(first: 50, orderBy: totalTrades, orderDirection: desc) {
+  traders(first: 50, orderBy: PNL, orderDirection: desc) {
     ...traderFields
   }
 }
