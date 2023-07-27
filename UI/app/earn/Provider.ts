@@ -48,8 +48,9 @@ const useStatsAPY = () => {
 
   const value = useMemo(() => {
     const currentNcETHPrice = analytics.ncETHPrice
+    if (!currentNcETHPrice) return
     const ncETHPrice7DaysAgo = safeGet(() => sourceData[0].ncETHPrice) || toBN(1)
-    return ncETHPrice7DaysAgo.minus(currentNcETHPrice).div(currentNcETHPrice).div(7).multipliedBy(365)
+    return currentNcETHPrice.minus(ncETHPrice7DaysAgo).div(ncETHPrice7DaysAgo).div(7).multipliedBy(365)
   }, [analytics.ncETHPrice, sourceData])
 
   return {
