@@ -1,4 +1,4 @@
-import { format, subDays } from 'date-fns'
+import { format, isSameDay, subDays } from 'date-fns'
 import { useWallet } from 'domains'
 import { cloneDeep } from 'lodash'
 import type { MouseEvent } from 'react'
@@ -65,10 +65,16 @@ export const useChart = () => {
 
     const returnValue = getMapData()
 
-    returnValue.push({
-      createTime: Date.now(),
-      TVL: analytics.TVL,
-    } as any)
+    const targetDate = returnValue[returnValue.length - 1].createTime
+
+    if (isSameDay(targetDate, new Date())) {
+      returnValue[returnValue.length - 1].TVL = analytics.TVL
+    } else {
+      returnValue.push({
+        createTime: Date.now(),
+        TVL: analytics.TVL,
+      } as any)
+    }
 
     return returnValue.map(({ createTime, TVL }) => ({ x: createTime, TVL }))
   }, [analytics.TVL, dayButton.value, sourceData])
@@ -140,7 +146,7 @@ export const useChart = () => {
                   }
                 },
                 title: (context) => {
-                  return `${format((context[0].raw as any).x, 'yyyy-MM-dd HH:00')}`
+                  return `${format((context[0].raw as any).x, 'yyyy-MM-dd')}`
                 },
               },
             },
