@@ -43,6 +43,9 @@ const useStats = () => {
 }
 
 const useCollectionStats = () => {
+  const {
+    analytics: { TVL },
+  } = useVault()
   const { collections, displayCollections } = useNFTCollections()
   const data = useMemo(() => {
     const sourceData = cloneDeep(collections)
@@ -59,15 +62,13 @@ const useCollectionStats = () => {
             volatility: displayCollections[collection.address.collection].vol,
             delta: collection.status.delta,
             utilizationRate: safeGet(() =>
-              collection.status.optionTokenTotalLockedValue.div(
-                collection.status.optionTokenTotalValue.times(collection.status.collectionWeight)
-              )
+              collection.status.optionTokenTotalValue.div(TVL.times(collection.status.collectionWeight))
             ),
             leverage: safeGet(() => collection.status.callOptionAmount.div(collection.status.putOptionAmount)),
             unrealizedPnL: collection.status.unrealizedPNL,
           } as CollectionStats)
       )
-  }, [collections, displayCollections])
+  }, [TVL, collections, displayCollections])
 
   return {
     data,
