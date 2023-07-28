@@ -1,51 +1,50 @@
-import type { Props } from 'UI/app/leaderboard/Table/request'
-import { request } from 'UI/app/leaderboard/Table/request'
-import { useWallet } from 'domains'
-import { useCallback, useEffect, useMemo } from 'react'
-import { type Updater, useImmer } from 'use-immer'
+import { useControllers, useWallet } from 'domains'
+import { useCallback, useMemo } from 'react'
 
-import { usePost } from 'app/hooks/request'
+import { MINUTES } from 'app/constant'
 import { useWhyDidYouUpdate } from 'app/utils/dev/hooks/useWhyDidYouUpdate'
 
 import { useNetwork } from 'domains/data'
 
-import type { TraderData } from 'store/thegraph/trader/adapter/getTraderData'
+import type { TraderProps } from 'store/thegraph/trader/adapter'
+import { useThegraphStateData } from 'store/thegraph/useThegraphStateData'
 
-const useTraderRequest = (setTrader: Updater<TraderData>) => {
-  const dataFetcher = usePost(request)
+const useTraderSouceData = () => {
+  const storeThegraphData = useThegraphStateData()
+  const traderSouceData = useMemo(() => {
+    const trader = storeThegraphData.trader
+    return trader
+  }, [storeThegraphData.trader])
+
+  useWhyDidYouUpdate('[Vault][TraderSouceData]', [storeThegraphData.trader])
+  return traderSouceData
+}
+
+const useTraderRequest = () => {
+  const { thegraph } = useControllers()
   const { thegraphUrl } = useNetwork()
   const { account } = useWallet()
-  const query: Props = useMemo(() => ({ thegraphUrl, userAddress: account }), [account, thegraphUrl])
+  const query: TraderProps = useMemo(() => ({ thegraphUrl, userAddress: account }), [account, thegraphUrl])
 
-  const updateTrader = useCallback(() => {
-    if (!query.userAddress) return
-    dataFetcher.post(query).then((data) => {
-      if (data[0]) {
-        setTrader(() => data[0])
-      }
-    })
-  }, [dataFetcher, query, setTrader])
+  thegraph.trader.usePolling(query, (query) => !query.userAddress, MINUTES)
 
-  useEffect(() => {
-    updateTrader()
-
-    return () => {
-      dataFetcher.cancel()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account])
+  const updateTraders = useCallback(() => {
+    thegraph.trader.polling.restart()
+  }, [thegraph.trader.polling])
 
   return {
-    updateTrader,
+    updateTraders,
   }
 }
 
 export const useTraderData = () => {
-  const [trader, setTrader] = useImmer<TraderData>(undefined)
+  const traderSouceData = useTraderSouceData()
+
+  const trader = useMemo(() => traderSouceData, [traderSouceData])
 
   useWhyDidYouUpdate('[Vault][trader]', trader)
 
-  const { updateTrader } = useTraderRequest(setTrader)
+  const { updateTraders } = useTraderRequest()
 
-  return { trader, updateTrader }
+  return { trader, updateTraders }
 }
