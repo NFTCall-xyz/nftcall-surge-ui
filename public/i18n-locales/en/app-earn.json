@@ -7,7 +7,9 @@
     "ncETHBalance": "ncETH Balance",
     "lockedNcETHBalance": "Locked ncETH Balance",
     "totalValue": "Total Value",
+    "totalValueTip": "Total value of your ncETH, denominated in WETH.",
     "estimatedEarnings": "Estimated Earnings",
+    "estimatedEarningsTip": "Calculated based on current market value of ncETH holdings and the total WETH deposited and withdrawn.",
     "vault": {
       "title": "Vault",
       "available": "Available to Withdraw"
@@ -34,7 +36,9 @@
   "stats": {
     "TVL": "TVL",
     "APY": "APY",
+    "apyTip": "Calculated using the data from the past 7days, projected to a year.",
     "ncETHPrice": "ncETH Price",
+    "ncETHTip": "ncETH accumulates options premiums in real time.",
     "ncETHTotalSupply": "ncETH Total Supply"
   }
 }
