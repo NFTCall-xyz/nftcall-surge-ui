@@ -199,7 +199,7 @@ export const run = async (req: NextApiRequest, res: NextApiResponse) => {
     },
     {
       namedImports: ['useAppSelector'],
-      moduleSpecifier: 'store',
+      moduleSpecifier: 'store/helpers',
     },
     ...imports.useStateData,
   ])

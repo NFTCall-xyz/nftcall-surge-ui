@@ -15,16 +15,17 @@ import { traderCellRenderer } from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
+import type { TraderData } from 'store/thegraph/trader/adapter/getTraderData'
+
 import { usePageLeaderboard } from '..'
 import { request } from './request'
-import type { Trader } from './request/getTraders'
 
 const pageSize = 50
 
 export const useTable = (): BasicTableProps => {
   const { tTable, trader } = usePageLeaderboard()
 
-  const [sourceData, setData] = useImmer<Trader[]>([])
+  const [sourceData, setData] = useImmer<TraderData[]>([])
   const [pageIndex, setPageIndex] = useImmer(0)
   const dataFetcher = usePost(request)
   const [noMoreSourceData, setNoMoreSourceData] = useImmer(false)

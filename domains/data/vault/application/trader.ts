@@ -1,6 +1,5 @@
 import type { Props } from 'UI/app/leaderboard/Table/request'
 import { request } from 'UI/app/leaderboard/Table/request'
-import type { Trader } from 'UI/app/leaderboard/Table/request/getTraders'
 import { useWallet } from 'domains'
 import { useCallback, useEffect, useMemo } from 'react'
 import { type Updater, useImmer } from 'use-immer'
@@ -10,7 +9,9 @@ import { useWhyDidYouUpdate } from 'app/utils/dev/hooks/useWhyDidYouUpdate'
 
 import { useNetwork } from 'domains/data'
 
-const useTraderRequest = (setTrader: Updater<Trader>) => {
+import type { TraderData } from 'store/thegraph/trader/adapter/getTraderData'
+
+const useTraderRequest = (setTrader: Updater<TraderData>) => {
   const dataFetcher = usePost(request)
   const { thegraphUrl } = useNetwork()
   const { account } = useWallet()
@@ -40,7 +41,7 @@ const useTraderRequest = (setTrader: Updater<Trader>) => {
 }
 
 export const useTraderData = () => {
-  const [trader, setTrader] = useImmer<Trader>(undefined)
+  const [trader, setTrader] = useImmer<TraderData>(undefined)
 
   useWhyDidYouUpdate('[Vault][trader]', trader)
 
