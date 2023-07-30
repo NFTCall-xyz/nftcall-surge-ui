@@ -1,6 +1,7 @@
 import type { AsyncThunk } from '@reduxjs/toolkit'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import { useImmer } from 'use-immer'
 
 import { useLatest } from 'app/hooks/useLatest'
 import { useObjectMemo } from 'app/hooks/useValues'
@@ -24,7 +25,7 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
 ) => {
   const {
     request,
-    select: { selectStatus },
+    select: { selectStatus, selectData },
     actions: { setStatus: setStatusAction },
   } = props
 
@@ -56,12 +57,12 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
     const { setStatus, getStatus } = useStatus()
     const abortFnRef = useRef<() => void>()
     const timerRef = useRef<ReturnType<typeof setTimeout>>()
-    const propsRef = useRef({} as any)
+    const propsRef = useRef<{ ms: number; props: ThunkArg }>({} as any)
     const run = useCallback(
       (props: ThunkArg, ms = 5000) => {
         propsRef.current = { ms, props }
         const status = getStatus()
-        if (status !== REQUEST_STATUS.ready) return Promise.reject({ name: 'RunningError', message: 'Running' })
+        if (status !== REQUEST_STATUS.ready) return Promise.reject({ name: 'RunningError', message: 'Polling' })
         setStatus(REQUEST_STATUS.polling)
 
         const fn = () => {
@@ -91,11 +92,19 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch])
 
-    const restart = useCallback((props?: ThunkArg, ms?: number) => {
+    const restart = useCallback((props?: ThunkArg, ms?: number, delay = 0) => {
       const status = getStatus()
       if (status !== REQUEST_STATUS.polling) return
       stop()
-      run(props || propsRef.current.props, ms || propsRef.current.ms || 5000)
+
+      if (delay) {
+        timerRef.current = setTimeout(() => {
+          run(props || propsRef.current.props, ms || propsRef.current.ms)
+        }, delay)
+      } else {
+        run(props || propsRef.current.props, ms || propsRef.current.ms)
+      }
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -103,10 +112,102 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
       run,
       stop,
       restart,
+
+      propsRef,
     })
 
     // useWhyDidYouUpdate('usePolling', returnValue)
     return returnValue
+  }
+
+  const createUseAutoPolling = (polling: ReturnType<typeof usePolling>) => {
+    const useAutoPolling = (query: ThunkArg, isStop: (query: ThunkArg) => boolean, ms: number, delay = 500) => {
+      useEffect(() => {
+        if (isStop(query)) return
+        const timer = setTimeout(() => {
+          polling.run(query, ms)
+        }, delay)
+        return () => {
+          clearTimeout(timer)
+          polling.stop()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [query])
+    }
+    return useAutoPolling
+  }
+
+  const createUsePollingEmergency = (polling: ReturnType<typeof usePolling>) => {
+    const usePollingEmergency = (
+      checkData: (oldData: SliceState['data'], newData: SliceState['data']) => boolean,
+      ms = 1000
+    ) => {
+      const data = useSelector(selectData)
+      const dispatch = useAppDispatch()
+      const dataRef = useLatest(data)
+
+      const { setStatus, getStatus } = useStatus()
+      const [loading, setLoading] = useImmer(false)
+      const abortFnRef = useRef<() => void>()
+      const timerRef = useRef<ReturnType<typeof setTimeout>>()
+
+      const stop = useCallback(
+        (props?: ThunkArg, ms?: number, delay = polling.propsRef.current.ms) => {
+          const status = getStatus()
+          if (status !== REQUEST_STATUS.pollingEmergency) return
+
+          if (abortFnRef.current) abortFnRef.current()
+          clearTimeout(timerRef.current)
+
+          setStatus(REQUEST_STATUS.polling)
+
+          polling.restart(props, ms || polling.propsRef.current.ms, delay)
+
+          setLoading(false)
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [dispatch]
+      )
+
+      const run = useCallback(
+        (props = polling.propsRef.current.props) => {
+          const status = getStatus()
+          if (status !== REQUEST_STATUS.polling) {
+            return Promise.reject({ name: 'RunningError', message: 'Polling Emergency' })
+          }
+          setLoading(true)
+          polling.stop()
+          setStatus(REQUEST_STATUS.pollingEmergency)
+
+          const fn = () => {
+            const oldData = dataRef.current
+            const promise = dispatch(request(props))
+            abortFnRef.current = () => promise.abort()
+            return promise.then((action: any) => {
+              if (action.error?.name === 'AbortError') return
+              if (!checkData(oldData, action.payload)) {
+                timerRef.current = setTimeout(() => fn(), ms)
+              } else {
+                stop()
+              }
+            })
+          }
+
+          fn()
+
+          return Promise.resolve()
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [dispatch]
+      )
+
+      return {
+        loading,
+        run,
+        stop,
+      }
+    }
+    return usePollingEmergency
   }
 
   const useSingle = () => {
@@ -117,7 +218,7 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
     const run = useCallback(
       (props: ThunkArg) => {
         const status = getStatus()
-        if (status !== REQUEST_STATUS.ready) return Promise.reject({ name: 'RunningError', message: 'Running' })
+        if (status !== REQUEST_STATUS.ready) return Promise.reject({ name: 'RunningError', message: 'Single' })
         setStatus(REQUEST_STATUS.single)
         const promise = dispatch(request(props))
         abortFnRef.current = () => promise.abort()
@@ -156,21 +257,14 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
     const polling = usePolling()
     const single = useSingle()
 
-    const useAutoPolling = useCallback(
-      (query: ThunkArg, isStop: (query: ThunkArg) => boolean, ms: number, delay = 500) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useEffect(() => {
-          if (isStop(query)) return
-          const timer = setTimeout(() => {
-            polling.run(query, ms)
-          }, delay)
-          return () => {
-            clearTimeout(timer)
-            polling.stop()
-          }
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [query])
-      },
+    const useAutoPolling = useMemo(
+      () => createUseAutoPolling(polling),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      []
+    )
+
+    const usePollingEmergency = useMemo(
+      () => createUsePollingEmergency(polling),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       []
     )
@@ -179,6 +273,7 @@ export const createUseRequestController = <SliceState extends RequestSliceState,
       polling,
       single,
       usePolling: useAutoPolling,
+      usePollingEmergency,
     })
     return returnValue
   }

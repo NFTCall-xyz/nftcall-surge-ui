@@ -1,6 +1,7 @@
 export enum REQUEST_STATUS {
   ready = 'ready',
   polling = 'polling',
+  pollingEmergency = 'polling-emergency',
   single = 'single',
 }
 

@@ -2,8 +2,6 @@ import type { ActionReducerMapBuilder, AsyncThunk, PayloadAction, Slice } from '
 import type { NoInfer } from '@reduxjs/toolkit/dist/tsHelpers'
 import { isEqual } from 'lodash'
 
-import { safeGet } from 'app/utils/get'
-
 import type { REQUEST_STATUS, RequestSliceState } from './state'
 
 export const createRequestReducers = () => ({
@@ -26,7 +24,7 @@ export const createRequestExtraReducers: CreateRequestExtraReducers = (request) 
     })
     .addCase(request.fulfilled, (state, action) => {
       state.loading = false
-      const payload = safeGet(() => action.payload.data || action.payload)
+      const payload = action.payload
 
       if (!isEqual(state.data, payload)) {
         state.data = payload
