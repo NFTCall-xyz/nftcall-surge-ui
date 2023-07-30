@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 
+import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
 import { safeGet } from 'app/utils/get'
@@ -23,7 +24,12 @@ const Text: FCC = ({ children }) => {
 const YourStats: FC = () => {
   const {
     tYourStats,
-    yourStats: { your, vault, locked },
+    yourStats: {
+      your,
+      vault,
+      locked,
+      traderPollingEmergency: { loading },
+    },
   } = usePageEarn()
   return (
     <Stack spacing={4}>
@@ -52,10 +58,14 @@ const YourStats: FC = () => {
         </Text>
         <Text>
           <Span color="text.secondary">{tYourStats('estimatedEarnings')}</Span>
-          <Stack spacing={0.5} direction="row" alignItems="center">
-            <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
-            <NumberDisplay value={your.estimatedEarnings} />
-          </Stack>
+          {loading ? (
+            <CircularProgress size={16} />
+          ) : (
+            <Stack spacing={0.5} direction="row" alignItems="center">
+              <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
+              <NumberDisplay value={your.estimatedEarnings} />
+            </Stack>
+          )}
         </Text>
       </Stack>
       <Stack spacing={1}>

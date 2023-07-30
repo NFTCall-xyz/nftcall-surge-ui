@@ -1,7 +1,7 @@
 import { useControllers, useWallet } from 'domains'
 import { useCallback, useMemo } from 'react'
 
-import { MINUTES } from 'app/constant'
+import { MINUTES, SECONDS } from 'app/constant'
 import { useWhyDidYouUpdate } from 'app/utils/dev/hooks/useWhyDidYouUpdate'
 
 import { useNetwork } from 'domains/data'
@@ -28,12 +28,18 @@ const useTraderRequest = () => {
 
   thegraph.trader.usePolling(query, (query) => !query.userAddress, MINUTES)
 
-  const updateTraders = useCallback(() => {
+  const traderPollingEmergency = thegraph.trader.usePollingEmergency(
+    (a, b) => a.depositAmount !== b.depositAmount,
+    3 * SECONDS
+  )
+
+  const updateTrader = useCallback(() => {
     thegraph.trader.polling.restart()
   }, [thegraph.trader.polling])
 
   return {
-    updateTraders,
+    updateTrader,
+    traderPollingEmergency,
   }
 }
 
@@ -44,7 +50,7 @@ export const useTraderData = () => {
 
   useWhyDidYouUpdate('[Vault][trader]', trader)
 
-  const { updateTraders } = useTraderRequest()
+  const { updateTrader, traderPollingEmergency } = useTraderRequest()
 
-  return { trader, updateTraders }
+  return { trader, updateTrader, traderPollingEmergency }
 }

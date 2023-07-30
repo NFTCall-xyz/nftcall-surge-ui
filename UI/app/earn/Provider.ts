@@ -92,6 +92,7 @@ const useYourStats = ({ stats }: UseYourStatsProps) => {
       totalLockedAssets,
     },
     trader,
+    traderPollingEmergency,
   } = useVault()
   const your = useMemo(() => {
     const returnValue = {
@@ -120,7 +121,7 @@ const useYourStats = ({ stats }: UseYourStatsProps) => {
     return returnValue
   }, [lockedBalance, releaseTime])
 
-  return { your, vault, locked }
+  return { your, vault, locked, traderPollingEmergency }
 }
 type UseTabsProps = {
   stats: ReturnType<typeof useStats>
@@ -130,6 +131,7 @@ type UseTabsProps = {
 const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps) => {
   const {
     updateVaults,
+    traderPollingEmergency,
     vault: {
       lpToken: { allowance, wETHBalance, wETHAllowance, maxRedeem },
     },
@@ -197,16 +199,21 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
         setStatus: () => {},
         sendTransaction,
         isOnlyApprove: false,
-      }).finally(() => {
-        updateVaults()
-        updateNFTCollections()
       })
+        .then(() => {
+          traderPollingEmergency.run()
+        })
+        .finally(() => {
+          updateVaults()
+          updateNFTCollections()
+        })
     },
     [
       account,
       erc20Service,
       lpTokenAddress,
       sendTransaction,
+      traderPollingEmergency,
       updateNFTCollections,
       updateVaults,
       vaultAddress,
@@ -257,16 +264,21 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
         setStatus: () => {},
         sendTransaction,
         isOnlyApprove: false,
-      }).finally(() => {
-        updateVaults()
-        updateNFTCollections()
       })
+        .then(() => {
+          traderPollingEmergency.run()
+        })
+        .finally(() => {
+          updateVaults()
+          updateNFTCollections()
+        })
     },
     [
       account,
       erc20Service,
       lpTokenAddress,
       sendTransaction,
+      traderPollingEmergency,
       updateNFTCollections,
       updateVaults,
       vaultAddress,

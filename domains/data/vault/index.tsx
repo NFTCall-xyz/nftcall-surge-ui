@@ -19,7 +19,7 @@ export type Vault = Market & {
 const useVaultService = () => {
   const { vault, updateVaults } = useVaultData()
   const { analytics, updateAnalytics } = useAnalyticsData()
-  const { trader, updateTrader } = useTraderData()
+  const { trader, updateTrader, traderPollingEmergency } = useTraderData()
 
   return {
     vault,
@@ -28,6 +28,7 @@ const useVaultService = () => {
     updateAnalytics,
     trader,
     updateTrader,
+    traderPollingEmergency,
     constants: { NOTIONAL_FEE_RATE, PROFIT_FEE_RATE },
   }
 }
