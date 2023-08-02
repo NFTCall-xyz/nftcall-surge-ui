@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
 
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
+import { Box, IconButton, Tooltip } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 
@@ -10,8 +12,6 @@ import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
-import { Tooltip, Box, IconButton } from '@mui/material'
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 
 import { usePageEarn } from '../..'
 
@@ -41,8 +41,8 @@ const YourStats: FC = () => {
         <Text>
           <Stack spacing={0.5} direction="row" alignItems="center">
             <Span color="text.secondary">{tYourStats('ncETHBalance')}</Span>
-            <IconButton onClick={add} size='small'>
-              <Tooltip title='add ncETH to wallet'>
+            <IconButton onClick={add} size="small">
+              <Tooltip title="add ncETH to wallet">
                 <AddCircleOutlineRoundedIcon />
               </Tooltip>
             </IconButton>

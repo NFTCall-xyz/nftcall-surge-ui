@@ -9,7 +9,8 @@ const locale = {
     totalValue: 'Total Value',
     totalValueTip: 'Total value of your ncETH, denominated in WETH.',
     estimatedEarnings: 'Estimated Earnings',
-    estimatedEarningsTip: 'Calculated based on current market value of ncETH holdings and the total WETH deposited and withdrawn.',
+    estimatedEarningsTip:
+      'Calculated based on current market value of ncETH holdings and the total WETH deposited and withdrawn.',
     vault: {
       title: 'Vault',
       available: 'Available to Withdraw',
