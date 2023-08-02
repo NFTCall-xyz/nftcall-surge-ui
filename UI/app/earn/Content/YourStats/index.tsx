@@ -5,11 +5,12 @@ import Stack from '@mui/material/Stack'
 
 import { safeGet } from 'app/utils/get'
 
-import { H3, Span } from 'components/Typography'
+import { H3, Span, TooltipSpan } from 'components/Typography'
 import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
+import { Tooltip, Box } from '@mui/material'
 
 import { usePageEarn } from '../..'
 
@@ -50,14 +51,22 @@ const YourStats: FC = () => {
           </Stack>
         </Text>
         <Text>
-          <Span color="text.secondary">{tYourStats('totalValue')}</Span>
+          <Tooltip title={tYourStats('totalValueTip')}>
+            <Box>
+              <TooltipSpan color="text.secondary">{tYourStats('totalValue')}</TooltipSpan>
+            </Box>
+          </Tooltip>
           <Stack spacing={0.5} direction="row" alignItems="center">
             <TokenIcon symbol={'WETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={your.totalValue} />
           </Stack>
         </Text>
         <Text>
-          <Span color="text.secondary">{tYourStats('estimatedEarnings')}</Span>
+          <Tooltip title={tYourStats('estimatedEarningsTip')}>
+            <Box>
+              <TooltipSpan color="text.secondary">{tYourStats('estimatedEarnings')}</TooltipSpan>
+            </Box>
+          </Tooltip>
           {loading ? (
             <CircularProgress size={16} />
           ) : (
