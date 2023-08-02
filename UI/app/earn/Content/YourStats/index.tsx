@@ -10,7 +10,8 @@ import FlexBetween from 'components/flexbox/FlexBetween'
 
 import NumberDisplay from 'lib/math/components/NumberDisplay'
 import TokenIcon from 'lib/protocol/components/TokenIcon'
-import { Tooltip, Box } from '@mui/material'
+import { Tooltip, Box, IconButton } from '@mui/material'
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded'
 
 import { usePageEarn } from '../..'
 
@@ -31,13 +32,21 @@ const YourStats: FC = () => {
       locked,
       traderPollingEmergency: { loading },
     },
+    ncETH: { add },
   } = usePageEarn()
   return (
     <Stack spacing={4}>
       <Stack spacing={1}>
         <Title>{tYourStats('title')}</Title>
         <Text>
-          <Span color="text.secondary">{tYourStats('ncETHBalance')}</Span>
+          <Stack spacing={0.5} direction="row" alignItems="center">
+            <Span color="text.secondary">{tYourStats('ncETHBalance')}</Span>
+            <IconButton onClick={add} size='small'>
+              <Tooltip title='add ncETH to wallet'>
+                <AddCircleOutlineRoundedIcon />
+              </Tooltip>
+            </IconButton>
+          </Stack>
           <Stack spacing={0.5} direction="row" alignItems="center">
             <TokenIcon symbol={'ncETH'} sx={{ width: 16, height: 16 }} />
             <NumberDisplay value={your.ncETHBalance} />
