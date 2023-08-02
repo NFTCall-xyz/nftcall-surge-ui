@@ -36,7 +36,7 @@
   "stats": {
     "TVL": "TVL",
     "APY": "APY",
-    "apyTip": "Calculated using the data from the past 7days, projected to a year.",
+    "apyTip": "Calculated using the data from the past 7 days, projected to a year.",
     "ncETHPrice": "ncETH Price",
     "ncETHTip": "ncETH accumulates options premiums in real time.",
     "ncETHTotalSupply": "ncETH Total Supply"
