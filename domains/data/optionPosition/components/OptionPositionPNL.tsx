@@ -61,7 +61,7 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
     if (
       status !== OptionPositionStatus.Active ||
       new Date(expiration).getTime() < Date.now() ||
-      !safeGet(() => PNLInner.isZero())
+      safeGet(() => !PNLInner.isZero())
     )
       return
 
