@@ -6,6 +6,7 @@ export type GraphqlVaultBaseData = {
   totalTradingVolume: string
   totalPremiumCollected: string
   totalTrades: number
+  totalTraders: number
 }
 
 export type ResponseType = { vaults: GraphqlVaultBaseData[] }

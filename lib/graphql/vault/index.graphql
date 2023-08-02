@@ -3,5 +3,6 @@ query getVaults($id: ID!) {
     totalTradingVolume
     totalPremiumCollected
     totalTrades
+    totalTraders
   }
 }

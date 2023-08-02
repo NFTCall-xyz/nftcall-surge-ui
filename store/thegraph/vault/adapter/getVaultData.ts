@@ -6,6 +6,7 @@ export type VaultData = {
   totalTradingVolume: BN
   totalPremiumCollected: BN
   totalTrades: number
+  totalTraders: number
 }
 
 export const getVaultData = (vaultBaseData: VaultBaseData): VaultData => {
