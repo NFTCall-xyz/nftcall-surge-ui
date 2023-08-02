@@ -19,6 +19,7 @@ import type { NcETHPriceTrends } from 'domains/data/NFTCollection/adapter/ncETHP
 
 import { toBN } from 'lib/math'
 import { type SendTransaction, useSendTransaction } from 'lib/protocol/hooks/sendTransaction'
+import { useERC20Token } from 'lib/wallet/application/token'
 
 import Deposit from './Content/Tabs/Deposit'
 import Withdraw from './Content/Tabs/Withdraw'
@@ -300,6 +301,19 @@ const useTabs = ({ stats: { ncETHPrice }, tTabs, sendTransaction }: UseTabsProps
   }
 }
 
+const useNcETHToken = () => {
+  const { address } = useNetwork()
+  const { provider } = useWallet()
+
+  const ncETH = useERC20Token(provider, {
+    address: address.LPToken,
+    symbol: 'ncETH',
+    decimals: 18,
+  })
+
+  return ncETH
+}
+
 export default createContextWithProvider(() => {
   const theme = useTheme()
   const { t } = useTranslation('app-earn')
@@ -311,6 +325,8 @@ export default createContextWithProvider(() => {
   const yourStats = useYourStats({ stats })
   const tabs = useTabs({ stats, tTabs, sendTransaction })
 
+  const ncETH = useNcETHToken()
+
   return {
     theme,
     t,
@@ -320,6 +336,8 @@ export default createContextWithProvider(() => {
     stats,
     yourStats,
     tabs,
+
+    ncETH,
 
     usePageEffect,
   }

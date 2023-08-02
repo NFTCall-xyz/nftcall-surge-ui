@@ -24,6 +24,7 @@ const Deposit: FC = () => {
     theme,
     tabs: { approveDeposit, deposit, ncETHPrice, wETHBalance, wETHAllowance },
     tTabs,
+    ncETH: { add },
   } = usePageEarn()
   const [value, setValue] = useImmer(0)
   const receiveAmount = useMemo(() => {
@@ -70,6 +71,9 @@ const Deposit: FC = () => {
                   <TokenIcon symbol={'ncETH'} sx={{ width: 16, height: 16 }} />
                   <NumberDisplay value={receiveAmount} />
                 </Stack>
+                <Button variant="text" onClick={add}>
+                  Add ncETH to wallet
+                </Button>
                 <Tiny color="text.secondary">
                   1 WETH = {<NumberDisplay value={toBN(1).div(ncETHPrice)} options="number" />} ncETH
                 </Tiny>
