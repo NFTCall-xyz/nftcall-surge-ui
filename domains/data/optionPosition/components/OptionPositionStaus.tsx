@@ -1,4 +1,5 @@
 import type { OptionPosition } from 'UI/app/trade/Positions/Table/request/getPositions'
+import { useNotification, useWallet } from 'domains'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { type Updater, useImmer } from 'use-immer'
@@ -9,93 +10,55 @@ import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
 import Tooltip from '@mui/material/Tooltip'
 
-import { SECONDS } from 'app/constant'
-import { getWeiToValueBN } from 'app/utils/get'
+import { getWeiToValueBN, safeGet } from 'app/utils/get'
 
 import { Span, TooltipSpan } from 'components/Typography'
 
-import { useNFTCollections, useNetwork, useOptionPosition } from 'domains/data'
+import { useNFTCollections, useOptionPosition } from 'domains/data'
+import { ListeningType } from 'domains/notification/application/optionPosition'
 
-import {
-  OptionPositionStateProtocol,
-  OptionPositionStatus,
-  getOptionPositionStatusByProtocol,
-} from 'lib/graphql/option-position'
+import { OptionPositionStatus, getOptionPositionStatusByProtocol } from 'lib/graphql/option-position'
 
 type OptionPositionStausProps = {
   rowData: OptionPosition
   setRowData: Updater<OptionPosition>
 }
-const OptionPositionStaus: FC<OptionPositionStausProps> = ({
-  rowData: { status, positionId, collectionAddress },
-  setRowData,
-}) => {
+const OptionPositionStaus: FC<OptionPositionStausProps> = ({ rowData, setRowData }) => {
+  const { status, positionId, collectionAddress } = rowData
   const [loading, setLoaidng] = useImmer(false)
   const { forceClosePendingPosition } = useOptionPosition()
-  const { collections, updateNFTCollections } = useNFTCollections()
-  const {
-    contracts: { surgeUIService },
-    address: { SurgeUI },
-  } = useNetwork()
+  const { updateNFTCollections } = useNFTCollections()
+  const { optionPosition } = useNotification()
+  const { chainId } = useWallet()
 
   useEffect(() => {
-    if (status !== OptionPositionStatus.Pending) return
-    const collection = collections.find((collection) => collection.address.collection === collectionAddress)
-    if (!collection || !collection.address.optionToken) return
-    let nextRuntime = Date.now()
-    let timer = 0
-    let loading = false
     let isCancel = false
-
-    const run = () => {
-      timer = setTimeout(() => {
+    if (status === OptionPositionStatus.Pending) {
+      optionPosition.add(ListeningType.Pending, rowData, chainId).then(({ type, data, complete }) => {
+        const finalStatus = safeGet(() => getOptionPositionStatusByProtocol(data.state)) || OptionPositionStatus.Failed
+        complete(finalStatus)
         if (isCancel) return
-        if (!loading && nextRuntime <= Date.now()) {
-          loading = true
-          nextRuntime += SECONDS * 15
-          surgeUIService
-            .getPosition({
-              SurgeUI,
-              optionTokenAddress: collection.address.optionToken,
-              positionId,
-            })
-            .then((data) => {
-              if (isCancel) return
-              if (data.state === OptionPositionStateProtocol.PENDING) {
-                run()
-              } else {
-                setRowData((row) => ({
-                  ...row,
-                  ...getWeiToValueBN(data, ['premium'], 18),
-                  status: getOptionPositionStatusByProtocol(data.state),
-                }))
-              }
-            })
-            .catch(() => {
-              if (isCancel) return
-              setRowData((row) => ({
-                ...row,
-                status: OptionPositionStatus.Failed,
-              }))
-            })
-            .finally(() => {
-              loading = false
-            })
+        if (type === 'then') {
+          setRowData((row) => ({
+            ...row,
+            ...getWeiToValueBN(data, ['premium'], 18),
+            status: finalStatus,
+          }))
         } else {
-          run()
+          setRowData((row) => ({
+            ...row,
+            status: OptionPositionStatus.Failed,
+          }))
         }
-      }, SECONDS) as any
+      })
     }
-
-    run()
 
     return () => {
       isCancel = true
-      clearTimeout(timer)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [surgeUIService, status])
+  }, [status])
 
   if (status === OptionPositionStatus.Failed) {
     return (

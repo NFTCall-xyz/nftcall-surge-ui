@@ -6,6 +6,7 @@ import activeDocument from './active/index.graphql'
 import activeDocumentNoNFTAddress from './active/noNFTAddress.graphql'
 import historyDocument from './history/index.graphql'
 import historyDocumentNoNFTAddress from './history/noNFTAddress.graphql'
+import positionIdDocument from './positionId.graphql'
 
 export enum OptionPositionStateProtocol {
   EMPTY,
@@ -76,4 +77,13 @@ export const graphqlRequest = (url: string, isActive: boolean, variables: Reques
       return RQ<ResponseType>(url, historyDocumentNoNFTAddress, variables)
     }
   }
+}
+
+export type RequestByPositionIdType = {
+  collectionAddress: string
+  positionId: number
+}
+export const graphqlRequestByPositionId = (url: string, variables: RequestByPositionIdType) => {
+  variables.collectionAddress = variables.collectionAddress.toLowerCase()
+  return RQ<ResponseType>(url, positionIdDocument, variables)
 }

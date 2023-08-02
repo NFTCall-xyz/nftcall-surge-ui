@@ -1,0 +1,28 @@
+query getOptionPositions($collectionAddress: Bytes!, $positionId: BigInt) {
+  optionPositions(
+    first: 1
+    where: { collectionAddress: $collectionAddress, positionId: $positionId }
+    orderBy: createTimestamp
+    orderDirection: desc
+  ) {
+    id
+    userAddress: receiverAddress
+    collectionAddress
+    positionId
+    optionType
+    status
+    expiration
+    entryPrice
+    strikePrice
+    delta
+    settlementPrice
+    amount
+    premium
+    excessPremium
+    returnedPremium
+    keeperFee
+    revenue
+    exerciseFee
+    updateTimestamp
+  }
+}
