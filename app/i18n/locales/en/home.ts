@@ -86,20 +86,20 @@ const locale = {
       {
         title: 'What is an NFT Option?',
         text: [
-          "An option gives the holder the right to buy (call option) or sell (put option) an asset at a specified price (the strike price) at a certain time (expiration). ",
+          'An option gives the holder the right to buy (call option) or sell (put option) an asset at a specified price (the strike price) at a certain time (expiration). ',
           "Example: The ETH 3000 strike call expiring in 14 days gives the holder the right to purchase 1 ETH for $3000 in 14 days' time. ",
-          "Options are one of the most traded products in global financial markets. NFTCall introduce this simple definition into the NFT world, giving a universe of possibility to NFT traders.",
-          "In terms of NFT options, the example above would change into:",
+          'Options are one of the most traded products in global financial markets. NFTCall introduce this simple definition into the NFT world, giving a universe of possibility to NFT traders.',
+          'In terms of NFT options, the example above would change into:',
           "NFT Option Example: The BAYC #3211 75 strike call expiring in 14 days gives the holder the right to purchase the Ape NFT for 75 ETH in 14 days' time.",
         ],
       },
       {
         title: 'How does NFTCall work?',
         text: [
-          "NFTCall has two key user groups, namely liquidity providers and NFT options traders.",
-          "Liquidity providers (LPs) deposit liquidity into the vault as NFT option sellers. The vault automatically provides market-making services through an AMM model, helping LPs earn NFT option premiums. ",
-          "NFT Option traders use NFTCall to buy call or put options for speculation or hedging risks. Options buyers need to pay option premiums to LPs, and the pricing of NFT options is determined by the AMM module and Black-Scholes formula.",
-          "NFTCall currently supports European-style options, which are settled in cash and can only be exercised at expiration. In addition, the protocol uses floor prices to evaluate the price of each NFT collection uniformly. When opening a position, options buyers can choose any out-of-the-money (OTM) strike price within a range, in other words, buyers can purchase NFT covered calls and protective puts in the platform.",
+          'NFTCall has two key user groups, namely liquidity providers and NFT options traders.',
+          'Liquidity providers (LPs) deposit liquidity into the vault as NFT option sellers. The vault automatically provides market-making services through an AMM model, helping LPs earn NFT option premiums. ',
+          'NFT Option traders use NFTCall to buy call or put options for speculation or hedging risks. Options buyers need to pay option premiums to LPs, and the pricing of NFT options is determined by the AMM module and Black-Scholes formula.',
+          'NFTCall currently supports European-style options, which are settled in cash and can only be exercised at expiration. In addition, the protocol uses floor prices to evaluate the price of each NFT collection uniformly. When opening a position, options buyers can choose any out-of-the-money (OTM) strike price within a range, in other words, buyers can purchase NFT covered calls and protective puts in the platform.',
         ],
       },
       {
@@ -112,35 +112,33 @@ const locale = {
       {
         title: 'How to exercise my NFT options?',
         text: [
-          "For exercising an NFT option, user does not need to send a request, the keepers will automatically execute a transaction to exercise the option.",
-          "When an NFT option is exercised, a exercise fee will be charged by the protocol, which is 0.5% of the notional value or 12.5% of the option value, whichever is lower."
+          'For exercising an NFT option, user does not need to send a request, the keepers will automatically execute a transaction to exercise the option.',
+          'When an NFT option is exercised, a exercise fee will be charged by the protocol, which is 0.5% of the notional value or 12.5% of the option value, whichever is lower.',
         ],
       },
       {
-        title: "What happens when my NFT options expire?",
+        title: 'What happens when my NFT options expire?',
+        text: ['The NFT option is invalid and no exercise fee will be charged.'],
+      },
+      {
+        title: 'What is ncETH Vault?',
         text: [
-          "The NFT option is invalid and no exercise fee will be charged.",
+          'ncETH Vault is an WETH vault that follows ERC-4626, a standard API for tokenized yield-bearing vaults that represent shares of a single underlying ERC-20 asset. For this vault, ncETH shares are representative of the underlying WETH asset.',
+          'The vault serves as the counterparty to all NFT options trades made on the platform: When traders win (positive PnL), their profits will be paid by the vault; when traders lose (negative PnL), their losses (premiums) will be obtained by the vault.',
+          '90% of the premiums will be sent to the vault, while the remaining 10% will be treated as protocol income.',
         ],
       },
       {
-        title: "What is ncETH Vault?",
+        title: 'What is ncETH?',
         text: [
-          "ncETH Vault is an WETH vault that follows ERC-4626, a standard API for tokenized yield-bearing vaults that represent shares of a single underlying ERC-20 asset. For this vault, ncETH shares are representative of the underlying WETH asset.",
-          "The vault serves as the counterparty to all NFT options trades made on the platform: When traders win (positive PnL), their profits will be paid by the vault; when traders lose (negative PnL), their losses (premiums) will be obtained by the vault.",
-          "90% of the premiums will be sent to the vault, while the remaining 10% will be treated as protocol income.",
+          "ncETH is an ERC-20 representing ownership of the underlying WETH asset. It follows an exchange rate model (similar to Compound's cTokens) where the price of ncETH to WETH changes in real-time from two variables: accumulated option premiums and trader options value (open options).",
         ],
       },
       {
-        title: "What is ncETH?",
+        title: 'How does the vault manage the risks?',
         text: [
-          "ncETH is an ERC-20 representing ownership of the underlying WETH asset. It follows an exchange rate model (similar to Compound's cTokens) where the price of ncETH to WETH changes in real-time from two variables: accumulated option premiums and trader options value (open options)."
+          'The protocol aims for the ncETH vault to be close to delta-neutral, reducing PNL fluctuations for LPs and aiming to ensure that returns are driven by market making.',
         ],
-      },
-      {
-        title: "How does the vault manage the risks?",
-        text: [
-          "The protocol aims for the ncETH vault to be close to delta-neutral, reducing PNL fluctuations for LPs and aiming to ensure that returns are driven by market making.",
-        ]
       },
     ],
   },

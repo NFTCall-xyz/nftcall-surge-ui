@@ -1,17 +1,18 @@
+import { useTranslation } from 'next-i18next'
 import React from 'react'
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { H2, H4, Paragraph } from 'components/Typography'
 
-import { useTranslation } from 'next-i18next'
+import { H2, H4, Paragraph } from 'components/Typography'
 
 const FAQ: FC = () => {
   const { t } = useTranslation('home', { keyPrefix: 'faq' })
-  const qa = t('qa', { returnObjects: true}) as any
+  const qa = t('qa', { returnObjects: true }) as any
   return (
     <Stack component="section" spacing={4} paddingX={4}>
       <Stack spacing={4} alignItems="center">
@@ -54,9 +55,11 @@ const FAQ: FC = () => {
               </Box>
             </Box>
             <AccordionDetails>
-              {(t(`qa.${i}.text`, { returnObjects: true }) as any || []).map((line: string, i: number) => 
-                <Paragraph color='text.secondary' key={i} marginBottom={1.5}>{line}</Paragraph>
-              )}
+              {((t(`qa.${i}.text`, { returnObjects: true }) as any) || []).map((line: string, i: number) => (
+                <Paragraph color="text.secondary" key={i} marginBottom={1.5}>
+                  {line}
+                </Paragraph>
+              ))}
             </AccordionDetails>
           </Box>
         ))}
