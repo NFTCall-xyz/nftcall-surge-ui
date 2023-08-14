@@ -3,17 +3,17 @@
   "BAYC": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
   "NFTCallOracle": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
   "LPToken": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
-  "BlackScholes": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
-  "OptionPricer": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
-  "AssetRiskCache": "0x0165878a594ca255338adfa4d48449f69242eb8f",
-  "Reserve": "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
-  "Vault": "0x8a791620dd6260079bf849dc5567adc3f2fdc318",
+  "BlackScholes": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+  "OptionPricer": "0x0165878a594ca255338adfa4d48449f69242eb8f",
+  "AssetRiskCache": "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
+  "Reserve": "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6",
+  "Vault": "0x610178da211fef7d417bc0e6fed39f05609ad788",
   "WETH": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-  "KeeperHelper": "0x68b1d87f95878fe05b998f19b66f4baba5de1aed",
-  "BackstopPool": "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6",
+  "KeeperHelper": "0x322813fd9a801c5507c9de605d63cea4f2ce6c44",
+  "BackstopPool": "0x8a791620dd6260079bf849dc5567adc3f2fdc318",
   "markets": {
     "BAYC": {
-      "OptionToken": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0"
+      "OptionToken": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE"
     }
   }
 }
