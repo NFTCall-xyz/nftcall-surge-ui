@@ -88,18 +88,18 @@ const useStrikePrice = (optionType: OptionType, setInit: Updater<boolean>) => {
 
   const { diffPercent, min, max, tags } = useMemo(() => {
     const tags: number[] =
-      optionType === OptionType.LONG_CALL ? [0.1, 0.2, 0.3, 0.4, 0.5, 1] : [-0.1, -0.2, -0.3, -0.4, -0.5, -0.6]
+      optionType === OptionType.LONG_CALL ? [0.05, 0.1, 0.2, 0.3, 0.4, 1] : [-0.05, -0.1, -0.2, -0.3, -0.4, -0.6]
 
     if (!strikePrice || !price || price.isZero()) return { tags } as undefined
     const diffPercent = toBN(strikePrice).div(price).minus(1)
     let min = toBN(0)
     let max = toBN(0)
     if (optionType === OptionType.LONG_CALL) {
-      min = price.times(1.1)
+      min = price.times(1.05)
       max = price.times(2)
     } else {
       min = price.times(0.4)
-      max = price.times(0.9)
+      max = price.times(0.95)
     }
 
     return {
