@@ -93,12 +93,14 @@ export interface VaultInterface extends utils.Interface {
     'RESERVE_RATIO()': FunctionFragment
     'TIME_SCALE()': FunctionFragment
     'activateMarket(address)': FunctionFragment
-    'activePosition(address,uint256)': FunctionFragment
+    'activatePosition(address,uint256)': FunctionFragment
     'addMarket(address,uint32,address)': FunctionFragment
     'adjustedVolatility(address,uint8,uint256,uint256)': FunctionFragment
     'backstopPool()': FunctionFragment
     'closePosition(address,uint256)': FunctionFragment
+    'collectUntitledAssetsFromLPToken(address)': FunctionFragment
     'deactivateMarket(address)': FunctionFragment
+    'decimals()': FunctionFragment
     'defreezeMarket(address)': FunctionFragment
     'deposit(uint256,address)': FunctionFragment
     'estimatePremium(address,uint8,uint256,uint256,uint256)': FunctionFragment
@@ -112,6 +114,8 @@ export interface VaultInterface extends utils.Interface {
     'marketConfiguration(address)': FunctionFragment
     'markets()': FunctionFragment
     'maximumOptionAmount(address,uint8)': FunctionFragment
+    'minimumAnnualRateOfReturnOnLockedAssets()': FunctionFragment
+    'minimumPremium(address,uint8,uint256,uint256,uint256)': FunctionFragment
     'openPosition(address,address,uint8,uint256,uint256,uint256,uint256)': FunctionFragment
     'owner()': FunctionFragment
     'pause()': FunctionFragment
@@ -121,8 +125,15 @@ export interface VaultInterface extends utils.Interface {
     'redeem(uint256,address)': FunctionFragment
     'renounceOwnership()': FunctionFragment
     'reserve()': FunctionFragment
+    'sendAssetsToLPToken(uint256)': FunctionFragment
+    'setCallStrikePriceRatioRange(uint256,uint256)': FunctionFragment
+    'setDurationRange(uint256,uint256)': FunctionFragment
     'setKeeper(address)': FunctionFragment
+    'setMinimumAnnualRateOfReturnOnLockedAssets(uint256)': FunctionFragment
+    'setPutStrikePriceRatioRange(uint256,uint256)': FunctionFragment
+    'setTimeWindowForActivation(uint256)': FunctionFragment
     'strike(uint256)': FunctionFragment
+    'timeWindowForActivation()': FunctionFragment
     'totalAssets()': FunctionFragment
     'totalLockedAssets()': FunctionFragment
     'transferOwnership(address)': FunctionFragment
@@ -147,12 +158,14 @@ export interface VaultInterface extends utils.Interface {
       | 'RESERVE_RATIO'
       | 'TIME_SCALE'
       | 'activateMarket'
-      | 'activePosition'
+      | 'activatePosition'
       | 'addMarket'
       | 'adjustedVolatility'
       | 'backstopPool'
       | 'closePosition'
+      | 'collectUntitledAssetsFromLPToken'
       | 'deactivateMarket'
+      | 'decimals'
       | 'defreezeMarket'
       | 'deposit'
       | 'estimatePremium'
@@ -166,6 +179,8 @@ export interface VaultInterface extends utils.Interface {
       | 'marketConfiguration'
       | 'markets'
       | 'maximumOptionAmount'
+      | 'minimumAnnualRateOfReturnOnLockedAssets'
+      | 'minimumPremium'
       | 'openPosition'
       | 'owner'
       | 'pause'
@@ -175,8 +190,15 @@ export interface VaultInterface extends utils.Interface {
       | 'redeem'
       | 'renounceOwnership'
       | 'reserve'
+      | 'sendAssetsToLPToken'
+      | 'setCallStrikePriceRatioRange'
+      | 'setDurationRange'
       | 'setKeeper'
+      | 'setMinimumAnnualRateOfReturnOnLockedAssets'
+      | 'setPutStrikePriceRatioRange'
+      | 'setTimeWindowForActivation'
       | 'strike'
+      | 'timeWindowForActivation'
       | 'totalAssets'
       | 'totalLockedAssets'
       | 'transferOwnership'
@@ -199,7 +221,7 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'RESERVE_RATIO', values?: undefined): string
   encodeFunctionData(functionFragment: 'TIME_SCALE', values?: undefined): string
   encodeFunctionData(functionFragment: 'activateMarket', values: [string]): string
-  encodeFunctionData(functionFragment: 'activePosition', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'activatePosition', values: [string, BigNumberish]): string
   encodeFunctionData(functionFragment: 'addMarket', values: [string, BigNumberish, string]): string
   encodeFunctionData(
     functionFragment: 'adjustedVolatility',
@@ -207,7 +229,9 @@ export interface VaultInterface extends utils.Interface {
   ): string
   encodeFunctionData(functionFragment: 'backstopPool', values?: undefined): string
   encodeFunctionData(functionFragment: 'closePosition', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'collectUntitledAssetsFromLPToken', values: [string]): string
   encodeFunctionData(functionFragment: 'deactivateMarket', values: [string]): string
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string
   encodeFunctionData(functionFragment: 'defreezeMarket', values: [string]): string
   encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string]): string
   encodeFunctionData(
@@ -224,6 +248,11 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'marketConfiguration', values: [string]): string
   encodeFunctionData(functionFragment: 'markets', values?: undefined): string
   encodeFunctionData(functionFragment: 'maximumOptionAmount', values: [string, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'minimumAnnualRateOfReturnOnLockedAssets', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'minimumPremium',
+    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+  ): string
   encodeFunctionData(
     functionFragment: 'openPosition',
     values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
@@ -236,8 +265,15 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish, string]): string
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
   encodeFunctionData(functionFragment: 'reserve', values?: undefined): string
+  encodeFunctionData(functionFragment: 'sendAssetsToLPToken', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setCallStrikePriceRatioRange', values: [BigNumberish, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setDurationRange', values: [BigNumberish, BigNumberish]): string
   encodeFunctionData(functionFragment: 'setKeeper', values: [string]): string
+  encodeFunctionData(functionFragment: 'setMinimumAnnualRateOfReturnOnLockedAssets', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setPutStrikePriceRatioRange', values: [BigNumberish, BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setTimeWindowForActivation', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'strike', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'timeWindowForActivation', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalLockedAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string
@@ -259,12 +295,14 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'RESERVE_RATIO', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'TIME_SCALE', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'activateMarket', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'activatePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'adjustedVolatility', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'backstopPool', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'collectUntitledAssetsFromLPToken', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deactivateMarket', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'defreezeMarket', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'estimatePremium', data: BytesLike): Result
@@ -278,6 +316,8 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'marketConfiguration', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'markets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'maximumOptionAmount', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'minimumAnnualRateOfReturnOnLockedAssets', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'minimumPremium', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'openPosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result
@@ -287,8 +327,15 @@ export interface VaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'reserve', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'sendAssetsToLPToken', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setCallStrikePriceRatioRange', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setDurationRange', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setKeeper', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setMinimumAnnualRateOfReturnOnLockedAssets', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setPutStrikePriceRatioRange', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setTimeWindowForActivation', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'strike', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'timeWindowForActivation', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalLockedAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result
@@ -310,16 +357,22 @@ export interface VaultInterface extends utils.Interface {
     'DestoryStrike(uint256)': EventFragment
     'ExercisePosition(address,address,uint256,uint256,uint256,uint256)': EventFragment
     'ExpirePosition(address,address,uint256,uint256)': EventFragment
-    'FailPosition(address,address,uint256,uint256)': EventFragment
+    'FailPosition(address,address,uint256,uint256,uint8)': EventFragment
     'FreezeMarket(address,address)': EventFragment
-    'KeeperAddressUpdated(address)': EventFragment
     'OpenPosition(address,address,address,uint256,(uint8,uint256,uint256,uint256,uint256,uint256,uint256))': EventFragment
     'OwnershipTransferred(address,address)': EventFragment
     'PauseVault(address)': EventFragment
     'Paused(address)': EventFragment
+    'SendAssetsToLPToken(address,uint256)': EventFragment
     'UnpauseVault(address)': EventFragment
     'Unpaused(address)': EventFragment
+    'UpdateCallStrikePriceRatioRange(address,uint256,uint256)': EventFragment
+    'UpdateDurationRange(address,uint256,uint256)': EventFragment
+    'UpdateKeeper(address,address)': EventFragment
     'UpdateLPTokenPrice(address,uint256)': EventFragment
+    'UpdateMinimumAnnualRateOfReturnOnLockedAssets(address,uint256)': EventFragment
+    'UpdatePutStrikePriceRatioRange(address,uint256,uint256)': EventFragment
+    'UpdateTimeWindowForActivation(address,uint256)': EventFragment
   }
 
   getEvent(nameOrSignatureOrTopic: 'ActivateMarket'): EventFragment
@@ -334,14 +387,20 @@ export interface VaultInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'ExpirePosition'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'FailPosition'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'FreezeMarket'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'KeeperAddressUpdated'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'OpenPosition'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'PauseVault'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'SendAssetsToLPToken'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UnpauseVault'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateCallStrikePriceRatioRange'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateDurationRange'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateKeeper'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateLPTokenPrice'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateMinimumAnnualRateOfReturnOnLockedAssets'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdatePutStrikePriceRatioRange'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateTimeWindowForActivation'): EventFragment
 }
 
 export interface ActivateMarketEventObject {
@@ -453,8 +512,9 @@ export interface FailPositionEventObject {
   collection: string
   positionId: BigNumber
   returnedPremium: BigNumber
+  reason: number
 }
-export type FailPositionEvent = TypedEvent<[string, string, BigNumber, BigNumber], FailPositionEventObject>
+export type FailPositionEvent = TypedEvent<[string, string, BigNumber, BigNumber, number], FailPositionEventObject>
 
 export type FailPositionEventFilter = TypedEventFilter<FailPositionEvent>
 
@@ -465,13 +525,6 @@ export interface FreezeMarketEventObject {
 export type FreezeMarketEvent = TypedEvent<[string, string], FreezeMarketEventObject>
 
 export type FreezeMarketEventFilter = TypedEventFilter<FreezeMarketEvent>
-
-export interface KeeperAddressUpdatedEventObject {
-  keeperAddress: string
-}
-export type KeeperAddressUpdatedEvent = TypedEvent<[string], KeeperAddressUpdatedEventObject>
-
-export type KeeperAddressUpdatedEventFilter = TypedEventFilter<KeeperAddressUpdatedEvent>
 
 export interface OpenPositionEventObject {
   caller: string
@@ -509,6 +562,14 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>
 
+export interface SendAssetsToLPTokenEventObject {
+  operator: string
+  amount: BigNumber
+}
+export type SendAssetsToLPTokenEvent = TypedEvent<[string, BigNumber], SendAssetsToLPTokenEventObject>
+
+export type SendAssetsToLPTokenEventFilter = TypedEventFilter<SendAssetsToLPTokenEvent>
+
 export interface UnpauseVaultEventObject {
   operator: string
 }
@@ -523,6 +584,35 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>
 
+export interface UpdateCallStrikePriceRatioRangeEventObject {
+  operator: string
+  minimumRatio: BigNumber
+  maximumRatio: BigNumber
+}
+export type UpdateCallStrikePriceRatioRangeEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  UpdateCallStrikePriceRatioRangeEventObject
+>
+
+export type UpdateCallStrikePriceRatioRangeEventFilter = TypedEventFilter<UpdateCallStrikePriceRatioRangeEvent>
+
+export interface UpdateDurationRangeEventObject {
+  operator: string
+  minimumDuration: BigNumber
+  maximumDuration: BigNumber
+}
+export type UpdateDurationRangeEvent = TypedEvent<[string, BigNumber, BigNumber], UpdateDurationRangeEventObject>
+
+export type UpdateDurationRangeEventFilter = TypedEventFilter<UpdateDurationRangeEvent>
+
+export interface UpdateKeeperEventObject {
+  operator: string
+  keeperAddress: string
+}
+export type UpdateKeeperEvent = TypedEvent<[string, string], UpdateKeeperEventObject>
+
+export type UpdateKeeperEventFilter = TypedEventFilter<UpdateKeeperEvent>
+
 export interface UpdateLPTokenPriceEventObject {
   lpToken: string
   newPrice: BigNumber
@@ -530,6 +620,41 @@ export interface UpdateLPTokenPriceEventObject {
 export type UpdateLPTokenPriceEvent = TypedEvent<[string, BigNumber], UpdateLPTokenPriceEventObject>
 
 export type UpdateLPTokenPriceEventFilter = TypedEventFilter<UpdateLPTokenPriceEvent>
+
+export interface UpdateMinimumAnnualRateOfReturnOnLockedAssetsEventObject {
+  operator: string
+  ratio: BigNumber
+}
+export type UpdateMinimumAnnualRateOfReturnOnLockedAssetsEvent = TypedEvent<
+  [string, BigNumber],
+  UpdateMinimumAnnualRateOfReturnOnLockedAssetsEventObject
+>
+
+export type UpdateMinimumAnnualRateOfReturnOnLockedAssetsEventFilter =
+  TypedEventFilter<UpdateMinimumAnnualRateOfReturnOnLockedAssetsEvent>
+
+export interface UpdatePutStrikePriceRatioRangeEventObject {
+  operator: string
+  minimumRatio: BigNumber
+  maximumRatio: BigNumber
+}
+export type UpdatePutStrikePriceRatioRangeEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  UpdatePutStrikePriceRatioRangeEventObject
+>
+
+export type UpdatePutStrikePriceRatioRangeEventFilter = TypedEventFilter<UpdatePutStrikePriceRatioRangeEvent>
+
+export interface UpdateTimeWindowForActivationEventObject {
+  operator: string
+  timeWindows: BigNumber
+}
+export type UpdateTimeWindowForActivationEvent = TypedEvent<
+  [string, BigNumber],
+  UpdateTimeWindowForActivationEventObject
+>
+
+export type UpdateTimeWindowForActivationEventFilter = TypedEventFilter<UpdateTimeWindowForActivationEvent>
 
 export interface Vault extends BaseContract {
   contractName: 'Vault'
@@ -578,7 +703,7 @@ export interface Vault extends BaseContract {
 
     activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-    activePosition(
+    activatePosition(
       collection: string,
       positionId: BigNumberish,
       overrides?: Overrides & { from?: string }
@@ -607,7 +732,14 @@ export interface Vault extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
+    collectUntitledAssetsFromLPToken(
+      receiver: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>
+
     deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
+    decimals(overrides?: CallOverrides): Promise<[number]>
 
     defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
@@ -657,6 +789,17 @@ export interface Vault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { amount: BigNumber }>
 
+    minimumAnnualRateOfReturnOnLockedAssets(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    minimumPremium(
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
+
     openPosition(
       collection: string,
       onBehalfOf: string,
@@ -693,9 +836,41 @@ export interface Vault extends BaseContract {
 
     reserve(overrides?: CallOverrides): Promise<[string]>
 
+    sendAssetsToLPToken(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
+    setCallStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>
+
+    setDurationRange(
+      minimumDuration: BigNumberish,
+      maximumDuration: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>
+
     setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
+    setMinimumAnnualRateOfReturnOnLockedAssets(
+      ratio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>
+
+    setPutStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>
+
+    setTimeWindowForActivation(
+      timeWindows: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>
+
     strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<[StrikeStructOutput] & { s: StrikeStructOutput }>
+
+    timeWindowForActivation(overrides?: CallOverrides): Promise<[BigNumber]>
 
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>
 
@@ -743,7 +918,7 @@ export interface Vault extends BaseContract {
 
   activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
-  activePosition(
+  activatePosition(
     collection: string,
     positionId: BigNumberish,
     overrides?: Overrides & { from?: string }
@@ -772,7 +947,14 @@ export interface Vault extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
+  collectUntitledAssetsFromLPToken(
+    receiver: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>
+
   deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
+  decimals(overrides?: CallOverrides): Promise<number>
 
   defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
@@ -818,6 +1000,17 @@ export interface Vault extends BaseContract {
 
   maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
+  minimumAnnualRateOfReturnOnLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
+
+  minimumPremium(
+    collection: string,
+    optionType: BigNumberish,
+    strikePrice: BigNumberish,
+    expiry: BigNumberish,
+    amount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
   openPosition(
     collection: string,
     onBehalfOf: string,
@@ -854,9 +1047,41 @@ export interface Vault extends BaseContract {
 
   reserve(overrides?: CallOverrides): Promise<string>
 
+  sendAssetsToLPToken(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
+  setCallStrikePriceRatioRange(
+    minimumRatio: BigNumberish,
+    maximumRatio: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>
+
+  setDurationRange(
+    minimumDuration: BigNumberish,
+    maximumDuration: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>
+
   setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
+  setMinimumAnnualRateOfReturnOnLockedAssets(
+    ratio: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>
+
+  setPutStrikePriceRatioRange(
+    minimumRatio: BigNumberish,
+    maximumRatio: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>
+
+  setTimeWindowForActivation(
+    timeWindows: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>
+
   strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<StrikeStructOutput>
+
+  timeWindowForActivation(overrides?: CallOverrides): Promise<BigNumber>
 
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -904,7 +1129,7 @@ export interface Vault extends BaseContract {
 
     activateMarket(collection: string, overrides?: CallOverrides): Promise<void>
 
-    activePosition(
+    activatePosition(
       collection: string,
       positionId: BigNumberish,
       overrides?: CallOverrides
@@ -924,7 +1149,11 @@ export interface Vault extends BaseContract {
 
     closePosition(collection: string, positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
+    collectUntitledAssetsFromLPToken(receiver: string, overrides?: CallOverrides): Promise<BigNumber>
+
     deactivateMarket(collection: string, overrides?: CallOverrides): Promise<void>
+
+    decimals(overrides?: CallOverrides): Promise<number>
 
     defreezeMarket(collection: string, overrides?: CallOverrides): Promise<void>
 
@@ -962,6 +1191,17 @@ export interface Vault extends BaseContract {
 
     maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
+    minimumAnnualRateOfReturnOnLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
+
+    minimumPremium(
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     openPosition(
       collection: string,
       onBehalfOf: string,
@@ -998,9 +1238,35 @@ export interface Vault extends BaseContract {
 
     reserve(overrides?: CallOverrides): Promise<string>
 
+    sendAssetsToLPToken(amount: BigNumberish, overrides?: CallOverrides): Promise<void>
+
+    setCallStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    setDurationRange(
+      minimumDuration: BigNumberish,
+      maximumDuration: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>
+
     setKeeper(keeperAddress: string, overrides?: CallOverrides): Promise<void>
 
+    setMinimumAnnualRateOfReturnOnLockedAssets(ratio: BigNumberish, overrides?: CallOverrides): Promise<void>
+
+    setPutStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    setTimeWindowForActivation(timeWindows: BigNumberish, overrides?: CallOverrides): Promise<void>
+
     strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<StrikeStructOutput>
+
+    timeWindowForActivation(overrides?: CallOverrides): Promise<BigNumber>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -1124,24 +1390,23 @@ export interface Vault extends BaseContract {
       settlementPrice?: null
     ): ExpirePositionEventFilter
 
-    'FailPosition(address,address,uint256,uint256)'(
+    'FailPosition(address,address,uint256,uint256,uint8)'(
       owner?: string | null,
       collection?: string | null,
       positionId?: BigNumberish | null,
-      returnedPremium?: null
+      returnedPremium?: null,
+      reason?: null
     ): FailPositionEventFilter
     FailPosition(
       owner?: string | null,
       collection?: string | null,
       positionId?: BigNumberish | null,
-      returnedPremium?: null
+      returnedPremium?: null,
+      reason?: null
     ): FailPositionEventFilter
 
     'FreezeMarket(address,address)'(operator?: string | null, collection?: string | null): FreezeMarketEventFilter
     FreezeMarket(operator?: string | null, collection?: string | null): FreezeMarketEventFilter
-
-    'KeeperAddressUpdated(address)'(keeperAddress?: string | null): KeeperAddressUpdatedEventFilter
-    KeeperAddressUpdated(keeperAddress?: string | null): KeeperAddressUpdatedEventFilter
 
     'OpenPosition(address,address,address,uint256,(uint8,uint256,uint256,uint256,uint256,uint256,uint256))'(
       caller?: null,
@@ -1170,14 +1435,71 @@ export interface Vault extends BaseContract {
     'Paused(address)'(account?: null): PausedEventFilter
     Paused(account?: null): PausedEventFilter
 
+    'SendAssetsToLPToken(address,uint256)'(operator?: string | null, amount?: null): SendAssetsToLPTokenEventFilter
+    SendAssetsToLPToken(operator?: string | null, amount?: null): SendAssetsToLPTokenEventFilter
+
     'UnpauseVault(address)'(operator?: string | null): UnpauseVaultEventFilter
     UnpauseVault(operator?: string | null): UnpauseVaultEventFilter
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter
     Unpaused(account?: null): UnpausedEventFilter
 
+    'UpdateCallStrikePriceRatioRange(address,uint256,uint256)'(
+      operator?: string | null,
+      minimumRatio?: null,
+      maximumRatio?: null
+    ): UpdateCallStrikePriceRatioRangeEventFilter
+    UpdateCallStrikePriceRatioRange(
+      operator?: string | null,
+      minimumRatio?: null,
+      maximumRatio?: null
+    ): UpdateCallStrikePriceRatioRangeEventFilter
+
+    'UpdateDurationRange(address,uint256,uint256)'(
+      operator?: string | null,
+      minimumDuration?: null,
+      maximumDuration?: null
+    ): UpdateDurationRangeEventFilter
+    UpdateDurationRange(
+      operator?: string | null,
+      minimumDuration?: null,
+      maximumDuration?: null
+    ): UpdateDurationRangeEventFilter
+
+    'UpdateKeeper(address,address)'(operator?: string | null, keeperAddress?: string | null): UpdateKeeperEventFilter
+    UpdateKeeper(operator?: string | null, keeperAddress?: string | null): UpdateKeeperEventFilter
+
     'UpdateLPTokenPrice(address,uint256)'(lpToken?: string | null, newPrice?: null): UpdateLPTokenPriceEventFilter
     UpdateLPTokenPrice(lpToken?: string | null, newPrice?: null): UpdateLPTokenPriceEventFilter
+
+    'UpdateMinimumAnnualRateOfReturnOnLockedAssets(address,uint256)'(
+      operator?: string | null,
+      ratio?: null
+    ): UpdateMinimumAnnualRateOfReturnOnLockedAssetsEventFilter
+    UpdateMinimumAnnualRateOfReturnOnLockedAssets(
+      operator?: string | null,
+      ratio?: null
+    ): UpdateMinimumAnnualRateOfReturnOnLockedAssetsEventFilter
+
+    'UpdatePutStrikePriceRatioRange(address,uint256,uint256)'(
+      operator?: string | null,
+      minimumRatio?: null,
+      maximumRatio?: null
+    ): UpdatePutStrikePriceRatioRangeEventFilter
+    UpdatePutStrikePriceRatioRange(
+      operator?: string | null,
+      minimumRatio?: null,
+      maximumRatio?: null
+    ): UpdatePutStrikePriceRatioRangeEventFilter
+
+    'UpdateTimeWindowForActivation(address,uint256)'(
+      operator?: string | null,
+      timeWindows?: null
+    ): UpdateTimeWindowForActivationEventFilter
+    UpdateTimeWindowForActivation(
+      operator?: string | null,
+      timeWindows?: null
+    ): UpdateTimeWindowForActivationEventFilter
   }
 
   estimateGas: {
@@ -1203,7 +1525,7 @@ export interface Vault extends BaseContract {
 
     activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
-    activePosition(
+    activatePosition(
       collection: string,
       positionId: BigNumberish,
       overrides?: Overrides & { from?: string }
@@ -1232,7 +1554,11 @@ export interface Vault extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>
 
+    collectUntitledAssetsFromLPToken(receiver: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+
     deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+
+    decimals(overrides?: CallOverrides): Promise<BigNumber>
 
     defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
@@ -1271,6 +1597,17 @@ export interface Vault extends BaseContract {
 
     maximumOptionAmount(collection: string, optionType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
+    minimumAnnualRateOfReturnOnLockedAssets(overrides?: CallOverrides): Promise<BigNumber>
+
+    minimumPremium(
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
     openPosition(
       collection: string,
       onBehalfOf: string,
@@ -1302,9 +1639,38 @@ export interface Vault extends BaseContract {
 
     reserve(overrides?: CallOverrides): Promise<BigNumber>
 
+    sendAssetsToLPToken(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+
+    setCallStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>
+
+    setDurationRange(
+      minimumDuration: BigNumberish,
+      maximumDuration: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>
+
     setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
+    setMinimumAnnualRateOfReturnOnLockedAssets(
+      ratio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>
+
+    setPutStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>
+
+    setTimeWindowForActivation(timeWindows: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+
     strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
+
+    timeWindowForActivation(overrides?: CallOverrides): Promise<BigNumber>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -1353,7 +1719,7 @@ export interface Vault extends BaseContract {
 
     activateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
-    activePosition(
+    activatePosition(
       collection: string,
       positionId: BigNumberish,
       overrides?: Overrides & { from?: string }
@@ -1382,7 +1748,14 @@ export interface Vault extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
+    collectUntitledAssetsFromLPToken(
+      receiver: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
     deactivateMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     defreezeMarket(collection: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
@@ -1429,6 +1802,17 @@ export interface Vault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
+    minimumAnnualRateOfReturnOnLockedAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    minimumPremium(
+      collection: string,
+      optionType: BigNumberish,
+      strikePrice: BigNumberish,
+      expiry: BigNumberish,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
     openPosition(
       collection: string,
       onBehalfOf: string,
@@ -1460,9 +1844,41 @@ export interface Vault extends BaseContract {
 
     reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
+    sendAssetsToLPToken(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+
+    setCallStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
+    setDurationRange(
+      minimumDuration: BigNumberish,
+      maximumDuration: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
     setKeeper(keeperAddress: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
+    setMinimumAnnualRateOfReturnOnLockedAssets(
+      ratio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
+    setPutStrikePriceRatioRange(
+      minimumRatio: BigNumberish,
+      maximumRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
+    setTimeWindowForActivation(
+      timeWindows: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
     strike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    timeWindowForActivation(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 

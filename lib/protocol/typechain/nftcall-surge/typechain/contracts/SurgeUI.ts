@@ -132,6 +132,18 @@ export type VaultStruct = {
   totalSupply: BigNumberish
   totalAssets: BigNumberish
   executionFee: BigNumberish
+  reserveRatio: BigNumberish
+  feeRatio: BigNumberish
+  profitFeeRatio: BigNumberish
+  timeWindowForActivation: BigNumberish
+  maximumLockRatio: BigNumberish
+  maximumCallStrikePriceRatio: BigNumberish
+  maximumPutStrikePriceRatio: BigNumberish
+  minimumCallStrikePriceRatio: BigNumberish
+  minimumPutStrikePriceRatio: BigNumberish
+  maximumDuration: BigNumberish
+  minimumDuration: BigNumberish
+  timeScale: BigNumberish
   totalLockedAssets: BigNumberish
   unrealizedPNL: BigNumberish
   unrealizedPremium: BigNumberish
@@ -139,6 +151,18 @@ export type VaultStruct = {
 
 export type VaultStructOutput = [
   VaultLPTokenStructOutput,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
   BigNumber,
   BigNumber,
   BigNumber,
@@ -154,6 +178,18 @@ export type VaultStructOutput = [
   totalSupply: BigNumber
   totalAssets: BigNumber
   executionFee: BigNumber
+  reserveRatio: BigNumber
+  feeRatio: BigNumber
+  profitFeeRatio: BigNumber
+  timeWindowForActivation: BigNumber
+  maximumLockRatio: BigNumber
+  maximumCallStrikePriceRatio: BigNumber
+  maximumPutStrikePriceRatio: BigNumber
+  minimumCallStrikePriceRatio: BigNumber
+  minimumPutStrikePriceRatio: BigNumber
+  maximumDuration: BigNumber
+  minimumDuration: BigNumber
+  timeScale: BigNumber
   totalLockedAssets: BigNumber
   unrealizedPNL: BigNumber
   unrealizedPremium: BigNumber

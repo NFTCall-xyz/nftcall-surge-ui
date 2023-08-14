@@ -40,26 +40,22 @@ export declare namespace BlackScholes {
 
 export interface IPricerInterface extends utils.Interface {
   functions: {
-    'delta(uint256,uint256,uint256,uint256)': FunctionFragment
     'getAdjustedVol(address,uint8,uint256,uint256)': FunctionFragment
     'getPremiumDeltaStdVega(uint8,uint256,uint256,uint256,uint256)': FunctionFragment
+    'optionDelta(uint256,uint256,uint256,uint256)': FunctionFragment
     'optionPrices(uint256,uint256,uint256,uint256)': FunctionFragment
     'optionPricesDeltaStdVega(uint256,uint256,uint256,uint256)': FunctionFragment
   }
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'delta'
       | 'getAdjustedVol'
       | 'getPremiumDeltaStdVega'
+      | 'optionDelta'
       | 'optionPrices'
       | 'optionPricesDeltaStdVega'
   ): FunctionFragment
 
-  encodeFunctionData(
-    functionFragment: 'delta',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
-  ): string
   encodeFunctionData(
     functionFragment: 'getAdjustedVol',
     values: [string, BigNumberish, BigNumberish, BigNumberish]
@@ -67,6 +63,10 @@ export interface IPricerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'getPremiumDeltaStdVega',
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'optionDelta',
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(
     functionFragment: 'optionPrices',
@@ -77,9 +77,9 @@ export interface IPricerInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
 
-  decodeFunctionResult(functionFragment: 'delta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getAdjustedVol', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getPremiumDeltaStdVega', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'optionDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'optionPrices', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'optionPricesDeltaStdVega', data: BytesLike): Result
 
@@ -111,14 +111,6 @@ export interface IPricer extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      druation: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
-
     getAdjustedVol(
       asset: string,
       ot: BigNumberish,
@@ -143,6 +135,14 @@ export interface IPricer extends BaseContract {
       }
     >
 
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
+
     optionPrices(
       S: BigNumberish,
       K: BigNumberish,
@@ -159,14 +159,6 @@ export interface IPricer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BlackScholes.PricesDeltaStdVegaStructOutput]>
   }
-
-  delta(
-    S: BigNumberish,
-    K: BigNumberish,
-    vol: BigNumberish,
-    druation: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
   getAdjustedVol(
     asset: string,
@@ -192,6 +184,14 @@ export interface IPricer extends BaseContract {
     }
   >
 
+  optionDelta(
+    S: BigNumberish,
+    K: BigNumberish,
+    vol: BigNumberish,
+    druation: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
+
   optionPrices(
     S: BigNumberish,
     K: BigNumberish,
@@ -209,14 +209,6 @@ export interface IPricer extends BaseContract {
   ): Promise<BlackScholes.PricesDeltaStdVegaStructOutput>
 
   callStatic: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      druation: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
-
     getAdjustedVol(
       asset: string,
       ot: BigNumberish,
@@ -241,6 +233,14 @@ export interface IPricer extends BaseContract {
       }
     >
 
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
+
     optionPrices(
       S: BigNumberish,
       K: BigNumberish,
@@ -261,14 +261,6 @@ export interface IPricer extends BaseContract {
   filters: {}
 
   estimateGas: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      druation: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
     getAdjustedVol(
       asset: string,
       ot: BigNumberish,
@@ -283,6 +275,14 @@ export interface IPricer extends BaseContract {
       K: BigNumberish,
       vol: BigNumberish,
       duration: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
@@ -304,14 +304,6 @@ export interface IPricer extends BaseContract {
   }
 
   populateTransaction: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      druation: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
     getAdjustedVol(
       asset: string,
       ot: BigNumberish,
@@ -326,6 +318,14 @@ export interface IPricer extends BaseContract {
       K: BigNumberish,
       vol: BigNumberish,
       duration: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      druation: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 

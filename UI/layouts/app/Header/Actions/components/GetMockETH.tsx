@@ -27,7 +27,6 @@ const GetMockETH: FC = () => {
       createTransaction: wETHService.mint({
         wETH: wETHAddress,
         userAddress: account,
-        amount: '100',
       }),
       setStatus: () => {},
       sendTransaction,
@@ -39,7 +38,7 @@ const GetMockETH: FC = () => {
 
   const disabled = useMemo(() => {
     if (!account || !wETHBalance) return true
-    return wETHBalance.gt(10)
+    return wETHBalance.gt(0.0001)
   }, [account, wETHBalance])
 
   return (

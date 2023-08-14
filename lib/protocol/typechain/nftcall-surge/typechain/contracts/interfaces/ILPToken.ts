@@ -22,7 +22,7 @@ import type { OnEvent, TypedEvent, TypedEventFilter, TypedListener } from '../..
 
 export interface ILPTokenInterface extends utils.Interface {
   functions: {
-    'collect(address)': FunctionFragment
+    'collectUntitledAssets(address)': FunctionFragment
     'decreaseTotalAssets(uint256)': FunctionFragment
     'deposit(uint256,address,address)': FunctionFragment
     'increaseTotalAssets(uint256)': FunctionFragment
@@ -31,13 +31,15 @@ export interface ILPTokenInterface extends utils.Interface {
     'releaseTime(address)': FunctionFragment
     'setMaximumVaultBalance(uint256)': FunctionFragment
     'setMinimumAssetToShareRatio(uint256)': FunctionFragment
+    'setWholeWithdrawLimit(uint256)': FunctionFragment
     'untitledAssets()': FunctionFragment
     'vault()': FunctionFragment
+    'wholeWithdrawLimit()': FunctionFragment
   }
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'collect'
+      | 'collectUntitledAssets'
       | 'decreaseTotalAssets'
       | 'deposit'
       | 'increaseTotalAssets'
@@ -46,11 +48,13 @@ export interface ILPTokenInterface extends utils.Interface {
       | 'releaseTime'
       | 'setMaximumVaultBalance'
       | 'setMinimumAssetToShareRatio'
+      | 'setWholeWithdrawLimit'
       | 'untitledAssets'
       | 'vault'
+      | 'wholeWithdrawLimit'
   ): FunctionFragment
 
-  encodeFunctionData(functionFragment: 'collect', values: [string]): string
+  encodeFunctionData(functionFragment: 'collectUntitledAssets', values: [string]): string
   encodeFunctionData(functionFragment: 'decreaseTotalAssets', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string, string]): string
   encodeFunctionData(functionFragment: 'increaseTotalAssets', values: [BigNumberish]): string
@@ -59,10 +63,12 @@ export interface ILPTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'releaseTime', values: [string]): string
   encodeFunctionData(functionFragment: 'setMaximumVaultBalance', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'setMinimumAssetToShareRatio', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setWholeWithdrawLimit', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'untitledAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
+  encodeFunctionData(functionFragment: 'wholeWithdrawLimit', values?: undefined): string
 
-  decodeFunctionResult(functionFragment: 'collect', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'collectUntitledAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'decreaseTotalAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'increaseTotalAssets', data: BytesLike): Result
@@ -71,8 +77,10 @@ export interface ILPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'releaseTime', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setMaximumVaultBalance', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setMinimumAssetToShareRatio', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setWholeWithdrawLimit', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'untitledAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'wholeWithdrawLimit', data: BytesLike): Result
 
   events: {
     'Claim(address,uint256)': EventFragment
@@ -81,6 +89,7 @@ export interface ILPTokenInterface extends utils.Interface {
     'UpdateMaximumVaultBalance(uint256)': EventFragment
     'UpdateMinimumAssetToShareRatio(uint256)': EventFragment
     'UpdateTotalAssets(uint256)': EventFragment
+    'UpdateWholeWithdrawLimit(uint256)': EventFragment
   }
 
   getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment
@@ -89,6 +98,7 @@ export interface ILPTokenInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'UpdateMaximumVaultBalance'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateMinimumAssetToShareRatio'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateTotalAssets'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateWholeWithdrawLimit'): EventFragment
 }
 
 export interface ClaimEventObject {
@@ -136,6 +146,13 @@ export type UpdateTotalAssetsEvent = TypedEvent<[BigNumber], UpdateTotalAssetsEv
 
 export type UpdateTotalAssetsEventFilter = TypedEventFilter<UpdateTotalAssetsEvent>
 
+export interface UpdateWholeWithdrawLimitEventObject {
+  limit: BigNumber
+}
+export type UpdateWholeWithdrawLimitEvent = TypedEvent<[BigNumber], UpdateWholeWithdrawLimitEventObject>
+
+export type UpdateWholeWithdrawLimitEventFilter = TypedEventFilter<UpdateWholeWithdrawLimitEvent>
+
 export interface ILPToken extends BaseContract {
   contractName: 'ILPToken'
 
@@ -161,7 +178,7 @@ export interface ILPToken extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+    collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
@@ -190,12 +207,16 @@ export interface ILPToken extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
     untitledAssets(overrides?: CallOverrides): Promise<[BigNumber]>
 
     vault(overrides?: CallOverrides): Promise<[string]>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<[BigNumber]>
   }
 
-  collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+  collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
@@ -224,12 +245,16 @@ export interface ILPToken extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
+  setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
   untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
   vault(overrides?: CallOverrides): Promise<string>
 
+  wholeWithdrawLimit(overrides?: CallOverrides): Promise<BigNumber>
+
   callStatic: {
-    collect(receiver: string, overrides?: CallOverrides): Promise<BigNumber>
+    collectUntitledAssets(receiver: string, overrides?: CallOverrides): Promise<BigNumber>
 
     decreaseTotalAssets(amount: BigNumberish, overrides?: CallOverrides): Promise<void>
 
@@ -247,9 +272,13 @@ export interface ILPToken extends BaseContract {
 
     setMinimumAssetToShareRatio(ratio: BigNumberish, overrides?: CallOverrides): Promise<void>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: CallOverrides): Promise<void>
+
     untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<string>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<BigNumber>
   }
 
   filters: {
@@ -270,10 +299,13 @@ export interface ILPToken extends BaseContract {
 
     'UpdateTotalAssets(uint256)'(amount?: null): UpdateTotalAssetsEventFilter
     UpdateTotalAssets(amount?: null): UpdateTotalAssetsEventFilter
+
+    'UpdateWholeWithdrawLimit(uint256)'(limit?: null): UpdateWholeWithdrawLimitEventFilter
+    UpdateWholeWithdrawLimit(limit?: null): UpdateWholeWithdrawLimitEventFilter
   }
 
   estimateGas: {
-    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+    collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
@@ -296,13 +328,17 @@ export interface ILPToken extends BaseContract {
 
     setMinimumAssetToShareRatio(ratio: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+
     untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<BigNumber>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<BigNumber>
   }
 
   populateTransaction: {
-    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+    collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     decreaseTotalAssets(amount: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
@@ -331,8 +367,12 @@ export interface ILPToken extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+
     untitledAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>
   }
 }

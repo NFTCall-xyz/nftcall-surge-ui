@@ -44,6 +44,7 @@ export interface IOptionTokenInterface extends utils.Interface {
   functions: {
     'activePosition(uint256,uint256)': FunctionFragment
     'closePosition(uint256)': FunctionFragment
+    'decimals()': FunctionFragment
     'forceClosePendingPosition(uint256)': FunctionFragment
     'lockedValue(uint256)': FunctionFragment
     'openPosition(address,address,uint8,uint256,uint256,uint256)': FunctionFragment
@@ -61,6 +62,7 @@ export interface IOptionTokenInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'activePosition'
       | 'closePosition'
+      | 'decimals'
       | 'forceClosePendingPosition'
       | 'lockedValue'
       | 'openPosition'
@@ -76,6 +78,7 @@ export interface IOptionTokenInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'activePosition', values: [BigNumberish, BigNumberish]): string
   encodeFunctionData(functionFragment: 'closePosition', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string
   encodeFunctionData(functionFragment: 'forceClosePendingPosition', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'lockedValue', values: [BigNumberish]): string
   encodeFunctionData(
@@ -93,6 +96,7 @@ export interface IOptionTokenInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'activePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'forceClosePendingPosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'lockedValue', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'openPosition', data: BytesLike): Result
@@ -207,6 +211,8 @@ export interface IOptionToken extends BaseContract {
 
     closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
+    decimals(overrides?: CallOverrides): Promise<[number]>
+
     forceClosePendingPosition(
       positionId: BigNumberish,
       overrides?: Overrides & { from?: string }
@@ -249,6 +255,8 @@ export interface IOptionToken extends BaseContract {
 
   closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
+  decimals(overrides?: CallOverrides): Promise<number>
+
   forceClosePendingPosition(
     positionId: BigNumberish,
     overrides?: Overrides & { from?: string }
@@ -286,6 +294,8 @@ export interface IOptionToken extends BaseContract {
     activePosition(positionId: BigNumberish, premium: BigNumberish, overrides?: CallOverrides): Promise<void>
 
     closePosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
+
+    decimals(overrides?: CallOverrides): Promise<number>
 
     forceClosePendingPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
@@ -363,6 +373,8 @@ export interface IOptionToken extends BaseContract {
 
     closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
+    decimals(overrides?: CallOverrides): Promise<BigNumber>
+
     forceClosePendingPosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     lockedValue(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
@@ -402,6 +414,8 @@ export interface IOptionToken extends BaseContract {
     ): Promise<PopulatedTransaction>
 
     closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     forceClosePendingPosition(
       positionId: BigNumberish,

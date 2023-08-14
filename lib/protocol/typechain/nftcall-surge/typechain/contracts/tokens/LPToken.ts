@@ -29,7 +29,7 @@ export interface LPTokenInterface extends utils.Interface {
     'approve(address,uint256)': FunctionFragment
     'asset()': FunctionFragment
     'balanceOf(address)': FunctionFragment
-    'collect(address)': FunctionFragment
+    'collectUntitledAssets(address)': FunctionFragment
     'convertToAssets(uint256)': FunctionFragment
     'convertToShares(uint256)': FunctionFragment
     'decimals()': FunctionFragment
@@ -58,6 +58,7 @@ export interface LPTokenInterface extends utils.Interface {
     'renounceOwnership()': FunctionFragment
     'setMaximumVaultBalance(uint256)': FunctionFragment
     'setMinimumAssetToShareRatio(uint256)': FunctionFragment
+    'setWholeWithdrawLimit(uint256)': FunctionFragment
     'symbol()': FunctionFragment
     'totalAssets()': FunctionFragment
     'totalSupply()': FunctionFragment
@@ -66,6 +67,7 @@ export interface LPTokenInterface extends utils.Interface {
     'transferOwnership(address)': FunctionFragment
     'untitledAssets()': FunctionFragment
     'vault()': FunctionFragment
+    'wholeWithdrawLimit()': FunctionFragment
     'withdraw(uint256,address,address)': FunctionFragment
   }
 
@@ -78,7 +80,7 @@ export interface LPTokenInterface extends utils.Interface {
       | 'approve'
       | 'asset'
       | 'balanceOf'
-      | 'collect'
+      | 'collectUntitledAssets'
       | 'convertToAssets'
       | 'convertToShares'
       | 'decimals'
@@ -107,6 +109,7 @@ export interface LPTokenInterface extends utils.Interface {
       | 'renounceOwnership'
       | 'setMaximumVaultBalance'
       | 'setMinimumAssetToShareRatio'
+      | 'setWholeWithdrawLimit'
       | 'symbol'
       | 'totalAssets'
       | 'totalSupply'
@@ -115,6 +118,7 @@ export interface LPTokenInterface extends utils.Interface {
       | 'transferOwnership'
       | 'untitledAssets'
       | 'vault'
+      | 'wholeWithdrawLimit'
       | 'withdraw'
   ): FunctionFragment
 
@@ -125,7 +129,7 @@ export interface LPTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string
-  encodeFunctionData(functionFragment: 'collect', values: [string]): string
+  encodeFunctionData(functionFragment: 'collectUntitledAssets', values: [string]): string
   encodeFunctionData(functionFragment: 'convertToAssets', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'convertToShares', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string
@@ -157,6 +161,7 @@ export interface LPTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string
   encodeFunctionData(functionFragment: 'setMaximumVaultBalance', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'setMinimumAssetToShareRatio', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: 'setWholeWithdrawLimit', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string
@@ -165,6 +170,7 @@ export interface LPTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string
   encodeFunctionData(functionFragment: 'untitledAssets', values?: undefined): string
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string
+  encodeFunctionData(functionFragment: 'wholeWithdrawLimit', values?: undefined): string
   encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, string, string]): string
 
   decodeFunctionResult(functionFragment: 'LOCK_PERIOD', data: BytesLike): Result
@@ -174,7 +180,7 @@ export interface LPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'collect', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'collectUntitledAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result
@@ -203,6 +209,7 @@ export interface LPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setMaximumVaultBalance', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setMinimumAssetToShareRatio', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'setWholeWithdrawLimit', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result
@@ -211,6 +218,7 @@ export interface LPTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'untitledAssets', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'wholeWithdrawLimit', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result
 
   events: {
@@ -224,6 +232,7 @@ export interface LPTokenInterface extends utils.Interface {
     'UpdateMaximumVaultBalance(uint256)': EventFragment
     'UpdateMinimumAssetToShareRatio(uint256)': EventFragment
     'UpdateTotalAssets(uint256)': EventFragment
+    'UpdateWholeWithdrawLimit(uint256)': EventFragment
     'Withdraw(address,address,address,uint256,uint256)': EventFragment
   }
 
@@ -237,6 +246,7 @@ export interface LPTokenInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'UpdateMaximumVaultBalance'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateMinimumAssetToShareRatio'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'UpdateTotalAssets'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateWholeWithdrawLimit'): EventFragment
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment
 }
 
@@ -321,6 +331,13 @@ export type UpdateTotalAssetsEvent = TypedEvent<[BigNumber], UpdateTotalAssetsEv
 
 export type UpdateTotalAssetsEventFilter = TypedEventFilter<UpdateTotalAssetsEvent>
 
+export interface UpdateWholeWithdrawLimitEventObject {
+  limit: BigNumber
+}
+export type UpdateWholeWithdrawLimitEvent = TypedEvent<[BigNumber], UpdateWholeWithdrawLimitEventObject>
+
+export type UpdateWholeWithdrawLimitEventFilter = TypedEventFilter<UpdateWholeWithdrawLimitEvent>
+
 export interface WithdrawEventObject {
   sender: string
   receiver: string
@@ -375,7 +392,7 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: string, overrides?: CallOverrides): Promise<[BigNumber]>
 
-    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+    collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
     convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets: BigNumber }>
 
@@ -469,6 +486,8 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
     symbol(overrides?: CallOverrides): Promise<[string]>
 
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>
@@ -489,6 +508,8 @@ export interface LPToken extends BaseContract {
     untitledAssets(overrides?: CallOverrides): Promise<[BigNumber]>
 
     vault(overrides?: CallOverrides): Promise<[string]>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<[BigNumber]>
 
     withdraw(
       assets: BigNumberish,
@@ -516,7 +537,7 @@ export interface LPToken extends BaseContract {
 
   balanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
-  collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+  collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
 
   convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -606,6 +627,8 @@ export interface LPToken extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
 
+  setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<ContractTransaction>
+
   symbol(overrides?: CallOverrides): Promise<string>
 
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>
@@ -626,6 +649,8 @@ export interface LPToken extends BaseContract {
   untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
   vault(overrides?: CallOverrides): Promise<string>
+
+  wholeWithdrawLimit(overrides?: CallOverrides): Promise<BigNumber>
 
   withdraw(
     assets: BigNumberish,
@@ -649,7 +674,7 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    collect(receiver: string, overrides?: CallOverrides): Promise<BigNumber>
+    collectUntitledAssets(receiver: string, overrides?: CallOverrides): Promise<BigNumber>
 
     convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -712,6 +737,8 @@ export interface LPToken extends BaseContract {
 
     setMinimumAssetToShareRatio(ratio: BigNumberish, overrides?: CallOverrides): Promise<void>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: CallOverrides): Promise<void>
+
     symbol(overrides?: CallOverrides): Promise<string>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
@@ -727,6 +754,8 @@ export interface LPToken extends BaseContract {
     untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<string>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<BigNumber>
 
     withdraw(assets: BigNumberish, receiver: string, owner: string, overrides?: CallOverrides): Promise<BigNumber>
   }
@@ -774,6 +803,9 @@ export interface LPToken extends BaseContract {
     'UpdateTotalAssets(uint256)'(amount?: null): UpdateTotalAssetsEventFilter
     UpdateTotalAssets(amount?: null): UpdateTotalAssetsEventFilter
 
+    'UpdateWholeWithdrawLimit(uint256)'(limit?: null): UpdateWholeWithdrawLimitEventFilter
+    UpdateWholeWithdrawLimit(limit?: null): UpdateWholeWithdrawLimitEventFilter
+
     'Withdraw(address,address,address,uint256,uint256)'(
       sender?: string | null,
       receiver?: string | null,
@@ -805,7 +837,7 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>
 
-    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+    collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
 
@@ -889,6 +921,8 @@ export interface LPToken extends BaseContract {
 
     setMinimumAssetToShareRatio(ratio: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
+
     symbol(overrides?: CallOverrides): Promise<BigNumber>
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>
@@ -909,6 +943,8 @@ export interface LPToken extends BaseContract {
     untitledAssets(overrides?: CallOverrides): Promise<BigNumber>
 
     vault(overrides?: CallOverrides): Promise<BigNumber>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<BigNumber>
 
     withdraw(
       assets: BigNumberish,
@@ -937,7 +973,7 @@ export interface LPToken extends BaseContract {
 
     balanceOf(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    collect(receiver: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+    collectUntitledAssets(receiver: string, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>
 
@@ -1031,6 +1067,8 @@ export interface LPToken extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>
 
+    setWholeWithdrawLimit(limit: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
+
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
@@ -1051,6 +1089,8 @@ export interface LPToken extends BaseContract {
     untitledAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    wholeWithdrawLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     withdraw(
       assets: BigNumberish,

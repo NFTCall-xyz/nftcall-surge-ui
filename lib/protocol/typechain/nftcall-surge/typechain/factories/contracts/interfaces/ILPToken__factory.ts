@@ -259,6 +259,19 @@ const _abi = [
     type: 'event',
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'limit',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateWholeWithdrawLimit',
+    type: 'event',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -266,7 +279,7 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'collect',
+    name: 'collectUntitledAssets',
     outputs: [
       {
         internalType: 'uint256',
@@ -410,6 +423,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'limit',
+        type: 'uint256',
+      },
+    ],
+    name: 'setWholeWithdrawLimit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'untitledAssets',
     outputs: [
@@ -430,6 +456,19 @@ const _abi = [
         internalType: 'address',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'wholeWithdrawLimit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',

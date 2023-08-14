@@ -47,6 +47,7 @@ export interface OptionTokenInterface extends utils.Interface {
     'balanceOf(address)': FunctionFragment
     'closePosition(uint256)': FunctionFragment
     'collection()': FunctionFragment
+    'decimals()': FunctionFragment
     'forceClosePendingPosition(uint256)': FunctionFragment
     'getApproved(uint256)': FunctionFragment
     'initialize(address)': FunctionFragment
@@ -85,6 +86,7 @@ export interface OptionTokenInterface extends utils.Interface {
       | 'balanceOf'
       | 'closePosition'
       | 'collection'
+      | 'decimals'
       | 'forceClosePendingPosition'
       | 'getApproved'
       | 'initialize'
@@ -121,6 +123,7 @@ export interface OptionTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string
   encodeFunctionData(functionFragment: 'closePosition', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'collection', values?: undefined): string
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string
   encodeFunctionData(functionFragment: 'forceClosePendingPosition', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string
   encodeFunctionData(functionFragment: 'initialize', values: [string]): string
@@ -165,6 +168,7 @@ export interface OptionTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'collection', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'forceClosePendingPosition', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getApproved', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
@@ -346,6 +350,8 @@ export interface OptionToken extends BaseContract {
 
     collection(overrides?: CallOverrides): Promise<[string]>
 
+    decimals(overrides?: CallOverrides): Promise<[number]>
+
     forceClosePendingPosition(
       positionId: BigNumberish,
       overrides?: Overrides & { from?: string }
@@ -453,6 +459,8 @@ export interface OptionToken extends BaseContract {
 
   collection(overrides?: CallOverrides): Promise<string>
 
+  decimals(overrides?: CallOverrides): Promise<number>
+
   forceClosePendingPosition(
     positionId: BigNumberish,
     overrides?: Overrides & { from?: string }
@@ -552,6 +560,8 @@ export interface OptionToken extends BaseContract {
     closePosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
     collection(overrides?: CallOverrides): Promise<string>
+
+    decimals(overrides?: CallOverrides): Promise<number>
 
     forceClosePendingPosition(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>
 
@@ -709,6 +719,8 @@ export interface OptionToken extends BaseContract {
 
     collection(overrides?: CallOverrides): Promise<BigNumber>
 
+    decimals(overrides?: CallOverrides): Promise<BigNumber>
+
     forceClosePendingPosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<BigNumber>
 
     getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
@@ -810,6 +822,8 @@ export interface OptionToken extends BaseContract {
     closePosition(positionId: BigNumberish, overrides?: Overrides & { from?: string }): Promise<PopulatedTransaction>
 
     collection(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     forceClosePendingPosition(
       positionId: BigNumberish,

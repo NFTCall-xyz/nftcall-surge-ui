@@ -42,10 +42,10 @@ export declare namespace BlackScholes {
 
 export interface OptionPricerInterface extends utils.Interface {
   functions: {
-    'delta(uint256,uint256,uint256,uint256)': FunctionFragment
     'getAdjustedVol(address,uint8,uint256,uint256)': FunctionFragment
     'getPremiumDeltaStdVega(uint8,uint256,uint256,uint256,uint256)': FunctionFragment
     'initialize(address,address,address)': FunctionFragment
+    'optionDelta(uint256,uint256,uint256,uint256)': FunctionFragment
     'optionPrices(uint256,uint256,uint256,uint256)': FunctionFragment
     'optionPricesDeltaStdVega(uint256,uint256,uint256,uint256)': FunctionFragment
     'owner()': FunctionFragment
@@ -56,10 +56,10 @@ export interface OptionPricerInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'delta'
       | 'getAdjustedVol'
       | 'getPremiumDeltaStdVega'
       | 'initialize'
+      | 'optionDelta'
       | 'optionPrices'
       | 'optionPricesDeltaStdVega'
       | 'owner'
@@ -69,10 +69,6 @@ export interface OptionPricerInterface extends utils.Interface {
   ): FunctionFragment
 
   encodeFunctionData(
-    functionFragment: 'delta',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
-  ): string
-  encodeFunctionData(
     functionFragment: 'getAdjustedVol',
     values: [string, BigNumberish, BigNumberish, BigNumberish]
   ): string
@@ -81,6 +77,10 @@ export interface OptionPricerInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
   encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string
+  encodeFunctionData(
+    functionFragment: 'optionDelta',
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+  ): string
   encodeFunctionData(
     functionFragment: 'optionPrices',
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
@@ -97,10 +97,10 @@ export interface OptionPricerInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string
 
-  decodeFunctionResult(functionFragment: 'delta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getAdjustedVol', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getPremiumDeltaStdVega', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'optionDelta', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'optionPrices', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'optionPricesDeltaStdVega', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result
@@ -148,16 +148,8 @@ export interface OptionPricer extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      duration: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
-
     getAdjustedVol(
-      asset: string,
+      collection: string,
       ot: BigNumberish,
       K: BigNumberish,
       lockValue: BigNumberish,
@@ -179,6 +171,14 @@ export interface OptionPricer extends BaseContract {
       oracle_: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>
+
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
     optionPrices(
       S: BigNumberish,
@@ -215,16 +215,8 @@ export interface OptionPricer extends BaseContract {
     ): Promise<ContractTransaction>
   }
 
-  delta(
-    S: BigNumberish,
-    K: BigNumberish,
-    vol: BigNumberish,
-    duration: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
-
   getAdjustedVol(
-    asset: string,
+    collection: string,
     ot: BigNumberish,
     K: BigNumberish,
     lockValue: BigNumberish,
@@ -246,6 +238,14 @@ export interface OptionPricer extends BaseContract {
     oracle_: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>
+
+  optionDelta(
+    S: BigNumberish,
+    K: BigNumberish,
+    vol: BigNumberish,
+    duration: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
   optionPrices(
     S: BigNumberish,
@@ -278,16 +278,8 @@ export interface OptionPricer extends BaseContract {
   ): Promise<ContractTransaction>
 
   callStatic: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      duration: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
-
     getAdjustedVol(
-      asset: string,
+      collection: string,
       ot: BigNumberish,
       K: BigNumberish,
       lockValue: BigNumberish,
@@ -304,6 +296,14 @@ export interface OptionPricer extends BaseContract {
     ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>
 
     initialize(vault_: string, riskCache_: string, oracle_: string, overrides?: CallOverrides): Promise<void>
+
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>
 
     optionPrices(
       S: BigNumberish,
@@ -345,16 +345,8 @@ export interface OptionPricer extends BaseContract {
   }
 
   estimateGas: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      duration: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
     getAdjustedVol(
-      asset: string,
+      collection: string,
       ot: BigNumberish,
       K: BigNumberish,
       lockValue: BigNumberish,
@@ -375,6 +367,14 @@ export interface OptionPricer extends BaseContract {
       riskCache_: string,
       oracle_: string,
       overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>
+
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>
 
     optionPrices(
@@ -409,16 +409,8 @@ export interface OptionPricer extends BaseContract {
   }
 
   populateTransaction: {
-    delta(
-      S: BigNumberish,
-      K: BigNumberish,
-      vol: BigNumberish,
-      duration: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
     getAdjustedVol(
-      asset: string,
+      collection: string,
       ot: BigNumberish,
       K: BigNumberish,
       lockValue: BigNumberish,
@@ -439,6 +431,14 @@ export interface OptionPricer extends BaseContract {
       riskCache_: string,
       oracle_: string,
       overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>
+
+    optionDelta(
+      S: BigNumberish,
+      K: BigNumberish,
+      vol: BigNumberish,
+      duration: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
     optionPrices(

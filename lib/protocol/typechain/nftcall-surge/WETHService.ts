@@ -1,7 +1,5 @@
 import type { providers } from 'ethers'
 
-import { valueToWei } from 'lib/math'
-
 import BaseService from '../commons/BaseService'
 import {
   type EthereumTransactionTypeExtended,
@@ -19,7 +17,6 @@ interface BaseWETHServiceProps {
 
 export interface MintProps extends BaseWETHServiceProps {
   userAddress: tEthereumAddress
-  amount: string
 }
 
 export class WETHService extends BaseService<MintableERC20> {
@@ -32,14 +29,12 @@ export class WETHService extends BaseService<MintableERC20> {
   }
 
   public async mint(props: MintProps) {
-    const { wETH, amount, userAddress } = props
+    const { wETH, userAddress } = props
     const wETHContract = this.getContractInstance(wETH)
     const txs: EthereumTransactionTypeExtended[] = []
 
-    const convertedAmount = valueToWei(amount, 18).toString()
-
     const txCallback: () => Promise<transactionType> = this.generateTxCallback({
-      rawTxMethod: async () => wETHContract.populateTransaction.mint(convertedAmount),
+      rawTxMethod: async () => wETHContract.populateTransaction.mint(),
       from: userAddress,
       value: DEFAULT_NULL_VALUE_ON_TX,
     })

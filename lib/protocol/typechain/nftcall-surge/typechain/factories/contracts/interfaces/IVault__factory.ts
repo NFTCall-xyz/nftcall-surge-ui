@@ -123,11 +123,74 @@ const _abi = [
       },
       {
         internalType: 'uint256',
+        name: 'minimumRatio',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'InvalidCallStrikePriceRatioRange',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
         name: 'duration',
         type: 'uint256',
       },
     ],
     name: 'InvalidDuration',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'minimumDuration',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumDuration',
+        type: 'uint256',
+      },
+    ],
+    name: 'InvalidDurationRange',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'minimumRatio',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'InvalidPutStrikePriceRatioRange',
     type: 'error',
   },
   {
@@ -353,6 +416,17 @@ const _abi = [
       },
     ],
     name: 'RevenueTransferFailed',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+    ],
+    name: 'ZeroAddress',
     type: 'error',
   },
   {
@@ -673,6 +747,12 @@ const _abi = [
         name: 'returnedPremium',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'enum FailureReason',
+        name: 'reason',
+        type: 'uint8',
+      },
     ],
     name: 'FailPosition',
     type: 'event',
@@ -694,19 +774,6 @@ const _abi = [
       },
     ],
     name: 'FreezeMarket',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'keeperAddress',
-        type: 'address',
-      },
-    ],
-    name: 'KeeperAddressUpdated',
     type: 'event',
   },
   {
@@ -805,8 +872,96 @@ const _abi = [
         name: 'operator',
         type: 'address',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'SendAssetsToLPToken',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
     ],
     name: 'UnpauseVault',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'minimumRatio',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'maximumRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateCallStrikePriceRatioRange',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'minimumDuration',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'maximumDuration',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateDurationRange',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'keeperAddress',
+        type: 'address',
+      },
+    ],
+    name: 'UpdateKeeper',
     type: 'event',
   },
   {
@@ -826,6 +981,69 @@ const _abi = [
       },
     ],
     name: 'UpdateLPTokenPrice',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'ratio',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateMinimumAnnualRateOfReturnOnLockedAssets',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'minimumRatio',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'maximumRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdatePutStrikePriceRatioRange',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timeWindows',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateTimeWindowForActivation',
     type: 'event',
   },
   {
@@ -984,7 +1202,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'activePosition',
+    name: 'activatePosition',
     outputs: [
       {
         internalType: 'uint256',
@@ -1104,6 +1322,25 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
+        name: 'receiver',
+        type: 'address',
+      },
+    ],
+    name: 'collectUntitledAssetsFromLPToken',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
         name: 'collection',
         type: 'address',
       },
@@ -1111,6 +1348,19 @@ const _abi = [
     name: 'deactivateMarket',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -1375,6 +1625,58 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'minimumAnnualRateOfReturnOnLockedAssets',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'collection',
+        type: 'address',
+      },
+      {
+        internalType: 'enum OptionType',
+        name: 'optionType',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint256',
+        name: 'strikePrice',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'expiry',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'minimumPremium',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -1517,12 +1819,105 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'sendAssetsToLPToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'minimumRatio',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'setCallStrikePriceRatioRange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'minimumDuration',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumDuration',
+        type: 'uint256',
+      },
+    ],
+    name: 'setDurationRange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'keeperAddress',
         type: 'address',
       },
     ],
     name: 'setKeeper',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'ratio',
+        type: 'uint256',
+      },
+    ],
+    name: 'setMinimumAnnualRateOfReturnOnLockedAssets',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'minimumRatio',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maximumRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'setPutStrikePriceRatioRange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'timeWindows',
+        type: 'uint256',
+      },
+    ],
+    name: 'setTimeWindowForActivation',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1563,6 +1958,19 @@ const _abi = [
         internalType: 'struct Strike',
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'timeWindowForActivation',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',

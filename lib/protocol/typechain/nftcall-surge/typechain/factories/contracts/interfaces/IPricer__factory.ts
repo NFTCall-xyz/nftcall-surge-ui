@@ -33,45 +33,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'S',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'K',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'vol',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'druation',
-        type: 'uint256',
-      },
-    ],
-    name: 'delta',
-    outputs: [
-      {
-        internalType: 'int256',
-        name: 'callDelta',
-        type: 'int256',
-      },
-      {
-        internalType: 'int256',
-        name: 'putDelta',
-        type: 'int256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
         name: 'asset',
         type: 'address',
@@ -152,6 +113,45 @@ const _abi = [
         internalType: 'uint256',
         name: 'stdVega',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'S',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'K',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'vol',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'druation',
+        type: 'uint256',
+      },
+    ],
+    name: 'optionDelta',
+    outputs: [
+      {
+        internalType: 'int256',
+        name: 'callDelta',
+        type: 'int256',
+      },
+      {
+        internalType: 'int256',
+        name: 'putDelta',
+        type: 'int256',
       },
     ],
     stateMutability: 'view',
