@@ -19,6 +19,18 @@ export type GetVaultData = {
   totalAssets: BN
   totalLockedAssets: BN
   executionFee: BN
+  reserveRatio: BN
+  feeRatio: BN
+  profitFeeRatio: BN
+  timeWindowForActivation: BN
+  maximumLockRatio: BN
+  maximumCallStrikePriceRatio: BN
+  maximumPutStrikePriceRatio: BN
+  minimumCallStrikePriceRatio: BN
+  minimumPutStrikePriceRatio: BN
+  maximumDuration: number
+  minimumDuration: number
+  timeScale: number
   unrealizedPNL: BN
   unrealizedPremium: BN
 }
@@ -47,5 +59,21 @@ export const getGetVaultData = (getVaultBaseData: GetVaultBaseData): GetVaultDat
       ],
       18
     ),
+    ...getWeiToValueBN(
+      getVaultBaseData,
+      [
+        'reserveRatio',
+        'feeRatio',
+        'profitFeeRatio',
+        'timeWindowForActivation',
+        'maximumLockRatio',
+        'maximumCallStrikePriceRatio',
+        'maximumPutStrikePriceRatio',
+        'minimumCallStrikePriceRatio',
+        'minimumPutStrikePriceRatio',
+      ],
+      6
+    ),
+    ...getNumber(getVaultBaseData, ['maximumDuration', 'minimumDuration', 'timeScale']),
   }
 }

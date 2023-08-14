@@ -19,6 +19,18 @@ export type GetVaultBaseData = {
   totalAssets: string
   totalLockedAssets: string
   executionFee: string
+  reserveRatio: string
+  feeRatio: string
+  profitFeeRatio: string
+  timeWindowForActivation: string
+  maximumLockRatio: string
+  maximumCallStrikePriceRatio: string
+  maximumPutStrikePriceRatio: string
+  minimumCallStrikePriceRatio: string
+  minimumPutStrikePriceRatio: string
+  maximumDuration: string
+  minimumDuration: string
+  timeScale: string
   unrealizedPNL: string
   unrealizedPremium: string
 }
@@ -43,6 +55,18 @@ export const getGetVaultBaseData = (value: VaultStructOutput): GetVaultBaseData 
       'unrealizedPremium',
       'wETHAllowance',
       'executionFee',
+      'reserveRatio',
+      'feeRatio',
+      'profitFeeRatio',
+      'timeWindowForActivation',
+      'maximumLockRatio',
+      'maximumCallStrikePriceRatio',
+      'maximumPutStrikePriceRatio',
+      'minimumCallStrikePriceRatio',
+      'minimumPutStrikePriceRatio',
+      'maximumDuration',
+      'minimumDuration',
+      'timeScale',
     ]),
   }
 }
