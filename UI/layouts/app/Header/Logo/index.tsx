@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles'
 
 import LogoImg from './images/logo.svg'
 import type { LogoProps } from './types'
+import Chip from '@mui/material/Chip'
 
 const ROOT = styled(MaterialLink)`
   display: flex;
@@ -21,6 +22,7 @@ const Logo = (props: LogoProps) => {
       }}
     >
       <Image src={props.imgSrc || LogoImg} height={40} alt="NFTCall Protocol" />
+      <Chip label="Beta" color="primary" sx={{ ml: 2 }} />
     </ROOT>
   )
 }
