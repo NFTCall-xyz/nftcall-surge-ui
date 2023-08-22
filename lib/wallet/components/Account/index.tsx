@@ -11,19 +11,19 @@ type AccountProps = {
 }
 export const Account: FC<AccountProps> = ({ onlyENSName }) => {
   const {
-    account,
+    walletAccount,
     ens: { useGetENSName },
   } = useWallet()
 
-  const ENSName = useGetENSName(account)
+  const ENSName = useGetENSName(walletAccount)
 
   if (onlyENSName) {
-    return <Fragment>{ENSName || textCenterEllipsis(account)}</Fragment>
+    return <Fragment>{ENSName || textCenterEllipsis(walletAccount)}</Fragment>
   }
 
   return (
     <Fragment>
-      {textCenterEllipsis(account)}
+      {textCenterEllipsis(walletAccount)}
       <Paragraph color="text.secondary">{ENSName && `(${ENSName})`}</Paragraph>
     </Fragment>
   )

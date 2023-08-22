@@ -1,4 +1,5 @@
-import { ArbitrumETH, ArbitrumGoerliETH, ETH } from '../currency'
+// import { ArbitrumETH, ArbitrumGoerliETH, ETH } from '../currency'
+import { ArbitrumGoerliETH, ETH } from '../currency'
 import type { ChainInformation } from './types'
 
 export const infuraId = ''
@@ -6,7 +7,7 @@ export const walletconnectId = ''
 
 export enum ChainId {
   ethereum = 1,
-  arbitrum = 42161,
+  // arbitrum = 42161,
   arbitrumGoerli = 421613,
 }
 
@@ -23,13 +24,13 @@ export const CHAIN_INFORMATION: ChainInformation[] = [
       'https://ethereum.publicnode.com',
     ],
   },
-  {
-    id: ChainId.arbitrum,
-    currency: ArbitrumETH,
-    name: 'Arbitrum',
-    explorerUrl: `https://arbiscan.io/`,
-    publicJsonRPCUrl: ['https://endpoints.omniatech.io/v1/arbitrum/one/public', `https://1rpc.io/arb`],
-  },
+  // {
+  //   id: ChainId.arbitrum,
+  //   currency: ArbitrumETH,
+  //   name: 'Arbitrum',
+  //   explorerUrl: `https://arbiscan.io/`,
+  //   publicJsonRPCUrl: ['https://endpoints.omniatech.io/v1/arbitrum/one/public', `https://1rpc.io/arb`],
+  // },
   {
     id: ChainId.arbitrumGoerli,
     currency: ArbitrumGoerliETH,

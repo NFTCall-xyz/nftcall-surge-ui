@@ -24,7 +24,7 @@ const useWalletService = () => {
     isActivating,
     isActive,
     provider: walletProvider,
-    account,
+    account: walletAccount,
   } = useWeb3React()
 
   const chainId = useMemo(() => walletChainId || defalutChainId, [walletChainId, defalutChainId])
@@ -49,6 +49,7 @@ const useWalletService = () => {
   }, [isActivating, isActive])
 
   const network = useMemo(() => {
+    if (chainId === ChainId.ethereum) return
     return getChainInformationByChainId(chainId)
   }, [chainId])
 
@@ -62,6 +63,11 @@ const useWalletService = () => {
 
   const ens = useENS(mainnetProvider)
 
+  const account = useMemo(() => {
+    if (!network) return
+    return walletAccount
+  }, [network, walletAccount])
+
   return {
     connector,
     dialogs,
@@ -72,6 +78,7 @@ const useWalletService = () => {
     isActive,
     provider,
     account,
+    walletAccount,
     status,
 
     setDefalutChainId,
