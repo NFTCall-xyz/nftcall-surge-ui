@@ -176,8 +176,7 @@ export const ROOT = styled('div')`
   .ReactVirtualized__Table__row {
     display: flex;
     will-change: transform;
-    /* padding: 20px 0; */
-    /* border: solid 1px; */
+    margin-bottom: 1px;
     border: none;
     border-bottom: solid 1px;
     border-radius: 0;
