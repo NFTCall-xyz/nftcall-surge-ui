@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
 
+import { getStringObj } from 'app/utils/dev'
 import { safeGet } from 'app/utils/get'
 
 import { OptionPositionStatus } from 'lib/graphql/option-position'
@@ -51,6 +52,7 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
     } else if (status === OptionPositionStatus.Expired) {
       PNL = premium.times(-1)
       PNLRate = PNL.dividedBy(premium)
+      console.log(getStringObj({ PNL, PNLRate }))
       return { PNL, PNLRate }
     }
 
