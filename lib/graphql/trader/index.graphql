@@ -11,7 +11,7 @@ fragment traderFields on Trader {
 }
 
 query getTraders {
-  traders(first: 50, orderBy: PNL, orderDirection: desc) {
+  traders(first: 50, orderBy: PNL, orderDirection: desc, where: { totalTrades_not: 0 }) {
     ...traderFields
   }
 }

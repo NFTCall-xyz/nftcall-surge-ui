@@ -86,7 +86,7 @@ export const traderCellRenderer = (props: TableCellProps) => {
 export const winrateCellRenderer = ({ cellData }: TableCellProps) => {
   return (
     <TableCell align="center" component="div">
-      {toBN(cellData).isZero() ? '0' : <NumberDisplay value={cellData} options="percent" />}
+      {toBN(cellData).isZero() ? '0%' : <NumberDisplay value={cellData} options="percent" />}
     </TableCell>
   )
 }
