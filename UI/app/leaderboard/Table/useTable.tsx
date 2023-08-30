@@ -7,11 +7,10 @@ import type { BasicTableProps, TableColumnsProps } from 'components/table/BasicT
 import {
   cellRenderer,
   headerRenderer,
-  percentCellRenderer,
   percentRiseOrFallCellRenderer,
   tokenIconCellRenderer,
 } from 'components/table/renderer'
-import { traderCellRenderer } from 'components/table/renderer/position'
+import { traderCellRenderer, winrateCellRenderer } from 'components/table/renderer/position'
 
 import { useNetwork } from 'domains/data'
 
@@ -70,7 +69,7 @@ export const useTable = (): BasicTableProps => {
             dataKey: 'winrate',
             width: 200,
             headerRenderer,
-            cellRenderer: percentCellRenderer,
+            cellRenderer: winrateCellRenderer,
           },
           {
             dataKey: 'relativePNL',

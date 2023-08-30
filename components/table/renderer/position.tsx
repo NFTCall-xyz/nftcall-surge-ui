@@ -15,6 +15,8 @@ import OptionPositionPrice from 'domains/data/optionPosition/components/OptionPo
 import OptionPositionStaus from 'domains/data/optionPosition/components/OptionPositionStaus'
 import OptionPositionTrader from 'domains/data/optionPosition/components/OptionPositionTrader'
 
+import { toBN } from 'lib/math'
+import NumberDisplay from 'lib/math/components/NumberDisplay'
 import { OptionType } from 'lib/protocol/typechain/nftcall-surge'
 
 type TableCellProps = {
@@ -79,4 +81,12 @@ export const NFTCollectionRenderer = ({ cellData, rowData: { positionId } }: Tab
 
 export const traderCellRenderer = (props: TableCellProps) => {
   return <OptionPositionTrader {...props} />
+}
+
+export const winrateCellRenderer = ({ cellData }: TableCellProps) => {
+  return (
+    <TableCell align="center" component="div">
+      {toBN(cellData).isZero() ? '0' : <NumberDisplay value={cellData} options="percent" />}
+    </TableCell>
+  )
 }
