@@ -48,6 +48,7 @@ const OptionPositionPNL: FC<OptionPositionPNLProps> = ({
     if (status === OptionPositionStatus.Exercised) {
       PNL = revenue.minus(premium)
       PNLRate = PNL.dividedBy(premium)
+      console.log(getStringObj({ PNL, PNLRate }))
       return { PNL, PNLRate }
     } else if (status === OptionPositionStatus.Expired) {
       PNL = premium.times(-1)
