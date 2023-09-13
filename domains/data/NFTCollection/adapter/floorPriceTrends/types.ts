@@ -1,17 +1,17 @@
+import type { CollectionName } from 'lib/api'
 import type { ChartProps } from 'react-chartjs-2'
 
 export class UseTableProps {}
 export type FloorPriceTrendsProps = any
 export type GetFloorPriceTrendsProps = {
   chainId: number
-  NFTAddress: string
-  startTimestamp: number
-  endTimestamp: number
+  collectionName: CollectionName
+  startTime: number
+  endTime: number
 }
 export type FloorPriceTrends = {
   chainId: number
-  NFTAddress: string
-  MainNetworkNFT: string
+  collectionName: CollectionName
   floorPrice: BN
   vol: BN
   createTime: number

@@ -17,7 +17,7 @@ import type { CollectionsStats } from './adapter/types'
 function transformData(data: CollectionsStats[]): Record<string, CollectionsStats> {
   const result: Record<string, CollectionsStats> = {}
   for (const item of data) {
-    const key = item.MainNetworkNFT
+    const key = item.collectionName
     result[key] = cloneDeep(item)
   }
 
@@ -27,18 +27,15 @@ function transformData(data: CollectionsStats[]): Record<string, CollectionsStat
 export const useCollectionsStats = (collections: NFTCollection[]) => {
   const { post, cancel, loading } = usePost(getCollectionsStats)
   const [sourceData, setSourceData] = useImmer<CollectionsStats[]>([])
-  const NFTAddress = useMemo(
-    () => collections.map((collection) => collection.address.ethereumCollection).join(','),
-    [collections]
-  )
+  const collectionNames = useMemo(() => collections.map((collection) => collection.id) || [], [collections])
 
   useEffect(() => {
-    if (!NFTAddress || loading) return
+    if (!collectionNames || loading) return
     let timer: any = 0
     const run = () => {
       post({
         chainId: ChainId.ethereum,
-        NFTAddress,
+        collectionNames,
       }).then((data) => setSourceData(() => data))
       timer = setTimeout(() => run(), MINUTES)
     }
@@ -50,7 +47,7 @@ export const useCollectionsStats = (collections: NFTCollection[]) => {
       clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [NFTAddress])
+  }, [collectionNames.length])
 
   const returnValue = useMemo(() => {
     const floorPrice24Change: Record<string, BN> = {}
@@ -61,7 +58,7 @@ export const useCollectionsStats = (collections: NFTCollection[]) => {
     const tData = transformData(sourceData)
 
     for (const key in tData) {
-      const collection = collections.find((item) => item.address.ethereumCollection === key)
+      const collection = collections.find((item) => item.id === key)
       const item = tData[key]
 
       floorPrice24Change[collection.address.collection] = safeGet(() => item.changed || toBN(0))

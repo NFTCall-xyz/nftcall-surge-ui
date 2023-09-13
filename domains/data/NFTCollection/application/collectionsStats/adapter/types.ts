@@ -1,12 +1,13 @@
+import type { CollectionName } from 'lib/api'
+
 export type CollectionsStatsProps = any
 export type GetCollectionsStatsProps = {
   chainId: number
-  NFTAddress: string
+  collectionNames: CollectionName[]
 }
 export type CollectionsStats = {
   chainId: number
-  NFTAddress: string
-  MainNetworkNFT: string
+  collectionName: CollectionName
   floorPrice: BN
   vol: BN
   changed: BN

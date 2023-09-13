@@ -9,7 +9,7 @@ import { useImmer } from 'use-immer'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
+import { DAY, getCurrentTime } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 import { safeGet } from 'app/utils/get'
 
@@ -55,19 +55,19 @@ export const useChart = () => {
   const [sourceData, setSourceData] = useImmer<FloorPriceTrends[]>([])
 
   useEffect(() => {
-    const endTimestamp = getCurrentTimestamp()
+    const endTime = getCurrentTime()
     post({
       chainId: ChainId.ethereum,
-      NFTAddress: collection.address.ethereumCollection,
-      startTimestamp: endTimestamp - getTimestamp(90 * DAY),
-      endTimestamp,
+      collectionName: collection.id,
+      startTime: endTime - 90 * DAY,
+      endTime: endTime,
     }).then((data) => setSourceData(() => data))
 
     return () => {
       cancel()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, collection.address.collection])
+  }, [chainId, collection.id])
 
   const data = useMemo(() => {
     if (!sourceData.length) return []
