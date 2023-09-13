@@ -46,7 +46,7 @@ export class CancelablePromise<T> implements Promise<T> {
           return
         }
         this.#isResolved = true
-        this.#resolve?.(value)
+        if (this.#resolve) this.#resolve(value)
       }
 
       const onReject = (reason?: any): void => {
@@ -54,7 +54,7 @@ export class CancelablePromise<T> implements Promise<T> {
           return
         }
         this.#isRejected = true
-        this.#reject?.(reason)
+        if (this.#reject) this.#reject(reason)
       }
 
       const onCancel = (cancelHandler: () => void): void => {
