@@ -31,7 +31,7 @@ export type TokenMetadataType = {
   address: string
 }
 export class ERC20Service extends BaseService<ERC20> implements IERC20ServiceInterface {
-  provider: any
+  declare provider: any
   readonly tokenDecimals: Record<string, number>
 
   readonly tokenMetadata: Record<string, TokenMetadataType>

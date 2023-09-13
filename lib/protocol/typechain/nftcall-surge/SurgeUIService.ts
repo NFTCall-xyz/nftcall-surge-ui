@@ -46,7 +46,7 @@ export interface GetAnalyticsProps extends BaseSurgeUIProps {
 }
 
 export class SurgeUIService extends BaseService<SurgeUI> {
-  provider: providers.Provider
+  declare provider: providers.Provider
 
   constructor(provider: providers.Provider) {
     super(provider, SurgeUI__factory)

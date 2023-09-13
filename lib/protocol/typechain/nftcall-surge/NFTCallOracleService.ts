@@ -38,7 +38,7 @@ export interface BatchSetAssetPriceProps extends BaseNFTCallOracleProps {
 }
 
 export class NFTCallOracleService extends BaseService<NFTCallOracle> {
-  provider: providers.Provider
+  declare provider: providers.Provider
 
   constructor(provider: providers.Provider) {
     super(provider, NFTCallOracle__factory)

@@ -1,5 +1,6 @@
-import type { CollectionName } from 'lib/api'
 import type { ChartProps } from 'react-chartjs-2'
+
+import type { CollectionName } from 'lib/api'
 
 export class UseTableProps {}
 export type FloorPriceTrendsProps = any

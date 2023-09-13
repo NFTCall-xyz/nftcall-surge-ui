@@ -20,7 +20,7 @@ export interface MintProps extends BaseWETHServiceProps {
 }
 
 export class WETHService extends BaseService<MintableERC20> {
-  provider: providers.Provider
+  declare provider: providers.Provider
 
   constructor(provider: providers.Provider) {
     super(provider, MintableERC20__factory)

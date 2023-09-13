@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
+import Chip from '@mui/material/Chip'
 import MaterialLink from '@mui/material/Link'
 import { styled } from '@mui/material/styles'
 
 import LogoImg from './images/logo.svg'
 import type { LogoProps } from './types'
-import Chip from '@mui/material/Chip'
 
 const ROOT = styled(MaterialLink)`
   display: flex;

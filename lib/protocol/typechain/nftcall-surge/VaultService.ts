@@ -90,7 +90,7 @@ export interface GetPositionPNLWeightedDeltaProps extends BaseVaultProps {
 }
 
 export class VaultService extends BaseService<Vault> {
-  provider: providers.Provider
+  declare provider: providers.Provider
 
   constructor(provider: providers.Provider) {
     super(provider, Vault__factory)
