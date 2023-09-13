@@ -4,8 +4,8 @@ export class UseTableProps {}
 export type TVLTrendsProps = any
 export type GetTVLTrendsProps = {
   chainId: number
-  startTimestamp: number
-  endTimestamp: number
+  startTime: number
+  endTime: number
 }
 export type TVLTrends = {
   chainId: number

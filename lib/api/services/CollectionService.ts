@@ -43,8 +43,8 @@ export class CollectionService {
    */
   public static collectionControllerGetOriginalPrice(
     collectionName: CollectionName,
-    startTime: number = 1693989405499,
-    endTime: number = 1694594205500,
+    startTime: number = 1693993518984,
+    endTime: number = 1694598318984,
     interval: number = 3600000
   ): CancelablePromise<Array<OriginalPriceResponse>> {
     return __request(OpenAPI, {
@@ -72,8 +72,8 @@ export class CollectionService {
   public static collectionControllerGetFloorPrice(
     collectionName: CollectionName,
     dataSource?: 'openSea' | 'openBlur',
-    startTime: number = 1693989405497,
-    endTime: number = 1694594205497,
+    startTime: number = 1693993518982,
+    endTime: number = 1694598318982,
     interval: number = 3600000
   ): CancelablePromise<Array<FloorPriceResponse>> {
     return __request(OpenAPI, {

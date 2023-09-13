@@ -5,7 +5,7 @@ import { useImmer } from 'use-immer'
 
 import { useTheme } from '@mui/material/styles'
 
-import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
+import { DAY, getCurrentTime } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 import { createContextWithProvider } from 'app/utils/createContext'
 import { safeGet } from 'app/utils/get'
@@ -37,8 +37,8 @@ const useStatsAPY = () => {
   useEffect(() => {
     post({
       chainId,
-      startTimestamp: getCurrentTimestamp() - getTimestamp(7 * DAY),
-      endTimestamp: getCurrentTimestamp() - getTimestamp(6 * DAY),
+      startTime: getCurrentTime() - 7 * DAY,
+      endTime: getCurrentTime() - 6 * DAY,
     }).then((data) => setSourceData(() => data))
 
     return () => {

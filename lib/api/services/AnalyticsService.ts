@@ -22,8 +22,8 @@ export class AnalyticsService {
    */
   public static analyticsControllerGetTvlList(
     chainId: number = 421613,
-    startTime: number = 1693989405400,
-    endTime: number = 1694594205401,
+    startTime: number = 1693993518926,
+    endTime: number = 1694598318926,
     interval: number = 3600000
   ): CancelablePromise<Array<AnalyticsResponseDto>> {
     return __request(OpenAPI, {
@@ -44,15 +44,15 @@ export class AnalyticsService {
    * @param startTime 开始时间
    * @param endTime 结束时间
    * @param interval 间隔单位
-   * @returns any 成功
+   * @returns AnalyticsResponseDto 成功
    * @throws ApiError
    */
   public static analyticsControllerGetNcEthPriceList(
     chainId: number = 421613,
-    startTime: number = 1693989405400,
-    endTime: number = 1694594205401,
+    startTime: number = 1693993518926,
+    endTime: number = 1694598318926,
     interval: number = 3600000
-  ): CancelablePromise<any> {
+  ): CancelablePromise<Array<AnalyticsResponseDto>> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/analytics/ncethprice',

@@ -9,7 +9,7 @@ import { useImmer } from 'use-immer'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { DAY, getCurrentTimestamp, getTimestamp } from 'app/constant'
+import { DAY, getCurrentTime } from 'app/constant'
 import { usePost } from 'app/hooks/request'
 
 import { getNcETHPriceTrends } from 'domains/data/NFTCollection/adapter/ncETHPriceTrends/request'
@@ -45,11 +45,11 @@ export const useChart = () => {
   const [sourceData, setSourceData] = useImmer<NcETHPriceTrends[]>([])
 
   useEffect(() => {
-    const endTimestamp = getCurrentTimestamp()
+    const endTime = getCurrentTime()
     post({
       chainId,
-      startTimestamp: endTimestamp - getTimestamp(90 * DAY),
-      endTimestamp,
+      startTime: getCurrentTime() - 90 * DAY,
+      endTime: endTime,
     }).then((data) => setSourceData(() => data))
 
     return () => {

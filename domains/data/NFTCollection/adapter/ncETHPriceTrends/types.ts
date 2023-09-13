@@ -4,8 +4,8 @@ export class UseTableProps {}
 export type NcETHPriceTrendsProps = any
 export type GetNcETHPriceTrendsProps = {
   chainId: number
-  startTimestamp: number
-  endTimestamp: number
+  startTime: number
+  endTime: number
 }
 export type NcETHPriceTrends = {
   chainId: number
