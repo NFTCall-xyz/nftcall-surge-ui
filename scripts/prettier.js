@@ -93,14 +93,14 @@ function runPrettier(options) {
     return
   }
   const prettierConfigPath = path__default.join(workspaceRoot, '.prettierrc')
-  files.forEach((file) => {
-    const prettierOptions = prettier__default.resolveConfig.sync(file, {
+  files.forEach(async (file) => {
+    const prettierOptions = await prettier__default.resolveConfig(file, {
       config: prettierConfigPath,
     })
     try {
       const input = fs__default.readFileSync(file, 'utf8')
       if (shouldWrite) {
-        const output = prettier__default.format(input, { ...prettierOptions, filepath: file })
+        const output = await prettier__default.format(input, { ...prettierOptions, filepath: file })
         if (output !== input) {
           console.log(`Formatting ${file}`)
           fs__default.writeFileSync(file, output, 'utf8')
@@ -131,7 +131,8 @@ function runPrettier(options) {
   }
 }
 async function run(argv) {
-  const { mode, branch } = argv
+  const { mode } = argv
+  const branch = argv.branch || (await await execGitCmd(['rev-parse', '--abbrev-ref', 'HEAD']))
   const shouldWrite = mode === 'write' || mode === 'write-changed'
   const onlyChanged = mode === 'check-changed' || mode === 'write-changed'
   let changedFiles
