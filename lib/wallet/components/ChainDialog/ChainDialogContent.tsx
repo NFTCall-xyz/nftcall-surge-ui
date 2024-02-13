@@ -18,7 +18,7 @@ const ChainDialogContent: FC = () => {
     () => (
       <Fragment>
         {/* <ChainButton chainId={ChainId.arbitrum} /> */}
-        <ChainButton chainId={ChainId.arbitrumGoerli} />
+        <ChainButton chainId={ChainId.blastSepolia} />
       </Fragment>
     ),
     []

@@ -11,6 +11,7 @@
     "fix:prettier:changed": "yarn fix:prettier --mode write-changed",
     "fix:eslint": "eslint --fix .",
     "fix": "yarn fix:eslint && yarn fix:prettier",
+    "type-check": "tsc --noEmit",
     "codegen": "openapi --input https://api.nftcall.xyz/doc-json --output ./lib/api --client axios && yarn fix:prettier:changed"
   },
   "private": true,

@@ -1,26 +1,15 @@
-import { isStage } from 'app/constant/envs'
-
-import arbitrumGoerli from 'lib/protocol/generate/arbitrum_goerli.json'
-import arbitrumGoerliRelease from 'lib/protocol/generate/arbitrum_goerli_release.json'
+import blastSepolia from 'lib/protocol/generate/blastSepolia.json'
 import { ChainId } from 'lib/wallet/constant/chains'
 
 export type AddressData = {
   chainId: ChainId
-} & typeof arbitrumGoerli
+} & typeof blastSepolia
 
-const list: Record<ChainId, typeof arbitrumGoerli> = (
-  isStage
-    ? {
-        [ChainId.arbitrumGoerli]: {
-          ...arbitrumGoerli,
-        },
-      }
-    : {
-        [ChainId.arbitrumGoerli]: {
-          ...arbitrumGoerliRelease,
-        },
-      }
-) as any
+const list: Record<ChainId, typeof blastSepolia> = {
+  [ChainId.blastSepolia]: {
+    ...blastSepolia,
+  },
+} as any
 
 const getMarketsData = (chainId: ChainId): AddressData => {
   const generateInfo = list[chainId]
@@ -34,9 +23,9 @@ const getMarketsData = (chainId: ChainId): AddressData => {
 
 export const MARKETS: Record<number, AddressData> = {
   // [ChainId.arbitrum]: getMarketsData(ChainId.arbitrum),
-  [ChainId.arbitrumGoerli]: getMarketsData(ChainId.arbitrumGoerli),
+  [ChainId.blastSepolia]: getMarketsData(ChainId.blastSepolia),
 }
 
-export const defaultMarket = MARKETS[ChainId.arbitrumGoerli]
+export const defaultMarket = MARKETS[ChainId.blastSepolia]
 export const getAddress = (chainId: ChainId) => MARKETS[chainId] || defaultMarket
 export const marktetIds = Object.keys(defaultMarket.markets)

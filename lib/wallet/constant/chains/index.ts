@@ -1,5 +1,4 @@
-// import { ArbitrumETH, ArbitrumGoerliETH, ETH } from '../currency'
-import { ArbitrumGoerliETH, ETH } from '../currency'
+import { ETH } from '../currency'
 import type { ChainInformation } from './types'
 
 export const infuraId = ''
@@ -8,7 +7,8 @@ export const walletconnectId = ''
 export enum ChainId {
   ethereum = 1,
   // arbitrum = 42161,
-  arbitrumGoerli = 421613,
+  // arbitrumGoerli = 421613,
+  blastSepolia = 168587773,
 }
 
 export const CHAIN_INFORMATION: ChainInformation[] = [
@@ -31,15 +31,23 @@ export const CHAIN_INFORMATION: ChainInformation[] = [
   //   explorerUrl: `https://arbiscan.io/`,
   //   publicJsonRPCUrl: ['https://endpoints.omniatech.io/v1/arbitrum/one/public', `https://1rpc.io/arb`],
   // },
+  // {
+  //   id: ChainId.arbitrumGoerli,
+  //   currency: ArbitrumGoerliETH,
+  //   name: 'Arbitrum Goerli',
+  //   explorerUrl: `https://testnet.arbiscan.io/`,
+  //   publicJsonRPCUrl: [
+  //     'https://endpoints.omniatech.io/v1/arbitrum/goerli/public',
+  //     `https://arbitrum-goerli.public.blastapi.io`,
+  //   ],
+  // },
+
   {
-    id: ChainId.arbitrumGoerli,
-    currency: ArbitrumGoerliETH,
-    name: 'Arbitrum Goerli',
-    explorerUrl: `https://testnet.arbiscan.io/`,
-    publicJsonRPCUrl: [
-      'https://endpoints.omniatech.io/v1/arbitrum/goerli/public',
-      `https://arbitrum-goerli.public.blastapi.io`,
-    ],
+    id: ChainId.blastSepolia,
+    currency: ETH,
+    name: 'Blast Sepolia',
+    explorerUrl: `https://testnet.blastscan.io/`,
+    publicJsonRPCUrl: ['https://sepolia.blast.io'],
   },
 ]
 
