@@ -2,14 +2,13 @@ import { utils } from 'ethers'
 
 import { getOpenSeaMainNetworkAddress } from 'app/constant/openSea'
 
-import type { CollectionName } from 'lib/api'
 import type { AddressData } from 'lib/protocol/market'
 
 export type MarketInfo = {
   symbol: string
 }
 
-const getMarketInfo = (id: CollectionName): MarketInfo => {
+const getMarketInfo = (id: string): MarketInfo => {
   switch (id) {
     default:
       return {
@@ -25,7 +24,7 @@ export type ContractsAddress = {
 }
 
 export type Market = {
-  id: CollectionName
+  id: string
   info: MarketInfo
   address: ContractsAddress
 }
@@ -34,7 +33,7 @@ export const getMarkets = (address: AddressData) => {
   return Object.keys(address.markets)
     .filter((key) => address.markets[key as 'BAYC'].OptionToken)
     .map((key) => {
-      const id: CollectionName = key as any
+      const id = key
       const info = getMarketInfo(id)
       const NFT = utils.getAddress(address[key as 'BAYC'])
 
@@ -44,7 +43,7 @@ export const getMarkets = (address: AddressData) => {
         address: {
           collection: NFT,
           ethereumCollection: getOpenSeaMainNetworkAddress(NFT),
-          optionToken: utils.getAddress(address.markets[id].OptionToken),
+          optionToken: utils.getAddress(address.markets[id as 'BAYC'].OptionToken),
         } as ContractsAddress,
       }
     })

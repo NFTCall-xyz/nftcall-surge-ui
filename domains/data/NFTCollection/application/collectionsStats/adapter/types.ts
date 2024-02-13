@@ -1,13 +1,11 @@
-import type { CollectionName } from 'lib/api'
-
 export type CollectionsStatsProps = any
 export type GetCollectionsStatsProps = {
   chainId: number
-  collectionNames: CollectionName[]
+  collectionNames: string[]
 }
 export type CollectionsStats = {
   chainId: number
-  collectionName: CollectionName
+  collectionName: string
   floorPrice: BN
   vol: BN
   changed: BN
