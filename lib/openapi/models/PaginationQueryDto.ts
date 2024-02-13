@@ -3,7 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum CollectionName {
-  BAYC = 'BAYC',
-  MAYC = 'MAYC',
+export type PaginationQueryDto = {
+  /**
+   * 当前页数
+   */
+  page: number
+  /**
+   * 每页条数
+   */
+  limit: number
 }

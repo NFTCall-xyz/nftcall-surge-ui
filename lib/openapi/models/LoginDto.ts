@@ -3,7 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum DataSourceName {
-  OPEN_SEA = 'openSea',
-  OPEN_BLUR = 'openBlur',
+export type LoginDto = {
+  /**
+   * 用户的手机号
+   */
+  phone: string
+  /**
+   * 用户的密码
+   */
+  password: string
 }

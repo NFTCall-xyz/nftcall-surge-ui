@@ -12,7 +12,9 @@
     "fix:eslint": "eslint --fix .",
     "fix": "yarn fix:eslint && yarn fix:prettier",
     "type-check": "tsc --noEmit",
-    "codegen": "openapi --input https://api.nftcall.xyz/doc-json --output ./lib/api --client axios && yarn fix:prettier:changed"
+    "codegen": "yarn codegen:openAPI && yarn fix:prettier:changed",
+    "download-openapi": "ts-node -r tsconfig-paths/register -P ./scripts/tsconfig.json ./scripts/download-openapi.ts",
+    "codegen:openAPI": "yarn download-openapi http://localhost:3003/doc-json && openapi --input ./.next/cache/open-api.json --output ./lib/openapi --client fetch --exportCore false"
   },
   "private": true,
   "sideEffects": false,
@@ -85,6 +87,8 @@
     "openapi-typescript-codegen": "^0.25.0",
     "prettier": "^2.8.8",
     "ts-morph": "^17.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "~5.0.0"
   }
 }

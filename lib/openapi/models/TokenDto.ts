@@ -3,13 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type AnalyticsResponseDto = {
+export type TokenDto = {
   /**
-   * 数据获取时间
+   * 访问令牌
    */
-  time: string
+  access_token: string
   /**
-   * 值
+   * 刷新令牌
    */
-  value: string
+  refresh_token: string
 }
