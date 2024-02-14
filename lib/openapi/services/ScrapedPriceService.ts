@@ -10,6 +10,7 @@ import { OpenAPI } from '../core/OpenAPI'
 import { request as __request } from '../core/request'
 import type { AdminScrapedPriceFindAllRequest } from '../models/AdminScrapedPriceFindAllRequest'
 import type { AdminScrapedPriceFindAllResponse } from '../models/AdminScrapedPriceFindAllResponse'
+import type { CollectionStatsResponse } from '../models/CollectionStatsResponse'
 
 export class ScrapedPriceService {
   /**
@@ -31,6 +32,18 @@ export class ScrapedPriceService {
       },
       body: requestBody,
       mediaType: 'application/json',
+    })
+  }
+
+  /**
+   * 获取 nft统计信息
+   * @returns CollectionStatsResponse nft统计信息
+   * @throws ApiError
+   */
+  public static getCollectionStats(): CancelablePromise<Array<CollectionStatsResponse>> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/tasks/scraped-price/collection-stats',
     })
   }
 }

@@ -27,15 +27,13 @@ function transformData(data: CollectionsStats[]): Record<string, CollectionsStat
 export const useCollectionsStats = (collections: NFTCollection[]) => {
   const { post, cancel, loading } = usePost(getCollectionsStats)
   const [sourceData, setSourceData] = useImmer<CollectionsStats[]>([])
-  const collectionNames = useMemo(() => collections.map((collection) => collection.id) || [], [collections])
 
   useEffect(() => {
-    if (!collectionNames || loading) return
+    if (loading) return
     let timer: any = 0
     const run = () => {
       post({
         chainId: ChainId.ethereum,
-        collectionNames,
       }).then((data) => setSourceData(() => data))
       timer = setTimeout(() => run(), MINUTES)
     }
@@ -47,7 +45,7 @@ export const useCollectionsStats = (collections: NFTCollection[]) => {
       clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [collectionNames.length])
+  }, [])
 
   const returnValue = useMemo(() => {
     const floorPrice24Change: Record<string, BN> = {}

@@ -23,6 +23,7 @@ export type { AdminScrapedPriceFindAllRequest } from './models/AdminScrapedPrice
 export type { AdminScrapedPriceFindAllRequestFilter } from './models/AdminScrapedPriceFindAllRequestFilter'
 export { AdminScrapedPriceFindAllRequestOrder } from './models/AdminScrapedPriceFindAllRequestOrder'
 export type { AdminScrapedPriceFindAllResponse } from './models/AdminScrapedPriceFindAllResponse'
+export type { CollectionStatsResponse } from './models/CollectionStatsResponse'
 export type { FeDataDictionaryDto } from './models/FeDataDictionaryDto'
 export type { FeDataDictionaryFindAllRequest } from './models/FeDataDictionaryFindAllRequest'
 export type { FeDataDictionaryFindAllRequestFilter } from './models/FeDataDictionaryFindAllRequestFilter'

@@ -22,7 +22,7 @@ const useCollectionsSouceData = () => {
       const { id, address } = market
       const data =
         storeData.getNFTCollections.find((i) => i.collectionAddress === address.collection) || ({} as undefined)
-      const info = collectionInfos[id]
+      const info = collectionInfos[id as 'BAYC']
       const status = storeData.getNFTCollectionsStaus.find((i) => i.collectionAddress === address.collection)
 
       return {

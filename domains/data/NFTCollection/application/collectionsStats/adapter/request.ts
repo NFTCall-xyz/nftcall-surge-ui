@@ -1,12 +1,12 @@
-import { CollectionService } from 'lib/api'
 import { toBN } from 'lib/math'
+import { ScrapedPriceService } from 'lib/openapi'
 
 import type { CollectionsStats, GetCollectionsStatsProps } from './types'
 
 export const getCollectionsStats = (props: GetCollectionsStatsProps): Promise<CollectionsStats[]> => {
-  const { chainId, collectionNames } = props
+  const { chainId } = props
 
-  return CollectionService.collectionControllerGetStats(collectionNames).then((data) =>
+  return ScrapedPriceService.getCollectionStats().then((data) =>
     data.map((item) => {
       return {
         chainId,
