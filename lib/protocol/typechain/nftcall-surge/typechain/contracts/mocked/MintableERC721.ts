@@ -147,8 +147,6 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 export type TransferEventFilter = TypedEventFilter<TransferEvent>
 
 export interface MintableERC721 extends BaseContract {
-  contractName: 'MintableERC721'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

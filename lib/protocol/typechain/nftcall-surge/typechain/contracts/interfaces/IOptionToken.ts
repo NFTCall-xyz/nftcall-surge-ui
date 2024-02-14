@@ -179,8 +179,6 @@ export type UpdateBaseURIEvent = TypedEvent<[string], UpdateBaseURIEventObject>
 export type UpdateBaseURIEventFilter = TypedEventFilter<UpdateBaseURIEvent>
 
 export interface IOptionToken extends BaseContract {
-  contractName: 'IOptionToken'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

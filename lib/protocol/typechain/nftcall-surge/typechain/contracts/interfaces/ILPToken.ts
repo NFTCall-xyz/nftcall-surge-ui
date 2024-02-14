@@ -154,8 +154,6 @@ export type UpdateWholeWithdrawLimitEvent = TypedEvent<[BigNumber], UpdateWholeW
 export type UpdateWholeWithdrawLimitEventFilter = TypedEventFilter<UpdateWholeWithdrawLimitEvent>
 
 export interface ILPToken extends BaseContract {
-  contractName: 'ILPToken'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

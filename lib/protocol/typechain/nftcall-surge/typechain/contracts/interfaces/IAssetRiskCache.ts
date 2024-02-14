@@ -46,8 +46,6 @@ export interface IAssetRiskCacheInterface extends utils.Interface {
 }
 
 export interface IAssetRiskCache extends BaseContract {
-  contractName: 'IAssetRiskCache'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

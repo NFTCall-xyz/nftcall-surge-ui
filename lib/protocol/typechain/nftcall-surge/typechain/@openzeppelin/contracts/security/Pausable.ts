@@ -44,8 +44,6 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>
 
 export interface Pausable extends BaseContract {
-  contractName: 'Pausable'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

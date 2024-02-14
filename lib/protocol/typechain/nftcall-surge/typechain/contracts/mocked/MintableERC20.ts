@@ -140,8 +140,6 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 export type TransferEventFilter = TypedEventFilter<TransferEvent>
 
 export interface MintableERC20 extends BaseContract {
-  contractName: 'MintableERC20'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

@@ -15,8 +15,6 @@ export interface FixedPointMathLibInterface extends utils.Interface {
 }
 
 export interface FixedPointMathLib extends BaseContract {
-  contractName: 'FixedPointMathLib'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

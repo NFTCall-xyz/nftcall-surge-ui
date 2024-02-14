@@ -94,8 +94,6 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 export type TransferEventFilter = TypedEventFilter<TransferEvent>
 
 export interface IERC20Metadata extends BaseContract {
-  contractName: 'IERC20Metadata'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

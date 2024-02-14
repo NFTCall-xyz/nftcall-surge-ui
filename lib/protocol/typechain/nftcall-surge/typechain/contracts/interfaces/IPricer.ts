@@ -87,8 +87,6 @@ export interface IPricerInterface extends utils.Interface {
 }
 
 export interface IPricer extends BaseContract {
-  contractName: 'IPricer'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

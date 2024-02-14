@@ -241,8 +241,6 @@ export interface SurgeUIInterface extends utils.Interface {
 }
 
 export interface SurgeUI extends BaseContract {
-  contractName: 'SurgeUI'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

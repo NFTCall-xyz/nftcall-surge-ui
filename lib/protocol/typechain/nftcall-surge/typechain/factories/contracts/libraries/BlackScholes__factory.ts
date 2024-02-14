@@ -286,7 +286,6 @@ export class BlackScholes__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'BlackScholes'
   }
 
   override deploy(overrides?: Overrides & { from?: string }): Promise<BlackScholes> {
@@ -301,9 +300,6 @@ export class BlackScholes__factory extends ContractFactory {
   override connect(signer: Signer): BlackScholes__factory {
     return super.connect(signer) as BlackScholes__factory
   }
-  static readonly contractName: 'BlackScholes'
-
-  public readonly contractName: 'BlackScholes'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

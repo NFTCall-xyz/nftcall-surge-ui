@@ -58,8 +58,6 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>
 
 export interface Reserve extends BaseContract {
-  contractName: 'Reserve'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

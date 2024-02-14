@@ -30,8 +30,6 @@ export interface IOracleInterface extends utils.Interface {
 }
 
 export interface IOracle extends BaseContract {
-  contractName: 'IOracle'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

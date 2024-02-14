@@ -1033,7 +1033,6 @@ export class OptionToken__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'OptionToken'
   }
 
   override deploy(
@@ -1060,9 +1059,6 @@ export class OptionToken__factory extends ContractFactory {
   override connect(signer: Signer): OptionToken__factory {
     return super.connect(signer) as OptionToken__factory
   }
-  static readonly contractName: 'OptionToken'
-
-  public readonly contractName: 'OptionToken'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

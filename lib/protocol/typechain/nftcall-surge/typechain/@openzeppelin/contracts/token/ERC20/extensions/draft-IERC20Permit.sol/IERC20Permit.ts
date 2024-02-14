@@ -44,8 +44,6 @@ export interface IERC20PermitInterface extends utils.Interface {
 }
 
 export interface IERC20Permit extends BaseContract {
-  contractName: 'IERC20Permit'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

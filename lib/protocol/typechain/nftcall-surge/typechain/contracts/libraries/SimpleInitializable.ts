@@ -15,8 +15,6 @@ export interface SimpleInitializableInterface extends utils.Interface {
 }
 
 export interface SimpleInitializable extends BaseContract {
-  contractName: 'SimpleInitializable'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

@@ -191,8 +191,6 @@ export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>
 
 export interface ERC4626 extends BaseContract {
-  contractName: 'ERC4626'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

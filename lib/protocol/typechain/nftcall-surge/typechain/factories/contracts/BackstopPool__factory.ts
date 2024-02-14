@@ -106,7 +106,6 @@ export class BackstopPool__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'BackstopPool'
   }
 
   override deploy(overrides?: Overrides & { from?: string }): Promise<BackstopPool> {
@@ -121,9 +120,6 @@ export class BackstopPool__factory extends ContractFactory {
   override connect(signer: Signer): BackstopPool__factory {
     return super.connect(signer) as BackstopPool__factory
   }
-  static readonly contractName: 'BackstopPool'
-
-  public readonly contractName: 'BackstopPool'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

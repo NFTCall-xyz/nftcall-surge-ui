@@ -538,7 +538,6 @@ export class NFTCallOracle__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'NFTCallOracle'
   }
 
   override deploy(
@@ -561,9 +560,6 @@ export class NFTCallOracle__factory extends ContractFactory {
   override connect(signer: Signer): NFTCallOracle__factory {
     return super.connect(signer) as NFTCallOracle__factory
   }
-  static readonly contractName: 'NFTCallOracle'
-
-  public readonly contractName: 'NFTCallOracle'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

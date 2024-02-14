@@ -212,8 +212,6 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>
 
 export interface NFTCallOracle extends BaseContract {
-  contractName: 'NFTCallOracle'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

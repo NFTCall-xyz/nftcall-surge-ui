@@ -105,7 +105,6 @@ export class Reserve__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'Reserve'
   }
 
   override deploy(overrides?: Overrides & { from?: string }): Promise<Reserve> {
@@ -120,9 +119,6 @@ export class Reserve__factory extends ContractFactory {
   override connect(signer: Signer): Reserve__factory {
     return super.connect(signer) as Reserve__factory
   }
-  static readonly contractName: 'Reserve'
-
-  public readonly contractName: 'Reserve'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

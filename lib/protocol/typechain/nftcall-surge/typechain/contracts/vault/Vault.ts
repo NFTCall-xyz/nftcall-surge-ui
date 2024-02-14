@@ -657,8 +657,6 @@ export type UpdateTimeWindowForActivationEvent = TypedEvent<
 export type UpdateTimeWindowForActivationEventFilter = TypedEventFilter<UpdateTimeWindowForActivationEvent>
 
 export interface Vault extends BaseContract {
-  contractName: 'Vault'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

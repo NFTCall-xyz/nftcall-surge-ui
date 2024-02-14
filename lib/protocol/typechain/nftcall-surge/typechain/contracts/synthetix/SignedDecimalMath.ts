@@ -41,8 +41,6 @@ export interface SignedDecimalMathInterface extends utils.Interface {
 }
 
 export interface SignedDecimalMath extends BaseContract {
-  contractName: 'SignedDecimalMath'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

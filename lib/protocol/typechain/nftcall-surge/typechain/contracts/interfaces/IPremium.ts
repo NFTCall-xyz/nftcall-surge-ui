@@ -45,8 +45,6 @@ export interface IPremiumInterface extends utils.Interface {
 }
 
 export interface IPremium extends BaseContract {
-  contractName: 'IPremium'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

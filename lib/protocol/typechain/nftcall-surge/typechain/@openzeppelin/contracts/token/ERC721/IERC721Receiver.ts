@@ -35,8 +35,6 @@ export interface IERC721ReceiverInterface extends utils.Interface {
 }
 
 export interface IERC721Receiver extends BaseContract {
-  contractName: 'IERC721Receiver'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

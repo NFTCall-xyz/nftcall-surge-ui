@@ -350,8 +350,6 @@ export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>
 
 export interface LPToken extends BaseContract {
-  contractName: 'LPToken'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

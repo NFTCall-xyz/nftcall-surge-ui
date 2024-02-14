@@ -613,8 +613,6 @@ export type UpdateTimeWindowForActivationEvent = TypedEvent<
 export type UpdateTimeWindowForActivationEventFilter = TypedEventFilter<UpdateTimeWindowForActivationEvent>
 
 export interface IVault extends BaseContract {
-  contractName: 'IVault'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

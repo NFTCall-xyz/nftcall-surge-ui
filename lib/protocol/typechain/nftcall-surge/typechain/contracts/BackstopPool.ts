@@ -58,8 +58,6 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>
 
 export interface BackstopPool extends BaseContract {
-  contractName: 'BackstopPool'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

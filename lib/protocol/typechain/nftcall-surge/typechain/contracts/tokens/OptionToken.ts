@@ -312,8 +312,6 @@ export type UpdateBaseURIEvent = TypedEvent<[string], UpdateBaseURIEventObject>
 export type UpdateBaseURIEventFilter = TypedEventFilter<UpdateBaseURIEvent>
 
 export interface OptionToken extends BaseContract {
-  contractName: 'OptionToken'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>

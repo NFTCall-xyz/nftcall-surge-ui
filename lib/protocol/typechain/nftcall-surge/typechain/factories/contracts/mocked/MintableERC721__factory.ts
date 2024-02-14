@@ -448,7 +448,6 @@ export class MintableERC721__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'MintableERC721'
   }
 
   override deploy(name: string, symbol: string, overrides?: Overrides & { from?: string }): Promise<MintableERC721> {
@@ -467,9 +466,6 @@ export class MintableERC721__factory extends ContractFactory {
   override connect(signer: Signer): MintableERC721__factory {
     return super.connect(signer) as MintableERC721__factory
   }
-  static readonly contractName: 'MintableERC721'
-
-  public readonly contractName: 'MintableERC721'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

@@ -41,7 +41,6 @@ export class FixedPointMathLib__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'FixedPointMathLib'
   }
 
   override deploy(overrides?: Overrides & { from?: string }): Promise<FixedPointMathLib> {
@@ -56,9 +55,6 @@ export class FixedPointMathLib__factory extends ContractFactory {
   override connect(signer: Signer): FixedPointMathLib__factory {
     return super.connect(signer) as FixedPointMathLib__factory
   }
-  static readonly contractName: 'FixedPointMathLib'
-
-  public readonly contractName: 'FixedPointMathLib'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

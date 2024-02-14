@@ -311,7 +311,6 @@ export class ERC20__factory extends ContractFactory {
     } else {
       super(_abi, _bytecode, args[0])
     }
-    this.contractName = 'ERC20'
   }
 
   override deploy(name_: string, symbol_: string, overrides?: Overrides & { from?: string }): Promise<ERC20> {
@@ -330,9 +329,6 @@ export class ERC20__factory extends ContractFactory {
   override connect(signer: Signer): ERC20__factory {
     return super.connect(signer) as ERC20__factory
   }
-  static readonly contractName: 'ERC20'
-
-  public readonly contractName: 'ERC20'
 
   static readonly bytecode = _bytecode
   static readonly abi = _abi

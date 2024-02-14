@@ -83,8 +83,6 @@ export interface BlackScholesInterface extends utils.Interface {
 }
 
 export interface BlackScholes extends BaseContract {
-  contractName: 'BlackScholes'
-
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
