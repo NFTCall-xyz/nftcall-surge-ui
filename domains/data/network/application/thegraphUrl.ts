@@ -10,7 +10,7 @@ import { isStage } from 'app/constant/envs'
 const getThegraphUrl = (chainId: number) => {
   switch (chainId) {
     default:
-      return 'https://api.thegraph.com/subgraphs/name/nftcall-xyz/nftcall-surge'
+      return 'https://api.studio.thegraph.com/query/15757/nftcall-surge-blast-testnet/v0.0.1'
   }
 }
 
