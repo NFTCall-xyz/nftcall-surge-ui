@@ -23,8 +23,8 @@ export type OpenAPIConfig = {
 }
 
 export const OpenAPI: OpenAPIConfig = {
-  // BASE: 'https://api.nftcall.xyz',
-  BASE: 'http://localhost:3003',
+  BASE: 'https://api.nftcall.xyz',
+  // BASE: 'http://localhost:9000',
   VERSION: '1.0',
   WITH_CREDENTIALS: false,
   CREDENTIALS: 'include',

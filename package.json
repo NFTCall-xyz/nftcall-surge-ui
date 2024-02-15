@@ -14,7 +14,7 @@
     "type-check": "tsc --noEmit",
     "codegen": "yarn codegen:openAPI && yarn fix:prettier:changed",
     "download-openapi": "ts-node -r tsconfig-paths/register -P ./scripts/tsconfig.json ./scripts/download-openapi.ts",
-    "codegen:openAPI": "yarn download-openapi http://localhost:3003/doc-json && openapi --input ./.next/cache/open-api.json --output ./lib/openapi --client fetch --exportCore false"
+    "codegen:openAPI": "yarn download-openapi http://localhost:9000/doc-json && openapi --input ./.next/cache/open-api.json --output ./lib/openapi --client fetch --exportCore false"
   },
   "private": true,
   "sideEffects": false,
